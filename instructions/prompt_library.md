@@ -16,10 +16,7 @@ This document provides a collection of effective prompts for Amazon Q Developer 
 ### Repository Structure Setup
 
 ```
-I'm building the MITA State Self-Assessment Tool as described in instructions/index.md. 
-Please help me set up the initial folder structure for a Next.js project with TypeScript 
-following the architecture outlined in instructions/architecture.md. Include appropriate 
-configuration files for Next.js, TypeScript, ESLint, and Prettier.
+I'm building the MITA State Self-Assessment Tool as described in instructions/index.md and following the Development Guide in instructions/development_guide.md. I'll be providing additional prompts for each part of the development, but for now, please help me set up the initial folder structure for a Next.js project with TypeScript following the architecture outlined in instructions/architecture.md and the Development Guide in instructions/development_guide.md. Include appropriate configuration files for Next.js, TypeScript, ESLint, and Prettier.
 ```
 
 ### GitHub Pages Configuration
@@ -439,3 +436,4 @@ Following the browser storage approach in instructions/architecture.md and instr
 3. Ensures data integrity during offline operation
 4. Synchronizes correctly when coming back online
 ```
+
