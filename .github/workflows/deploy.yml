@@ -36,10 +36,13 @@ jobs:
       - name: Build
         run: npm run build
         
-      - name: Create .nojekyll file
+      - name: List output directory
+        run: ls -la out/
+        
+      - name: Create .nojekyll file and configure GitHub Pages
         run: |
           touch out/.nojekyll
-          cp README.md out/README.md
+          echo "mita-state-self-assessment-tool.naretakis.github.io" > out/CNAME
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
