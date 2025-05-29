@@ -40,6 +40,28 @@ The MITA State Self-Assessment (SS-A) Tool helps state Medicaid agencies assess 
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
+## Deployment to GitHub Pages
+
+This project is configured for automatic deployment to GitHub Pages using GitHub Actions:
+
+1. **Setup GitHub Actions Workflow**:
+   - The workflow file is located at `.github/workflows/deploy.yml`
+   - It builds the Next.js app and deploys to the `gh-pages` branch
+
+2. **Configure GitHub Pages**:
+   - Go to your repository's Settings > Pages
+   - Set the Source to "Deploy from a branch"
+   - Select the `gh-pages` branch and root (/) folder
+   - Click Save
+
+3. **First Deployment**:
+   - Push changes to the `main` branch to trigger the workflow
+   - The workflow will create the `gh-pages` branch automatically
+   - GitHub Pages will serve your site from this branch
+
+4. **Access Your Deployed Site**:
+   - Your site will be available at `https://[username].github.io/mita-state-self-assessment-tool/`
+
 ## Project Structure
 
 ```
@@ -58,6 +80,8 @@ mita-state-self-assessment-tool/
 │   ├── styles/          # CSS styles
 │   ├── types/           # TypeScript type definitions
 │   └── utils/           # Utility functions
+├── .github/
+│   └── workflows/       # GitHub Actions workflow files
 ├── .eslintrc.json       # ESLint configuration
 ├── .prettierrc          # Prettier configuration
 ├── next.config.js       # Next.js configuration
