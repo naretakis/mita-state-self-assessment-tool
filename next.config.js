@@ -7,9 +7,12 @@ const nextConfig = {
   },
   // Configure trailing slash for better compatibility with static hosting
   trailingSlash: true,
-  // Set the base path for GitHub Pages deployment
-  basePath: '/mita-state-self-assessment-tool',
-  assetPrefix: '/mita-state-self-assessment-tool',
 };
+
+// Only add basePath and assetPrefix when building for production (not in dev mode)
+if (process.env.NODE_ENV === 'production') {
+  nextConfig.basePath = '/mita-state-self-assessment-tool';
+  nextConfig.assetPrefix = '/mita-state-self-assessment-tool';
+}
 
 module.exports = nextConfig;
