@@ -68,7 +68,7 @@ This project uses Amazon Q Developer in VS Code to implement the application wit
 To begin development:
 
 1. Review all files in the Instructions folder to understand the project context
-2. Set up the development environment as described in the [Development Guide](development-guide.md)
+2. Set up the development environment as described in the [Development Guide](development_guide.md)
 3. Follow the phased implementation approach in the GenAI Implementation Plan
 4. Use the prompt library to effectively leverage Amazon Q Developer
 
