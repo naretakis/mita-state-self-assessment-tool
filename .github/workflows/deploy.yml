@@ -37,7 +37,9 @@ jobs:
         run: npm run build
         
       - name: Create .nojekyll file
-        run: touch out/.nojekyll
+        run: |
+          touch out/.nojekyll
+          cp README.md out/README.md
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
