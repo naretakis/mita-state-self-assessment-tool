@@ -10,10 +10,10 @@ export const ContentService = {
    */
   parseCapabilityContent: (content: string): Capability | null => {
     try {
-      const { data, content: markdownContent } = matter(content);
+      const { data } = matter(content);
       
       // Extract front matter data
-      const { capabilityDomain, capabilityArea, version, lastUpdated } = data;
+      const { capabilityDomain, capabilityArea } = data;
       
       // This is a simplified implementation - in a real app, we would parse the markdown
       // content to extract the dimension descriptions and maturity levels
