@@ -35,6 +35,11 @@ jobs:
 
       - name: Build
         run: npm run build
+        
+      - name: Configure base path
+        run: |
+          echo "Adding .nojekyll file to disable Jekyll"
+          touch out/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
