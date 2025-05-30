@@ -159,7 +159,7 @@ assessmentstatus: in-progress
 
 ## Capability Domain: Provider
 
-The Provider capability domain encompasses three related areas: Provider Enrollment, Provider Management, and Provider Termination. 
+The Provider capability domain encompasses three related areas; Provider Enrollment, Provider Management, and Provider Termination. 
 
 ## Capability Area: Provider Enrollment
 
