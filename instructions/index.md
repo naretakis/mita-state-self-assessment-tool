@@ -44,6 +44,7 @@ The Minimum Lovable Product (MLP) focuses on delivering core functionality by Au
 * Centralized data repository
 * APD integration
 * Advanced analytics
+* ... and much more (our plan is to just keep iterating)
 
 ## Technical Stack
 

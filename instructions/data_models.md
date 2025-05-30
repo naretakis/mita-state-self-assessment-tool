@@ -215,17 +215,22 @@ Content files use front matter for metadata and markdown sections for content:
 
 ```YAML
 ---
-capabilityDomain: Provider
-capabilityArea: Provider Enrollment
+capabilityDomain: [Capability Domain Name]
+capabilityArea: [Capability Area Name]
 version: 1.0
-lastUpdated: 2025-05-01
+mitadefinitioncreated: [created date]
+mitadefinitionupdatedlastUpdated: [last modified date]
+assessmentcreated: [date the state intiatited their assessment]
+assessmentupdated: [date of the last updated to their assessment]
+assessmentstatus: [uses type AssessmentStatus]
+
 ---
 
-## Capability Domain Description
+## Capability Domain: [Domain Name]
 
 [Description content]
 
-## Capability Area Description
+## Capability Area: [Area Name]
 
 [Description content]
 
@@ -255,6 +260,22 @@ lastUpdated: 2025-05-01
 
 #### Level 5: Optimized
 [Level 5 definition]
+
+## Roles
+
+[Similar structure for Roles dimension]
+
+## Business Processes
+
+[Similar structure for Business Processes dimension]
+
+## Information
+
+[Similar structure for Information dimension]
+
+## Technology
+
+[Similar structure for Technology dimension]
 ```
 
 ## Export Models

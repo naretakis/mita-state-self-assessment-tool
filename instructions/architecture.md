@@ -37,7 +37,7 @@ The MITA SS-A Tool follows a modern, browser-based architecture that emphasizes 
 
 #### Assessment Components
 
-* **CapabilitySelector**: Allows users to select capability areas for assessment
+* **CapabilitySelector**: Allows users to select capability domain and capability areas for assessment
 * **AssessmentForm**: Dynamic form generation based on capability structure
 * **DecisionTreeNavigator**: Guides users through the assessment process
 * **ProgressTracker**: Displays progress through the assessment
@@ -86,31 +86,7 @@ A key architectural principle of the MITA SS-A Tool is the separation of content
 3. **Versioning Simplicity**: Content can be versioned independently from application code
 4. **Improved Testability**: Application logic can be tested with mock content
 
-The content is structured in YAML/Markdown files with a standardized format:
-
-```Markdown
----
-capabilityDomain: Provider
-capabilityArea: Provider Enrollment
-version: 1.0
-lastUpdated: 2025-04-15
----
-
-## Outcomes
-[Outcome description and assessment questions]
-
-## Roles
-[Role description and assessment questions]
-
-## Business Processes
-[Business process description and assessment questions]
-
-## Information
-[Information model description and assessment questions]
-
-## Technology
-[Technology description and assessment questions]
-```
+The content is structured in YAML/Markdown files with a standardized format, see the [Data Model](data_models.md) for detailed information.
 
 ## Data Flow
 

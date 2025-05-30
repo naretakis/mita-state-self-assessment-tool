@@ -41,7 +41,7 @@ Medicaid Enterprise
 
 Each capability area is assessed across five key dimensions, collectively known as ORBIT:
 
-### 1. Outcome
+### 1. Outcomes
 
 The Outcome dimension describes the business results and objectives achieved through the capability. Assessment focuses on:
 
@@ -50,7 +50,7 @@ The Outcome dimension describes the business results and objectives achieved thr
 * Measurable impact on stakeholders
 * Improvements in service delivery
 
-### 2. Role
+### 2. Roles
 
 The Role dimension examines who performs various functions within the capability and how responsibilities are structured. Assessment focuses on:
 
@@ -59,7 +59,7 @@ The Role dimension examines who performs various functions within the capability
 * Operational efficiency
 * Business and technical roles
 
-### 3. Business Process
+### 3. Business Processes
 
 The Business Process dimension evaluates the workflows, procedures, and business rules that implement the capability. Assessment focuses on:
 
@@ -140,23 +140,28 @@ The SS-A Tool guides users through assessing each capability area across all fiv
 4. Document plans for improvement
 5. Identify barriers to advancement
 
-## Content Structure in SS-A Tool
+## Example: Provider Capability Content Structure in SS-A Tool
 
-Within the application, capability definitions and assessment content are structured in YAML/Markdown files:
+Within the application, capability definitions and assessment content are structured in YAML/Markdown files per the [Data Model](data_models.md). Below is an example of the Provider Enrollment capability area:
 
-```Markdown
+```YAML
 ---
 capabilityDomain: Provider
 capabilityArea: Provider Enrollment
-version: 1.0
-lastUpdated: 2025-05-01
+version: 1.1
+mitadefinitioncreated: 2025-02-02
+mitadefinitionupdatedlastUpdated: 2025-02-03
+assessmentcreated: 2025-05-30
+assessmentupdated: 2025-06-10
+assessmentstatus: in-progress
+
 ---
 
-## Capability Domain Description
+## Capability Domain: Provider
 
 The Provider capability domain encompasses three related areas: Provider Enrollment, Provider Management, and Provider Termination. 
 
-## Capability Area Description
+## Capability Area: Provider Enrollment
 
 Provider Enrollment encompasses the processes and systems used to register healthcare providers in the Medicaid program, including application processing, screening, verification, and enrollment decisions.
 
@@ -189,11 +194,11 @@ Provider enrollment outcomes are inconsistent with manual tracking of applicatio
 
 ## Roles
 
-[Similar structure for Role dimension]
+[Similar structure for Roles dimension]
 
 ## Business Processes
 
-[Similar structure for Business Process dimension]
+[Similar structure for Business Processes dimension]
 
 ## Information
 

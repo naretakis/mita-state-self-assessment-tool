@@ -12,6 +12,8 @@ The MITA State Self-Assessment (SS-A) Tool helps state Medicaid agencies assess 
 4. Local browser storage for data persistence
 5. Visualization and export capabilities for actionable reporting
 
+For detailed project documentation, including architecture, workflows, and development guidelines, see the [Project Documentation](instructions/index.md) in the instructions folder.
+
 ## Getting Started
 
 ### Prerequisites
