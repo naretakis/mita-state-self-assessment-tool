@@ -246,7 +246,7 @@ export const StorageService = {
 /**
  * Helper function to migrate old dimension data to new format
  */
-function migrateOldDimension(oldDimension: any): any {
+function migrateOldDimension(oldDimension: Record<string, unknown>): Record<string, unknown> {
   return {
     maturityLevel: oldDimension.maturityLevel || 1,
     evidence: oldDimension.evidence || '',

@@ -1,4 +1,4 @@
-import { Capability, CapabilityDefinition } from '@/types';
+import { CapabilityDefinition } from '@/types';
 import matter from 'gray-matter';
 
 /**
@@ -10,7 +10,7 @@ export const ContentService = {
    */
   parseCapabilityContent: (content: string): CapabilityDefinition | null => {
     try {
-      const { data, content: markdownContent } = matter(content);
+      const { data } = matter(content);
       
       // Extract front matter data
       const { 
