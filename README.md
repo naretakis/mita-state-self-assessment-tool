@@ -106,6 +106,95 @@ mita-state-self-assessment-tool/
 - [gray-matter](https://github.com/jonschlinkert/gray-matter) - Front matter parser
 - [react-markdown](https://github.com/remarkjs/react-markdown) - Markdown renderer
 
+## Testing Framework
+
+The project uses the following testing tools:
+
+- **Jest**: Test runner and assertion library
+- **React Testing Library**: Component testing
+- **Mock Service Worker**: API mocking (for future implementation)
+
+### Test Structure
+
+```
+tests/
+├── unit/              # Unit tests for individual components and functions
+├── integration/       # Integration tests for component interactions
+├── e2e/               # End-to-end tests for complete user flows
+├── fixtures/          # Test data
+└── utils/             # Test utilities
+```
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:coverage
+```
+
+### Writing Tests
+
+#### Unit Tests
+
+Unit tests focus on testing individual components or functions in isolation. Example:
+
+```tsx
+// Button.test.tsx
+import { render, screen } from '@testing-library/react';
+import Button from '@/components/common/Button';
+
+test('renders button with label', () => {
+  render(<Button label="Click me" />);
+  expect(screen.getByText('Click me')).toBeInTheDocument();
+});
+```
+
+#### Integration Tests
+
+Integration tests verify that multiple components work together correctly:
+
+```tsx
+// AssessmentForm.test.tsx
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import AssessmentForm from '@/components/assessment/AssessmentForm';
+
+test('form submission works correctly', async () => {
+  const handleSubmit = jest.fn();
+  render(<AssessmentForm onSubmit={handleSubmit} />);
+  
+  // Fill out form
+  await userEvent.type(screen.getByLabelText('Title'), 'Test Assessment');
+  
+  // Submit form
+  await userEvent.click(screen.getByText('Submit'));
+  
+  // Verify submission
+  expect(handleSubmit).toHaveBeenCalledWith(expect.objectContaining({
+    title: 'Test Assessment'
+  }));
+});
+```
+
+#### End-to-End Tests
+
+E2E tests simulate real user interactions across multiple pages:
+
+```js
+// Future implementation with Playwright or Cypress
+test('user can complete assessment workflow', async () => {
+  // Navigate to assessment page
+  // Fill out assessment
+  // Submit and verify results
+});
+```
+
 ## License
 
 This project is licensed under the GNU General Public License v3.0 (GPL-3.0) - see the LICENSE file for details.
