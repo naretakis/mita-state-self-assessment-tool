@@ -140,74 +140,11 @@ The SS-A Tool guides users through assessing each capability area across all fiv
 4. Document plans for improvement
 5. Identify barriers to advancement
 
-## Example: Provider Capability Content Structure in SS-A Tool
+## Capability Framework Structure in SS-A Tool
 
-Within the application, capability definitions and assessment content are structured in YAML/Markdown files per the [Data Model](data_models.md). Below is an example of the Provider Enrollment capability area:
+Within the application, capability definitions and assessment content are structured in YAML/Markdown files per the [Data Model](data_models.md). 
 
-```YAML
----
-capabilityDomain: Provider
-capabilityArea: Provider Enrollment
-version: 1.1
-mitadefinitioncreated: 2025-02-02
-mitadefinitionupdatedlastUpdated: 2025-02-03
-assessmentcreated: 2025-05-30
-assessmentupdated: 2025-06-10
-assessmentstatus: in-progress
-
----
-
-## Capability Domain: Provider
-
-The Provider capability domain encompasses three related areas; Provider Enrollment, Provider Management, and Provider Termination. 
-
-## Capability Area: Provider Enrollment
-
-Provider Enrollment encompasses the processes and systems used to register healthcare providers in the Medicaid program, including application processing, screening, verification, and enrollment decisions.
-
-## Outcomes
-
-### Description
-The Outcomes dimension focuses on how effectively the provider enrollment capability achieves its primary business objectives of registering qualified providers while preventing fraud and ensuring program integrity.
-
-### Assessment Questions
-1. How effectively does your provider enrollment process identify and screen qualified providers?
-2. To what extent are enrollment timeframes meeting program goals?
-3. How well does the enrollment process prevent ineligible providers from participating?
-
-### Maturity Level Definitions
-
-#### Level 1: Initial
-Provider enrollment outcomes are inconsistent with manual tracking of applications and limited verification of provider information.
-
-#### Level 2: Repeatable
-[Level 2 definition]
-
-#### Level 3: Defined
-[Level 3 definition]
-
-#### Level 4: Managed
-[Level 4 definition]
-
-#### Level 5: Optimized
-[Level 5 definition]
-
-## Roles
-
-[Similar structure for Roles dimension]
-
-## Business Processes
-
-[Similar structure for Business Processes dimension]
-
-## Information
-
-[Similar structure for Information dimension]
-
-## Technology
-
-[Similar structure for Technology dimension]
-```
+See the [example provider enrollment file](/public/content/sample-provider-enrollment.md) for more information.
 
 ## Implementation Considerations
 

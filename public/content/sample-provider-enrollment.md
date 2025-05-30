@@ -1,143 +1,153 @@
 ---
 capabilityDomain: Provider
 capabilityArea: Provider Enrollment
-version: 1.0
-lastUpdated: 2025-04-15
+version: 1.1
+capabilityAreaCreated: 2025-02-02
+capabilityAreaLastUpdated: 2025-02-03
+assessmentCreated: 2025-05-01
+assessmentUpdated: 2025-05-15
+assessmentStatus: in-progress
 ---
+
+## Capability Domain: Provider
+
+The Provider capability domain encompasses three related areas; Provider Enrollment, Provider Management, and Provider Termination. 
+
+## Capability Area: Provider Enrollment
+
+Provider Enrollment encompasses the processes and systems used to register healthcare providers in the Medicaid program, including application processing, screening, verification, and enrollment decisions.
 
 ## Outcomes
 
-The Provider Enrollment capability enables prospective providers to enroll in the Medicaid program through a streamlined, automated process that validates credentials and ensures compliance with program requirements.
+### Description
+The Outcomes dimension focuses on the results and effectiveness of the provider enrollment process.
 
-### Level 1
-- Manual provider enrollment process
-- Paper-based applications
-- Limited validation of provider information
+### Assessment Questions
+1. How efficiently are providers enrolled in the Medicaid program?
+2. What percentage of applications are processed within standard timeframes?
+3. How effectively does the enrollment process validate provider credentials?
 
-### Level 2
-- Basic online enrollment forms
-- Some automated validation
-- Manual review still required for most applications
+### Maturity Level Definitions
 
-### Level 3
-- Fully electronic enrollment process
-- Automated validation against multiple sources
-- Self-service status checking
+#### Level 1: Initial
+Manual provider enrollment process with paper-based applications and limited validation of provider information.
 
-### Level 4
-- Intelligent workflow with predictive analytics
-- Real-time credential verification
-- Automated risk assessment
+#### Level 2: Repeatable
+Basic online enrollment forms with some automated validation, though manual review is still required for most applications.
 
-### Level 5
-- Continuous monitoring and revalidation
-- Cross-program enrollment coordination
-- Adaptive enrollment requirements based on provider risk
+#### Level 3: Defined
+Fully electronic enrollment process with automated validation against multiple sources and self-service status checking.
+
+#### Level 4: Managed
+Intelligent workflow with predictive analytics, real-time credential verification, and automated risk assessment.
+
+#### Level 5: Optimized
+Continuous monitoring and revalidation with cross-program enrollment coordination and adaptive enrollment requirements based on provider risk.
 
 ## Roles
 
-### Level 1
-- Provider enrollment specialists manually process applications
-- Limited provider self-service capabilities
-- Siloed responsibilities across enrollment steps
+### Description
+The Roles dimension addresses the responsibilities and interactions of staff and providers in the enrollment process.
 
-### Level 2
-- Providers can submit applications online
-- Staff roles focused on specific verification tasks
-- Limited coordination between enrollment teams
+### Assessment Questions
+1. How are responsibilities distributed across the enrollment process?
+2. What self-service capabilities are available to providers?
+3. How effectively do different roles collaborate during the enrollment process?
 
-### Level 3
-- Provider self-service for most enrollment functions
-- Specialized staff handle exceptions and complex cases
-- Coordinated roles across enrollment workflow
+### Maturity Level Definitions
 
-### Level 4
-- Automated assignment of tasks based on expertise
-- Cross-trained staff with decision support tools
-- Collaborative enrollment teams
+#### Level 1: Initial
+Provider enrollment specialists manually process applications with limited provider self-service capabilities and siloed responsibilities across enrollment steps.
 
-### Level 5
-- Dynamic role assignment based on enrollment complexity
-- Continuous learning systems support staff decisions
-- Seamless coordination across programs and agencies
+#### Level 2: Repeatable
+Providers can submit applications online, staff roles are focused on specific verification tasks, with limited coordination between enrollment teams.
+
+#### Level 3: Defined
+Provider self-service for most enrollment functions, specialized staff handle exceptions and complex cases, with coordinated roles across enrollment workflow.
+
+#### Level 4: Managed
+Automated assignment of tasks based on expertise, cross-trained staff with decision support tools, and collaborative enrollment teams.
+
+#### Level 5: Optimized
+Dynamic role assignment based on enrollment complexity, continuous learning systems support staff decisions, with seamless coordination across programs and agencies.
 
 ## Business Processes
 
-### Level 1
-- Manual, paper-based workflow
-- Sequential processing steps
-- Limited tracking of application status
+### Description
+The Business Processes dimension covers the workflows, procedures, and operational aspects of provider enrollment.
 
-### Level 2
-- Basic electronic workflow
-- Some automated validations
-- Manual intervention required for most steps
+### Assessment Questions
+1. How streamlined is the provider enrollment workflow?
+2. What degree of automation exists in the enrollment process?
+3. How are exceptions and special cases handled?
 
-### Level 3
-- Fully electronic workflow
-- Parallel processing where possible
-- Automated tracking and notifications
+### Maturity Level Definitions
 
-### Level 4
-- Intelligent workflow with adaptive routing
-- Automated exception handling
-- Predictive workload management
+#### Level 1: Initial
+Manual, paper-based workflow with sequential processing steps and limited tracking of application status.
 
-### Level 5
-- Continuous process optimization
-- Cross-program enrollment coordination
-- Real-time adaptation to regulatory changes
+#### Level 2: Repeatable
+Basic electronic workflow with some automated validations, though manual intervention is required for most steps.
+
+#### Level 3: Defined
+Fully electronic workflow with parallel processing where possible and automated tracking and notifications.
+
+#### Level 4: Managed
+Intelligent workflow with adaptive routing, automated exception handling, and predictive workload management.
+
+#### Level 5: Optimized
+Continuous process optimization with cross-program enrollment coordination and real-time adaptation to regulatory changes.
 
 ## Information
 
-### Level 1
-- Basic provider demographic information
-- Manual verification of credentials
-- Limited data sharing between systems
+### Description
+The Information dimension addresses the data, data models, and information management aspects of provider enrollment.
 
-### Level 2
-- Structured provider data model
-- Electronic storage of supporting documentation
-- Basic interfaces with external verification sources
+### Assessment Questions
+1. How comprehensive is the provider data model?
+2. What data validation mechanisms are in place?
+3. How effectively is provider information shared across systems?
 
-### Level 3
-- Comprehensive provider data model
-- Automated data validation rules
-- Integration with multiple verification sources
+### Maturity Level Definitions
 
-### Level 4
-- Enhanced data model supporting advanced analytics
-- Real-time data validation and enrichment
-- Comprehensive provider risk profile
+#### Level 1: Initial
+Basic provider demographic information with manual verification of credentials and limited data sharing between systems.
 
-### Level 5
-- Dynamic data model adapting to changing requirements
-- Continuous data quality monitoring
-- Seamless information sharing across programs
+#### Level 2: Repeatable
+Structured provider data model with electronic storage of supporting documentation and basic interfaces with external verification sources.
+
+#### Level 3: Defined
+Comprehensive provider data model with automated data validation rules and integration with multiple verification sources.
+
+#### Level 4: Managed
+Enhanced data model supporting advanced analytics, real-time data validation and enrichment, and comprehensive provider risk profile.
+
+#### Level 5: Optimized
+Dynamic data model adapting to changing requirements, continuous data quality monitoring, and seamless information sharing across programs.
 
 ## Technology
 
-### Level 1
-- Legacy systems with limited integration
-- Manual data entry and verification
-- Minimal automation
+### Description
+The Technology dimension covers the systems, infrastructure, and technical capabilities supporting provider enrollment.
 
-### Level 2
-- Basic web forms for provider enrollment
-- Document management system
-- Limited system integration
+### Assessment Questions
+1. How well do systems support the provider enrollment process?
+2. What degree of integration exists between enrollment and other systems?
+3. How adaptable is the technology to changing requirements?
 
-### Level 3
-- Integrated provider enrollment system
-- Automated workflow management
-- API-based integration with verification sources
+### Maturity Level Definitions
 
-### Level 4
-- Cloud-based enrollment platform
-- Advanced analytics and decision support
-- Comprehensive API ecosystem
+#### Level 1: Initial
+Legacy systems with limited integration, manual data entry and verification, and minimal automation.
 
-### Level 5
-- Microservices architecture
-- AI/ML-powered enrollment processing
-- Real-time integration with federal and state systems
+#### Level 2: Repeatable
+Basic web forms for provider enrollment, document management system, and limited system integration.
+
+#### Level 3: Defined
+Integrated provider enrollment system, automated workflow management, and API-based integration with verification sources.
+
+#### Level 4: Managed
+Cloud-based enrollment platform, advanced analytics and decision support, and comprehensive API ecosystem.
+
+#### Level 5: Optimized
+Microservices architecture, AI/ML-powered enrollment processing, and real-time integration with federal and state systems.

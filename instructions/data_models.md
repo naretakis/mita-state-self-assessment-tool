@@ -217,12 +217,12 @@ Content files use front matter for metadata and markdown sections for content:
 ---
 capabilityDomain: [Capability Domain Name]
 capabilityArea: [Capability Area Name]
-version: 1.0
-mitadefinitioncreated: [created date]
-mitadefinitionupdatedlastUpdated: [last modified date]
-assessmentcreated: [date the state intiatited their assessment]
-assessmentupdated: [date of the last updated to their assessment]
-assessmentstatus: [uses type AssessmentStatus]
+version: [version number]
+capabilityAreaCreated: [created date]
+capabilityAreaLastUpdated: [last modified date]
+assessmentCreated: [date the state intiatited their assessment]
+assessmentUpdated: [date of the last updated to their assessment]
+assessmentStatus: [uses type AssessmentStatus]
 
 ---
 
