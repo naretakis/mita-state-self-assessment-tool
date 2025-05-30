@@ -29,7 +29,7 @@ export function parseCapabilityMarkdown(fileContent: string): CapabilityDefiniti
       outcome: createEmptyDimension(),
       role: createEmptyDimension(),
       businessProcess: createEmptyDimension(),
-      informationData: createEmptyDimension(),
+      information: createEmptyDimension(),
       technology: createEmptyDimension()
     }
   };
@@ -44,7 +44,7 @@ export function parseCapabilityMarkdown(fileContent: string): CapabilityDefiniti
   extractDimension(sections, 'Outcomes', capabilityDefinition.dimensions.outcome);
   extractDimension(sections, 'Roles', capabilityDefinition.dimensions.role);
   extractDimension(sections, 'Business Processes', capabilityDefinition.dimensions.businessProcess);
-  extractDimension(sections, 'Information', capabilityDefinition.dimensions.informationData);
+  extractDimension(sections, 'Information', capabilityDefinition.dimensions.information);
   extractDimension(sections, 'Technology', capabilityDefinition.dimensions.technology);
   
   return capabilityDefinition;
