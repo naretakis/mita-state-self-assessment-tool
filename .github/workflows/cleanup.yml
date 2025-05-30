@@ -1,0 +1,37 @@
+name: Cleanup Stale Deployments
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          
+      - name: Get branch name
+        id: branch-name
+        run: |
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          
+      - name: Remove stale deployment
+        if: env.BRANCH_NAME != 'main'
+        run: |
+          if [ -d "${{ env.BRANCH_NAME }}" ]; then
+            rm -rf ${{ env.BRANCH_NAME }}
+            git config --global user.name "GitHub Actions"
+            git config --global user.email "actions@github.com"
+            git add -A
+            git commit -m "Remove stale deployment for ${{ env.BRANCH_NAME }}" || echo "No changes to commit"
+            git push
+          else
+            echo "No deployment directory found for ${{ env.BRANCH_NAME }}"
+          fi

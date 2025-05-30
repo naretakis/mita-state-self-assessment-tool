@@ -1,18 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export', // Enables static HTML export for GitHub Pages
+  output: 'export',
   images: {
-    unoptimized: true, // Required for static export
+    unoptimized: true,
   },
-  // Configure trailing slash for better compatibility with static hosting
+  basePath: '',
+  // This allows us to modify the basePath for different environments
+  // The GitHub Action will modify this for non-main branches
+  
+  // Disable trailing slashes for GitHub Pages compatibility
   trailingSlash: true,
-};
-
-// Only add basePath and assetPrefix when building for production (not in dev mode)
-if (process.env.NODE_ENV === 'production') {
-  nextConfig.basePath = '/mita-state-self-assessment-tool';
-  nextConfig.assetPrefix = '/mita-state-self-assessment-tool';
 }
 
-module.exports = nextConfig;
+module.exports = nextConfig
