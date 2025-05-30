@@ -1,4 +1,4 @@
-import { Assessment, AssessmentData, AssessmentSummary, AssessmentStatus } from '@/types';
+import { Assessment, AssessmentData, AssessmentSummary, AssessmentStatus, DimensionAssessment, OldDimensionAssessment } from '@/types';
 
 const STORAGE_KEY_PREFIX = 'mita-assessment-';
 const ASSESSMENT_LIST_KEY = 'mita-assessment-list';
@@ -246,7 +246,7 @@ export const StorageService = {
 /**
  * Helper function to migrate old dimension data to new format
  */
-function migrateOldDimension(oldDimension: Record<string, unknown>): Record<string, unknown> {
+function migrateOldDimension(oldDimension: OldDimensionAssessment): DimensionAssessment {
   return {
     maturityLevel: oldDimension.maturityLevel || 1,
     evidence: oldDimension.evidence || '',
