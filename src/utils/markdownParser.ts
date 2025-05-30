@@ -14,7 +14,7 @@ export function parseCapabilityMarkdown(fileContent: string): CapabilityDefiniti
   const frontMatter = data as CapabilityFrontMatter;
   
   // Generate a unique ID based on domain and capability name
-  const id = `${frontMatter.capabilityDomain.toLowerCase()}-${frontMatter.capabilityArea.toLowerCase().replace(/\s+/g, '-')}`;
+  const id = `${frontMatter.capabilityDomain.toLowerCase()}-${frontMatter.capabilityArea.toLowerCase().replace(/\\s+/g, '-')}`;
   
   // Initialize the capability definition
   const capabilityDefinition: CapabilityDefinition = {
@@ -138,7 +138,7 @@ function extractDimension(sections: Record<string, string>, dimensionName: strin
   // Extract assessment questions
   if (subsections['Assessment Questions']) {
     dimension.assessmentQuestions = subsections['Assessment Questions']
-      .split(/\d+\.\s+/)
+      .split(/\\d+\\.\\s+/)
       .filter(q => q.trim().length > 0)
       .map(q => q.trim());
   }
@@ -216,7 +216,10 @@ function parseMaturityLevels(content: string): Record<string, string> {
   return levels;
 }
 
-export default {
+// Create a named export object to fix ESLint warning
+const markdownParserExports = {
   parseCapabilityMarkdown,
   loadCapabilityDefinitions
 };
+
+export default markdownParserExports;

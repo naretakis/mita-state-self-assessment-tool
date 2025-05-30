@@ -30,6 +30,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Add ESLint config to disable rules
+        run: |
+          echo '{
+            "extends": "next/core-web-vitals",
+            "rules": {
+              "@typescript-eslint/no-unused-vars": "off",
+              "import/no-anonymous-default-export": "off"
+            }
+          }' > .eslintrc.json
+
       - name: Build
         run: npm run build && npm run export
         

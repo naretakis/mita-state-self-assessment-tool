@@ -1,4 +1,3 @@
-import path from 'path';
 import fs from 'fs';
 import { loadCapabilityDefinitions, parseCapabilityMarkdown } from '../utils/markdownParser';
 import type { CapabilityDefinition } from '../types';
