@@ -12,20 +12,29 @@
     // Handle different deployment scenarios
     let basePath = '';
     
-    if (segments.length > 0) {
-      // First segment is always the repo name
-      if (segments[0] === 'mita-state-self-assessment-tool') {
-        basePath = '/mita-state-self-assessment-tool';
-        
-        // Check if we're in a branch subdirectory
-        if (segments.length > 1) {
-          basePath += '/' + segments[1];
-        }
+    // Get the repository name from the URL
+    const repoName = 'mita-state-self-assessment-tool';
+    
+    // Find the repository name in the path segments
+    const repoIndex = segments.indexOf(repoName);
+    
+    if (repoIndex !== -1) {
+      // Build the base path including the repo name
+      basePath = '/' + repoName;
+      
+      // Check if we're in a branch subdirectory (next segment after repo name)
+      if (segments.length > repoIndex + 1) {
+        basePath += '/' + segments[repoIndex + 1];
       }
     }
     
     // Redirect to the index.html with the correct base path
     window.location.href = basePath + '/index.html';
+    
+    // If redirection doesn't happen immediately, provide a fallback
+    setTimeout(function() {
+      window.location.href = '/';
+    }, 2000);
   </script>
 </head>
 <body>
