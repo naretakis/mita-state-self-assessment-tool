@@ -34,7 +34,7 @@ export interface CapabilityAssessment {
     outcome: DimensionAssessment;
     role: DimensionAssessment;
     businessProcess: DimensionAssessment;
-    informationData: DimensionAssessment;
+    information: DimensionAssessment;
     technology: DimensionAssessment;
   };
 }
@@ -61,7 +61,7 @@ export interface CapabilityDefinition {
     outcome: DimensionDefinition;
     role: DimensionDefinition;
     businessProcess: DimensionDefinition;
-    informationData: DimensionDefinition;
+    information: DimensionDefinition;
     technology: DimensionDefinition;
   };
 }
