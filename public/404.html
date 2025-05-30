@@ -4,8 +4,28 @@
   <meta charset="utf-8">
   <title>Redirecting...</title>
   <script>
-    // Redirect to the index.html
-    window.location.href = '/mita-state-self-assessment-tool/index.html';
+    // Extract the path from the current URL
+    const path = window.location.pathname;
+    // Get the base path (everything up to the last segment)
+    const segments = path.split('/').filter(Boolean);
+    
+    // Handle different deployment scenarios
+    let basePath = '';
+    
+    if (segments.length > 0) {
+      // First segment is always the repo name
+      if (segments[0] === 'mita-state-self-assessment-tool') {
+        basePath = '/mita-state-self-assessment-tool';
+        
+        // Check if we're in a branch subdirectory
+        if (segments.length > 1) {
+          basePath += '/' + segments[1];
+        }
+      }
+    }
+    
+    // Redirect to the index.html with the correct base path
+    window.location.href = basePath + '/index.html';
   </script>
 </head>
 <body>
