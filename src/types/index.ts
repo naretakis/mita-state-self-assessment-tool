@@ -1,8 +1,4 @@
-// Assessment data types
-export type AssessmentStatus = 
-  | 'not-started'
-  | 'in-progress' 
-  | 'completed';
+// Core data models based on data_models.md
 
 export interface Assessment {
   id: string;
@@ -13,6 +9,11 @@ export interface Assessment {
   capabilities: CapabilityAssessment[];
   metadata: AssessmentMetadata;
 }
+
+export type AssessmentStatus = 
+  | 'not-started'
+  | 'in-progress' 
+  | 'completed';
 
 export interface AssessmentMetadata {
   version: string;
@@ -33,7 +34,7 @@ export interface CapabilityAssessment {
     outcome: DimensionAssessment;
     role: DimensionAssessment;
     businessProcess: DimensionAssessment;
-    information: DimensionAssessment;
+    informationData: DimensionAssessment;
     technology: DimensionAssessment;
   };
 }
@@ -48,72 +49,6 @@ export interface DimensionAssessment {
   lastUpdated: string;
 }
 
-export interface AssessmentSummary {
-  id: string;
-  stateName: string;
-  createdAt: string;
-  updatedAt: string;
-  status: AssessmentStatus;
-  completionPercentage: number;
-}
-
-// For backward compatibility
-export interface AssessmentData {
-  assessmentId: string;
-  stateName: string;
-  createdAt: string;
-  updatedAt: string;
-  status: 'in-progress' | 'completed';
-  capabilities: Record<string, OldCapabilityAssessment>;
-}
-
-// Old interfaces for backward compatibility
-export interface OldCapabilityAssessment {
-  id: string;
-  name: string;
-  dimensions: {
-    outcome: OldDimensionAssessment;
-    role: OldDimensionAssessment;
-    businessProcess: OldDimensionAssessment;
-    information: OldDimensionAssessment;
-    technology: OldDimensionAssessment;
-  };
-}
-
-export interface OldDimensionAssessment {
-  maturityLevel: number;
-  notes: string;
-  evidence: string;
-}
-
-// MITA Framework types
-export interface Capability {
-  id: string;
-  name: string;
-  description: string;
-  domain: string;
-  area: string;
-  dimensions: {
-    outcome: CapabilityDimension;
-    role: CapabilityDimension;
-    businessProcess: CapabilityDimension;
-    information: CapabilityDimension;
-    technology: CapabilityDimension;
-  };
-}
-
-export interface CapabilityDimension {
-  description: string;
-  levels: MaturityLevel[];
-}
-
-export interface MaturityLevel {
-  level: number;
-  description: string;
-  criteria: string[];
-}
-
-// New capability definition model
 export interface CapabilityDefinition {
   id: string;
   name: string;
@@ -126,7 +61,7 @@ export interface CapabilityDefinition {
     outcome: DimensionDefinition;
     role: DimensionDefinition;
     businessProcess: DimensionDefinition;
-    information: DimensionDefinition;
+    informationData: DimensionDefinition;
     technology: DimensionDefinition;
   };
 }
@@ -141,4 +76,25 @@ export interface DimensionDefinition {
     level4: string;
     level5: string;
   };
+}
+
+export interface AssessmentSummary {
+  id: string;
+  stateName: string;
+  createdAt: string;
+  updatedAt: string;
+  status: AssessmentStatus;
+  completionPercentage: number;
+}
+
+// Front matter metadata interface
+export interface CapabilityFrontMatter {
+  capabilityDomain: string;
+  capabilityArea: string;
+  version: string;
+  capabilityAreaCreated: string;
+  capabilityAreaLastUpdated: string;
+  assessmentCreated?: string;
+  assessmentUpdated?: string;
+  assessmentStatus?: AssessmentStatus;
 }
