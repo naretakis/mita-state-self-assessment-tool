@@ -98,3 +98,31 @@ export interface CapabilityFrontMatter {
   assessmentUpdated?: string;
   assessmentStatus?: AssessmentStatus;
 }
+
+// Legacy data structure for migration
+export interface AssessmentData {
+  assessmentId: string;
+  stateName: string;
+  createdAt: string;
+  updatedAt: string;
+  status: string;
+  capabilities: Record<string, OldCapabilityAssessment>;
+}
+
+export interface OldCapabilityAssessment {
+  id: string;
+  name: string;
+  dimensions: {
+    outcome: OldDimensionAssessment;
+    role: OldDimensionAssessment;
+    businessProcess: OldDimensionAssessment;
+    information: OldDimensionAssessment;
+    technology: OldDimensionAssessment;
+  };
+}
+
+export interface OldDimensionAssessment {
+  maturityLevel: number;
+  evidence: string;
+  notes: string;
+}
