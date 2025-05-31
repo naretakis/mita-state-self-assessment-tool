@@ -13,8 +13,8 @@ const nextConfig = {
   trailingSlash: true,
   
   // Add assetPrefix for GitHub Pages
-  // Use relative paths for assets to work with different base paths
-  assetPrefix: process.env.NODE_ENV === 'production' ? '.' : '',
+  // This ensures assets are loaded correctly in all branch deployments
+  assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
 }
 
 module.exports = nextConfig

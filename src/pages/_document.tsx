@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* Add base tag to help with relative paths */}
+        {/* Add a base tag to ensure all relative URLs are resolved correctly */}
         <base href="/" />
       </Head>
       <body>

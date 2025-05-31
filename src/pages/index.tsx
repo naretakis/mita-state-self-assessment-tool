@@ -4,14 +4,13 @@ import styles from '../styles/Home.module.css';
 
 export default function Home() {
   const router = useRouter();
-  const basePath = router.basePath || '';
   
   return (
     <div className={styles.container}>
       <Head>
         <title>MITA State Self-Assessment Tool</title>
         <meta name="description" content="MITA State Self-Assessment Tool" />
-        <link rel="icon" href={`${basePath}/favicon.ico`} />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
