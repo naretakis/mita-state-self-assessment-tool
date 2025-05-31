@@ -16,7 +16,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          HELLO WORLD
+          Welcome to the MITA State Self-Assessment Tool
         </h1>
 
         <p className={styles.description}>
