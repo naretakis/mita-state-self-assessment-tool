@@ -50,8 +50,13 @@ jobs:
           echo "Configuring for branch: ${{ env.BRANCH_NAME }}"
           sed -i "s|basePath: '',|basePath: '/${{ env.BRANCH_NAME }}',|g" next.config.js
 
+      - name: Set NODE_ENV to production
+        run: echo "NODE_ENV=production" >> $GITHUB_ENV
+
       - name: Build
         run: npm run build
+        env:
+          NODE_ENV: production
 
       - name: Move branch build to correct directory
         if: ${{ env.BRANCH_NAME != 'main' }}
