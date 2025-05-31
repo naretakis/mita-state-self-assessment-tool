@@ -92,38 +92,50 @@ jobs:
             <meta charset="utf-8">
             <title>Redirecting...</title>
             <script>
-              // Extract the path from the current URL
-              const path = window.location.pathname;
-              const repoName = 'mita-state-self-assessment-tool';
-              
-              // Check if we're already at an index.html page to prevent redirect loops
-              if (path.includes('index.html')) {
-                console.log('Already at index.html, not redirecting');
-                // Don't redirect if we're already at an index.html page
-                document.body.innerHTML = '<p>Page not found. Please go to the <a href="/">home page</a>.</p>';
-              } else {
-                // Find the repository name in the path
-                const repoIndex = path.indexOf(repoName);
+              (function() {
+                const path = window.location.pathname;
+                const repoName = 'mita-state-self-assessment-tool';
+                const redirectKey = 'mita_redirect_path';
+                const redirectCount = parseInt(sessionStorage.getItem('mita_redirect_count') || '0');
                 
+                // Stop after 3 redirects to prevent infinite loops
+                if (redirectCount > 3) {
+                  document.body.innerHTML = '<p>Too many redirects. Please go to the <a href="/">home page</a>.</p>';
+                  return;
+                }
+                
+                // Check if we've already tried to redirect this path
+                if (sessionStorage.getItem(redirectKey) === path) {
+                  document.body.innerHTML = '<p>Page not found. Please go to the <a href="/">home page</a>.</p>';
+                  return;
+                }
+                
+                // Simple check for root paths
+                if (path === `/${repoName}/` || path === `/${repoName}` || path.endsWith('index.html')) {
+                  document.body.innerHTML = '<p>Page not found. Please go to the <a href="/">home page</a>.</p>';
+                  return;
+                }
+                
+                const repoIndex = path.indexOf(repoName);
                 if (repoIndex !== -1) {
-                  // Get everything after the repo name
                   const pathAfterRepo = path.substring(repoIndex + repoName.length);
-                  
-                  // Check if this is a branch path
                   const segments = pathAfterRepo.split('/').filter(Boolean);
+                  
+                  // Track this redirect attempt
+                  sessionStorage.setItem(redirectKey, path);
+                  sessionStorage.setItem('mita_redirect_count', (redirectCount + 1).toString());
+                  
                   if (segments.length > 0) {
-                    const branchName = segments[0];
-                    // Redirect to the branch index
-                    window.location.href = `/${repoName}/${branchName}/`;
+                    // Branch deployment
+                    window.location.href = `/${repoName}/${segments[0]}/`;
                   } else {
-                    // Redirect to main index
+                    // Main deployment
                     window.location.href = `/${repoName}/`;
                   }
                 } else {
-                  // Fallback to root
                   window.location.href = '/';
                 }
-              }
+              })();
             </script>
           </head>
           <body>
