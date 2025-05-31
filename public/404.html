@@ -20,15 +20,20 @@
       if (segments.length > 0) {
         const branchName = segments[0];
         // Redirect to the branch index
-        window.location.href = `/${repoName}/${branchName}/`;
+        window.location.href = `/${repoName}/${branchName}/index.html`;
       } else {
         // Redirect to main index
-        window.location.href = `/${repoName}/`;
+        window.location.href = `/${repoName}/index.html`;
       }
     } else {
       // Fallback to root
       window.location.href = '/';
     }
+
+    // Log for debugging
+    console.log('404 redirect script executed');
+    console.log('Path:', path);
+    console.log('Segments:', path.split('/').filter(Boolean));
   </script>
 </head>
 <body>

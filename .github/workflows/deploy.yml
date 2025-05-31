@@ -53,10 +53,34 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Create 404.html for branch subdirectories
+      - name: Debug output directory structure before moving
+        run: |
+          echo "Output directory structure before moving:"
+          ls -la out/
+
+      - name: Move branch build to correct directory
         if: ${{ env.BRANCH_NAME != 'main' }}
         run: |
+          # Create branch directory
           mkdir -p out/${{ env.BRANCH_NAME }}
+          
+          # Copy all files from out/ to out/branch-name/
+          # Exclude the branch directory itself to avoid recursion
+          find out -mindepth 1 -maxdepth 1 -not -name "${{ env.BRANCH_NAME }}" -exec cp -r {} out/${{ env.BRANCH_NAME }}/ \;
+          
+          # Remove the original files that were copied (except the branch directory)
+          find out -mindepth 1 -maxdepth 1 -not -name "${{ env.BRANCH_NAME }}" -exec rm -rf {} \;
+
+      - name: Debug output directory structure after moving
+        if: ${{ env.BRANCH_NAME != 'main' }}
+        run: |
+          echo "Output directory structure after moving:"
+          ls -la out/
+          echo "Branch directory structure:"
+          ls -la out/${{ env.BRANCH_NAME }}/
+
+      - name: Create 404.html for redirects
+        run: |
           cat > out/404.html << 'EOL'
           <!DOCTYPE html>
           <html>
@@ -80,10 +104,10 @@ jobs:
                 if (segments.length > 0) {
                   const branchName = segments[0];
                   // Redirect to the branch index
-                  window.location.href = `/${repoName}/${branchName}/`;
+                  window.location.href = `/${repoName}/${branchName}/index.html`;
                 } else {
                   // Redirect to main index
-                  window.location.href = `/${repoName}/`;
+                  window.location.href = `/${repoName}/index.html`;
                 }
               } else {
                 // Fallback to root
