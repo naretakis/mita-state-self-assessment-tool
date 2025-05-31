@@ -8,32 +8,34 @@
     const path = window.location.pathname;
     const repoName = 'mita-state-self-assessment-tool';
     
-    // Find the repository name in the path
-    const repoIndex = path.indexOf(repoName);
-    
-    if (repoIndex !== -1) {
-      // Get everything after the repo name
-      const pathAfterRepo = path.substring(repoIndex + repoName.length);
-      
-      // Check if this is a branch path
-      const segments = pathAfterRepo.split('/').filter(Boolean);
-      if (segments.length > 0) {
-        const branchName = segments[0];
-        // Redirect to the branch index
-        window.location.href = `/${repoName}/${branchName}/index.html`;
-      } else {
-        // Redirect to main index
-        window.location.href = `/${repoName}/index.html`;
-      }
+    // Check if we're already at an index.html page to prevent redirect loops
+    if (path.endsWith('index.html')) {
+      console.log('Already at index.html, not redirecting');
+      // Don't redirect if we're already at an index.html page
+      document.body.innerHTML = '<p>Page not found. Please go to the <a href="/">home page</a>.</p>';
     } else {
-      // Fallback to root
-      window.location.href = '/';
+      // Find the repository name in the path
+      const repoIndex = path.indexOf(repoName);
+      
+      if (repoIndex !== -1) {
+        // Get everything after the repo name
+        const pathAfterRepo = path.substring(repoIndex + repoName.length);
+        
+        // Check if this is a branch path
+        const segments = pathAfterRepo.split('/').filter(Boolean);
+        if (segments.length > 0) {
+          const branchName = segments[0];
+          // Redirect to the branch index
+          window.location.href = `/${repoName}/${branchName}/`;
+        } else {
+          // Redirect to main index
+          window.location.href = `/${repoName}/`;
+        }
+      } else {
+        // Fallback to root
+        window.location.href = '/';
+      }
     }
-
-    // Log for debugging
-    console.log('404 redirect script executed');
-    console.log('Path:', path);
-    console.log('Segments:', path.split('/').filter(Boolean));
   </script>
 </head>
 <body>
