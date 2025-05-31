@@ -9,8 +9,11 @@ const nextConfig = {
   // This allows us to modify the basePath for different environments
   // The GitHub Action will modify this for non-main branches
   
-  // Disable trailing slashes for GitHub Pages compatibility
+  // Enable trailing slashes for GitHub Pages compatibility
   trailingSlash: true,
+  
+  // Add assetPrefix for GitHub Pages
+  assetPrefix: process.env.NODE_ENV === 'production' ? '.' : '',
 }
 
 module.exports = nextConfig

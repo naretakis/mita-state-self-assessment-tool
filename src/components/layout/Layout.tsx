@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import styles from './Layout.module.css';
 
 interface LayoutProps {
@@ -11,12 +12,15 @@ const Layout: React.FC<LayoutProps> = ({
   children, 
   title = 'MITA State Self-Assessment Tool' 
 }) => {
+  const router = useRouter();
+  const basePath = router.basePath || '';
+  
   return (
     <div className={styles.container}>
       <Head>
         <title>{title}</title>
         <meta name="description" content="MITA State Self-Assessment Tool" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
 
       <header className={styles.header}>

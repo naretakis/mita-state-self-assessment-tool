@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Redirecting...</title>
-  <script>
-    // Extract the path from the current URL
+/**
+ * Utility function to get the correct base path for assets
+ * This is important for multi-branch deployments where the base path changes
+ */
+export function getBasePath(): string {
+  // In the browser
+  if (typeof window !== 'undefined') {
     const path = window.location.pathname;
     const repoName = 'mita-state-self-assessment-tool';
     
@@ -19,19 +19,14 @@
       const segments = pathAfterRepo.split('/').filter(Boolean);
       if (segments.length > 0) {
         const branchName = segments[0];
-        // Redirect to the branch index
-        window.location.href = `/${repoName}/${branchName}/`;
-      } else {
-        // Redirect to main index
-        window.location.href = `/${repoName}/`;
+        // Return the branch-specific base path
+        return `/${repoName}/${branchName}`;
       }
-    } else {
-      // Fallback to root
-      window.location.href = '/';
+      // Return the main branch base path
+      return `/${repoName}`;
     }
-  </script>
-</head>
-<body>
-  <p>Redirecting to the application...</p>
-</body>
-</html>
+  }
+  
+  // Default to empty string for local development
+  return '';
+}

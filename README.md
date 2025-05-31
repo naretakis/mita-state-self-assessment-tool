@@ -44,11 +44,12 @@ For detailed project documentation, including architecture, workflows, and devel
 
 ## Deployment to GitHub Pages
 
-This project is configured for automatic deployment to GitHub Pages using GitHub Actions:
+This project is configured for automatic multi-branch deployment to GitHub Pages using GitHub Actions:
 
 1. **Setup GitHub Actions Workflow**:
    - The workflow file is located at `.github/workflows/deploy.yml`
    - It builds the Next.js app and deploys to the `gh-pages` branch
+   - Supports deployment from `main`, `staging`, and feature branches
 
 2. **Configure GitHub Pages**:
    - Go to your repository's Settings > Pages
@@ -56,13 +57,22 @@ This project is configured for automatic deployment to GitHub Pages using GitHub
    - Select the `gh-pages` branch and root (/) folder
    - Click Save
 
-3. **First Deployment**:
-   - Push changes to the `main` branch to trigger the workflow
-   - The workflow will create the `gh-pages` branch automatically
-   - GitHub Pages will serve your site from this branch
+3. **Multi-Branch Deployment Structure**:
+   - `main` branch: deployed to the root path (`/`)
+   - `staging` branch: deployed to `/staging` path
+   - Feature branches: deployed to `/<branch-name>` path
+   - Each branch deployment is isolated with its own base path
 
-4. **Access Your Deployed Site**:
-   - Your site will be available at `https://[username].github.io/mita-state-self-assessment-tool/`
+4. **Access Your Deployed Sites**:
+   - Main: `https://[username].github.io/mita-state-self-assessment-tool/`
+   - Staging: `https://[username].github.io/mita-state-self-assessment-tool/staging/`
+   - Feature branch: `https://[username].github.io/mita-state-self-assessment-tool/<branch-name>/`
+
+5. **Setting Up Multi-Branch Deployment**:
+   - The project is already configured for multi-branch deployment
+   - The workflow automatically detects the branch and configures the correct base path
+   - A custom 404.html page handles redirects between different branch deployments
+   - Asset paths are dynamically adjusted using Next.js's `basePath` configuration
 
 ## Project Structure
 

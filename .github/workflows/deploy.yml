@@ -40,25 +40,62 @@ jobs:
             }
           }' > .eslintrc.json
 
-      - name: Build
-        run: npm run build && npm run export
-        
-      - name: Configure base path
+      - name: Set branch name
+        id: branch_name
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+
+      - name: Configure base path for non-main branches
+        if: ${{ env.BRANCH_NAME != 'main' }}
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            # Main branch - deploy to root
-            echo "No base path adjustment needed for main branch"
-          else
-            # For other branches, create a subfolder with branch name
-            BRANCH_NAME=${GITHUB_REF#refs/heads/}
-            echo "Configuring for branch: $BRANCH_NAME"
-            # For Next.js, we need to adjust the basePath in next.config.js
-            # This is a simple sed replacement - you might need to adjust based on your config
-            sed -i "s|basePath: '',|basePath: '/$BRANCH_NAME',|g" next.config.js
-            npm run build && npm run export
-            mkdir -p out/$BRANCH_NAME
-            find out -maxdepth 1 -not -path "out/$BRANCH_NAME" -not -path "out" -exec cp -r {} out/$BRANCH_NAME/ \;
-          fi
+          echo "Configuring for branch: ${{ env.BRANCH_NAME }}"
+          sed -i "s|basePath: '',|basePath: '/${{ env.BRANCH_NAME }}',|g" next.config.js
+
+      - name: Build
+        run: npm run build
+
+      - name: Create 404.html for branch subdirectories
+        if: ${{ env.BRANCH_NAME != 'main' }}
+        run: |
+          mkdir -p out/${{ env.BRANCH_NAME }}
+          cat > out/404.html << 'EOL'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>Redirecting...</title>
+            <script>
+              // Extract the path from the current URL
+              const path = window.location.pathname;
+              const repoName = 'mita-state-self-assessment-tool';
+              
+              // Find the repository name in the path
+              const repoIndex = path.indexOf(repoName);
+              
+              if (repoIndex !== -1) {
+                // Get everything after the repo name
+                const pathAfterRepo = path.substring(repoIndex + repoName.length);
+                
+                // Check if this is a branch path
+                const segments = pathAfterRepo.split('/').filter(Boolean);
+                if (segments.length > 0) {
+                  const branchName = segments[0];
+                  // Redirect to the branch index
+                  window.location.href = `/${repoName}/${branchName}/`;
+                } else {
+                  // Redirect to main index
+                  window.location.href = `/${repoName}/`;
+                }
+              } else {
+                // Fallback to root
+                window.location.href = '/';
+              }
+            </script>
+          </head>
+          <body>
+            <p>Redirecting to the application...</p>
+          </body>
+          </html>
+          EOL
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
@@ -72,9 +109,8 @@ jobs:
             
       - name: Output Deployment URL
         run: |
-          BRANCH_NAME=${GITHUB_REF#refs/heads/}
-          if [[ "$BRANCH_NAME" == "main" ]]; then
+          if [[ "${{ env.BRANCH_NAME }}" == "main" ]]; then
             echo "::notice::🚀 Deployed to: https://$(echo ${{ github.repository_owner }}).github.io/$(echo ${{ github.event.repository.name }})"
           else
-            echo "::notice::🚀 Deployed to: https://$(echo ${{ github.repository_owner }}).github.io/$(echo ${{ github.event.repository.name }})/$BRANCH_NAME"
+            echo "::notice::🚀 Deployed to: https://$(echo ${{ github.repository_owner }}).github.io/$(echo ${{ github.event.repository.name }})/${{ env.BRANCH_NAME }}"
           fi
