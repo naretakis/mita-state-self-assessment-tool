@@ -85,9 +85,9 @@ A workflow file (`.github/workflows/deploy.yml`) handles automated deployment:
 
 - **Triggers**: Runs on pushes to `main`, `dev`, and `test` branches
 - **Multi-branch deployment**: Supports three environments simultaneously:
-  - Production: `https://[username].github.io/mita-state-self-assessment-tool/`
-  - Development: `https://[username].github.io/mita-state-self-assessment-tool/dev/`
-  - Testing: `https://[username].github.io/mita-state-self-assessment-tool/test/`
+  - Production (`main` branch): `https://[username].github.io/mita-state-self-assessment-tool/`
+  - Development (`dev` branch): `https://[username].github.io/mita-state-self-assessment-tool/dev/`
+  - Testing (`test` branch): `https://[username].github.io/mita-state-self-assessment-tool/test/`
 - **Build process**: Builds the Next.js app with static export
 - **Dependency caching**: Implements npm caching for faster builds
 

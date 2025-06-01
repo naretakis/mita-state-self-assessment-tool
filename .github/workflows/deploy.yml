@@ -11,9 +11,9 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment
+# Allow one concurrent deployment per branch
 concurrency:
-  group: "pages-${{ github.ref }}"
+  group: "pages-${{ github.ref_name }}"
   cancel-in-progress: true
 
 jobs:
@@ -39,16 +39,41 @@ jobs:
           
           if [ "$BRANCH_NAME" = "main" ]; then
             echo "NEXT_PUBLIC_BASE_PATH=/mita-state-self-assessment-tool" >> $GITHUB_ENV
+            echo "OUTPUT_DIR=out" >> $GITHUB_ENV
           elif [ "$BRANCH_NAME" = "dev" ]; then
             echo "NEXT_PUBLIC_BASE_PATH=/mita-state-self-assessment-tool/dev" >> $GITHUB_ENV
+            echo "OUTPUT_DIR=out/dev" >> $GITHUB_ENV
+            # Create dev directory
+            mkdir -p out/dev
           elif [ "$BRANCH_NAME" = "test" ]; then
             echo "NEXT_PUBLIC_BASE_PATH=/mita-state-self-assessment-tool/test" >> $GITHUB_ENV
+            echo "OUTPUT_DIR=out/test" >> $GITHUB_ENV
+            # Create test directory
+            mkdir -p out/test
           fi
 
       - name: Build and Export
         run: |
           npm run build
-          touch out/.nojekyll
+          
+          # Handle branch-specific output
+          if [ "$BRANCH_NAME" = "main" ]; then
+            touch out/.nojekyll
+          elif [ "$BRANCH_NAME" = "dev" ]; then
+            # Move files to dev subdirectory
+            cp -r out/* out/dev/
+            # Remove files from root that were copied to dev
+            find out -maxdepth 1 -type f -exec rm {} \;
+            find out -maxdepth 1 -type d -not -name dev -not -name test -not -name "." -not -name ".." -exec rm -rf {} \;
+            touch out/.nojekyll
+          elif [ "$BRANCH_NAME" = "test" ]; then
+            # Move files to test subdirectory
+            cp -r out/* out/test/
+            # Remove files from root that were copied to test
+            find out -maxdepth 1 -type f -exec rm {} \;
+            find out -maxdepth 1 -type d -not -name dev -not -name test -not -name "." -not -name ".." -exec rm -rf {} \;
+            touch out/.nojekyll
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
