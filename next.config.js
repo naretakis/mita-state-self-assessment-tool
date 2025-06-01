@@ -12,12 +12,12 @@ const nextConfig = {
     minimumCacheTTL: 60,
   },
   
-  // Base path configuration
-  basePath: process.env.NODE_ENV === 'production' ? '/mita-state-self-assessment-tool' : '',
+  // Base path configuration - use environment variable for multi-branch deployment
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || (process.env.NODE_ENV === 'production' ? '/mita-state-self-assessment-tool' : ''),
   // Enable trailing slashes for GitHub Pages compatibility
   trailingSlash: true,
-  // Add assetPrefix for GitHub Pages
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/mita-state-self-assessment-tool' : '',
+  // Add assetPrefix for GitHub Pages - use environment variable for multi-branch deployment
+  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || (process.env.NODE_ENV === 'production' ? '/mita-state-self-assessment-tool' : ''),
   
   // Configure webpack for optimizations
   webpack: (config, { dev, isServer }) => {

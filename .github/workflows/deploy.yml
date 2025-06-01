@@ -3,188 +3,75 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main
-      - staging
-      - dev
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches:
-      - main
-      - staging
+      - '**'
+      - '!gh-pages'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages-${{ github.ref }}"
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pages: write
-      id-token: write
-    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
 
+      - name: Get branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v7
+
+      - name: Set deployment path
+        id: set-path
+        run: |
+          BRANCH_NAME="${{ steps.branch-name.outputs.current_branch }}"
+          if [[ "$BRANCH_NAME" == "main" ]]; then
+            echo "DEPLOY_PATH=" >> $GITHUB_ENV
+            echo "BASE_PATH=/mita-state-self-assessment-tool" >> $GITHUB_ENV
+          else
+            # Convert branch name to URL-friendly format
+            SAFE_BRANCH=$(echo "$BRANCH_NAME" | sed 's/\//-/g')
+            echo "DEPLOY_PATH=$SAFE_BRANCH" >> $GITHUB_ENV
+            echo "BASE_PATH=/mita-state-self-assessment-tool/$SAFE_BRANCH" >> $GITHUB_ENV
+          fi
+
       - name: Install dependencies
         run: npm ci
-        
-      - name: Create ESLint config to fix build issues
-        run: |
-          echo '{
-            "extends": "next/core-web-vitals",
-            "rules": {
-              "@typescript-eslint/no-unused-vars": "off",
-              "import/no-anonymous-default-export": "off",
-              "@typescript-eslint/no-unsafe-declaration-merging": "off"
-            }
-          }' > .eslintrc.json
 
-      - name: Set branch name
-        id: branch_name
-        run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            echo "BRANCH_NAME=pr-${{ github.event.pull_request.number }}" >> $GITHUB_ENV
-          else
-            echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-          fi
-
-      - name: Configure Next.js for deployment
-        run: |
-          # Create a temporary config file
-          cat > next.config.deploy.js << 'EOL'
-          const originalConfig = require('./next.config.js');
-          
-          // Determine base path based on branch
-          const branchName = process.env.BRANCH_NAME;
-          const isMain = branchName === 'main';
-          const basePath = isMain 
-            ? '/mita-state-self-assessment-tool' 
-            : '/mita-state-self-assessment-tool/' + branchName;
-          
-          // Merge with original config
-          module.exports = {
-            ...originalConfig,
-            basePath,
-            assetPrefix: basePath,
-          };
-          EOL
-          
-          # Replace the original config
-          mv next.config.deploy.js next.config.js
-
-      - name: Build
-        run: |
-          # Set NODE_ENV for the build
-          export NODE_ENV=production
-          
-          # Run the build command with --no-lint to skip linting
-          npx next build --no-lint
-          
-          # For Next.js 13+, we may need to run export if out directory isn't created
-          if [ ! -d "out" ]; then
-            echo "Running export command to generate static files"
-            npx next export
-          fi
-          
-          # Create out directory if it still doesn't exist
-          if [ ! -d "out" ]; then
-            echo "Creating out directory manually"
-            mkdir -p out
-            # Copy .next/static to out/_next/static
-            if [ -d ".next/static" ]; then
-              mkdir -p out/_next
-              cp -r .next/static out/_next/
-            fi
-          fi
+      - name: Build with Next.js
         env:
-          NODE_ENV: production
-          BRANCH_NAME: ${{ env.BRANCH_NAME }}
-
-      - name: Create deployment metadata
+          NEXT_PUBLIC_BASE_PATH: ${{ env.BASE_PATH }}
         run: |
-          # Ensure out directory exists
-          mkdir -p out
+          npm run build
           
-          # Create a file with deployment info
-          cat > out/deployment-info.json << EOL
-          {
-            "branch": "${{ env.BRANCH_NAME }}",
-            "commit": "${{ github.sha }}",
-            "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
-            "repository": "${{ github.repository }}"
-          }
-          EOL
-
-      - name: Create branch list file
-        run: |
-          # Ensure directories exist
-          mkdir -p out/.github
-          
-          cat > out/.github/branches.json << EOL
-          {
-            "updated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
-            "branches": [
-              {"name": "${{ env.BRANCH_NAME }}", "commit": "${{ github.sha }}", "updated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"}
-            ]
-          }
-          EOL
-
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          folder: out
-          branch: gh-pages
-          target-folder: ${{ env.BRANCH_NAME }}
-          clean: true
-          clean-exclude: |
-            .github/
-            */
-          commit-message: "Deploy ${{ env.BRANCH_NAME }} branch [skip ci]"
+          path: ./out
+          name: github-pages-${{ env.DEPLOY_PATH || 'main' }}
 
-      - name: Update branch list
-        run: |
-          # Clone gh-pages branch to get current branch list
-          git clone --depth 1 --single-branch --branch gh-pages https://github.com/${{ github.repository }}.git gh-pages-temp
-          
-          # Create or update branches.json
-          mkdir -p gh-pages-temp/.github
-          if [ -f "gh-pages-temp/.github/branches.json" ]; then
-            # Update existing file
-            jq --arg branch "${{ env.BRANCH_NAME }}" \
-               --arg commit "${{ github.sha }}" \
-               --arg updated "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
-               '.updated = $updated | .branches = (.branches | map(if .name == $branch then {name: $branch, commit: $commit, updated: $updated} else . end) | if any(.name == $branch) then . else . + [{name: $branch, commit: $commit, updated: $updated}] end)' \
-               gh-pages-temp/.github/branches.json > branches.json.new
-            mv branches.json.new gh-pages-temp/.github/branches.json
-          else
-            # Create new file
-            cat > gh-pages-temp/.github/branches.json << EOL
-            {
-              "updated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
-              "branches": [
-                {"name": "${{ env.BRANCH_NAME }}", "commit": "${{ github.sha }}", "updated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"}
-              ]
-            }
-            EOL
-          fi
-          
-          # Deploy updated branch list
-          cd gh-pages-temp
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add .github/branches.json
-          git commit -m "Update branch list [skip ci]" || echo "No changes to commit"
-          git push https://${{ github.actor }}:${{ github.token }}@github.com/${{ github.repository }}.git gh-pages
-
-      - name: Output Deployment URL
-        run: |
-          if [[ "${{ env.BRANCH_NAME }}" == "main" ]]; then
-            echo "::notice::🚀 Deployed to: https://${{ github.repository_owner }}.github.io/mita-state-self-assessment-tool/"
-          else
-            echo "::notice::🚀 Deployed to: https://${{ github.repository_owner }}.github.io/mita-state-self-assessment-tool/${{ env.BRANCH_NAME }}/"
-          fi
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages-${{ env.DEPLOY_PATH || 'main' }}
