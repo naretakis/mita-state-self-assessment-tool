@@ -81,19 +81,35 @@ The application is deployed to GitHub Pages using GitHub Actions:
 
 ### GitHub Actions Workflow
 
-A workflow file (`.github/workflows/deploy.yml`) handles automated deployment:
+A workflow file (`.github/workflows/deploy.yml`) handles automated deployment with multi-branch support:
 
 - **Triggers**: Runs on pushes to `main`, `dev`, and `test` branches
 - **Multi-branch deployment**: Supports three environments simultaneously:
   - Production (`main` branch): `https://[username].github.io/mita-state-self-assessment-tool/`
   - Development (`dev` branch): `https://[username].github.io/mita-state-self-assessment-tool/dev/`
   - Testing (`test` branch): `https://[username].github.io/mita-state-self-assessment-tool/test/`
-- **Build process**: Builds the Next.js app with static export
-- **Dependency caching**: Implements npm caching for faster builds
+- **Content preservation**: Downloads existing site content before deployment to preserve all environments
+- **Branch-specific builds**: Each branch builds with the correct base path configuration
+- **Single deployment target**: All branches deploy to the same GitHub Pages site but in different directories
 
-To enable GitHub Pages deployment:
-1. Go to repository Settings > Pages
-2. Set the source to "GitHub Actions"
+### Setup Instructions
+
+1. **Enable GitHub Pages**:
+   - Go to repository Settings > Pages
+   - Set the source to "GitHub Actions"
+
+2. **Configure Next.js**:
+   - The `next.config.js` file is already configured to use the correct base paths
+   - Environment variables set in the workflow control the base path for each branch
+
+3. **Branch Management**:
+   - Push to `main` for production updates
+   - Push to `dev` for development environment updates
+   - Push to `test` for testing environment updates
+
+4. **Accessing Deployments**:
+   - Each environment is accessible at its respective URL
+   - The workflow preserves all environments during each deployment
 
 ## MITA Framework Structure
 
