@@ -130,6 +130,9 @@ jobs:
                 const redirectKey = 'mita_redirect_path';
                 const redirectCount = parseInt(sessionStorage.getItem('mita_redirect_count') || '0');
                 
+                // For debugging
+                console.log('Current path:', path);
+                
                 // Stop after 3 redirects to prevent infinite loops
                 if (redirectCount > 3) {
                   document.body.innerHTML = '<p>Too many redirects. Please go to the <a href="/">home page</a>.</p>';
@@ -142,9 +145,10 @@ jobs:
                   return;
                 }
                 
-                // Simple check for root paths
-                if (path === `/${repoName}/` || path === `/${repoName}` || path.endsWith('index.html')) {
-                  document.body.innerHTML = '<p>Page not found. Please go to the <a href="/">home page</a>.</p>';
+                // Check for exact matches to root paths that should load the index
+                if (path === `/${repoName}` || path === `/${repoName}/`) {
+                  console.log('Main branch root path detected');
+                  window.location.href = `/${repoName}/index.html`;
                   return;
                 }
                 
@@ -153,12 +157,21 @@ jobs:
                   const pathAfterRepo = path.substring(repoIndex + repoName.length);
                   const segments = pathAfterRepo.split('/').filter(Boolean);
                   
+                  console.log('Path segments after repo:', segments);
+                  
                   // Track this redirect attempt
                   sessionStorage.setItem(redirectKey, path);
                   sessionStorage.setItem('mita_redirect_count', (redirectCount + 1).toString());
                   
                   if (segments.length > 0) {
-                    // Branch deployment
+                    // Check if this is a branch root path
+                    if (segments.length === 1 && (pathAfterRepo === `/${segments[0]}` || pathAfterRepo === `/${segments[0]}/`)) {
+                      console.log('Branch root path detected:', segments[0]);
+                      window.location.href = `/${repoName}/${segments[0]}/index.html`;
+                      return;
+                    }
+                    
+                    // Branch deployment - redirect to the branch path
                     window.location.href = `/${repoName}/${segments[0]}/`;
                   } else {
                     // Main deployment

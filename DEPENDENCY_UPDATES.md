@@ -2,42 +2,55 @@
 
 ## Recent Updates
 
-The following dependencies were updated to fix npm warnings and errors during CI builds:
+```
 
-### ESLint Updates
-- Updated `eslint` from v8.57.1 to v9.28.0
-- Added `@eslint/config-array` v0.20.0 to replace deprecated `@humanwhocodes/config-array`
-- Added `@eslint/object-schema` v2.1.6 to replace deprecated `@humanwhocodes/object-schema`
+## Notable Dependencies
 
-### Other Dependency Fixes
-- Added override for `domexception` to use `@xmldom/xmldom` instead
-- Added override for `abab` to use `base64-js` instead
+### CMS Design System
+The project uses the official CMS Design System:
+- `@cmsgov/design-system` v12.3.0 - Provides UI components that follow CMS design guidelines
 
-## Package Overrides
+### PDF Generation
+For report generation and exports:
+- `jspdf` v3.0.1 - Used for generating PDF reports
+- `jspdf-autotable` v5.0.2 - Extension for creating tables in PDF exports
 
-The following overrides were added to package.json to ensure transitive dependencies use non-deprecated versions:
+### Data Storage
+- `idb` v7.1.1 - IndexedDB wrapper for client-side storage of assessment data
+
+### Markdown Processing
+- `react-markdown` v8.0.7 - For rendering markdown content
+- `remark-gfm` v3.0.1 - GitHub Flavored Markdown support
+- `gray-matter` v4.0.3 - For parsing frontmatter in markdown files
+
+### Visualization
+- `chart.js` v4.4.0 and `react-chartjs-2` v5.2.0 - For creating assessment visualizations and dashboards
+
+## Node Version Requirement
+
+The project requires Node.js 18.0.0 or higher as specified in the engines field:
 
 ```json
-"overrides": {
-  "glob": "^10.3.10",
-  "rimraf": "^5.0.5",
-  "inflight": "lru-cache@^10.2.0",
-  "domexception": "npm:@xmldom/xmldom@^0.8.10",
-  "abab": "npm:base64-js@^1.5.1",
-  "@humanwhocodes/object-schema": "@eslint/object-schema@^2.1.6",
-  "@humanwhocodes/config-array": "@eslint/config-array@^0.20.0",
-  "eslint": "^9.28.0"
+"engines": {
+  "node": ">=18.0.0"
 }
 ```
 
-## Warnings Fixed
+## Browser Compatibility
 
-These updates resolve the following npm warnings that were appearing during CI builds:
+The project uses different browser targets for production and development:
 
+### Production
 ```
-npm warn deprecated domexception@4.0.0: Use your platform's native DOMException instead
-npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
-npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
-npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
-npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+">0.2%",
+"not dead",
+"not op_mini all"
+```
+
+### Development
+```
+"last 2 chrome version",
+"last 2 firefox version",
+"last 2 safari version",
+"last 2 edge version"
 ```
