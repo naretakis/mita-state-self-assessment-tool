@@ -74,11 +74,9 @@ jobs:
           path: ./out
 
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
+    # Remove the environment block that's causing the approval requirement
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
