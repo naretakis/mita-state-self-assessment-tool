@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -43,3 +43,4 @@ jobs:
           folder: out
           target-folder: branch/${{ steps.branch-name.outputs.branch }}
           clean: true
+          token: ${{ secrets.GITHUB_TOKEN }}
