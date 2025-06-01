@@ -55,17 +55,17 @@ jobs:
           if [ "$BRANCH_NAME" = "dev" ]; then
             # Create dev directory and move files
             mkdir -p out/dev
-            cp -r out/*.* out/dev/ || true
-            cp -r out/_next out/dev/ || true
-            # Keep only necessary files in root
-            find out -maxdepth 1 -not -name dev -not -name test -not -name "." -not -name ".." -not -name ".nojekyll" -not -name "_next" | xargs rm -rf || true
+            cp -r out/*.* out/dev/ 2>/dev/null || true
+            cp -r out/_next out/dev/ 2>/dev/null || true
+            # Don't delete the out directory itself
+            ls -la out/
           elif [ "$BRANCH_NAME" = "test" ]; then
             # Create test directory and move files
             mkdir -p out/test
-            cp -r out/*.* out/test/ || true
-            cp -r out/_next out/test/ || true
-            # Keep only necessary files in root
-            find out -maxdepth 1 -not -name dev -not -name test -not -name "." -not -name ".." -not -name ".nojekyll" -not -name "_next" | xargs rm -rf || true
+            cp -r out/*.* out/test/ 2>/dev/null || true
+            cp -r out/_next out/test/ 2>/dev/null || true
+            # Don't delete the out directory itself
+            ls -la out/
           fi
 
       - name: Upload artifact
@@ -76,7 +76,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    # Remove the environment block that's causing the approval requirement
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
