@@ -22,20 +22,14 @@
         return;
       }
       
-      // Simple check for root paths
-      if (path === `/${repoName}/` || path === `/${repoName}` || path.endsWith('index.html')) {
-        document.body.innerHTML = '<p>Page not found. Please go to the <a href="/">home page</a>.</p>';
-        return;
-      }
+      // Track this redirect attempt
+      sessionStorage.setItem(redirectKey, path);
+      sessionStorage.setItem('mita_redirect_count', (redirectCount + 1).toString());
       
       const repoIndex = path.indexOf(repoName);
       if (repoIndex !== -1) {
         const pathAfterRepo = path.substring(repoIndex + repoName.length);
         const segments = pathAfterRepo.split('/').filter(Boolean);
-        
-        // Track this redirect attempt
-        sessionStorage.setItem(redirectKey, path);
-        sessionStorage.setItem('mita_redirect_count', (redirectCount + 1).toString());
         
         if (segments.length > 0) {
           // Branch deployment

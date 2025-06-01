@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document';
+import { getBasePath } from '../utils/getBasePath';
 
 export default function Document() {
   return (
@@ -6,6 +7,40 @@ export default function Document() {
       <Head>
         {/* Add a base tag to ensure all relative URLs are resolved correctly */}
         <base href="/" />
+        {/* Add a script to fix paths at runtime */}
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              const repoName = 'mita-state-self-assessment-tool';
+              const path = window.location.pathname;
+              const repoIndex = path.indexOf(repoName);
+              
+              if (repoIndex !== -1) {
+                const basePath = '/' + repoName;
+                
+                // Update base href
+                const baseElement = document.querySelector('base');
+                if (baseElement) {
+                  baseElement.setAttribute('href', basePath + '/');
+                }
+                
+                // Fix CSS links
+                document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+                  if (link.href.includes('/_next/') && !link.href.includes(basePath)) {
+                    link.href = link.href.replace('/_next/', basePath + '/_next/');
+                  }
+                });
+                
+                // Fix script sources
+                document.querySelectorAll('script').forEach(script => {
+                  if (script.src && script.src.includes('/_next/') && !script.src.includes(basePath)) {
+                    script.src = script.src.replace('/_next/', basePath + '/_next/');
+                  }
+                });
+              }
+            })();
+          `
+        }} />
       </Head>
       <body>
         <Main />

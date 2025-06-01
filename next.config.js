@@ -13,11 +13,11 @@ const nextConfig = {
   },
   
   // Base path configuration
-  basePath: '',
+  basePath: process.env.NODE_ENV === 'production' ? '/mita-state-self-assessment-tool' : '',
   // Enable trailing slashes for GitHub Pages compatibility
   trailingSlash: true,
   // Add assetPrefix for GitHub Pages
-  assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/mita-state-self-assessment-tool' : '',
   
   // Configure webpack for optimizations
   webpack: (config, { dev, isServer }) => {
@@ -34,7 +34,7 @@ const nextConfig = {
           // Create a framework chunk for React, etc.
           framework: {
             name: 'framework',
-            test: /[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types)[\\/]/,
+            test: /[\\\/]node_modules[\\\/](react|react-dom|scheduler|prop-types)[\\\/]/,
             priority: 40,
             chunks: 'all',
             enforce: true,
@@ -42,34 +42,34 @@ const nextConfig = {
           // Create a chunk for CMS design system
           cmsDesignSystem: {
             name: 'cms-design-system',
-            test: /[\\/]node_modules[\\/]@cmsgov[\\/]/,
+            test: /[\\\/]node_modules[\\\/]@cmsgov[\\\/]/,
             priority: 30,
             chunks: 'all',
           },
           // Create a chunk for charting libraries
           charts: {
             name: 'charts',
-            test: /[\\/]node_modules[\\/](chart\.js|react-chartjs-2)[\\/]/,
+            test: /[\\\/]node_modules[\\\/](chart\.js|react-chartjs-2)[\\\/]/,
             priority: 20,
             chunks: 'all',
           },
           // Create a chunk for PDF generation
           pdfLibs: {
             name: 'pdf-libs',
-            test: /[\\/]node_modules[\\/](jspdf|jspdf-autotable)[\\/]/,
+            test: /[\\\/]node_modules[\\\/](jspdf|jspdf-autotable)[\\\/]/,
             priority: 20,
             chunks: 'all',
           },
           // Create a chunk for markdown processing
           markdownLibs: {
             name: 'markdown-libs',
-            test: /[\\/]node_modules[\\/](react-markdown|remark-gfm|gray-matter|js-yaml)[\\/]/,
+            test: /[\\\/]node_modules[\\\/](react-markdown|remark-gfm|gray-matter|js-yaml)[\\\/]/,
             priority: 20,
             chunks: 'all',
           },
           // Group common libraries
           lib: {
-            test: /[\\/]node_modules[\\/]/,
+            test: /[\\\/]node_modules[\\\/]/,
             priority: 10,
             chunks: 'async',
             minChunks: 2,
@@ -77,7 +77,7 @@ const nextConfig = {
           // Group components by domain
           components: {
             name: 'components',
-            test: /[\\/]src[\\/]components[\\/]/,
+            test: /[\\\/]src[\\\/]components[\\\/]/,
             priority: 10,
             chunks: 'async',
             minChunks: 2,
