@@ -39,40 +39,33 @@ jobs:
           
           if [ "$BRANCH_NAME" = "main" ]; then
             echo "NEXT_PUBLIC_BASE_PATH=/mita-state-self-assessment-tool" >> $GITHUB_ENV
-            echo "OUTPUT_DIR=out" >> $GITHUB_ENV
           elif [ "$BRANCH_NAME" = "dev" ]; then
             echo "NEXT_PUBLIC_BASE_PATH=/mita-state-self-assessment-tool/dev" >> $GITHUB_ENV
-            echo "OUTPUT_DIR=out/dev" >> $GITHUB_ENV
-            # Create dev directory
-            mkdir -p out/dev
           elif [ "$BRANCH_NAME" = "test" ]; then
             echo "NEXT_PUBLIC_BASE_PATH=/mita-state-self-assessment-tool/test" >> $GITHUB_ENV
-            echo "OUTPUT_DIR=out/test" >> $GITHUB_ENV
-            # Create test directory
-            mkdir -p out/test
           fi
 
       - name: Build and Export
         run: |
           npm run build
-          
-          # Handle branch-specific output
-          if [ "$BRANCH_NAME" = "main" ]; then
-            touch out/.nojekyll
-          elif [ "$BRANCH_NAME" = "dev" ]; then
-            # Move files to dev subdirectory
-            cp -r out/* out/dev/
-            # Remove files from root that were copied to dev
-            find out -maxdepth 1 -type f -exec rm {} \;
-            find out -maxdepth 1 -type d -not -name dev -not -name test -not -name "." -not -name ".." -exec rm -rf {} \;
-            touch out/.nojekyll
+          touch out/.nojekyll
+
+      - name: Organize branch-specific output
+        run: |
+          if [ "$BRANCH_NAME" = "dev" ]; then
+            # Create dev directory and move files
+            mkdir -p out/dev
+            cp -r out/*.* out/dev/ || true
+            cp -r out/_next out/dev/ || true
+            # Keep only necessary files in root
+            find out -maxdepth 1 -not -name dev -not -name test -not -name "." -not -name ".." -not -name ".nojekyll" -not -name "_next" | xargs rm -rf || true
           elif [ "$BRANCH_NAME" = "test" ]; then
-            # Move files to test subdirectory
-            cp -r out/* out/test/
-            # Remove files from root that were copied to test
-            find out -maxdepth 1 -type f -exec rm {} \;
-            find out -maxdepth 1 -type d -not -name dev -not -name test -not -name "." -not -name ".." -exec rm -rf {} \;
-            touch out/.nojekyll
+            # Create test directory and move files
+            mkdir -p out/test
+            cp -r out/*.* out/test/ || true
+            cp -r out/_next out/test/ || true
+            # Keep only necessary files in root
+            find out -maxdepth 1 -not -name dev -not -name test -not -name "." -not -name ".." -not -name ".nojekyll" -not -name "_next" | xargs rm -rf || true
           fi
 
       - name: Upload artifact
