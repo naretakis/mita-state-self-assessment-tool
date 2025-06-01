@@ -39,14 +39,13 @@ jobs:
         run: |
           BRANCH_NAME="${{ steps.branch-name.outputs.current_branch }}"
           if [[ "$BRANCH_NAME" == "main" ]]; then
-            echo "DEPLOY_PATH=" >> $GITHUB_ENV
             echo "BASE_PATH=/mita-state-self-assessment-tool" >> $GITHUB_ENV
           else
             # Convert branch name to URL-friendly format
             SAFE_BRANCH=$(echo "$BRANCH_NAME" | sed 's/\//-/g')
-            echo "DEPLOY_PATH=$SAFE_BRANCH" >> $GITHUB_ENV
             echo "BASE_PATH=/mita-state-self-assessment-tool/$SAFE_BRANCH" >> $GITHUB_ENV
           fi
+          echo "Using BASE_PATH=${BASE_PATH}"
 
       - name: Install dependencies
         run: npm ci
@@ -56,6 +55,9 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: ${{ env.BASE_PATH }}
         run: |
           npm run build
+          
+      - name: Create .nojekyll file
+        run: touch ./out/.nojekyll
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -4,12 +4,12 @@
  */
 export function getBasePath(): string {
   // Use environment variable if available (set during build time)
-  if (process.env.NEXT_PUBLIC_BASE_PATH) {
+  if (typeof process !== 'undefined' && process.env.NEXT_PUBLIC_BASE_PATH) {
     return process.env.NEXT_PUBLIC_BASE_PATH;
   }
   
   // Default production path for main branch
-  if (process.env.NODE_ENV === 'production') {
+  if (typeof process !== 'undefined' && process.env.NODE_ENV === 'production') {
     return '/mita-state-self-assessment-tool';
   }
   
