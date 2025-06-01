@@ -153,12 +153,3 @@ This project is licensed under the GNU General Public License v3.0 (GPL-3.0) - s
 ## Contributing
 
 Contributions are welcome! This project follows an open-source approach to enable community contributions. Please review the development guidelines in the [instructions folder](instructions/development_guide.md) before contributing.
-
-## GitHub Pages Deployment
-
-This application is configured for deployment to GitHub Pages:
-
-- Main branch: [https://[username].github.io/mita-state-self-assessment-tool/](https://[username].github.io/mita-state-self-assessment-tool/)
-- Feature branches: `https://[username].github.io/mita-state-self-assessment-tool/branch/[branch-name]/`
-
-For detailed deployment instructions, see the [GitHub Pages Deployment Guide](./docs/github-pages-deployment.md).
