@@ -69,11 +69,13 @@ class MemoryCache {
    */
   cleanup(): void {
     const now = Date.now();
-    for (const [key, item] of this.cache.entries()) {
-      if (item.expiry < now) {
+    // Use Array.from to convert Map entries to array for ES5 compatibility
+    Array.from(this.cache.keys()).forEach(key => {
+      const item = this.cache.get(key);
+      if (item && item.expiry < now) {
         this.cache.delete(key);
       }
-    }
+    });
   }
 }
 
