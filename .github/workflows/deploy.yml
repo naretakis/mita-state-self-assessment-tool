@@ -32,11 +32,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            ~/.npm
             ${{ github.workspace }}/.next/cache
-          # Generate a new cache whenever packages or source files change
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          # If source files changed but packages didn't, rebuild from a prior cache
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
@@ -74,23 +71,11 @@ jobs:
       - name: Set NODE_ENV to production
         run: echo "NODE_ENV=production" >> $GITHUB_ENV
 
-      # Optimize build with persistent cache
+      # Build with proper caching
       - name: Build
         run: npm run build
         env:
           NODE_ENV: production
-
-      # Generate optimized images
-      - name: Optimize images
-        run: |
-          # Install image optimization tools
-          npm install -g sharp svgo
-          
-          # Optimize SVGs
-          find public -name "*.svg" -exec svgo {} \;
-          
-          # Optimize PNGs and JPGs
-          find public -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" | xargs -I{} sharp -i {} -o {} -q 85
 
       - name: Move branch build to correct directory and fix asset paths
         if: ${{ env.BRANCH_NAME != 'main' }}

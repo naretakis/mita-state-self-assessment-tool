@@ -4,6 +4,7 @@
  */
 
 import { ComponentType, lazy } from 'react';
+import React from 'react';
 
 /**
  * Dynamically imports a component with error handling
@@ -18,7 +19,7 @@ export function dynamicImport<T extends ComponentType<any>>(
       console.error('Error loading component:', error);
       // Return a minimal fallback component
       return {
-        default: (() => <div>Failed to load component</div>) as unknown as T,
+        default: ((() => React.createElement('div', null, 'Failed to load component')) as unknown) as T,
       };
     });
   }) as T;
