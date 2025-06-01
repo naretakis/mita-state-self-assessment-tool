@@ -18,6 +18,18 @@ To enable GitHub Pages deployment:
 3. Under **Source**, select **GitHub Actions**
 4. Under **Build and deployment**, ensure GitHub Actions is selected
 
+### Environment Protection Rules
+
+To allow deployment from any branch:
+
+1. Go to your GitHub repository
+2. Navigate to **Settings** > **Environments**
+3. Click on the **github-pages** environment
+4. Under "Deployment branches and tags", change the setting from "Selected branches" to **All branches**
+5. Click **Save protection rules**
+
+This step is critical - without it, only the default branch will be allowed to deploy to GitHub Pages.
+
 ## URL Structure
 
 - **Main branch**: `https://[username].github.io/mita-state-self-assessment-tool/`
