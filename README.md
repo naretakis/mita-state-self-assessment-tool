@@ -87,34 +87,6 @@ The MITA NextGen framework uses a capability-based approach organized around ORB
 
 Each capability is assessed across these dimensions with maturity levels from 1 (Initial) to 5 (Optimized).
 
-## Deployment
-
-### GitHub Pages Deployment
-
-This project uses GitHub Actions for automated multi-branch deployment:
-
-1. **Main Branch**: Deployed to `https://[username].github.io/mita-state-self-assessment-tool/`
-2. **Staging Branch**: Deployed to `https://[username].github.io/mita-state-self-assessment-tool/staging/`
-3. **Feature Branches**: Deployed to `https://[username].github.io/mita-state-self-assessment-tool/<branch-name>/`
-
-The deployment workflow:
-- Automatically detects the branch and configures the correct base path
-- Optimizes assets for production
-- Implements proper caching strategies
-- Handles cleanup of stale deployments
-
-### Manual Deployment
-
-To build for production manually:
-
-```bash
-# Build the application
-npm run build
-
-# Export as static site
-npm run export
-```
-
 ## Testing
 
 The project uses Jest and React Testing Library for testing:
