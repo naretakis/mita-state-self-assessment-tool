@@ -85,9 +85,9 @@ A workflow file (`.github/workflows/deploy.yml`) handles automated deployment wi
 
 - **Triggers**: Runs on pushes to `main`, `dev`, and `test` branches
 - **Multi-branch deployment**: Supports three environments simultaneously:
-  - Production (`main` branch): `https://[username].github.io/mita-state-self-assessment-tool/`
-  - Development (`dev` branch): `https://[username].github.io/mita-state-self-assessment-tool/dev/`
-  - Testing (`test` branch): `https://[username].github.io/mita-state-self-assessment-tool/test/`
+  - Production (`main` branch): https://naretakis.github.io/mita-state-self-assessment-tool/
+  - Development (`dev` branch): https://naretakis.github.io/mita-state-self-assessment-tool/dev/
+  - Testing (`test` branch): https://naretakis.github.io/mita-state-self-assessment-tool/test/
 - **Content preservation**: Downloads existing site content before deployment to preserve all environments
 - **Branch-specific builds**: Each branch builds with the correct base path configuration
 - **Single deployment target**: All branches deploy to the same GitHub Pages site but in different directories
