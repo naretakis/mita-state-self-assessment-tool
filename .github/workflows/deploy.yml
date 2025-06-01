@@ -67,13 +67,24 @@ jobs:
           mv next.config.deploy.js next.config.js
 
       - name: Build
-        run: npm run build
+        run: |
+          # Run the build command
+          npm run build
+          
+          # Verify the output directory was created
+          if [ ! -d "out" ]; then
+            echo "::error::Build failed to create 'out' directory"
+            exit 1
+          fi
         env:
           NODE_ENV: production
           BRANCH_NAME: ${{ env.BRANCH_NAME }}
 
       - name: Create deployment metadata
         run: |
+          # Ensure out directory exists
+          mkdir -p out
+          
           # Create a file with deployment info
           cat > out/deployment-info.json << EOL
           {
@@ -86,7 +97,9 @@ jobs:
 
       - name: Create branch list file
         run: |
+          # Ensure directories exist
           mkdir -p out/.github
+          
           cat > out/.github/branches.json << EOL
           {
             "updated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
