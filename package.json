@@ -39,6 +39,8 @@
     "@babel/preset-env": "^7.27.2",
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
+    "@eslint/config-array": "^0.20.0",
+    "@eslint/object-schema": "^2.1.6",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.5.1",
@@ -49,7 +51,7 @@
     "@types/react-dom": "^18.2.13",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
-    "eslint": "^8.57.1",
+    "eslint": "^9.28.0",
     "eslint-config-next": "^13.5.4",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-jsx-a11y": "^6.7.1",
@@ -66,7 +68,12 @@
   "overrides": {
     "glob": "^10.3.10",
     "rimraf": "^5.0.5",
-    "inflight": "lru-cache@^10.2.0"
+    "inflight": "lru-cache@^10.2.0",
+    "domexception": "npm:@xmldom/xmldom@^0.8.10",
+    "abab": "npm:base64-js@^1.5.1",
+    "@humanwhocodes/object-schema": "@eslint/object-schema@^2.1.6",
+    "@humanwhocodes/config-array": "@eslint/config-array@^0.20.0",
+    "eslint": "^9.28.0"
   },
   "engines": {
     "node": ">=18.0.0"
