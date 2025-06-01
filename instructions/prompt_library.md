@@ -54,7 +54,7 @@ Following our development approach in instructions/development_guide.md, help me
 4. Example test for a simple component
 ```
 
-### ~~Build Optimization~~ Moving this to future features of the app
+### Build Optimization
 
 ```
 Based on our architecture in instructions/architecture.md, please help me optimize the build configuration for our Next.js application to:
