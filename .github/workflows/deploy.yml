@@ -27,6 +27,19 @@ jobs:
           node-version: '18'
           cache: 'npm'
 
+      # Setup caching for Next.js builds
+      - name: Setup Next.js caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          # Generate a new cache whenever packages or source files change
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
       - name: Install dependencies
         run: npm ci
 
@@ -61,10 +74,23 @@ jobs:
       - name: Set NODE_ENV to production
         run: echo "NODE_ENV=production" >> $GITHUB_ENV
 
+      # Optimize build with persistent cache
       - name: Build
         run: npm run build
         env:
           NODE_ENV: production
+
+      # Generate optimized images
+      - name: Optimize images
+        run: |
+          # Install image optimization tools
+          npm install -g sharp svgo
+          
+          # Optimize SVGs
+          find public -name "*.svg" -exec svgo {} \;
+          
+          # Optimize PNGs and JPGs
+          find public -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" | xargs -I{} sharp -i {} -o {} -q 85
 
       - name: Move branch build to correct directory and fix asset paths
         if: ${{ env.BRANCH_NAME != 'main' }}
@@ -82,6 +108,27 @@ jobs:
           
           # Remove the original files that were copied (except the branch directory)
           find out -mindepth 1 -maxdepth 1 -not -name "${{ env.BRANCH_NAME }}" -exec rm -rf {} \;
+
+      # Add browser caching headers via _headers file
+      - name: Create caching headers
+        run: |
+          cat > out/_headers << 'EOL'
+          # Cache static assets for 1 year
+          /_next/static/*
+            Cache-Control: public, max-age=31536000, immutable
+          
+          # Cache images for 1 week
+          /_next/image/*
+            Cache-Control: public, max-age=604800
+          
+          # Cache fonts for 1 month
+          /_next/static/media/*
+            Cache-Control: public, max-age=2592000, immutable
+          
+          # Cache page data for 10 minutes
+          /_next/data/*
+            Cache-Control: public, max-age=600
+          EOL
 
       - name: Create 404.html for redirects and add CSS fix
         run: |
