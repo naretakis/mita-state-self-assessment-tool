@@ -49,21 +49,24 @@
     "@types/react-dom": "^18.2.13",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
-    "eslint": "^8.51.0",
+    "eslint": "^8.57.1",
     "eslint-config-next": "^13.5.4",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.33.2",
+    "glob": "^10.3.10",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "lru-cache": "^10.2.0",
     "msw": "^2.0.0",
     "prettier": "^3.0.3",
+    "rimraf": "^5.0.5",
     "typescript": "^5.2.2"
   },
   "overrides": {
-    "jspdf": "^3.0.1",
-    "dompurify": "^3.2.6",
-    "cookie": "^0.7.0"
+    "glob": "^10.3.10",
+    "rimraf": "^5.0.5",
+    "inflight": "lru-cache@^10.2.0"
   },
   "engines": {
     "node": ">=18.0.0"

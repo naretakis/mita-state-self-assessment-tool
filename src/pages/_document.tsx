@@ -1,5 +1,4 @@
 import { Html, Head, Main, NextScript } from 'next/document';
-import { getBasePath } from '../utils/getBasePath';
 
 export default function Document() {
   return (
