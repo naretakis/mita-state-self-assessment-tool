@@ -27,7 +27,7 @@ a GitHub Actions workflow file (.github/workflows/deploy.yml) that will:
 
 1. Build the Next.js application for static export
 2. Deploy the built files to GitHub Pages
-3. Run on push to the main branch
+3. Run on push to the `main`, `dev`, and `test` branches allowing for three diffierent versions of the app to be deployed at once
 4. Include proper caching for dependencies
 ```
 
