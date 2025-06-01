@@ -4,7 +4,7 @@ A modern, browser-based application for state Medicaid agencies to assess the ma
 
 ## Project Overview
 
-The MITA State Self-Assessment (SS-A) Tool helps state Medicaid agencies assess their systems using the new MITA NextGen capability-based framework. It offers:
+The MITA State Self-Assessment (SS-A) Tool helps state Medicaid agencies assess their systems using the MITA NextGen capability-based framework. It offers:
 
 1. A modern, browser-based application with intuitive user experience
 2. Integration with the MITA NextGen capability-based framework
@@ -14,11 +14,20 @@ The MITA State Self-Assessment (SS-A) Tool helps state Medicaid agencies assess 
 
 For detailed project documentation, including architecture, workflows, and development guidelines, see the [Project Documentation](instructions/index.md) in the instructions folder.
 
+## Key Features
+
+- **In-browser functionality**: Works entirely in the browser with local storage
+- **MITA NextGen Framework**: Full integration with the capability-based ORBIT dimensions
+- **Decision tree-guided assessment**: Intuitive workflow for completing assessments
+- **Maturity visualization**: Interactive dashboards showing maturity across capabilities
+- **Export functionality**: Generate PDF and CSV reports for sharing and documentation
+- **Multi-branch deployment**: Supports parallel development with isolated environments
+
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (LTS version recommended)
+- Node.js 18.0.0 or higher
 - npm or yarn
 - Git
 
@@ -26,7 +35,7 @@ For detailed project documentation, including architecture, workflows, and devel
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-username/mita-state-self-assessment-tool.git
+   git clone https://github.com/username/mita-state-self-assessment-tool.git
    cd mita-state-self-assessment-tool
    ```
 
@@ -41,38 +50,6 @@ For detailed project documentation, including architecture, workflows, and devel
    ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
-
-## Deployment to GitHub Pages
-
-This project is configured for automatic multi-branch deployment to GitHub Pages using GitHub Actions:
-
-1. **Setup GitHub Actions Workflow**:
-   - The workflow file is located at `.github/workflows/deploy.yml`
-   - It builds the Next.js app and deploys to the `gh-pages` branch
-   - Supports deployment from `main`, `staging`, and feature branches
-
-2. **Configure GitHub Pages**:
-   - Go to your repository's Settings > Pages
-   - Set the Source to "Deploy from a branch"
-   - Select the `gh-pages` branch and root (/) folder
-   - Click Save
-
-3. **Multi-Branch Deployment Structure**:
-   - `main` branch: deployed to the root path (`/`)
-   - `staging` branch: deployed to `/staging` path
-   - Feature branches: deployed to `/<branch-name>` path
-   - Each branch deployment is isolated with its own base path
-
-4. **Access Your Deployed Sites**:
-   - Main: `https://[username].github.io/mita-state-self-assessment-tool/`
-   - Staging: `https://[username].github.io/mita-state-self-assessment-tool/staging/`
-   - Feature branch: `https://[username].github.io/mita-state-self-assessment-tool/<branch-name>/`
-
-5. **Setting Up Multi-Branch Deployment**:
-   - The project is already configured for multi-branch deployment
-   - The workflow automatically detects the branch and configures the correct base path
-   - A custom 404.html page handles redirects between different branch deployments
-   - Asset paths are dynamically adjusted using Next.js's `basePath` configuration
 
 ## Project Structure
 
@@ -92,50 +69,55 @@ mita-state-self-assessment-tool/
 │   ├── styles/          # CSS styles
 │   ├── types/           # TypeScript type definitions
 │   └── utils/           # Utility functions
-├── .github/
-│   └── workflows/       # GitHub Actions workflow files
-├── .eslintrc.json       # ESLint configuration
-├── .prettierrc          # Prettier configuration
-├── next.config.js       # Next.js configuration
-├── package.json         # Project dependencies
-└── tsconfig.json        # TypeScript configuration
+├── instructions/        # Project documentation
+├── tests/               # Test files
+├── .github/workflows/   # CI/CD configuration
+└── [config files]       # Various configuration files
 ```
 
-## Features
+## MITA Framework Structure
 
-- In-browser functionality with local storage
-- MITA NextGen Framework integration
-- Decision tree-guided assessment process
-- Basic maturity visualization and reporting
-- PDF and CSV export functionality
+The MITA NextGen framework uses a capability-based approach organized around ORBIT dimensions:
 
-## Built With
+- **O**utcomes: Business results and objectives
+- **R**oles: Who performs functions and responsibilities
+- **B**usiness Processes: Workflows and procedures
+- **I**nformation: Data structure and sharing
+- **T**echnology: Technical implementation
 
-- [Next.js 15](https://nextjs.org/) - React framework
-- [TypeScript](https://www.typescriptlang.org/) - Type-safe JavaScript
-- [gray-matter](https://github.com/jonschlinkert/gray-matter) - Front matter parser
-- [react-markdown](https://github.com/remarkjs/react-markdown) - Markdown renderer
+Each capability is assessed across these dimensions with maturity levels from 1 (Initial) to 5 (Optimized).
 
-## Testing Framework
+## Deployment
 
-The project uses the following testing tools:
+### GitHub Pages Deployment
 
-- **Jest**: Test runner and assertion library
-- **React Testing Library**: Component testing
-- **Mock Service Worker**: API mocking (for future implementation)
+This project uses GitHub Actions for automated multi-branch deployment:
 
-### Test Structure
+1. **Main Branch**: Deployed to `https://[username].github.io/mita-state-self-assessment-tool/`
+2. **Staging Branch**: Deployed to `https://[username].github.io/mita-state-self-assessment-tool/staging/`
+3. **Feature Branches**: Deployed to `https://[username].github.io/mita-state-self-assessment-tool/<branch-name>/`
 
+The deployment workflow:
+- Automatically detects the branch and configures the correct base path
+- Optimizes assets for production
+- Implements proper caching strategies
+- Handles cleanup of stale deployments
+
+### Manual Deployment
+
+To build for production manually:
+
+```bash
+# Build the application
+npm run build
+
+# Export as static site
+npm run export
 ```
-tests/
-├── unit/              # Unit tests for individual components and functions
-├── integration/       # Integration tests for component interactions
-├── e2e/               # End-to-end tests for complete user flows
-├── fixtures/          # Test data
-└── utils/             # Test utilities
-```
 
-### Running Tests
+## Testing
+
+The project uses Jest and React Testing Library for testing:
 
 ```bash
 # Run all tests
@@ -144,67 +126,58 @@ npm test
 # Run tests in watch mode
 npm run test:watch
 
-# Run tests with coverage report
+# Generate coverage report
 npm run test:coverage
 ```
 
-### Writing Tests
+### Test Structure
 
-#### Unit Tests
+- **Unit Tests**: Test individual components and functions
+- **Integration Tests**: Test component interactions
+- **E2E Tests**: Test complete user flows
 
-Unit tests focus on testing individual components or functions in isolation. Example:
+## Performance Optimizations
 
-```tsx
-// Button.test.tsx
-import { render, screen } from '@testing-library/react';
-import Button from '@/components/common/Button';
+The application includes several performance optimizations:
 
-test('renders button with label', () => {
-  render(<Button label="Click me" />);
-  expect(screen.getByText('Click me')).toBeInTheDocument();
-});
-```
+- **Code Splitting**: Dynamic imports for better loading performance
+- **Image Optimization**: Progressive loading with placeholders
+- **Caching Strategies**: In-memory caching with TTL
+- **Webpack Optimizations**: Custom chunk splitting for optimal loading
+- **Browser Storage**: Efficient local data persistence
 
-#### Integration Tests
+## Built With
 
-Integration tests verify that multiple components work together correctly:
+- [Next.js 15](https://nextjs.org/) - React framework
+- [TypeScript](https://www.typescriptlang.org/) - Type-safe JavaScript
+- [CMS Design System](https://design.cms.gov/) - UI component library
+- [Chart.js](https://www.chartjs.org/) - Data visualization
+- [jsPDF](https://github.com/parallax/jsPDF) - PDF generation
+- [gray-matter](https://github.com/jonschlinkert/gray-matter) - Front matter parser
+- [react-markdown](https://github.com/remarkjs/react-markdown) - Markdown renderer
 
-```tsx
-// AssessmentForm.test.tsx
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import AssessmentForm from '@/components/assessment/AssessmentForm';
+## Development Roadmap
 
-test('form submission works correctly', async () => {
-  const handleSubmit = jest.fn();
-  render(<AssessmentForm onSubmit={handleSubmit} />);
-  
-  // Fill out form
-  await userEvent.type(screen.getByLabelText('Title'), 'Test Assessment');
-  
-  // Submit form
-  await userEvent.click(screen.getByText('Submit'));
-  
-  // Verify submission
-  expect(handleSubmit).toHaveBeenCalledWith(expect.objectContaining({
-    title: 'Test Assessment'
-  }));
-});
-```
+The Minimum Lovable Product (MLP) focuses on core functionality by August 2025:
 
-#### End-to-End Tests
+### In Scope
+- In-browser functionality with local storage
+- MITA NextGen Framework integration
+- Decision tree-guided assessment process
+- Basic maturity visualization and reporting
+- PDF and CSV export functionality
 
-E2E tests simulate real user interactions across multiple pages:
-
-```js
-// Future implementation with Playwright or Cypress
-test('user can complete assessment workflow', async () => {
-  // Navigate to assessment page
-  // Fill out assessment
-  // Submit and verify results
-});
-```
+### Future Enhancements (Post-MLP)
+- Authentication and access control
+- Advanced collaboration features
+- Centralized data repository
+- APD integration
+- Advanced analytics
 
 ## License
 
 This project is licensed under the GNU General Public License v3.0 (GPL-3.0) - see the LICENSE file for details.
+
+## Contributing
+
+Contributions are welcome! This project follows an open-source approach to enable community contributions. Please review the development guidelines in the [instructions folder](instructions/development_guide.md) before contributing.
