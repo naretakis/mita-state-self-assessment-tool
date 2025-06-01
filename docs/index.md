@@ -1,6 +1,6 @@
 # MITA State Self-Assessment Tool Documentation
 
-Welcome to the documentation for the MITA State Self-Assessment Tool. MOVE THIS again
+Welcome to the documentation for the MITA State Self-Assessment Tool.
 
 ## Deployment Guides
 
