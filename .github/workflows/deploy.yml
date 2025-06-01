@@ -3,8 +3,11 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - '**'
+      - main
+      - staging
+      - dev
   pull_request:
+    types: [opened, synchronize, reopened]
     branches:
       - main
       - staging
@@ -19,192 +22,131 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
 
-      # Setup caching for Next.js builds
-      - name: Setup Next.js caching
-        uses: actions/cache@v3
-        with:
-          path: |
-            ${{ github.workspace }}/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-
       - name: Install dependencies
         run: npm ci
 
-      - name: Add ESLint config to disable rules
-        run: |
-          echo '{
-            "extends": "next/core-web-vitals",
-            "rules": {
-              "@typescript-eslint/no-unused-vars": "off",
-              "import/no-anonymous-default-export": "off"
-            }
-          }' > .eslintrc.json
-
       - name: Set branch name
         id: branch_name
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-
-      - name: Configure base path for main branch
-        if: ${{ env.BRANCH_NAME == 'main' }}
         run: |
-          echo "Configuring for main branch"
-          sed -i "s|basePath: '',|basePath: '/mita-state-self-assessment-tool',|g" next.config.js
-          sed -i "s|assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',|assetPrefix: process.env.NODE_ENV === 'production' ? '/mita-state-self-assessment-tool' : '',|g" next.config.js
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "BRANCH_NAME=pr-${{ github.event.pull_request.number }}" >> $GITHUB_ENV
+          else
+            echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+          fi
 
-      - name: Configure base path for non-main branches
-        if: ${{ env.BRANCH_NAME != 'main' }}
+      - name: Configure Next.js for deployment
         run: |
-          echo "Configuring for branch: ${{ env.BRANCH_NAME }}"
-          sed -i "s|basePath: '',|basePath: '/mita-state-self-assessment-tool/${{ env.BRANCH_NAME }}',|g" next.config.js
-          sed -i "s|assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',|assetPrefix: process.env.NODE_ENV === 'production' ? '/mita-state-self-assessment-tool/${{ env.BRANCH_NAME }}' : '',|g" next.config.js
+          # Create a temporary config file
+          cat > next.config.deploy.js << 'EOL'
+          const originalConfig = require('./next.config.js');
+          
+          // Determine base path based on branch
+          const branchName = process.env.BRANCH_NAME;
+          const isMain = branchName === 'main';
+          const basePath = isMain 
+            ? '/mita-state-self-assessment-tool' 
+            : '/mita-state-self-assessment-tool/' + branchName;
+          
+          // Merge with original config
+          module.exports = {
+            ...originalConfig,
+            basePath,
+            assetPrefix: basePath,
+          };
+          EOL
+          
+          # Replace the original config
+          mv next.config.deploy.js next.config.js
 
-      - name: Set NODE_ENV to production
-        run: echo "NODE_ENV=production" >> $GITHUB_ENV
-
-      # Build with proper caching
       - name: Build
         run: npm run build
         env:
           NODE_ENV: production
+          BRANCH_NAME: ${{ env.BRANCH_NAME }}
 
-      - name: Move branch build to correct directory and fix asset paths
-        if: ${{ env.BRANCH_NAME != 'main' }}
+      - name: Create deployment metadata
         run: |
-          # Create branch directory
-          mkdir -p out/${{ env.BRANCH_NAME }}
-          
-          # Copy all files from out/ to out/branch-name/
-          # Exclude the branch directory itself to avoid recursion
-          find out -mindepth 1 -maxdepth 1 -not -name "${{ env.BRANCH_NAME }}" -exec cp -r {} out/${{ env.BRANCH_NAME }}/ \;
-          
-          # Fix asset paths in HTML files
-          find out/${{ env.BRANCH_NAME }} -name "*.html" -exec sed -i 's|href="/_next/|href="/mita-state-self-assessment-tool/${{ env.BRANCH_NAME }}/_next/|g' {} \;
-          find out/${{ env.BRANCH_NAME }} -name "*.html" -exec sed -i 's|src="/_next/|src="/mita-state-self-assessment-tool/${{ env.BRANCH_NAME }}/_next/|g' {} \;
-          
-          # Remove the original files that were copied (except the branch directory)
-          find out -mindepth 1 -maxdepth 1 -not -name "${{ env.BRANCH_NAME }}" -exec rm -rf {} \;
-
-      # Add browser caching headers via _headers file
-      - name: Create caching headers
-        run: |
-          cat > out/_headers << 'EOL'
-          # Cache static assets for 1 year
-          /_next/static/*
-            Cache-Control: public, max-age=31536000, immutable
-          
-          # Cache images for 1 week
-          /_next/image/*
-            Cache-Control: public, max-age=604800
-          
-          # Cache fonts for 1 month
-          /_next/static/media/*
-            Cache-Control: public, max-age=2592000, immutable
-          
-          # Cache page data for 10 minutes
-          /_next/data/*
-            Cache-Control: public, max-age=600
+          # Create a file with deployment info
+          cat > out/deployment-info.json << EOL
+          {
+            "branch": "${{ env.BRANCH_NAME }}",
+            "commit": "${{ github.sha }}",
+            "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+            "repository": "${{ github.repository }}"
+          }
           EOL
 
-      - name: Create 404.html for redirects and add CSS fix
+      - name: Create branch list file
         run: |
-          cat > out/404.html << 'EOL'
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <meta charset="utf-8">
-            <title>Page Not Found</title>
-            <style>
-              body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 650px; margin: 0 auto; padding: 20px; }
-              h1 { margin-top: 0; color: #0073bb; }
-              a { color: #0073bb; text-decoration: none; }
-              a:hover { text-decoration: underline; }
-              .container { margin-top: 50px; }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <h1>Page Not Found</h1>
-              <p>The page you're looking for doesn't exist or has been moved.</p>
-              <p>Please visit one of these pages instead:</p>
-              <ul>
-                <li><a href="/mita-state-self-assessment-tool/">Main Application</a></li>
-              </ul>
-            </div>
-          </body>
-          </html>
+          mkdir -p out/.github
+          cat > out/.github/branches.json << EOL
+          {
+            "updated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+            "branches": [
+              {"name": "${{ env.BRANCH_NAME }}", "commit": "${{ github.sha }}", "updated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"}
+            ]
+          }
           EOL
-          
-          # Create a script to fix CSS paths at runtime
-          cat > out/fix-paths.js << 'EOL'
-          // This script fixes paths for CSS and other assets at runtime
-          (function() {
-            const repoName = 'mita-state-self-assessment-tool';
-            const path = window.location.pathname;
-            const repoIndex = path.indexOf(repoName);
-            
-            if (repoIndex !== -1) {
-              const pathAfterRepo = path.substring(repoIndex + repoName.length);
-              const segments = pathAfterRepo.split('/').filter(Boolean);
-              
-              // If this is a branch deployment
-              if (segments.length > 0) {
-                const branchName = segments[0];
-                const basePath = `/${repoName}/${branchName}`;
-                
-                // Fix CSS links that might be using incorrect paths
-                document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-                  if (link.href.includes('/_next/') && !link.href.includes(basePath)) {
-                    link.href = link.href.replace('/_next/', `${basePath}/_next/`);
-                  }
-                });
-                
-                // Fix script sources
-                document.querySelectorAll('script').forEach(script => {
-                  if (script.src && script.src.includes('/_next/') && !script.src.includes(basePath)) {
-                    script.src = script.src.replace('/_next/', `${basePath}/_next/`);
-                  }
-                });
-              }
-            }
-          })();
-          EOL
-          
-          # Add the fix-paths script to all HTML files
-          find out -name "*.html" -exec sed -i 's|</head>|<script src="/fix-paths.js"></script></head>|g' {} \;
-
-      # Ensure index.html exists at branch root level
-      - name: Ensure index.html exists at branch root level
-        if: ${{ env.BRANCH_NAME != 'main' }}
-        run: |
-          if [ -f "out/${{ env.BRANCH_NAME }}/index.html" ]; then
-            echo "Creating direct index.html at branch root"
-            cp out/${{ env.BRANCH_NAME }}/index.html out/${{ env.BRANCH_NAME }}/
-          fi
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: out
           branch: gh-pages
+          target-folder: ${{ env.BRANCH_NAME }}
           clean: true
           clean-exclude: |
-            main/**
-            ${{ env.BRANCH_NAME }}/**
-            
+            .github/
+            */
+          commit-message: "Deploy ${{ env.BRANCH_NAME }} branch [skip ci]"
+
+      - name: Update branch list
+        run: |
+          # Clone gh-pages branch to get current branch list
+          git clone --depth 1 --single-branch --branch gh-pages https://github.com/${{ github.repository }}.git gh-pages-temp
+          
+          # Create or update branches.json
+          mkdir -p gh-pages-temp/.github
+          if [ -f "gh-pages-temp/.github/branches.json" ]; then
+            # Update existing file
+            jq --arg branch "${{ env.BRANCH_NAME }}" \
+               --arg commit "${{ github.sha }}" \
+               --arg updated "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
+               '.updated = $updated | .branches = (.branches | map(if .name == $branch then {name: $branch, commit: $commit, updated: $updated} else . end) | if any(.name == $branch) then . else . + [{name: $branch, commit: $commit, updated: $updated}] end)' \
+               gh-pages-temp/.github/branches.json > branches.json.new
+            mv branches.json.new gh-pages-temp/.github/branches.json
+          else
+            # Create new file
+            cat > gh-pages-temp/.github/branches.json << EOL
+            {
+              "updated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+              "branches": [
+                {"name": "${{ env.BRANCH_NAME }}", "commit": "${{ github.sha }}", "updated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"}
+              ]
+            }
+            EOL
+          fi
+          
+          # Deploy updated branch list
+          cd gh-pages-temp
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .github/branches.json
+          git commit -m "Update branch list [skip ci]" || echo "No changes to commit"
+          git push https://${{ github.actor }}:${{ github.token }}@github.com/${{ github.repository }}.git gh-pages
+
       - name: Output Deployment URL
         run: |
           if [[ "${{ env.BRANCH_NAME }}" == "main" ]]; then
-            echo "::notice::🚀 Deployed to: https://$(echo ${{ github.repository_owner }}).github.io/$(echo ${{ github.event.repository.name }})"
+            echo "::notice::🚀 Deployed to: https://${{ github.repository_owner }}.github.io/mita-state-self-assessment-tool/"
           else
-            echo "::notice::🚀 Deployed to: https://$(echo ${{ github.repository_owner }}).github.io/$(echo ${{ github.event.repository.name }})/${{ env.BRANCH_NAME }}"
+            echo "::notice::🚀 Deployed to: https://${{ github.repository_owner }}.github.io/mita-state-self-assessment-tool/${{ env.BRANCH_NAME }}/"
           fi

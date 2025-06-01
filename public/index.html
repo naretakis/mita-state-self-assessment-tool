@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MITA State Self-Assessment Tool - Branch Index</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+      line-height: 1.6; 
+      color: #333; 
+      max-width: 800px; 
+      margin: 0 auto; 
+      padding: 20px; 
+    }
+    h1 { margin-top: 0; color: #0073bb; }
+    h2 { font-size: 1.2em; color: #0073bb; margin-top: 1.5em; }
+    a { color: #0073bb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { margin-top: 50px; }
+    .branch-item { 
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #e9ecef;
+      border-radius: 4px;
+    }
+    .branch-name {
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-bottom: 5px;
+    }
+    .branch-date { 
+      font-size: 0.8em; 
+      color: #666; 
+    }
+    .branch-commit {
+      font-family: monospace;
+      font-size: 0.9em;
+      color: #555;
+      background: #f8f9fa;
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+    .loading { color: #666; font-style: italic; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>MITA State Self-Assessment Tool</h1>
+    <p>Welcome to the MITA State Self-Assessment Tool deployment index.</p>
+    
+    <h2>Available Deployments</h2>
+    <div id="branch-list">
+      <p class="loading">Loading available branches...</p>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const branchList = document.getElementById('branch-list');
+        const repoName = 'mita-state-self-assessment-tool';
+        const repoOwner = window.location.hostname.split('.')[0];
+        
+        fetch(`/${repoName}/.github/branches.json?t=${Date.now()}`)
+          .then(response => response.json())
+          .then(data => {
+            if (branchList && data.branches.length) {
+              branchList.innerHTML = '';
+              
+              // Sort branches - main first, then alphabetically
+              const branches = data.branches.sort((a, b) => {
+                if (a.name === 'main') return -1;
+                if (b.name === 'main') return 1;
+                return a.name.localeCompare(b.name);
+              });
+              
+              // Create branch cards
+              branches.forEach(branch => {
+                const card = document.createElement('div');
+                card.className = 'branch-item';
+                
+                const name = document.createElement('div');
+                name.className = 'branch-name';
+                
+                const link = document.createElement('a');
+                link.href = `/${repoName}/${branch.name === 'main' ? '' : branch.name + '/'}`;
+                link.textContent = branch.name === 'main' ? 'Main Branch (Production)' : branch.name;
+                name.appendChild(link);
+                
+                const date = document.createElement('div');
+                date.className = 'branch-date';
+                date.textContent = `Updated: ${new Date(branch.updated).toLocaleString()}`;
+                
+                const commit = document.createElement('div');
+                commit.className = 'branch-commit';
+                commit.textContent = `Commit: ${branch.commit.substring(0, 7)}`;
+                
+                const commitLink = document.createElement('a');
+                commitLink.href = `https://github.com/${repoOwner}/${repoName}/commit/${branch.commit}`;
+                commitLink.textContent = ' View commit';
+                commitLink.target = '_blank';
+                commit.appendChild(commitLink);
+                
+                card.appendChild(name);
+                card.appendChild(date);
+                card.appendChild(commit);
+                branchList.appendChild(card);
+              });
+              
+              // Add last updated info
+              const updated = document.createElement('p');
+              updated.innerHTML = `<small>Last updated: ${new Date(data.updated).toLocaleString()}</small>`;
+              branchList.appendChild(updated);
+            }
+          })
+          .catch(error => {
+            branchList.innerHTML = `
+              <div class="branch-item">
+                <div class="branch-name"><a href="/${repoName}/">Main Branch (Production)</a></div>
+              </div>
+              <div class="branch-item">
+                <div class="branch-name"><a href="/${repoName}/staging/">Staging</a></div>
+              </div>
+              <div class="branch-item">
+                <div class="branch-name"><a href="/${repoName}/dev/">Development</a></div>
+              </div>
+              <p><small>Note: Branch list could not be loaded. Showing default branches.</small></p>
+            `;
+          });
+      });
+    </script>
+  </div>
+</body>
+</html>
