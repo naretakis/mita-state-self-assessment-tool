@@ -10,10 +10,7 @@ export interface Assessment {
   metadata: AssessmentMetadata;
 }
 
-export type AssessmentStatus = 
-  | 'not-started'
-  | 'in-progress' 
-  | 'completed';
+export type AssessmentStatus = 'not-started' | 'in-progress' | 'completed';
 
 export interface AssessmentMetadata {
   version: string;

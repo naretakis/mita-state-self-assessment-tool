@@ -15,11 +15,12 @@ export function dynamicImport<T extends ComponentType<unknown>>(
   importFn: () => Promise<{ default: T }>
 ): LazyExoticComponent<T> {
   return lazy(() => {
-    return importFn().catch((error) => {
+    return importFn().catch(error => {
       console.error('Error loading component:', error);
       // Return a minimal fallback component
       return {
-        default: ((() => React.createElement('div', null, 'Failed to load component')) as unknown) as T,
+        default: (() =>
+          React.createElement('div', null, 'Failed to load component')) as unknown as T,
       };
     });
   });
@@ -33,7 +34,7 @@ export function dynamicImport<T extends ComponentType<unknown>>(
 export function preloadComponent<T extends ComponentType<unknown>>(
   importFn: () => Promise<{ default: T }>
 ): void {
-  importFn().catch((error) => {
+  importFn().catch(error => {
     console.error('Error preloading component:', error);
   });
 }
@@ -53,7 +54,7 @@ export function createRetryableImport<T>(
       const attempt = (attemptsLeft: number) => {
         importFn()
           .then(resolve)
-          .catch((error) => {
+          .catch(error => {
             if (attemptsLeft <= 1) {
               reject(error);
             } else {

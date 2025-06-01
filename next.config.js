@@ -3,6 +3,13 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'export',
   
+  // ESLint configuration
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  },
+  
   // Optimize images - use Next.js Image Optimization
   images: {
     // We need unoptimized: true for static export

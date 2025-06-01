@@ -44,12 +44,17 @@ For detailed project documentation, including architecture, workflows, and devel
    npm install
    ```
 
-3. Start the development server:
+3. Create a `.env.local` file based on `.env.local.example`:
+   ```
+   cp .env.local.example .env.local
+   ```
+
+4. Start the development server:
    ```
    npm run dev
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
 ## Project Structure
 
@@ -74,6 +79,39 @@ mita-state-self-assessment-tool/
 ├── .github/workflows/   # CI/CD configuration
 └── [config files]       # Various configuration files
 ```
+
+## Available Scripts
+
+- `npm run dev`: Start the development server
+- `npm run build`: Build the application for production
+- `npm start`: Start the production server
+- `npm run lint`: Run ESLint to check code quality
+- `npm test`: Run all tests
+- `npm run test:watch`: Run tests in watch mode
+- `npm run test:coverage`: Generate test coverage report
+- `npm run format`: Format code with Prettier
+- `npm run export`: Export the application as static HTML
+
+## Development Workflow
+
+1. **Branch Management**:
+   - `main`: Production branch
+   - `dev`: Development branch
+   - `test`: Testing branch
+   - Feature branches should be created from `dev`
+
+2. **Code Style**:
+   - Follow the ESLint and Prettier configurations
+   - Run `npm run lint` and `npm run format` before committing
+
+3. **Testing**:
+   - Write tests for new features and bug fixes
+   - Ensure all tests pass before submitting a pull request
+
+4. **Pull Requests**:
+   - Create pull requests against the `dev` branch
+   - Include a description of changes and related issues
+   - Ensure CI checks pass before merging
 
 ## Deployment
 
@@ -123,26 +161,15 @@ The MITA NextGen framework uses a capability-based approach organized around ORB
 
 Each capability is assessed across these dimensions with maturity levels from 1 (Initial) to 5 (Optimized).
 
-## Testing
+## Browser Storage
 
-The project uses Jest and React Testing Library for testing:
+The application uses browser storage for data persistence:
 
-```bash
-# Run all tests
-npm test
+- **localStorage**: For long-term storage of assessment data
+- **sessionStorage**: For temporary session data
+- **indexedDB**: For larger datasets and offline capabilities
 
-# Run tests in watch mode
-npm run test:watch
-
-# Generate coverage report
-npm run test:coverage
-```
-
-### Test Structure
-
-- **Unit Tests**: Test individual components and functions
-- **Integration Tests**: Test component interactions
-- **E2E Tests**: Test complete user flows
+The application checks for storage availability and provides appropriate fallbacks.
 
 ## Performance Optimizations
 
@@ -153,6 +180,16 @@ The application includes several performance optimizations:
 - **Caching Strategies**: In-memory caching with TTL
 - **Webpack Optimizations**: Custom chunk splitting for optimal loading
 - **Browser Storage**: Efficient local data persistence
+
+## Accessibility
+
+The application follows accessibility best practices:
+
+- Uses semantic HTML elements
+- Implements proper ARIA attributes
+- Ensures keyboard navigation
+- Maintains sufficient color contrast
+- Integrates with CMS Design System for accessible components
 
 ## Built With
 
@@ -182,10 +219,22 @@ The Minimum Lovable Product (MLP) focuses on core functionality by August 2025:
 - APD integration
 - Advanced analytics
 
+## Contributing
+
+Contributions are welcome! This project follows an open-source approach to enable community contributions.
+
+### Contribution Guidelines
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run tests (`npm test`)
+5. Commit your changes (`git commit -m 'Add some amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+Please review the development guidelines in the [instructions folder](instructions/development_guide.md) before contributing.
+
 ## License
 
 This project is licensed under the GNU General Public License v3.0 (GPL-3.0) - see the LICENSE file for details.
-
-## Contributing
-
-Contributions are welcome! This project follows an open-source approach to enable community contributions. Please review the development guidelines in the [instructions folder](instructions/development_guide.md) before contributing.

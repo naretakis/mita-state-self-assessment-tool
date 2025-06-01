@@ -2,7 +2,6 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
-  
   return (
     <div className={styles.container}>
       <Head>
@@ -12,9 +11,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to the MITA State Self-Assessment Tool
-        </h1>
+        <h1 className={styles.title}>Welcome to the MITA State Self-Assessment Tool</h1>
 
         <p className={styles.description}>
           A modern tool for assessing Medicaid systems using the MITA NextGen framework

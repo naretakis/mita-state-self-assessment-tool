@@ -39,13 +39,13 @@ class MemoryCache {
    */
   get<T>(key: string): T | undefined {
     const item = this.cache.get(key);
-    
+
     // Return undefined if item doesn't exist or is expired
     if (!item || item.expiry < Date.now()) {
       if (item) this.cache.delete(key); // Clean up expired item
       return undefined;
     }
-    
+
     return item.value as T;
   }
 
@@ -97,11 +97,11 @@ export function createCachedFunction<T, Args extends unknown[]>(
   return async (...args: Args): Promise<T> => {
     const key = keyFn(...args);
     const cached = memoryCache.get<T>(key);
-    
+
     if (cached !== undefined) {
       return cached;
     }
-    
+
     const result = await fn(...args);
     memoryCache.set(key, result, ttl);
     return result;
@@ -116,7 +116,7 @@ export function initCacheCleanup(interval = 5 * 60 * 1000): () => void {
   const timer = setInterval(() => {
     memoryCache.cleanup();
   }, interval);
-  
+
   // Return cleanup function
   return () => clearInterval(timer);
 }

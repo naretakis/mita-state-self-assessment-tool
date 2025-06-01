@@ -63,13 +63,15 @@
     "msw": "^2.0.0",
     "prettier": "^3.0.3",
     "rimraf": "^5.0.5",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "domexception": "^4.0.0",
+    "@xmldom/xmldom": "^0.8.10"
   },
   "overrides": {
     "glob": "^10.3.10",
     "rimraf": "^5.0.5",
     "inflight": "lru-cache@^10.2.0",
-    "domexception": "npm:@xmldom/xmldom@^0.8.10",
+    "domexception": "^4.0.0",
     "abab": "npm:base64-js@^1.5.1",
     "@humanwhocodes/object-schema": "@eslint/object-schema@^2.1.6",
     "@humanwhocodes/config-array": "@eslint/config-array@^0.20.0",

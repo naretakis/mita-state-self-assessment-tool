@@ -7,8 +7,9 @@ export default function Document() {
         {/* Add a base tag to ensure all relative URLs are resolved correctly */}
         <base href="/" />
         {/* Add a script to fix paths at runtime */}
-        <script dangerouslySetInnerHTML={{
-          __html: `
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
             (function() {
               const repoName = 'mita-state-self-assessment-tool';
               const path = window.location.pathname;
@@ -38,8 +39,9 @@ export default function Document() {
                 });
               }
             })();
-          `
-        }} />
+          `,
+          }}
+        />
       </Head>
       <body>
         <Main />

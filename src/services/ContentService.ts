@@ -8,11 +8,11 @@ import type { CapabilityDefinition } from '../types';
 export class ContentService {
   private capabilities: CapabilityDefinition[] = [];
   private contentDirectory: string;
-  
+
   constructor(contentDirectory: string) {
     this.contentDirectory = contentDirectory;
   }
-  
+
   /**
    * Initialize the content service by loading all capability definitions
    */
@@ -24,28 +24,28 @@ export class ContentService {
       throw error;
     }
   }
-  
+
   /**
    * Get all capability definitions
    */
   getAllCapabilities(): CapabilityDefinition[] {
     return this.capabilities;
   }
-  
+
   /**
    * Get a capability by ID
    */
   getCapability(id: string): CapabilityDefinition | null {
     return this.capabilities.find(cap => cap.id === id) || null;
   }
-  
+
   /**
    * Get capabilities by domain name
    */
   getCapabilitiesByDomain(domainName: string): CapabilityDefinition[] {
     return this.capabilities.filter(cap => cap.domainName === domainName);
   }
-  
+
   /**
    * Load a single capability from a file
    */
