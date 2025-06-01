@@ -221,8 +221,8 @@ jobs:
           branch: gh-pages
           clean: true
           clean-exclude: |
-            staging/**
-            preview/**
+            main/**
+            ${{ env.BRANCH_NAME }}/**
             
       - name: Output Deployment URL
         run: |
