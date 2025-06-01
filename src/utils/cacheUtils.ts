@@ -19,7 +19,7 @@ interface CacheItem<T> {
  * In-memory cache for storing data with expiration
  */
 class MemoryCache {
-  private cache: Map<string, CacheItem<any>> = new Map();
+  private cache: Map<string, CacheItem<unknown>> = new Map();
 
   /**
    * Set a value in the cache with expiration
@@ -89,7 +89,7 @@ export const memoryCache = new MemoryCache();
  * @param ttl - Time to live in milliseconds
  * @returns A cached version of the function
  */
-export function createCachedFunction<T, Args extends any[]>(
+export function createCachedFunction<T, Args extends unknown[]>(
   fn: (...args: Args) => Promise<T>,
   keyFn: (...args: Args) => string,
   ttl: number

@@ -11,7 +11,7 @@ import React from 'react';
  * @param importFn - Import function that returns a promise
  * @returns A lazy-loaded component
  */
-export function dynamicImport<T extends ComponentType<any>>(
+export function dynamicImport<T extends ComponentType<unknown>>(
   importFn: () => Promise<{ default: T }>
 ): LazyExoticComponent<T> {
   return lazy(() => {
@@ -30,7 +30,7 @@ export function dynamicImport<T extends ComponentType<any>>(
  * Useful for preloading components that will be needed soon
  * @param importFn - Import function that returns a promise
  */
-export function preloadComponent<T extends ComponentType<any>>(
+export function preloadComponent<T extends ComponentType<unknown>>(
   importFn: () => Promise<{ default: T }>
 ): void {
   importFn().catch((error) => {
