@@ -179,7 +179,7 @@ tests/
 
 ### GitHub Pages Deployment
 
-1. Configure GitHub Actions workflow for automated deployment to `dev`, `test`, and `prod` branches
+1. Configure GitHub Actions workflow for automated deployment to `dev`, `test`, and `main` branches
 3. Configure caching and compression
 4. Test deployed application thoroughly
 
