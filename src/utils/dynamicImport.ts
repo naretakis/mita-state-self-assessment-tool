@@ -3,7 +3,7 @@
  * This helps reduce initial bundle size by loading components only when needed
  */
 
-import { ComponentType, lazy } from 'react';
+import { ComponentType, lazy, LazyExoticComponent } from 'react';
 import React from 'react';
 
 /**
@@ -13,7 +13,7 @@ import React from 'react';
  */
 export function dynamicImport<T extends ComponentType<any>>(
   importFn: () => Promise<{ default: T }>
-): T {
+): LazyExoticComponent<T> {
   return lazy(() => {
     return importFn().catch((error) => {
       console.error('Error loading component:', error);
@@ -22,7 +22,7 @@ export function dynamicImport<T extends ComponentType<any>>(
         default: ((() => React.createElement('div', null, 'Failed to load component')) as unknown) as T,
       };
     });
-  }) as T;
+  });
 }
 
 /**
