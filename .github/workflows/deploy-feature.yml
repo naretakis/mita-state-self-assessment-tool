@@ -37,6 +37,9 @@ jobs:
           # Set base path to include branch name for unique URLs
           NEXT_PUBLIC_BASE_PATH: '/mita-state-self-assessment-tool/branch/${{ steps.branch-name.outputs.branch }}'
       
+      - name: Create 404.html
+        run: cp out/index.html out/404.html
+      
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
