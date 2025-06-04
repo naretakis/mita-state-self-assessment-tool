@@ -16,12 +16,16 @@ export function parseCapabilityMarkdown(fileContent: string): CapabilityDefiniti
   // Generate a unique ID based on domain and capability name
   const id = `${frontMatter.capabilityDomain.toLowerCase()}-${frontMatter.capabilityArea.toLowerCase().replace(/\s+/g, '-')}`;
 
+  // Determine module name from domain if not explicitly provided
+  // This is a simplification - in a real implementation, there might be a mapping of domains to modules
+  const moduleName = frontMatter.capabilityDomain;
+
   // Initialize the capability definition
   const capabilityDefinition: CapabilityDefinition = {
     id,
     name: frontMatter.capabilityArea,
     domainName: frontMatter.capabilityDomain,
-    moduleName: '', // Not specified in the sample, might need to be added to front matter
+    moduleName,
     version: String(frontMatter.version), // Convert to string to ensure consistent type
     lastUpdated: String(frontMatter.capabilityAreaLastUpdated), // Convert to string
     description: '',
@@ -226,10 +230,5 @@ function parseMaturityLevels(content: string): Record<string, string> {
   return levels;
 }
 
-// Create a named export object to fix ESLint warning
-const markdownParserExports = {
-  parseCapabilityMarkdown,
-  loadCapabilityDefinitions,
-};
-
-export default markdownParserExports;
+// Export the functions directly
+export { parseCapabilityMarkdown, loadCapabilityDefinitions };
