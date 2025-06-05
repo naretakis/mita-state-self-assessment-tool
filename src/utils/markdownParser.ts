@@ -230,5 +230,4 @@ function parseMaturityLevels(content: string): Record<string, string> {
   return levels;
 }
 
-// Export the functions directly
-export { parseCapabilityMarkdown, loadCapabilityDefinitions };
+// No need to re-export functions that are already exported
