@@ -1,58 +1,48 @@
-# MITA State Self-Assessment Tool - Changelog
+# Changelog
 
-This file tracks completed work and implementation details for the MITA State Self-Assessment Tool project.
+## Overview
+This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
-## Development Phase 2: Content Structure Implementation
+## [0.1.0] - 2025-05-29 through 2025-05-01
 
-### Linting and Code Quality Overhaul ✅DONE (2024-06-15)
+### Project Setup and Infrastructure
+- Created initial repository structure with Next.js, TypeScript, and React
+- Configured GitHub Pages deployment with multi-branch support (main, dev, test)
+- Added GitHub Actions workflow for automated deployments
+- Set up project documentation in instructions folder
+- Implemented .nojekyll file and CNAME configuration for GitHub Pages
+- Fixed 404 redirect handling for multi-branch deployment
 
-**Implementation Summary:**
-- Implemented comprehensive ESLint configuration with modern best practices
-- Added import sorting and organization rules
-- Enhanced TypeScript-specific linting rules
-- Created proper ESLint and Prettier ignore files
-- Added VS Code integration for consistent developer experience
-- Updated npm scripts for better linting and formatting workflows
-- Fixed rule conflicts and removed incorrect exclusions
-- Added test-specific rule overrides for better testing experience
+### Core Framework Implementation
+- Implemented CMS Design System integration
+- Created base layout components with responsive design
+- Added browser storage detection and fallback mechanisms
+- Set up TypeScript interfaces for data models
+- Implemented Jest testing framework with React Testing Library
 
-**Files Modified/Added:**
-- `.eslintrc.json` - Enhanced ESLint configuration
-- `.eslintrc.js` - Updated to reference JSON configuration
-- `.eslintignore` - Added to exclude build artifacts and dependencies
-- `.prettierrc` - Enhanced Prettier configuration
-- `.prettierignore` - Added to exclude files that don't need formatting
-- `.vscode/settings.json` - Added for consistent editor configuration
-- `.vscode/extensions.json` - Added recommended extensions
-- `package.json` - Updated scripts and dependencies
+### MITA Framework Integration
+- Created markdown parser for MITA capability definitions
+- Implemented ORBIT dimensions structure (Outcomes, Roles, Business Processes, Information, Technology)
+- Added sample provider capability content files (Provider Enrollment, Management, Termination)
+- Implemented maturity level definitions (Levels 1-5)
 
-**Dependencies Added:**
-- eslint-plugin-import
-- eslint-plugin-prettier
-- eslint-import-resolver-typescript
-- eslint-plugin-react-hooks
+### Development Tools and Optimizations
+- Set up ESLint and Prettier for code quality
+- Implemented build optimizations for better performance
+- Added dynamic imports for code splitting
+- Created test utilities for component testing
+- Configured Jest for unit, integration, and E2E testing
 
-### YAML/Markdown Parser ✅DONE (2024-06-10)
+### Documentation
+- Created comprehensive README with project overview
+- Added detailed development guide with best practices
+- Documented MITA framework structure and assessment approach
+- Created data models documentation
+- Added assessment workflow documentation
 
-**Implementation Summary:**
-- Created a parser utility that loads and processes Markdown files containing MITA capability definitions
-- Implemented front matter metadata parsing using gray-matter
-- Built section extraction for the five ORBIT dimensions (Outcome, Role, Business Process, Information, Technology)
-- Added support for parsing assessment questions and maturity level definitions
-- Ensured proper typing with TypeScript interfaces
-- Fixed module name handling to properly set the moduleName field based on capability domain
-- Simplified exports for better code consistency
-- Verified correct dimension extraction for all ORBIT dimensions
-- Confirmed functionality with passing unit tests
-
-**Files Modified:**
-- `src/utils/markdownParser.ts` - Main parser implementation
-- Verified compatibility with existing imports in:
-  - `src/examples/parserExample.ts`
-  - `src/utils/clientContentLoader.ts`
-  - `src/services/ContentService.ts`
-  - `tests/unit/utils/markdownParser.test.ts`
-
-**Testing:**
-- All tests passing for the markdown parser functionality
-- Verified correct parsing of sample capability content
+### Bug Fixes and Improvements
+- Fixed TypeScript errors in StorageService
+- Resolved ESLint configuration issues
+- Fixed markdownParser.ts by removing old references
+- Improved multi-branch deployment configuration
+- Updated package dependencies to resolve vulnerabilities

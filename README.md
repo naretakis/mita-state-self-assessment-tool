@@ -92,7 +92,6 @@ mita-state-self-assessment-tool/
 - `npm run test:coverage`: Generate test coverage report
 - `npm run dev`: Start the development server
 - `npm run build`: Build the application for production
-
 - `npm run check`: Run linting, formatting checks, and tests
 - `npm start`: Start the production server
 - `npm run export`: Export the application as static HTML
