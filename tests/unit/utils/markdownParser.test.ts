@@ -67,7 +67,7 @@ Providers can submit applications online, staff roles are focused on specific ve
 
   test('parses front matter correctly', () => {
     const result = parseCapabilityMarkdown(sampleMarkdown);
-    
+
     expect(result.domainName).toBe('Provider');
     expect(result.name).toBe('Provider Enrollment');
     expect(result.version).toBe('1.1');
@@ -77,41 +77,55 @@ Providers can submit applications online, staff roles are focused on specific ve
 
   test('generates correct ID', () => {
     const result = parseCapabilityMarkdown(sampleMarkdown);
-    
+
     expect(result.id).toBe('provider-provider-enrollment');
   });
 
   test('extracts capability description', () => {
     const result = parseCapabilityMarkdown(sampleMarkdown);
-    
-    expect(result.description).toContain('Provider Enrollment encompasses the processes and systems');
+
+    expect(result.description).toContain(
+      'Provider Enrollment encompasses the processes and systems'
+    );
   });
 
   test('extracts dimension descriptions', () => {
     const result = parseCapabilityMarkdown(sampleMarkdown);
-    
+
     expect(result.dimensions.outcome.description).toContain('results and effectiveness');
     expect(result.dimensions.role.description).toContain('responsibilities and interactions');
   });
 
   test('extracts assessment questions', () => {
     const result = parseCapabilityMarkdown(sampleMarkdown);
-    
+
     expect(result.dimensions.outcome.assessmentQuestions).toHaveLength(3);
-    expect(result.dimensions.outcome.assessmentQuestions[0]).toContain('How efficiently are providers enrolled');
+    expect(result.dimensions.outcome.assessmentQuestions[0]).toContain(
+      'How efficiently are providers enrolled'
+    );
     expect(result.dimensions.role.assessmentQuestions).toHaveLength(3);
   });
 
   test('extracts maturity levels', () => {
     const result = parseCapabilityMarkdown(sampleMarkdown);
-    
-    expect(result.dimensions.outcome.maturityLevels.level1).toContain('Manual provider enrollment process');
-    expect(result.dimensions.outcome.maturityLevels.level2).toContain('Basic online enrollment forms');
-    expect(result.dimensions.outcome.maturityLevels.level3).toContain('Fully electronic enrollment process');
+
+    expect(result.dimensions.outcome.maturityLevels.level1).toContain(
+      'Manual provider enrollment process'
+    );
+    expect(result.dimensions.outcome.maturityLevels.level2).toContain(
+      'Basic online enrollment forms'
+    );
+    expect(result.dimensions.outcome.maturityLevels.level3).toContain(
+      'Fully electronic enrollment process'
+    );
     expect(result.dimensions.outcome.maturityLevels.level4).toContain('Intelligent workflow');
     expect(result.dimensions.outcome.maturityLevels.level5).toContain('Continuous monitoring');
-    
-    expect(result.dimensions.role.maturityLevels.level1).toContain('Provider enrollment specialists');
-    expect(result.dimensions.role.maturityLevels.level2).toContain('Providers can submit applications online');
+
+    expect(result.dimensions.role.maturityLevels.level1).toContain(
+      'Provider enrollment specialists'
+    );
+    expect(result.dimensions.role.maturityLevels.level2).toContain(
+      'Providers can submit applications online'
+    );
   });
 });

@@ -1,122 +1,123 @@
 /**
- * Utilities for efficient caching strategies
+ * Cache utility functions for optimizing data fetching
  */
 
-// Cache duration constants (in milliseconds)
+// Simple in-memory cache
+export const memoryCache = new Map<string, { data: unknown; timestamp: number }>();
+
+// Default cache expiration time (5 minutes)
+const DEFAULT_CACHE_TIME = 5 * 60 * 1000;
+
+// Cache duration constants
 export const CACHE_DURATIONS = {
-  SHORT: 5 * 60 * 1000, // 5 minutes
-  MEDIUM: 30 * 60 * 1000, // 30 minutes
-  LONG: 24 * 60 * 60 * 1000, // 1 day
-  VERY_LONG: 7 * 24 * 60 * 60 * 1000, // 1 week
+  SHORT: 60 * 1000, // 1 minute
+  MEDIUM: 5 * 60 * 1000, // 5 minutes
+  LONG: 30 * 60 * 1000, // 30 minutes
+  VERY_LONG: 24 * 60 * 60 * 1000, // 24 hours
 };
 
-interface CacheItem<T> {
-  value: T;
-  expiry: number;
+/**
+ * Get data from cache if available and not expired
+ * @param key Cache key
+ * @param maxAge Maximum age of cache in milliseconds
+ * @returns Cached data or null if not found or expired
+ */
+export function getFromCache<T>(key: string, maxAge = DEFAULT_CACHE_TIME): T | null {
+  const cached = memoryCache.get(key);
+
+  if (!cached) {
+    return null;
+  }
+
+  const now = Date.now();
+  const isExpired = now - cached.timestamp > maxAge;
+
+  if (isExpired) {
+    memoryCache.delete(key);
+    return null;
+  }
+
+  return cached.data as T;
 }
 
 /**
- * In-memory cache for storing data with expiration
+ * Store data in cache
+ * @param key Cache key
+ * @param data Data to cache
  */
-class MemoryCache {
-  private cache: Map<string, CacheItem<unknown>> = new Map();
-
-  /**
-   * Set a value in the cache with expiration
-   * @param key - Cache key
-   * @param value - Value to store
-   * @param ttl - Time to live in milliseconds
-   */
-  set<T>(key: string, value: T, ttl: number): void {
-    const expiry = Date.now() + ttl;
-    this.cache.set(key, { value, expiry });
-  }
-
-  /**
-   * Get a value from the cache
-   * @param key - Cache key
-   * @returns The cached value or undefined if not found or expired
-   */
-  get<T>(key: string): T | undefined {
-    const item = this.cache.get(key);
-
-    // Return undefined if item doesn't exist or is expired
-    if (!item || item.expiry < Date.now()) {
-      if (item) this.cache.delete(key); // Clean up expired item
-      return undefined;
-    }
-
-    return item.value as T;
-  }
-
-  /**
-   * Remove a value from the cache
-   * @param key - Cache key
-   */
-  delete(key: string): void {
-    this.cache.delete(key);
-  }
-
-  /**
-   * Clear all items from the cache
-   */
-  clear(): void {
-    this.cache.clear();
-  }
-
-  /**
-   * Clean up expired items from the cache
-   */
-  cleanup(): void {
-    const now = Date.now();
-    // Use Array.from to convert Map entries to array for ES5 compatibility
-    Array.from(this.cache.keys()).forEach(key => {
-      const item = this.cache.get(key);
-      if (item && item.expiry < now) {
-        this.cache.delete(key);
-      }
-    });
-  }
-}
-
-// Export a singleton instance
-export const memoryCache = new MemoryCache();
-
-/**
- * Creates a function that caches the result of an async operation
- * @param fn - The async function to cache
- * @param keyFn - Function to generate a cache key from arguments
- * @param ttl - Time to live in milliseconds
- * @returns A cached version of the function
- */
-export function createCachedFunction<T, Args extends unknown[]>(
-  fn: (...args: Args) => Promise<T>,
-  keyFn: (...args: Args) => string,
-  ttl: number
-): (...args: Args) => Promise<T> {
-  return async (...args: Args): Promise<T> => {
-    const key = keyFn(...args);
-    const cached = memoryCache.get<T>(key);
-
-    if (cached !== undefined) {
-      return cached;
-    }
-
-    const result = await fn(...args);
-    memoryCache.set(key, result, ttl);
-    return result;
-  };
+export function setInCache(key: string, data: unknown): void {
+  memoryCache.set(key, {
+    data,
+    timestamp: Date.now(),
+  });
 }
 
 /**
- * Initialize cache cleanup interval
- * @param interval - Cleanup interval in milliseconds (default: 5 minutes)
+ * Clear a specific item from cache
+ * @param key Cache key
  */
-export function initCacheCleanup(interval = 5 * 60 * 1000): () => void {
-  const timer = setInterval(() => {
-    memoryCache.cleanup();
-  }, interval);
+export function clearCacheItem(key: string): void {
+  if (memoryCache.has(key)) {
+    memoryCache.delete(key);
+  }
+}
 
-  // Return cleanup function
-  return () => clearInterval(timer);
+/**
+ * Clear all items from cache
+ */
+export function clearCache(): void {
+  memoryCache.clear();
+}
+
+/**
+ * Get cache size (number of items)
+ * @returns Number of items in cache
+ */
+export function getCacheSize(): number {
+  return memoryCache.size;
+}
+
+/**
+ * Check if a key exists in cache and is not expired
+ * @param key Cache key
+ * @param maxAge Maximum age of cache in milliseconds
+ * @returns Boolean indicating if valid cache entry exists
+ */
+export function hasValidCache(key: string, maxAge = DEFAULT_CACHE_TIME): boolean {
+  const cached = memoryCache.get(key);
+
+  if (!cached) {
+    return false;
+  }
+
+  const now = Date.now();
+  return now - cached.timestamp <= maxAge;
+}
+
+/**
+ * Fetch with cache utility
+ * @param key Cache key
+ * @param fetchFn Function to fetch data if not in cache
+ * @param maxAge Maximum age of cache in milliseconds
+ * @returns Promise resolving to data
+ */
+export async function fetchWithCache<T>(
+  key: string,
+  fetchFn: () => Promise<T>,
+  maxAge = DEFAULT_CACHE_TIME
+): Promise<T> {
+  // Try to get from cache first
+  const cached = getFromCache<T>(key, maxAge);
+
+  if (cached !== null) {
+    return cached;
+  }
+
+  // If not in cache or expired, fetch fresh data
+  const data = await fetchFn();
+
+  // Store in cache
+  setInCache(key, data);
+
+  return data;
 }

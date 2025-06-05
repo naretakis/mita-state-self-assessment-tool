@@ -9,19 +9,20 @@
     "type": "git",
     "url": "https://github.com/username/mita-state-self-assessment-tool"
   },
+  "type": "commonjs",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
-    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx . --fix",
-    "lint:report": "eslint --ext .js,.jsx,.ts,.tsx . --output-file eslint-report.json --format json",
+    "lint": "eslint --config eslint.config.mjs ./src",
+    "lint:fix": "eslint --config eslint.config.mjs ./src --fix",
+    "lint:report": "eslint --config eslint.config.mjs ./src --output-file eslint-report.json --format json",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css}\"",
-    "check": "npm run lint && npm run format:check && npm run test",
+    "check": "npm run format:check && npm run lint && npm run test",
     "export": "next export"
   },
   "dependencies": {
@@ -44,6 +45,7 @@
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
     "@eslint/config-array": "^0.20.0",
+    "@eslint/js": "^9.28.0",
     "@eslint/object-schema": "^2.1.6",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
@@ -55,6 +57,8 @@
     "@types/react-dom": "^18.2.13",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
+    "@xmldom/xmldom": "^0.8.10",
+    "domexception": "^4.0.0",
     "eslint": "^9.28.0",
     "eslint-config-next": "^13.5.4",
     "eslint-config-prettier": "^9.0.0",
@@ -72,8 +76,7 @@
     "prettier": "^3.0.3",
     "rimraf": "^5.0.5",
     "typescript": "^5.2.2",
-    "domexception": "^4.0.0",
-    "@xmldom/xmldom": "^0.8.10"
+    "typescript-eslint": "^8.33.1"
   },
   "overrides": {
     "glob": "^10.3.10",

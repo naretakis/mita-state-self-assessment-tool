@@ -1,5 +1,6 @@
-import { CapabilityDefinition } from '../types';
-import { memoryCache, CACHE_DURATIONS } from './cacheUtils';
+import { memoryCache } from './cacheUtils';
+
+import type { CapabilityDefinition } from '../types';
 
 /**
  * Client-side utility for loading capability content
@@ -12,9 +13,9 @@ export async function loadCapabilityContent(
   capabilityId: string
 ): Promise<CapabilityDefinition | null> {
   // Check cache first
-  const cachedCapability = memoryCache.get<CapabilityDefinition>(`capability-${capabilityId}`);
-  if (cachedCapability) {
-    return cachedCapability;
+  const cachedItem = memoryCache.get(`capability-${capabilityId}`);
+  if (cachedItem) {
+    return cachedItem.data as CapabilityDefinition;
   }
 
   try {
@@ -27,11 +28,14 @@ export async function loadCapabilityContent(
     const content = await response.text();
 
     // Use dynamic import to load the parser only when needed
-    const { parseCapabilityMarkdown } = await import('./markdownParser');
+    const { parseCapabilityMarkdown } = await import('./capabilityParser');
     const capability = parseCapabilityMarkdown(content);
 
     // Cache the result
-    memoryCache.set(`capability-${capabilityId}`, capability, CACHE_DURATIONS.MEDIUM);
+    memoryCache.set(`capability-${capabilityId}`, {
+      data: capability,
+      timestamp: Date.now(),
+    });
 
     return capability;
   } catch (error) {

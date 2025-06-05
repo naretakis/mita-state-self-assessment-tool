@@ -1,69 +1,54 @@
 /**
- * Utility for dynamic imports with code splitting
- * This helps reduce initial bundle size by loading components only when needed
+ * Utility for dynamic imports with proper TypeScript typing
  */
 
-import { ComponentType, lazy, LazyExoticComponent } from 'react';
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
+import type { ComponentType, LazyExoticComponent } from 'react';
 
 /**
- * Dynamically imports a component with error handling
- * @param importFn - Import function that returns a promise
- * @returns A lazy-loaded component
+ * Dynamically import a component
+ * @param importFn Function that returns a dynamic import
+ * @returns Lazy loaded component
  */
-export function dynamicImport<T extends ComponentType<unknown>>(
+export function dynamicImport<T extends ComponentType<any>>(
   importFn: () => Promise<{ default: T }>
 ): LazyExoticComponent<T> {
-  return lazy(() => {
-    return importFn().catch(error => {
-      console.error('Error loading component:', error);
-      // Return a minimal fallback component
-      return {
-        default: (() =>
-          React.createElement('div', null, 'Failed to load component')) as unknown as T,
-      };
-    });
-  });
+  return lazy(importFn);
 }
 
 /**
- * Preloads a component without rendering it
- * Useful for preloading components that will be needed soon
- * @param importFn - Import function that returns a promise
+ * Wrapper component for lazy loaded components
+ * @param props Component props
+ * @returns Suspense wrapped component
  */
-export function preloadComponent<T extends ComponentType<unknown>>(
-  importFn: () => Promise<{ default: T }>
-): void {
-  importFn().catch(error => {
-    console.error('Error preloading component:', error);
-  });
+export function LazyComponent<T>(
+  props: {
+    component: LazyExoticComponent<ComponentType<T>>;
+    fallback?: React.ReactNode;
+  } & T
+): JSX.Element {
+  const { component, fallback = React.createElement('div', null, 'Loading...'), ...rest } = props;
+
+  return React.createElement(Suspense, { fallback }, React.createElement(component, rest));
 }
 
 /**
- * Creates a dynamic import with retry logic
- * @param importFn - Import function that returns a promise
- * @param retries - Number of retries (default: 3)
- * @returns A function that returns a promise resolving to the module
+ * Create a lazy loaded component with suspense
+ * @param importFn Function that returns a dynamic import
+ * @param fallback Fallback component to show while loading
+ * @returns Function that returns a lazy loaded component
  */
-export function createRetryableImport<T>(
-  importFn: () => Promise<T>,
-  retries = 3
-): () => Promise<T> {
-  return () =>
-    new Promise<T>((resolve, reject) => {
-      const attempt = (attemptsLeft: number) => {
-        importFn()
-          .then(resolve)
-          .catch(error => {
-            if (attemptsLeft <= 1) {
-              reject(error);
-            } else {
-              // Exponential backoff
-              const delay = Math.pow(2, retries - attemptsLeft + 1) * 100;
-              setTimeout(() => attempt(attemptsLeft - 1), delay);
-            }
-          });
-      };
-      attempt(retries);
+export function createLazyComponent<T extends ComponentType<any>>(
+  importFn: () => Promise<{ default: T }>,
+  fallback?: React.ReactNode
+) {
+  const LazyComp = dynamicImport(importFn);
+
+  return function (props: any): JSX.Element {
+    return React.createElement(LazyComponent, {
+      component: LazyComp,
+      fallback,
+      ...props,
     });
+  };
 }

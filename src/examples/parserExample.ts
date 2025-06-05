@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { parseCapabilityMarkdown, loadCapabilityDefinitions } from '../utils/markdownParser';
+
+import { parseCapabilityMarkdown, loadCapabilityDefinitions } from '../utils/capabilityParser';
 
 /**
  * Example demonstrating how to use the markdown parser

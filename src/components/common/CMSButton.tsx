@@ -1,8 +1,6 @@
 import React from 'react';
-import { Button as DSButton } from '@cmsgov/design-system';
 
-// Define the correct variation type based on CMS Design System
-type ButtonVariation = 'solid' | 'ghost';
+import { Button as DSButton } from '@cmsgov/design-system';
 
 interface CMSButtonProps {
   label: string;

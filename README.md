@@ -82,18 +82,19 @@ mita-state-self-assessment-tool/
 
 ## Available Scripts
 
-- `npm run dev`: Start the development server
-- `npm run build`: Build the application for production
-- `npm start`: Start the production server
+- `npm run format`: Format code with Prettier
+- `npm run format:check`: Check formatting without making changes
 - `npm run lint`: Run ESLint to check code quality
 - `npm run lint:fix`: Automatically fix ESLint issues
 - `npm run lint:report`: Generate a JSON report of linting issues
 - `npm test`: Run all tests
 - `npm run test:watch`: Run tests in watch mode
 - `npm run test:coverage`: Generate test coverage report
-- `npm run format`: Format code with Prettier
-- `npm run format:check`: Check formatting without making changes
+- `npm run dev`: Start the development server
+- `npm run build`: Build the application for production
+
 - `npm run check`: Run linting, formatting checks, and tests
+- `npm start`: Start the production server
 - `npm run export`: Export the application as static HTML
 
 ## Development Workflow

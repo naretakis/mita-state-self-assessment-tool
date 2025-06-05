@@ -1,7 +1,9 @@
 import React from 'react';
-import { render, screen } from '../../../utils/test-utils';
+
 import userEvent from '@testing-library/user-event';
+
 import { mockAssessmentData } from '../../../fixtures/mockData';
+import { render, screen } from '../../../utils/test-utils';
 
 // This is a placeholder import - replace with your actual component path
 // import AssessmentForm from '@/components/assessment/AssessmentForm';
@@ -20,7 +22,7 @@ const AssessmentForm = ({ assessment, onSave }) => (
 describe('AssessmentForm Integration', () => {
   test('renders assessment form with data', () => {
     render(<AssessmentForm assessment={mockAssessmentData} onSave={jest.fn()} />);
-    
+
     expect(screen.getByText('Assessment Form')).toBeInTheDocument();
     expect(screen.getByTestId('assessment-title')).toHaveTextContent(mockAssessmentData.title);
   });
@@ -28,12 +30,12 @@ describe('AssessmentForm Integration', () => {
   test('calls onSave when save button is clicked', async () => {
     const handleSave = jest.fn();
     const user = userEvent.setup();
-    
+
     render(<AssessmentForm assessment={mockAssessmentData} onSave={handleSave} />);
-    
+
     const saveButton = screen.getByTestId('save-button');
     await user.click(saveButton);
-    
+
     expect(handleSave).toHaveBeenCalledTimes(1);
     expect(handleSave).toHaveBeenCalledWith(mockAssessmentData);
   });

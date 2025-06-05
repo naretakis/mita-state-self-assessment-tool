@@ -1,6 +1,6 @@
 /**
  * End-to-end test for the assessment workflow
- * 
+ *
  * Note: This is a placeholder for future e2e tests.
  * You may need to set up a tool like Playwright or Cypress for actual e2e testing.
  */

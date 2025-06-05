@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
-import Image, { ImageProps } from 'next/image';
+
+import Image from 'next/image';
+
+import type { ImageProps } from 'next/image';
 
 interface OptimizedImageProps extends Omit<ImageProps, 'onLoad' | 'onError'> {
   fallbackSrc?: string;

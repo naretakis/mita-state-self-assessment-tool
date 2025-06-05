@@ -1,5 +1,7 @@
 import fs from 'fs';
-import { loadCapabilityDefinitions, parseCapabilityMarkdown } from '../utils/markdownParser';
+
+import { loadCapabilityDefinitions, parseCapabilityMarkdown } from '../utils/capabilityParser';
+
 import type { CapabilityDefinition } from '../types';
 
 /**

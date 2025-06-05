@@ -1,7 +1,11 @@
-import type { AppProps } from 'next/app';
+import React, { useEffect } from 'react';
+
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+
 import { CMSProvider, ErrorBoundary } from '../components';
+
+import type { AppProps } from 'next/app';
+
 import '../styles/globals.css';
 
 export default function App({ Component, pageProps }: AppProps) {

@@ -1,233 +1,140 @@
-import fs from 'fs';
-import path from 'path';
 import matter from 'gray-matter';
-import { CapabilityDefinition, DimensionDefinition, CapabilityFrontMatter } from '../types';
+import yaml from 'js-yaml';
+
+import type { CapabilityLevel } from '../services/StorageService';
 
 /**
- * Parses a markdown file containing a MITA capability definition
- * @param fileContent Content of the markdown file
- * @returns Parsed CapabilityDefinition object
+ * Interface for parsed markdown content
  */
-export function parseCapabilityMarkdown(fileContent: string): CapabilityDefinition {
-  // Parse front matter and content
-  const { data, content } = matter(fileContent);
-  const frontMatter = data as CapabilityFrontMatter;
-
-  // Generate a unique ID based on domain and capability name
-  const id = `${frontMatter.capabilityDomain.toLowerCase()}-${frontMatter.capabilityArea.toLowerCase().replace(/\s+/g, '-')}`;
-
-  // Determine module name from domain if not explicitly provided
-  // This is a simplification - in a real implementation, there might be a mapping of domains to modules
-  const moduleName = frontMatter.capabilityDomain;
-
-  // Initialize the capability definition
-  const capabilityDefinition: CapabilityDefinition = {
-    id,
-    name: frontMatter.capabilityArea,
-    domainName: frontMatter.capabilityDomain,
-    moduleName,
-    version: String(frontMatter.version), // Convert to string to ensure consistent type
-    lastUpdated: String(frontMatter.capabilityAreaLastUpdated), // Convert to string
-    description: '',
-    dimensions: {
-      outcome: createEmptyDimension(),
-      role: createEmptyDimension(),
-      businessProcess: createEmptyDimension(),
-      information: createEmptyDimension(),
-      technology: createEmptyDimension(),
-    },
-  };
-
-  // Parse the markdown content
-  const sections = parseMarkdownSections(content);
-
-  // Extract capability description
-  capabilityDefinition.description =
-    sections[`Capability Area: ${frontMatter.capabilityArea}`] || '';
-
-  // Extract dimensions
-  extractDimension(sections, 'Outcomes', capabilityDefinition.dimensions.outcome);
-  extractDimension(sections, 'Roles', capabilityDefinition.dimensions.role);
-  extractDimension(sections, 'Business Processes', capabilityDefinition.dimensions.businessProcess);
-  extractDimension(sections, 'Information', capabilityDefinition.dimensions.information);
-  extractDimension(sections, 'Technology', capabilityDefinition.dimensions.technology);
-
-  return capabilityDefinition;
+export interface ParsedContent {
+  metadata: ContentMetadata;
+  content: string;
 }
 
 /**
- * Loads all capability markdown files from a directory
- * @param directoryPath Path to directory containing markdown files
- * @returns Array of parsed CapabilityDefinition objects
+ * Interface for content metadata
  */
-export async function loadCapabilityDefinitions(
-  directoryPath: string
-): Promise<CapabilityDefinition[]> {
-  const files = fs.readdirSync(directoryPath).filter(file => file.endsWith('.md'));
+export interface ContentMetadata {
+  title: string;
+  description?: string;
+  businessArea?: string;
+  category?: string;
+  tags?: string[];
+  levels?: CapabilityLevel[];
+  lastUpdated?: string;
+  version?: string;
+  [key: string]: unknown;
+}
 
-  const capabilities: CapabilityDefinition[] = [];
+/**
+ * Parse markdown content with frontmatter
+ * @param markdown Raw markdown content
+ * @returns Parsed content with metadata and content
+ */
+export function parseMarkdown(markdown: string): ParsedContent {
+  try {
+    const { data, content } = matter(markdown, {
+      engines: {
+        yaml: s => yaml.load(s) as Record<string, unknown>,
+      },
+    });
 
-  for (const file of files) {
-    const filePath = path.join(directoryPath, file);
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    try {
-      const capability = parseCapabilityMarkdown(fileContent);
-      capabilities.push(capability);
-    } catch (error) {
-      console.error(`Error parsing ${file}:`, error);
-    }
+    return {
+      metadata: data as ContentMetadata,
+      content: content.trim(),
+    };
+  } catch (error) {
+    console.error('Error parsing markdown:', error);
+    return {
+      metadata: { title: 'Error' },
+      content: 'Failed to parse content.',
+    };
   }
-
-  return capabilities;
 }
 
 /**
- * Helper function to create an empty dimension definition
+ * Extract capability levels from markdown content
+ * @param content Markdown content
+ * @returns Array of capability levels
  */
-function createEmptyDimension(): DimensionDefinition {
-  return {
-    description: '',
-    assessmentQuestions: [],
-    maturityLevels: {
-      level1: '',
-      level2: '',
-      level3: '',
-      level4: '',
-      level5: '',
-    },
-  };
-}
+export function extractCapabilityLevels(content: string): CapabilityLevel[] {
+  const levels: CapabilityLevel[] = [];
+  const levelRegex = /## Level (\d+)[\r\n]+([\s\S]*?)(?=## Level \d+|$)/g;
 
-/**
- * Parse markdown content into sections by headers
- */
-function parseMarkdownSections(content: string): Record<string, string> {
-  const sections: Record<string, string> = {};
-
-  // Split content by level 2 headers (##)
-  const level2Regex = /^## (.+)$/gm;
   let match;
-  let lastIndex = 0;
-  let lastHeader = '';
+  while ((match = levelRegex.exec(content)) !== null) {
+    const levelNumber = parseInt(match[1], 10);
+    const levelContent = match[2].trim();
 
-  while ((match = level2Regex.exec(content)) !== null) {
-    if (lastHeader) {
-      const sectionContent = content.substring(lastIndex, match.index).trim();
-      sections[lastHeader] = sectionContent;
+    // Extract description (first paragraph after level heading)
+    const descriptionMatch = levelContent.match(/^(.*?)(?=\n\n|\n###|$)/s);
+    const description = descriptionMatch ? descriptionMatch[0].trim() : '';
+
+    // Extract criteria (bullet points)
+    const criteriaRegex = /[*-] (.*?)(?=\n[*-]|\n\n|$)/g;
+    const criteria: string[] = [];
+
+    let criteriaMatch;
+    while ((criteriaMatch = criteriaRegex.exec(levelContent)) !== null) {
+      criteria.push(criteriaMatch[1].trim());
     }
 
-    lastHeader = match[1];
-    lastIndex = match.index + match[0].length;
+    levels.push({
+      level: levelNumber,
+      description,
+      criteria,
+    });
   }
 
-  // Add the last section
-  if (lastHeader) {
-    sections[lastHeader] = content.substring(lastIndex).trim();
+  return levels;
+}
+
+/**
+ * Extract sections from markdown content
+ * @param content Markdown content
+ * @returns Object with sections as keys and content as values
+ */
+export function extractSections(content: string): Record<string, string> {
+  const sections: Record<string, string> = {};
+  const sectionRegex = /## ([^\n]+)[\r\n]+([\s\S]*?)(?=## [^\n]+|$)/g;
+
+  let match;
+  while ((match = sectionRegex.exec(content)) !== null) {
+    const sectionName = match[1].trim();
+    const sectionContent = match[2].trim();
+    sections[sectionName] = sectionContent;
   }
 
   return sections;
 }
 
 /**
- * Extract dimension information from markdown sections
+ * Generate markdown from content metadata and sections
+ * @param metadata Content metadata
+ * @param content Main content
+ * @returns Markdown string
  */
-function extractDimension(
-  sections: Record<string, string>,
-  dimensionName: string,
-  dimension: DimensionDefinition
-): void {
-  const sectionContent = sections[dimensionName];
-  if (!sectionContent) return;
+export function generateMarkdown(metadata: ContentMetadata, content: string): string {
+  const frontmatter = yaml.dump(metadata);
 
-  // Parse subsections
-  const subsections = parseSubsections(sectionContent);
-
-  // Extract description
-  dimension.description = subsections['Description'] || '';
-
-  // Extract assessment questions
-  if (subsections['Assessment Questions']) {
-    // Split by numbered list items (e.g., "1. ", "2. ", etc.)
-    const questionsText = subsections['Assessment Questions'];
-    const questions = questionsText
-      .split(/\d+\.\s+/)
-      .filter(q => q.trim().length > 0)
-      .map(q => q.trim());
-
-    dimension.assessmentQuestions = questions;
-  }
-
-  // Extract maturity levels
-  if (subsections['Maturity Level Definitions']) {
-    const maturityLevels = parseMaturityLevels(subsections['Maturity Level Definitions']);
-    dimension.maturityLevels = {
-      level1: maturityLevels['Level 1: Initial'] || '',
-      level2: maturityLevels['Level 2: Repeatable'] || '',
-      level3: maturityLevels['Level 3: Defined'] || '',
-      level4: maturityLevels['Level 4: Managed'] || '',
-      level5: maturityLevels['Level 5: Optimized'] || '',
-    };
-  }
+  return `---\n${frontmatter}---\n\n${content}`;
 }
 
 /**
- * Parse subsections within a section (### headers)
+ * Extract tags from markdown content
+ * @param content Markdown content
+ * @returns Array of tags
  */
-function parseSubsections(content: string): Record<string, string> {
-  const subsections: Record<string, string> = {};
+export function extractTags(content: string): string[] {
+  const tagRegex = /\s#([a-zA-Z0-9_-]+)/g;
+  const tags: string[] = [];
 
-  // Split content by level 3 headers (###)
-  const level3Regex = /^### (.+)$/gm;
   let match;
-  let lastIndex = 0;
-  let lastHeader = '';
-
-  while ((match = level3Regex.exec(content)) !== null) {
-    if (lastHeader) {
-      const sectionContent = content.substring(lastIndex, match.index).trim();
-      subsections[lastHeader] = sectionContent;
+  while ((match = tagRegex.exec(content)) !== null) {
+    if (match[1]) {
+      tags.push(match[1]);
     }
-
-    lastHeader = match[1];
-    lastIndex = match.index + match[0].length;
   }
 
-  // Add the last subsection
-  if (lastHeader) {
-    subsections[lastHeader] = content.substring(lastIndex).trim();
-  }
-
-  return subsections;
+  return [...new Set(tags)]; // Remove duplicates
 }
-
-/**
- * Parse maturity levels from the maturity level definitions section
- */
-function parseMaturityLevels(content: string): Record<string, string> {
-  const levels: Record<string, string> = {};
-
-  // Split content by level 4 headers (####)
-  const level4Regex = /^#### (.+)$/gm;
-  let match;
-  let lastIndex = 0;
-  let lastHeader = '';
-
-  while ((match = level4Regex.exec(content)) !== null) {
-    if (lastHeader) {
-      const levelContent = content.substring(lastIndex, match.index).trim();
-      levels[lastHeader] = levelContent;
-    }
-
-    lastHeader = match[1];
-    lastIndex = match.index + match[0].length;
-  }
-
-  // Add the last level
-  if (lastHeader) {
-    levels[lastHeader] = content.substring(lastIndex).trim();
-  }
-
-  return levels;
-}
-
-// No need to re-export functions that are already exported

@@ -13,9 +13,9 @@ jest.mock('next/router', () => ({
     asPath: '/',
     events: {
       on: jest.fn(),
-      off: jest.fn()
-    }
-  })
+      off: jest.fn(),
+    },
+  }),
 }));
 
 // Mock localStorage
@@ -24,9 +24,9 @@ Object.defineProperty(window, 'localStorage', {
     getItem: jest.fn(),
     setItem: jest.fn(),
     removeItem: jest.fn(),
-    clear: jest.fn()
+    clear: jest.fn(),
   },
-  writable: true
+  writable: true,
 });
 
 // Mock matchMedia
@@ -40,6 +40,6 @@ Object.defineProperty(window, 'matchMedia', {
     removeListener: jest.fn(),
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn()
-  }))
+    dispatchEvent: jest.fn(),
+  })),
 });
