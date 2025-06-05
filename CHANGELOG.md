@@ -3,6 +3,27 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
+## [0.2.0] - 2025-06-04 through 2025-06-05
+
+### MITA Framework Enhancements
+- Completed the parser utility for MITA capability definitions
+- Updated sample provider files with comprehensive content
+- Added provider-management.md and provider-termination.md content files
+- Enhanced provider-enrollment.md with additional assessment questions and maturity level details
+
+### Code Quality and Formatting
+- Implemented comprehensive linting overhaul with ESLint and Prettier
+- Added VSCode extensions and settings for consistent development experience
+- Fixed duplicate export in markdownParser.ts
+- Cleaned up ignore files and build files
+- Implemented extensive formatting and linting fixes across the codebase
+
+### Parser Implementation
+- Added parseCapabilityMarkdown function to extract structured data from markdown files
+- Implemented dimension parsing for ORBIT framework (Outcomes, Roles, Business Processes, Information, Technology)
+- Added support for maturity level definitions extraction
+- Created utility functions for dimension creation and management
+
 ## [0.1.0] - 2025-05-29 through 2025-05-01
 
 ### Project Setup and Infrastructure
