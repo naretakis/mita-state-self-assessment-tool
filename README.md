@@ -86,10 +86,14 @@ mita-state-self-assessment-tool/
 - `npm run build`: Build the application for production
 - `npm start`: Start the production server
 - `npm run lint`: Run ESLint to check code quality
+- `npm run lint:fix`: Automatically fix ESLint issues
+- `npm run lint:report`: Generate a JSON report of linting issues
 - `npm test`: Run all tests
 - `npm run test:watch`: Run tests in watch mode
 - `npm run test:coverage`: Generate test coverage report
 - `npm run format`: Format code with Prettier
+- `npm run format:check`: Check formatting without making changes
+- `npm run check`: Run linting, formatting checks, and tests
 - `npm run export`: Export the application as static HTML
 
 ## Development Workflow
@@ -102,7 +106,8 @@ mita-state-self-assessment-tool/
 
 2. **Code Style**:
    - Follow the ESLint and Prettier configurations
-   - Run `npm run lint` and `npm run format` before committing
+   - Run `npm run check` before committing
+   - VS Code users: Install recommended extensions for automatic formatting
 
 3. **Testing**:
    - Write tests for new features and bug fixes
