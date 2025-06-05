@@ -1,21 +1,21 @@
 ---
 capabilityDomain: Provider
-capabilityArea: Provider Enrollment
+capabilityArea: Provider Termination
 version: 1.1
-capabilityAreaCreated: 2025-02-02
-capabilityAreaLastUpdated: 2025-02-03
-assessmentCreated: 2025-05-01
-assessmentUpdated: 2025-05-15
-assessmentStatus: in-progress
+capabilityAreaCreated: 2025-06-01
+capabilityAreaLastUpdated: 2025-06-05
+assessmentCreated: 
+assessmentUpdated: 
+assessmentStatus: 
 ---
 
 ## Capability Domain: Provider
 
 The Provider capability domain encompasses three related areas; Provider Enrollment, Provider Management, and Provider Termination. 
 
-## Capability Area: Provider Enrollment
+## Capability Area: Provider Termination
 
-Provider Enrollment encompasses the processes and systems used to register healthcare providers in the Medicaid program, including application processing, screening, verification, and enrollment decisions.
+Provider Termination encompasses the processes and systems used to manage the end of provider participation in the Medicaid program, including voluntary terminations, terminations for cause, payment suspensions, and appeals management. This capability area aligns with CMS-Required outcomes PM5 (Termination), PM7 (Appeal), PM15 (Sanctions and Terminations), and PM18 (Payment Suspension).
 
 ## Outcomes
 
@@ -23,26 +23,29 @@ Provider Enrollment encompasses the processes and systems used to register healt
 The Outcomes dimension focuses on the results and effectiveness of the provider enrollment process.
 
 ### Assessment Questions
-1. How efficiently are providers enrolled in the Medicaid program?
-2. What percentage of applications are processed within standard timeframes?
-3. How effectively does the enrollment process validate provider credentials?
+1. How effectively are provider terminations managed?
+2. How well does the system support the provider appeals process?
+3. How efficiently are payment suspensions implemented and managed?
+4. How effectively does the system share termination information with other states and Medicare?
+5. How well does the system track and report on termination reasons and trends?
+6. How are termination notices and communications managed?
 
 ### Maturity Level Definitions
 
 #### Level 1: Initial
-Manual provider enrollment process with paper-based applications and limited validation of provider information.
+Manual provider termination process with paper-based documentation and limited tracking of termination reasons. Basic appeals management with minimal automation. Limited sharing of termination information with other programs.
 
 #### Level 2: Repeatable
-Basic online enrollment forms with some automated validation, though manual review is still required for most applications.
+Basic electronic termination process with standardized documentation and categorization of termination reasons. Structured appeals workflow with manual tracking. Basic reporting of termination information to other states and Medicare.
 
 #### Level 3: Defined
-Fully electronic enrollment process with automated validation against multiple sources and self-service status checking.
+Fully electronic termination process with automated workflow and comprehensive tracking of termination reasons. Integrated appeals management system with status tracking and notification. Automated sharing of termination information with other states and Medicare.
 
 #### Level 4: Managed
-Intelligent workflow with predictive analytics, real-time credential verification, and automated risk assessment.
+Intelligent termination workflow with automated business rules for termination conditions. Advanced appeals management with case analytics and decision support. Comprehensive information sharing with real-time updates to other programs and systems.
 
 #### Level 5: Optimized
-Continuous monitoring and revalidation with cross-program enrollment coordination and adaptive enrollment requirements based on provider risk.
+Continuous monitoring for termination conditions with proactive identification of potential issues. Integrated appeals management with predictive analytics and outcome tracking. Real-time bidirectional information sharing across states and federal programs with automated synchronization.
 
 ## Roles
 
