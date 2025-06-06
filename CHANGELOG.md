@@ -3,6 +3,20 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
+## [0.3.0] - 2025-06-06
+
+### Content Structure Implementation
+- Enhanced parseCapabilityMarkdown function to handle all five ORBIT dimensions (Outcome, Role, Business Process, Information, Technology)
+- Implemented ContentLoader component for dynamically loading capability definitions
+- Created ContentProvider with React Context for application-wide content access
+- Added CapabilityList and CapabilityDetail components for content display
+- Implemented comprehensive tests for content loading functionality
+
+### Code Quality and Formatting
+- Fixed import order issues across content components
+- Updated ESLint configuration for better code quality
+- Improved error handling in content loading components
+
 ## [0.2.0] - 2025-06-04 through 2025-06-05
 
 ### MITA Framework Enhancements
