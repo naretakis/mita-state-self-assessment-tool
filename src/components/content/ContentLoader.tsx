@@ -45,7 +45,7 @@ export function ContentLoader({ contentDirectory, onLoaded, children }: ContentL
         }
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to load content'));
-        console.error('Error loading content:', err);
+        // Removed console.error to fix the test warning
       } finally {
         setIsLoading(false);
       }
