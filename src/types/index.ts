@@ -50,6 +50,7 @@ export interface CapabilityDefinition {
   id: string;
   name: string;
   domainName: string;
+  domainDescription?: string;
   moduleName: string;
   version: string;
   lastUpdated: string;

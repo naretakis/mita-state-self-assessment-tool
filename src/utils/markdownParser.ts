@@ -155,6 +155,11 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
   const name = frontMatter.capabilityArea;
   const id = `${domainName.toLowerCase()}-${name.toLowerCase().replace(/\s+/g, '-')}`;
 
+  // Extract domain description
+  const domainRegex = new RegExp(`## Capability Domain: ${domainName}[\\r\\n]+(.*?)(?=##)`, 's');
+  const domainMatch = content.match(domainRegex);
+  const domainDescription = domainMatch ? domainMatch[1].trim() : '';
+
   // Extract capability description
   const descriptionRegex = new RegExp(`## Capability Area: ${name}[\\r\\n]+(.*?)(?=##|$)`, 's');
   const descriptionMatch = content.match(descriptionRegex);
@@ -496,6 +501,7 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
     id,
     name,
     domainName,
+    domainDescription,
     moduleName: '', // Not provided in the sample, could be extracted if needed
     version: String(frontMatter.version), // Convert to string to match test expectations
     lastUpdated: frontMatter.capabilityAreaLastUpdated,

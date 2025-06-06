@@ -11,6 +11,7 @@ jest.mock('../../../src/services/ContentService', () => {
         id: 'test-capability',
         name: 'Test Capability',
         domainName: 'Test Domain',
+        domainDescription: 'Test Domain Description',
         moduleName: 'Test Module',
         version: '1.0',
         lastUpdated: '2025-06-01',
@@ -80,7 +81,68 @@ jest.mock('../../../src/services/ContentService', () => {
           id: 'test-capability',
           name: 'Test Capability',
           domainName: 'Test Domain',
-          // ... other properties
+          domainDescription: 'Test Domain Description',
+          moduleName: 'Test Module',
+          version: '1.0',
+          lastUpdated: '2025-06-01',
+          description: 'Test description',
+          dimensions: {
+            outcome: {
+              description: 'Outcome description',
+              assessmentQuestions: ['Question 1', 'Question 2'],
+              maturityLevels: {
+                level1: 'Level 1 description',
+                level2: 'Level 2 description',
+                level3: 'Level 3 description',
+                level4: 'Level 4 description',
+                level5: 'Level 5 description',
+              },
+            },
+            role: {
+              description: 'Role description',
+              assessmentQuestions: ['Question 1', 'Question 2'],
+              maturityLevels: {
+                level1: 'Level 1 description',
+                level2: 'Level 2 description',
+                level3: 'Level 3 description',
+                level4: 'Level 4 description',
+                level5: 'Level 5 description',
+              },
+            },
+            businessProcess: {
+              description: 'Business Process description',
+              assessmentQuestions: ['Question 1', 'Question 2'],
+              maturityLevels: {
+                level1: 'Level 1 description',
+                level2: 'Level 2 description',
+                level3: 'Level 3 description',
+                level4: 'Level 4 description',
+                level5: 'Level 5 description',
+              },
+            },
+            information: {
+              description: 'Information description',
+              assessmentQuestions: ['Question 1', 'Question 2'],
+              maturityLevels: {
+                level1: 'Level 1 description',
+                level2: 'Level 2 description',
+                level3: 'Level 3 description',
+                level4: 'Level 4 description',
+                level5: 'Level 5 description',
+              },
+            },
+            technology: {
+              description: 'Technology description',
+              assessmentQuestions: ['Question 1', 'Question 2'],
+              maturityLevels: {
+                level1: 'Level 1 description',
+                level2: 'Level 2 description',
+                level3: 'Level 3 description',
+                level4: 'Level 4 description',
+                level5: 'Level 5 description',
+              },
+            },
+          },
         };
       }
       return null;
@@ -92,7 +154,11 @@ jest.mock('../../../src/services/ContentService', () => {
             id: 'test-capability',
             name: 'Test Capability',
             domainName: 'Test Domain',
-            // ... other properties
+            domainDescription: 'Test Domain Description',
+            moduleName: 'Test Module',
+            version: '1.0',
+            lastUpdated: '2025-06-01',
+            description: 'Test description',
           },
         ];
       }
@@ -175,6 +241,62 @@ describe('ContentLoader', () => {
           capabilities: [],
         })
       );
+    });
+  });
+
+  test('provides capability access methods', async () => {
+    const mockChildrenFn = jest.fn().mockReturnValue(<div>Test Content</div>);
+
+    render(<ContentLoader contentDirectory="/test/content">{mockChildrenFn}</ContentLoader>);
+
+    await waitFor(() => {
+      // Verify getCapability method is provided
+      const { getCapability } = mockChildrenFn.mock.calls[mockChildrenFn.mock.calls.length - 1][0];
+      const capability = getCapability('test-capability');
+
+      expect(capability).toBeDefined();
+      expect(capability?.id).toBe('test-capability');
+      expect(capability?.name).toBe('Test Capability');
+      expect(capability?.domainName).toBe('Test Domain');
+      expect(capability?.domainDescription).toBe('Test Domain Description');
+
+      // Verify dimensions are properly loaded
+      expect(capability?.dimensions.outcome).toBeDefined();
+      expect(capability?.dimensions.role).toBeDefined();
+      expect(capability?.dimensions.businessProcess).toBeDefined();
+      expect(capability?.dimensions.information).toBeDefined();
+      expect(capability?.dimensions.technology).toBeDefined();
+
+      // Verify maturity levels for each dimension
+      expect(capability?.dimensions.outcome.maturityLevels.level1).toBe('Level 1 description');
+      expect(capability?.dimensions.role.maturityLevels.level2).toBe('Level 2 description');
+      expect(capability?.dimensions.businessProcess.maturityLevels.level3).toBe(
+        'Level 3 description'
+      );
+      expect(capability?.dimensions.information.maturityLevels.level4).toBe('Level 4 description');
+      expect(capability?.dimensions.technology.maturityLevels.level5).toBe('Level 5 description');
+    });
+  });
+
+  test('provides domain filtering', async () => {
+    const mockChildrenFn = jest.fn().mockReturnValue(<div>Test Content</div>);
+
+    render(<ContentLoader contentDirectory="/test/content">{mockChildrenFn}</ContentLoader>);
+
+    await waitFor(() => {
+      // Verify getCapabilitiesByDomain method is provided
+      const { getCapabilitiesByDomain } =
+        mockChildrenFn.mock.calls[mockChildrenFn.mock.calls.length - 1][0];
+
+      // Test with existing domain
+      const capabilities = getCapabilitiesByDomain('Test Domain');
+      expect(capabilities).toHaveLength(1);
+      expect(capabilities[0].id).toBe('test-capability');
+      expect(capabilities[0].domainName).toBe('Test Domain');
+
+      // Test with non-existing domain
+      const emptyCapabilities = getCapabilitiesByDomain('Non-Existent Domain');
+      expect(emptyCapabilities).toHaveLength(0);
     });
   });
 });
