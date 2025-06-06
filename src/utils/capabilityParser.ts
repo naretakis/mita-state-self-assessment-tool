@@ -1,6 +1,3 @@
-import fs from 'fs';
-import path from 'path';
-
 import { parseMarkdown, extractSections } from './markdownParser';
 
 /**
@@ -116,28 +113,20 @@ function extractMaturityLevel(content: string, levelName: string): string {
 
 /**
  * Load all capability definitions from a directory
- * @param directoryPath Path to directory containing capability markdown files
+ * This function is meant to be used in a server context or during build time
+ * @param capabilities Array of capability data objects
  * @returns Array of capability definitions
  */
-export async function loadCapabilityDefinitions(
-  directoryPath: string
-): Promise<CapabilityDefinition[]> {
+export function loadCapabilityDefinitions(capabilityData: string[]): CapabilityDefinition[] {
   const capabilities: CapabilityDefinition[] = [];
 
   try {
-    const files = fs.readdirSync(directoryPath);
-
-    for (const file of files) {
-      if (file.endsWith('.md')) {
-        const filePath = path.join(directoryPath, file);
-        const content = fs.readFileSync(filePath, 'utf8');
-
-        try {
-          const capability = parseCapabilityMarkdown(content);
-          capabilities.push(capability);
-        } catch (error) {
-          console.error(`Error parsing capability file ${file}:`, error);
-        }
+    for (const content of capabilityData) {
+      try {
+        const capability = parseCapabilityMarkdown(content);
+        capabilities.push(capability);
+      } catch (error) {
+        console.error(`Error parsing capability content:`, error);
       }
     }
   } catch (error) {
