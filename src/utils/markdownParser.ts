@@ -238,7 +238,7 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
 
   // Parse Roles section
   if (content.includes('## Roles')) {
-    const rolesSection = content.split('## Roles')[1];
+    const rolesSection = content.split('## Roles')[1].split('## Business Processes')[0];
 
     // Description
     if (rolesSection.includes('### Description')) {
@@ -269,8 +269,226 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
     }
 
     if (rolesSection.includes('#### Level 2: Repeatable')) {
-      const level2Text = rolesSection.split('#### Level 2: Repeatable')[1].trim();
+      const level2Text = rolesSection
+        .split('#### Level 2: Repeatable')[1]
+        .split('#### Level 3:')[0]
+        .trim();
       dimensions.role.maturityLevels.level2 = level2Text;
+    }
+
+    if (rolesSection.includes('#### Level 3: Defined')) {
+      const level3Text = rolesSection
+        .split('#### Level 3: Defined')[1]
+        .split('#### Level 4:')[0]
+        .trim();
+      dimensions.role.maturityLevels.level3 = level3Text;
+    }
+
+    if (rolesSection.includes('#### Level 4: Managed')) {
+      const level4Text = rolesSection
+        .split('#### Level 4: Managed')[1]
+        .split('#### Level 5:')[0]
+        .trim();
+      dimensions.role.maturityLevels.level4 = level4Text;
+    }
+
+    if (rolesSection.includes('#### Level 5: Optimized')) {
+      const level5Text = rolesSection.split('#### Level 5: Optimized')[1].trim();
+      dimensions.role.maturityLevels.level5 = level5Text;
+    }
+  }
+
+  // Parse Business Processes section
+  if (content.includes('## Business Processes')) {
+    const businessProcessSection = content
+      .split('## Business Processes')[1]
+      .split('## Information')[0];
+
+    // Description
+    if (businessProcessSection.includes('### Description')) {
+      const descriptionText = businessProcessSection
+        .split('### Description')[1]
+        .split('### Assessment Questions')[0]
+        .trim();
+      dimensions.businessProcess.description = descriptionText;
+    }
+
+    // Assessment Questions
+    if (businessProcessSection.includes('### Assessment Questions')) {
+      const questionsText = businessProcessSection
+        .split('### Assessment Questions')[1]
+        .split('### Maturity Level Definitions')[0]
+        .trim();
+      const questions = questionsText.split(/\r?\n/).filter(q => q.trim());
+      dimensions.businessProcess.assessmentQuestions = questions.map(q =>
+        q.replace(/^\d+\.\s*/, '').trim()
+      );
+    }
+
+    // Maturity Levels
+    if (businessProcessSection.includes('#### Level 1: Initial')) {
+      const level1Text = businessProcessSection
+        .split('#### Level 1: Initial')[1]
+        .split('#### Level 2:')[0]
+        .trim();
+      dimensions.businessProcess.maturityLevels.level1 = level1Text;
+    }
+
+    if (businessProcessSection.includes('#### Level 2: Repeatable')) {
+      const level2Text = businessProcessSection
+        .split('#### Level 2: Repeatable')[1]
+        .split('#### Level 3:')[0]
+        .trim();
+      dimensions.businessProcess.maturityLevels.level2 = level2Text;
+    }
+
+    if (businessProcessSection.includes('#### Level 3: Defined')) {
+      const level3Text = businessProcessSection
+        .split('#### Level 3: Defined')[1]
+        .split('#### Level 4:')[0]
+        .trim();
+      dimensions.businessProcess.maturityLevels.level3 = level3Text;
+    }
+
+    if (businessProcessSection.includes('#### Level 4: Managed')) {
+      const level4Text = businessProcessSection
+        .split('#### Level 4: Managed')[1]
+        .split('#### Level 5:')[0]
+        .trim();
+      dimensions.businessProcess.maturityLevels.level4 = level4Text;
+    }
+
+    if (businessProcessSection.includes('#### Level 5: Optimized')) {
+      const level5Text = businessProcessSection.split('#### Level 5: Optimized')[1].trim();
+      dimensions.businessProcess.maturityLevels.level5 = level5Text;
+    }
+  }
+
+  // Parse Information section
+  if (content.includes('## Information')) {
+    const informationSection = content.split('## Information')[1].split('## Technology')[0];
+
+    // Description
+    if (informationSection.includes('### Description')) {
+      const descriptionText = informationSection
+        .split('### Description')[1]
+        .split('### Assessment Questions')[0]
+        .trim();
+      dimensions.information.description = descriptionText;
+    }
+
+    // Assessment Questions
+    if (informationSection.includes('### Assessment Questions')) {
+      const questionsText = informationSection
+        .split('### Assessment Questions')[1]
+        .split('### Maturity Level Definitions')[0]
+        .trim();
+      const questions = questionsText.split(/\r?\n/).filter(q => q.trim());
+      dimensions.information.assessmentQuestions = questions.map(q =>
+        q.replace(/^\d+\.\s*/, '').trim()
+      );
+    }
+
+    // Maturity Levels
+    if (informationSection.includes('#### Level 1: Initial')) {
+      const level1Text = informationSection
+        .split('#### Level 1: Initial')[1]
+        .split('#### Level 2:')[0]
+        .trim();
+      dimensions.information.maturityLevels.level1 = level1Text;
+    }
+
+    if (informationSection.includes('#### Level 2: Repeatable')) {
+      const level2Text = informationSection
+        .split('#### Level 2: Repeatable')[1]
+        .split('#### Level 3:')[0]
+        .trim();
+      dimensions.information.maturityLevels.level2 = level2Text;
+    }
+
+    if (informationSection.includes('#### Level 3: Defined')) {
+      const level3Text = informationSection
+        .split('#### Level 3: Defined')[1]
+        .split('#### Level 4:')[0]
+        .trim();
+      dimensions.information.maturityLevels.level3 = level3Text;
+    }
+
+    if (informationSection.includes('#### Level 4: Managed')) {
+      const level4Text = informationSection
+        .split('#### Level 4: Managed')[1]
+        .split('#### Level 5:')[0]
+        .trim();
+      dimensions.information.maturityLevels.level4 = level4Text;
+    }
+
+    if (informationSection.includes('#### Level 5: Optimized')) {
+      const level5Text = informationSection.split('#### Level 5: Optimized')[1].trim();
+      dimensions.information.maturityLevels.level5 = level5Text;
+    }
+  }
+
+  // Parse Technology section
+  if (content.includes('## Technology')) {
+    const technologySection = content.split('## Technology')[1];
+
+    // Description
+    if (technologySection.includes('### Description')) {
+      const descriptionText = technologySection
+        .split('### Description')[1]
+        .split('### Assessment Questions')[0]
+        .trim();
+      dimensions.technology.description = descriptionText;
+    }
+
+    // Assessment Questions
+    if (technologySection.includes('### Assessment Questions')) {
+      const questionsText = technologySection
+        .split('### Assessment Questions')[1]
+        .split('### Maturity Level Definitions')[0]
+        .trim();
+      const questions = questionsText.split(/\r?\n/).filter(q => q.trim());
+      dimensions.technology.assessmentQuestions = questions.map(q =>
+        q.replace(/^\d+\.\s*/, '').trim()
+      );
+    }
+
+    // Maturity Levels
+    if (technologySection.includes('#### Level 1: Initial')) {
+      const level1Text = technologySection
+        .split('#### Level 1: Initial')[1]
+        .split('#### Level 2:')[0]
+        .trim();
+      dimensions.technology.maturityLevels.level1 = level1Text;
+    }
+
+    if (technologySection.includes('#### Level 2: Repeatable')) {
+      const level2Text = technologySection
+        .split('#### Level 2: Repeatable')[1]
+        .split('#### Level 3:')[0]
+        .trim();
+      dimensions.technology.maturityLevels.level2 = level2Text;
+    }
+
+    if (technologySection.includes('#### Level 3: Defined')) {
+      const level3Text = technologySection
+        .split('#### Level 3: Defined')[1]
+        .split('#### Level 4:')[0]
+        .trim();
+      dimensions.technology.maturityLevels.level3 = level3Text;
+    }
+
+    if (technologySection.includes('#### Level 4: Managed')) {
+      const level4Text = technologySection
+        .split('#### Level 4: Managed')[1]
+        .split('#### Level 5:')[0]
+        .trim();
+      dimensions.technology.maturityLevels.level4 = level4Text;
+    }
+
+    if (technologySection.includes('#### Level 5: Optimized')) {
+      const level5Text = technologySection.split('#### Level 5: Optimized')[1].trim();
+      dimensions.technology.maturityLevels.level5 = level5Text;
     }
   }
 
