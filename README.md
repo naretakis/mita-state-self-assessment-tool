@@ -107,11 +107,14 @@ mita-state-self-assessment-tool/
 2. **Code Style**:
    - Follow the ESLint and Prettier configurations
    - Run `npm run check` before committing
-   - VS Code users: Install recommended extensions for automatic formatting
+   - VS Code users: Install recommended extensions for automatic formatting:
+     - ESLint (dbaeumer.vscode-eslint)
+     - Prettier (esbenp.prettier-vscode)
 
 3. **Testing**:
-   - Write tests for new features and bug fixes
+   - Write tests for new features and bug fixes using Jest
    - Ensure all tests pass before submitting a pull request
+   - Note: E2E tests are currently placeholders and will require Playwright or Cypress setup for actual implementation
 
 4. **Pull Requests**:
    - Create pull requests against the `dev` branch
@@ -166,15 +169,17 @@ The MITA NextGen framework uses a capability-based approach organized around ORB
 
 Each capability is assessed across these dimensions with maturity levels from 1 (Initial) to 5 (Optimized).
 
+The application includes a ContentService that loads capability definitions from markdown files and provides methods to access them by ID or domain. The capability definitions are parsed using the capabilityParser utility.
+
 ## Browser Storage
 
 The application uses browser storage for data persistence:
 
 - **localStorage**: For long-term storage of assessment data
 - **sessionStorage**: For temporary session data
-- **indexedDB**: For larger datasets and offline capabilities
+- **indexedDB**: For larger datasets and offline capabilities, implemented using the idb library
 
-The application checks for storage availability and provides appropriate fallbacks.
+The application includes a StorageService that provides a unified API for database operations and a useStorageAvailability hook that checks for storage availability and provides appropriate fallbacks.
 
 ## Performance Optimizations
 
@@ -198,13 +203,16 @@ The application follows accessibility best practices:
 
 ## Built With
 
-- [Next.js 15](https://nextjs.org/) - React framework
+- [Next.js 15.3.3](https://nextjs.org/) - React framework
 - [TypeScript](https://www.typescriptlang.org/) - Type-safe JavaScript
 - [CMS Design System](https://design.cms.gov/) - UI component library
 - [Chart.js](https://www.chartjs.org/) - Data visualization
 - [jsPDF](https://github.com/parallax/jsPDF) - PDF generation
 - [gray-matter](https://github.com/jonschlinkert/gray-matter) - Front matter parser
 - [react-markdown](https://github.com/remarkjs/react-markdown) - Markdown renderer
+- [js-yaml](https://github.com/nodeca/js-yaml) - YAML parsing
+- [idb](https://github.com/jakearchibald/idb) - IndexedDB with Promises
+- [Jest](https://jestjs.io/) - Testing framework
 
 ## Development Roadmap
 
