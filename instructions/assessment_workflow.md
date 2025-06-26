@@ -6,156 +6,183 @@ This document outlines the assessment workflow and user journey for the MITA Sta
 
 ## User Journey Map
 
+```mermaid
+flowchart LR
+    B["SS-A Tool Landing Page"] -- Getting Started link --> C["User Dashboard"]
+    B -- About MITA link --> D["Description page of what MITA is with link to external MITA site"]
+    D -- External MITA site link --> n1["External MITA site"]
+    D -- Getting Started link --> C
+    C -- Begin New Assessment link --> n2["Page to select Capability Domain and Capability Areas they want to use for the assessment"]
+    C -- Open Existing Assessment link --> n3["Open Existing Assessment"]
+    n2 -- Link to begin guided decision tree assessment --> n5["Multiple page guided walkthrough of assessment questions for the capability areas selected"]
+    n5 -- Assessment Summary Page link --> n6["MITA Maturity Assessment Score page showing the score for each capability area assessed"]
+    n6 --- n7["User can output the assessment and score as a report"] & n8@{ label: "The completed assessment is added to the user's dashboard" }
+    n6 -- Link back to the User Dashboard --> C
+    n3 -- Update/Edit link --> n5
+    n3 -- View link --> n9["Multi page guided walkthrough of assessment questions for the capability areas selected - READ ONLY"]
+    n9 -- Assessment Summary Page link --> n6
+    B@{ shape: rounded}
+    C@{ shape: rounded}
+    D@{ shape: rounded}
+    n1@{ shape: rounded}
+    n7@{ shape: braces}
+    n8@{ shape: braces}
 ```
-+----------------+     +----------------+     +----------------+     +----------------+     +----------------+
-|                |     |                |     |                |     |                |     |                |
-|  Preparation   |---->|   Assessment   |---->| Collaboration  |---->|   Reporting    |---->|  Utilization   |
-|                |     |                |     |                |     |                |     |                |
-+----------------+     +----------------+     +----------------+     +----------------+     +----------------+
+
+## Key User Journey Components
+
+### Landing Page
+
+#### User Actions
+* Access the SS-A Tool through web browser
+* Click "Getting Started" to proceed to dashboard
+* Click "About MITA" to learn about the framework
+* Navigate between information and action options
+
+#### System Behavior
+* Display welcome message and tool overview
+* Present clear navigation options with descriptive labels
+* Load quickly with minimal dependencies
+* Provide accessible entry points for all user types
+
+### User Dashboard
+
+#### User Actions
+* Review existing assessments and their status
+* Click "Begin New Assessment" to start fresh evaluation
+* Click "Open Existing Assessment" to continue or review previous work
+* Navigate back to landing page if needed
+
+#### System Behavior
+* Load and display saved assessments from browser storage
+* Show assessment progress indicators and completion status
+* Provide quick access to both creation and management functions
+* Display assessment metadata (dates, domains, completion status)
+
+### MITA Information Page
+
+#### User Actions
+* Read about MITA framework concepts and benefits
+* Click external link to visit official MITA website
+* Click "Getting Started" to proceed to dashboard
+* Navigate back to landing page
+
+#### System Behavior
+* Present educational content about MITA in accessible format
+* Open external MITA site in new tab/window
+* Maintain user's place in the application flow
+* Provide clear pathways to continue assessment process
+
+### Assessment Setup
+
+#### User Actions
+* Select capability domains relevant to their assessment
+* Choose specific capability areas within selected domains
+* Review selections before proceeding
+* Navigate back to modify selections if needed
+
+#### System Behavior
+* Display capability domains and areas in organized structure
+* Validate that at least one capability area is selected
+* Save selections to browser storage
+* Generate customized assessment flow based on selections
+
+### Guided Assessment Process
+
+#### User Actions
+* Progress through multi-page assessment questions
+* Select maturity levels for each ORBIT dimension
+* Provide supporting evidence in text fields
+* Document advancement plans
+* Save progress at any point
+* Navigate between assessment pages
+
+#### System Behavior
+* Present assessment questions in logical sequence
+* Auto-save user inputs every 30 seconds
+* Validate required fields before allowing progression
+* Track completion status across all dimensions
+* Provide contextual help and reference materials
+* Support both forward and backward navigation
+
+### Assessment Results
+
+#### User Actions
+* Review MITA maturity scores for assessed capability areas
+* Generate and download assessment reports
+* Return to dashboard to access other assessments
+* Share results with stakeholders
+
+#### System Behavior
+* Calculate and display maturity scores based on user inputs
+* Generate formatted PDF/CSV reports
+* Update assessment status to "Completed"
+* Add completed assessment to user's dashboard
+* Provide visualization of results across capability areas
+
+### Assessment Management
+
+#### User Actions
+* Choose between "Update/Edit" and "View" modes for existing assessments
+* Modify assessment responses in edit mode
+* Review completed assessments in read-only mode
+* Delete or archive old assessments
+
+#### System Behavior
+* Load existing assessment data from browser storage
+* Present appropriate interface based on selected mode (edit vs. view)
+* Maintain data integrity during updates
+* Track version history and modification dates
+* Provide confirmation dialogs for destructive actions
+
+## Assessment Navigation Flow
+
+The SS-A Tool implements a guided navigation approach:
+
+```
+SS-A Tool Landing Page
+ |
+ |-----> About MITA -----> External MITA Resources
+ |                    |
+ |                    v
+ |-----> Getting Started -----> User Dashboard
+                                |
+                                |-----> Begin New Assessment
+                                |        |
+                                |        v
+                                |       Select Capability Domain & Areas
+                                |        |
+                                |        v
+                                |       Guided Assessment Walkthrough
+                                |        |
+                                |        v
+                                |       Assessment Summary & Scoring
+                                |        |
+                                |        v
+                                |       Generate Reports & Return to Dashboard
+                                |
+                                |-----> Open Existing Assessment
+                                         |
+                                         |-----> Update/Edit -----> Guided Assessment Walkthrough
+                                         |
+                                         |-----> View (Read-Only) -----> Assessment Summary & Scoring
 ```
 
-## Phase 1: Preparation
+## Assessment Question Flow
 
-### User Actions
+Within the guided assessment walkthrough, each capability area follows this pattern:
 
-1. Access the SS-A Tool through a web browser
-2. Create a new assessment or load an existing one
-3. Select the state name and assessment metadata
-4. Review assessment instructions and MITA framework overview
-
-### System Behavior
-
-* Displays landing page with options to create or resume assessment
-* Loads assessment metadata input form for new assessments
-* Retrieves saved assessments from browser storage for resuming work
-* Provides contextual help and framework documentation
-
-## Phase 2: Assessment
-
-### User Actions
-
-1. Select a capability domain to assess (e.g., Provider Management)
-2. Choose a specific capability area within that domain
-3. Review capability definition and maturity criteria
-4. Assess current maturity level for each ORBIT dimension
-5. Provide evidence supporting the selected maturity level
-6. Document plans for advancement
-7. Save progress
-
-### System Behavior
-
-* Displays capability tree navigation
-* Loads capability definitions from markdown/YAML content
-* Presents assessment forms for each ORBIT dimension
-* Provides reference materials and maturity definitions
-* Validates user inputs for completeness
-* Saves assessment progress to browser storage
-* Provides visual indication of completion status
-
-## Phase 3: Collaboration
-
-### User Actions
-
-1. Export specific sections or the entire assessment as PDF or CSV
-2. Share exports with subject matter experts for input
-3. Review feedback from colleagues
-4. Update assessment based on collective input
-5. Import updates if collaborating across browsers/devices
-
-### System Behavior
-
-* Generates formatted PDF reports with assessment details
-* Creates structured CSV exports of assessment data
-* Provides import functionality for data from other sessions
-* Validates imports for data integrity
-* Merges imported data with existing assessment content
-
-## Phase 4: Reporting
-
-### User Actions
-
-1. View maturity dashboard showing assessment results
-2. Analyze strengths and gaps across capabilities
-3. Review progress toward target maturity levels
-4. Generate comprehensive assessment report
-5. Export final results in desired format (PDF/CSV)
-
-### System Behavior
-
-* Calculates aggregate maturity scores
-* Generates visualizations of maturity across capabilities
-* Compares current state to target state
-* Highlights improvement opportunities
-* Creates formatted reports with visualizations and details
-
-## Phase 5: Utilization
-
-### User Actions
-
-1. Use assessment results to inform APD development
-2. Share insights with leadership and stakeholders
-3. Incorporate findings into strategic planning
-4. Track progress against maturity goals over time
-
-### System Behavior
-
-* Provides guidance on using results for planning
-* Offers export formats suitable for presentations
-* Maintains historical assessment data for comparison
-
-## Decision Tree Navigation
-
-The SS-A Tool implements a guided decision tree approach to streamline the assessment process:
-
-```
-Start
- |
- v
-Select Capability Domain
- |
- v
-Select Capability Area
- |
- v
-Assessment Landing Page for Capability
- |
- |-----> Assess Outcome Dimension
- |        |
- |        v
- |       Answer Assessment Questions
- |        |
- |        v
- |       Select Maturity Level
- |        |
- |        v
- |       Provide Supporting Evidence
- |
- |-----> Assess Role Dimension
- |        |
- |        v
- |       [Same subprocess as Outcome]
- |
- |-----> Assess Business Process Dimension
- |        |
- |        v
- |       [Same subprocess as Outcome]
- |
- |-----> Assess Information Dimension
- |        |
- |        v
- |       [Same subprocess as Outcome]
- |
- |-----> Assess Technology Dimension
- |        |
- |        v
- |       [Same subprocess as Outcome]
- |
- v
-Review Capability Summary
- |
- v
-Save & Continue to Next Capability
-```
+1. **Capability Overview**: Introduction and context
+2. **ORBIT Dimension Assessment**: Systematic evaluation across:
+   - Outcome dimension
+   - Role dimension 
+   - Business Process dimension
+   - Information dimension
+   - Technology dimension
+3. **Maturity Level Selection**: Choose appropriate maturity level
+4. **Evidence Documentation**: Provide supporting evidence
+5. **Advancement Planning**: Document improvement plans
+6. **Progress Tracking**: Save and continue to next area
 
 ## Assessment States
 
@@ -190,13 +217,15 @@ Each dimension assessment includes the following components:
 
 ## Save and Resume Workflow
 
-The SS-A Tool implements an autosave approach with explicit save options:
+The SS-A Tool implements comprehensive data persistence:
 
 1. **Autosave**: Assessment data saved to browser storage every 30 seconds
 2. **Explicit Save**: User-triggered save action at any point
 3. **Navigation Warning**: Alert when leaving unsaved changes
-4. **Resume Options**: List of saved assessments on landing page
-5. **Storage Management**: Options to manage saved assessments
+4. **Dashboard Integration**: Completed assessments automatically appear on user dashboard
+5. **Assessment States**: Support for both editable and read-only viewing modes
+6. **Resume Options**: Access existing assessments through dashboard interface
+7. **Storage Management**: Options to manage saved assessments
 
 ## Browser Storage Implementation
 
