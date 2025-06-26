@@ -7,26 +7,33 @@ This document outlines the assessment workflow and user journey for the MITA Sta
 ## User Journey Map
 
 ```mermaid
-flowchart LR
-    B["SS-A Tool Landing Page"] -- Getting Started link --> C["User Dashboard"]
-    B -- About MITA link --> D["Description page of what MITA is with link to external MITA site"]
-    D -- External MITA site link --> n1["External MITA site"]
-    D -- Getting Started link --> C
-    C -- Begin New Assessment link --> n2["Page to select Capability Domain and Capability Areas they want to use for the assessment"]
-    C -- Open Existing Assessment link --> n3["Open Existing Assessment"]
-    n2 -- Link to begin guided decision tree assessment --> n5["Multiple page guided walkthrough of assessment questions for the capability areas selected"]
-    n5 -- Assessment Summary Page link --> n6["MITA Maturity Assessment Score page showing the score for each capability area assessed"]
-    n6 --- n7["User can output the assessment and score as a report"] & n8@{ label: "The completed assessment is added to the user's dashboard" }
-    n6 -- Link back to the User Dashboard --> C
-    n3 -- Update/Edit link --> n5
-    n3 -- View link --> n9["Multi page guided walkthrough of assessment questions for the capability areas selected - READ ONLY"]
-    n9 -- Assessment Summary Page link --> n6
+flowchart TD
+    A["SS-A Tool Landing Page"] -- Getting Started link --> B["User Dashboard"]
+    A -- About MITA link --> C["Description page of what MITA is with link to external MITA site"]
+    C -- External MITA site link --> L["External MITA site"]
+    C -- Getting Started link --> B
+    B -- Begin New Assessment link --> D["Page to select Capability Domain and Capability Areas they want to use for the assessment"]
+    B -- Open Existing Assessment link --> E["Open Existing Assessment"]
+    D -- Link to begin guided decision tree assessment --> G["Multiple page guided walkthrough of assessment questions for the capability areas selected"]
+    G -- Assessment Summary Page link --> H["MITA Maturity Assessment Score page showing the score for each capability area assessed"]
+    H --- I["User can output the assessment and score as a report"] & J@{ label: "The completed assessment is added to the user's dashboard" }
+    H -- Link back to the User Dashboard --> B
+    E -- Update/Edit link --> G
+    E -- View link --> K["Multi page guided walkthrough of assessment questions for the capability areas selected - READ ONLY"]
+    K -- Assessment Summary Page link --> H
+
+    A@{ shape: rounded}
     B@{ shape: rounded}
     C@{ shape: rounded}
+    L@{ shape: text}
     D@{ shape: rounded}
-    n1@{ shape: rounded}
-    n7@{ shape: braces}
-    n8@{ shape: braces}
+    E@{ shape: rounded}
+    G@{ shape: rounded}
+    H@{ shape: rounded}
+    I@{ shape: braces}
+    J@{ shape: braces}
+    K@{ shape: rounded}
+
 ```
 
 ## Key User Journey Components
