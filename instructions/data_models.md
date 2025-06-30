@@ -48,7 +48,7 @@ interface CapabilityAssessment {
     outcome: DimensionAssessment;
     role: DimensionAssessment;
     businessProcess: DimensionAssessment;
-    informationData: DimensionAssessment;
+    information: DimensionAssessment;
     technology: DimensionAssessment;
   };
 }
@@ -87,7 +87,7 @@ interface CapabilityDefinition {
     outcome: DimensionDefinition;
     role: DimensionDefinition;
     businessProcess: DimensionDefinition;
-    informationData: DimensionDefinition;
+    information: DimensionDefinition;
     technology: DimensionDefinition;
   };
 }
