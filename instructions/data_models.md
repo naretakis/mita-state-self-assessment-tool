@@ -17,7 +17,7 @@ interface Assessment {
   createdAt: string;             // ISO date string of creation
   updatedAt: string;             // ISO date string of last update
   status: AssessmentStatus;      // Status indicator
-  capabilities: CapabilityAssessment[]; // Assessed capabilities
+  capabilities: CapabilityAreaAssessment[]; // Assessed capabilities Areas
   metadata: AssessmentMetadata;  // Additional assessment information
 }
 
@@ -27,10 +27,9 @@ type AssessmentStatus =
   | 'completed';
 
 interface AssessmentMetadata {
-  version: string;              // Assessment version
+  assessmentVersion: string;    // Assessment version
   completedBy?: string;         // Person completing the assessment
-  reviewedBy?: string;          // Person reviewing the assessment
-  submissionDate?: string;      // Date of submission (if applicable)
+  completionDate?: string;      // Date of completion (if applicable)
   notes?: string;               // General assessment notes
 }
 ```
@@ -42,10 +41,8 @@ Represents an assessment of a specific capability area:
 ```TypeScript
 interface CapabilityAssessment {
   id: string;                   // Unique identifier
-  capabilityId: string;         // Reference to capability definition
-  name: string;                 // Capability area name
-  domainName: string;           // Capability domain name
-  moduleName: string;           // Module name
+  capabilityDomainName: string; // Capability domain name
+  capabilityAreaName: string;   // Capability area name
   status: 'not-started' | 'in-progress' | 'completed';
   dimensions: {
     outcome: DimensionAssessment;
@@ -79,13 +76,13 @@ Represents the structure of a capability area defined in content files:
 
 ```TypeScript
 interface CapabilityDefinition {
-  id: string;                   // Unique identifier
-  name: string;                 // Capability area name
-  domainName: string;           // Capability domain name  
-  moduleName: string;           // Module name
-  version: string;              // Content version
-  lastUpdated: string;          // Last content update
-  description: string;          // General capability description
+  id: string;                        // Unique identifier
+  capabilityDomainName: string;      // Capability domain name  
+  capabilityAreaName: string;        // Capability area name
+  capabilityVersion: string;         // Capability version
+  capabilityAreaCreated: string;     // Capability created date
+  capabilityAreaLastUpdated: string; // Last content update
+  description: string;               // General capability description
   dimensions: {
     outcome: DimensionDefinition;
     role: DimensionDefinition;
@@ -103,7 +100,7 @@ Represents the content definition for a dimension:
 ```TypeScript
 interface DimensionDefinition {
   description: string;          // Dimension description
-  assessmentQuestions: string[];// Assessment guidance questions
+  maturityAssessment: string[];// Domain maturity assessment
   maturityLevels: {            // Definitions for each maturity level
     level1: string;
     level2: string;
@@ -217,7 +214,7 @@ Content files use front matter for metadata and markdown sections for content:
 ---
 capabilityDomain: [Capability Domain Name]
 capabilityArea: [Capability Area Name]
-version: [version number]
+capabilityVersion: [version number]
 capabilityAreaCreated: [created date]
 capabilityAreaLastUpdated: [last modified date]
 assessmentCreated: [date the state intiatited their assessment]
@@ -239,12 +236,8 @@ assessmentStatus: [uses type AssessmentStatus]
 ### Description
 [Outcomes description]
 
-### Assessment Questions
-1. [Question 1]
-2. [Question 2]
-3. [Question 3]
-
-### Maturity Level Definitions
+### Outcomes Maturity Level Assessment
+[Select the level that most closely aligns to your business]
 
 #### Level 1: Initial
 [Level 1 definition]
@@ -263,19 +256,97 @@ assessmentStatus: [uses type AssessmentStatus]
 
 ## Roles
 
-[Similar structure for Roles dimension]
+### Description
+[Roles description]
+
+### Roles Maturity Level Assessment
+[Select the level that most closely aligns to your business]
+
+#### Level 1: Initial
+[Level 1 definition]
+
+#### Level 2: Repeatable
+[Level 2 definition]
+
+#### Level 3: Defined
+[Level 3 definition]
+
+#### Level 4: Managed
+[Level 4 definition]
+
+#### Level 5: Optimized
+[Level 5 definition]
 
 ## Business Processes
 
-[Similar structure for Business Processes dimension]
+### Description
+[Buiness Processes description]
+
+### Business Processes Maturity Level Assessment
+[Select the level that most closely aligns to your business]
+
+#### Level 1: Initial
+[Level 1 definition]
+
+#### Level 2: Repeatable
+[Level 2 definition]
+
+#### Level 3: Defined
+[Level 3 definition]
+
+#### Level 4: Managed
+[Level 4 definition]
+
+#### Level 5: Optimized
+[Level 5 definition]
+
 
 ## Information
 
-[Similar structure for Information dimension]
+### Description
+[Information description]
+
+### Information Maturity Level Assessment
+[Select the level that most closely aligns to your business]
+
+#### Level 1: Initial
+[Level 1 definition]
+
+#### Level 2: Repeatable
+[Level 2 definition]
+
+#### Level 3: Defined
+[Level 3 definition]
+
+#### Level 4: Managed
+[Level 4 definition]
+
+#### Level 5: Optimized
+[Level 5 definition]
 
 ## Technology
 
-[Similar structure for Technology dimension]
+### Description
+[Technology description]
+
+### Technology Maturity Level Assessment
+[Select the level that most closely aligns to your business]
+
+#### Level 1: Initial
+[Level 1 definition]
+
+#### Level 2: Repeatable
+[Level 2 definition]
+
+#### Level 3: Defined
+[Level 3 definition]
+
+#### Level 4: Managed
+[Level 4 definition]
+
+#### Level 5: Optimized
+[Level 5 definition]
+
 ```
 
 ## Export Models
