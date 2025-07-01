@@ -74,7 +74,7 @@ export class ContentService {
    * Get capabilities by domain name
    */
   getCapabilitiesByDomain(domainName: string): CapabilityDefinition[] {
-    return this.capabilities.filter(cap => cap.domainName === domainName);
+    return this.capabilities.filter(cap => cap.capabilityDomainName === domainName);
   }
 
   /**
@@ -98,16 +98,16 @@ export class ContentService {
     return [
       {
         id: 'mock-capability-1',
-        name: 'Mock Capability 1',
-        domainName: 'Business Relationship Management',
-        moduleName: 'Client Management',
-        version: '1.0',
-        lastUpdated: '2023-01-01',
+        capabilityDomainName: 'Business Relationship Management',
+        capabilityAreaName: 'Client Management',
+        capabilityVersion: '1.0',
+        capabilityAreaCreated: '2023-01-01',
+        capabilityAreaLastUpdated: '2023-01-01',
         description: 'This is a mock capability for development purposes.',
         dimensions: {
           outcome: {
             description: 'Mock outcome dimension',
-            assessmentQuestions: ['Question 1?', 'Question 2?'],
+            maturityAssessment: ['Select the level that most closely aligns to your business'],
             maturityLevels: {
               level1: 'Level 1 description',
               level2: 'Level 2 description',
@@ -118,7 +118,7 @@ export class ContentService {
           },
           role: {
             description: 'Mock role dimension',
-            assessmentQuestions: ['Question 1?', 'Question 2?'],
+            maturityAssessment: ['Select the level that most closely aligns to your business'],
             maturityLevels: {
               level1: 'Level 1 description',
               level2: 'Level 2 description',
@@ -129,7 +129,7 @@ export class ContentService {
           },
           businessProcess: {
             description: 'Mock business process dimension',
-            assessmentQuestions: ['Question 1?', 'Question 2?'],
+            maturityAssessment: ['Select the level that most closely aligns to your business'],
             maturityLevels: {
               level1: 'Level 1 description',
               level2: 'Level 2 description',
@@ -140,7 +140,7 @@ export class ContentService {
           },
           information: {
             description: 'Mock information dimension',
-            assessmentQuestions: ['Question 1?', 'Question 2?'],
+            maturityAssessment: ['Select the level that most closely aligns to your business'],
             maturityLevels: {
               level1: 'Level 1 description',
               level2: 'Level 2 description',
@@ -151,7 +151,7 @@ export class ContentService {
           },
           technology: {
             description: 'Mock technology dimension',
-            assessmentQuestions: ['Question 1?', 'Question 2?'],
+            maturityAssessment: ['Select the level that most closely aligns to your business'],
             maturityLevels: {
               level1: 'Level 1 description',
               level2: 'Level 2 description',

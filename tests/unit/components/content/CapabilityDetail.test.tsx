@@ -10,15 +10,16 @@ jest.mock('../../../../src/components/content/ContentProvider', () => ({
 describe('CapabilityDetail', () => {
   const mockCapability = {
     id: 'test-capability',
-    name: 'Test Capability',
-    domainName: 'Test Domain',
-    version: '1.0',
-    lastUpdated: '2025-06-01',
+    capabilityAreaName: 'Test Capability',
+    capabilityDomainName: 'Test Domain',
+    capabilityVersion: '1.0',
+    capabilityAreaCreated: '2025-06-01',
+    capabilityAreaLastUpdated: '2025-06-01',
     description: 'This is a test capability description',
     dimensions: {
       outcome: {
         description: 'Outcome dimension description',
-        assessmentQuestions: ['Outcome question 1', 'Outcome question 2', 'Outcome question 3'],
+        maturityAssessment: ['Outcome assessment 1', 'Outcome assessment 2'],
         maturityLevels: {
           level1: 'Outcome level 1',
           level2: 'Outcome level 2',
@@ -29,7 +30,7 @@ describe('CapabilityDetail', () => {
       },
       role: {
         description: 'Role dimension description',
-        assessmentQuestions: ['Role question 1', 'Role question 2'],
+        maturityAssessment: ['Role assessment 1', 'Role assessment 2'],
         maturityLevels: {
           level1: 'Role level 1',
           level2: 'Role level 2',
@@ -40,7 +41,7 @@ describe('CapabilityDetail', () => {
       },
       businessProcess: {
         description: 'Business Process dimension description',
-        assessmentQuestions: ['Business Process question 1', 'Business Process question 2'],
+        maturityAssessment: ['Business Process assessment 1', 'Business Process assessment 2'],
         maturityLevels: {
           level1: 'Business Process level 1',
           level2: 'Business Process level 2',
@@ -51,7 +52,7 @@ describe('CapabilityDetail', () => {
       },
       information: {
         description: 'Information dimension description',
-        assessmentQuestions: ['Information question 1', 'Information question 2'],
+        maturityAssessment: ['Information assessment 1', 'Information assessment 2'],
         maturityLevels: {
           level1: 'Information level 1',
           level2: 'Information level 2',
@@ -62,7 +63,7 @@ describe('CapabilityDetail', () => {
       },
       technology: {
         description: 'Technology dimension description',
-        assessmentQuestions: ['Technology question 1', 'Technology question 2'],
+        maturityAssessment: ['Technology assessment 1', 'Technology assessment 2'],
         maturityLevels: {
           level1: 'Technology level 1',
           level2: 'Technology level 2',
@@ -142,11 +143,11 @@ describe('CapabilityDetail', () => {
     expect(screen.getByText('Information dimension description')).toBeInTheDocument();
     expect(screen.getByText('Technology dimension description')).toBeInTheDocument();
 
-    // Check assessment questions
-    expect(screen.getByText('Outcome question 1')).toBeInTheDocument();
-    expect(screen.getByText('Role question 1')).toBeInTheDocument();
-    expect(screen.getByText('Business Process question 1')).toBeInTheDocument();
-    expect(screen.getByText('Information question 1')).toBeInTheDocument();
-    expect(screen.getByText('Technology question 1')).toBeInTheDocument();
+    // Check maturity assessments
+    expect(screen.getByText('Outcome assessment 1')).toBeInTheDocument();
+    expect(screen.getByText('Role assessment 1')).toBeInTheDocument();
+    expect(screen.getByText('Business Process assessment 1')).toBeInTheDocument();
+    expect(screen.getByText('Information assessment 1')).toBeInTheDocument();
+    expect(screen.getByText('Technology assessment 1')).toBeInTheDocument();
   });
 });

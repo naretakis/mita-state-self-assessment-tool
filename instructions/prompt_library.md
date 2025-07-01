@@ -140,8 +140,7 @@ Following our architecture in instructions/architecture.md, help me create a Rea
 ### Assessment Form Component
 
 ```
-Following the assessment workflow in instructions/assessment_workflow.md, help me create 
-a React component for assessing a single ORBIT dimension that:
+Following the assessment workflow in instructions/assessment_workflow.md, help me create a React component for assessing a single ORBIT dimension that:
 
 1. Takes a dimension definition and current assessment state as props
 2. Renders the assessment questions and maturity level options

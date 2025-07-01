@@ -1,4 +1,4 @@
-import type { Assessment, AssessmentSummary, AssessmentStatus } from '../types';
+import type { Assessment, AssessmentSummary, AssessmentStatus, StorageManager } from '../types';
 
 /**
  * Interface for storage options
@@ -24,7 +24,7 @@ interface StorageInfo {
 /**
  * Enhanced storage service with tiered storage approach and fallback mechanisms
  */
-export class EnhancedStorageService {
+export class EnhancedStorageService implements StorageManager {
   private options: StorageOptions;
   private localStoragePrefix = 'mita_';
   private localStorageMetaKey = 'mita_meta';

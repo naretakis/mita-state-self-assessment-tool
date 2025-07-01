@@ -28,11 +28,11 @@ export function CapabilityDetail({ capabilityId }: CapabilityDetailProps) {
 
   return (
     <div className="capability-detail">
-      <h2>{capability.name}</h2>
+      <h2>{capability.capabilityAreaName}</h2>
       <div className="capability-meta">
-        <span>Domain: {capability.domainName}</span>
-        <span>Version: {capability.version}</span>
-        <span>Last Updated: {capability.lastUpdated}</span>
+        <span>Domain: {capability.capabilityDomainName}</span>
+        <span>Version: {capability.capabilityVersion}</span>
+        <span>Last Updated: {capability.capabilityAreaLastUpdated}</span>
       </div>
 
       <div className="capability-description">
@@ -46,10 +46,10 @@ export function CapabilityDetail({ capabilityId }: CapabilityDetailProps) {
         <div className="dimension">
           <h4>Outcome</h4>
           <p>{capability.dimensions.outcome.description}</p>
-          <h5>Assessment Questions</h5>
+          <h5>Maturity Assessment</h5>
           <ul>
-            {capability.dimensions.outcome.assessmentQuestions.map((question, index) => (
-              <li key={index}>{question}</li>
+            {capability.dimensions.outcome.maturityAssessment.map((assessment, index) => (
+              <li key={index}>{assessment}</li>
             ))}
           </ul>
         </div>
@@ -57,10 +57,10 @@ export function CapabilityDetail({ capabilityId }: CapabilityDetailProps) {
         <div className="dimension">
           <h4>Role</h4>
           <p>{capability.dimensions.role.description}</p>
-          <h5>Assessment Questions</h5>
+          <h5>Maturity Assessment</h5>
           <ul>
-            {capability.dimensions.role.assessmentQuestions.map((question, index) => (
-              <li key={index}>{question}</li>
+            {capability.dimensions.role.maturityAssessment.map((assessment, index) => (
+              <li key={index}>{assessment}</li>
             ))}
           </ul>
         </div>
@@ -68,10 +68,10 @@ export function CapabilityDetail({ capabilityId }: CapabilityDetailProps) {
         <div className="dimension">
           <h4>Business Process</h4>
           <p>{capability.dimensions.businessProcess.description}</p>
-          <h5>Assessment Questions</h5>
+          <h5>Maturity Assessment</h5>
           <ul>
-            {capability.dimensions.businessProcess.assessmentQuestions.map((question, index) => (
-              <li key={index}>{question}</li>
+            {capability.dimensions.businessProcess.maturityAssessment.map((assessment, index) => (
+              <li key={index}>{assessment}</li>
             ))}
           </ul>
         </div>
@@ -79,10 +79,10 @@ export function CapabilityDetail({ capabilityId }: CapabilityDetailProps) {
         <div className="dimension">
           <h4>Information</h4>
           <p>{capability.dimensions.information.description}</p>
-          <h5>Assessment Questions</h5>
+          <h5>Maturity Assessment</h5>
           <ul>
-            {capability.dimensions.information.assessmentQuestions.map((question, index) => (
-              <li key={index}>{question}</li>
+            {capability.dimensions.information.maturityAssessment.map((assessment, index) => (
+              <li key={index}>{assessment}</li>
             ))}
           </ul>
         </div>
@@ -90,10 +90,10 @@ export function CapabilityDetail({ capabilityId }: CapabilityDetailProps) {
         <div className="dimension">
           <h4>Technology</h4>
           <p>{capability.dimensions.technology.description}</p>
-          <h5>Assessment Questions</h5>
+          <h5>Maturity Assessment</h5>
           <ul>
-            {capability.dimensions.technology.assessmentQuestions.map((question, index) => (
-              <li key={index}>{question}</li>
+            {capability.dimensions.technology.maturityAssessment.map((assessment, index) => (
+              <li key={index}>{assessment}</li>
             ))}
           </ul>
         </div>

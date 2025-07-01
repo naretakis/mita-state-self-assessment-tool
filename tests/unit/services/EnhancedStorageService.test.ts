@@ -36,7 +36,7 @@ jest.mock('idb', () => ({
       updatedAt: '2025-06-06T12:00:00Z',
       status: 'in-progress',
       capabilities: [],
-      metadata: { version: '1.0' },
+      metadata: { assessmentVersion: '1.0' },
     }),
     getAll: jest.fn().mockResolvedValue([
       {
@@ -95,7 +95,7 @@ describe('EnhancedStorageService', () => {
       updatedAt: '2025-06-06T12:00:00Z',
       status: 'in-progress' as const,
       capabilities: [],
-      metadata: { version: '1.0' },
+      metadata: { assessmentVersion: '1.0' },
     };
 
     await storageService.initialize();
@@ -113,7 +113,7 @@ describe('EnhancedStorageService', () => {
       updatedAt: '2025-06-06T12:00:00Z',
       status: 'in-progress' as const,
       capabilities: [],
-      metadata: { version: '1.0' },
+      metadata: { assessmentVersion: '1.0' },
     };
 
     localStorageMock.setItem('mita_test-id', JSON.stringify(assessment));
@@ -154,7 +154,7 @@ describe('EnhancedStorageService', () => {
       updatedAt: '2025-06-06T12:00:00Z',
       status: 'in-progress' as const,
       capabilities: [],
-      metadata: { version: '1.0' },
+      metadata: { assessmentVersion: '1.0' },
     };
 
     localStorageMock.setItem('mita_test-id', JSON.stringify(assessment));
@@ -187,7 +187,7 @@ describe('EnhancedStorageService', () => {
       updatedAt: '2025-06-06T12:00:00Z',
       status: 'in-progress' as const,
       capabilities: [],
-      metadata: { version: '1.0' },
+      metadata: { assessmentVersion: '1.0' },
     };
 
     localStorageMock.setItem('mita_test-id', JSON.stringify(assessment));

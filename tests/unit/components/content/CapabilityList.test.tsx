@@ -11,15 +11,16 @@ describe('CapabilityList', () => {
   const mockCapabilities = [
     {
       id: 'capability-1',
-      name: 'Capability 1',
-      domainName: 'Domain 1',
-      version: '1.0',
+      capabilityAreaName: 'Capability 1',
+      capabilityDomainName: 'Domain 1',
+      capabilityVersion: '1.0',
+      capabilityAreaCreated: '2025-06-01',
+      capabilityAreaLastUpdated: '2025-06-01',
       description: 'Description for capability 1',
-      lastUpdated: '2025-06-01',
       dimensions: {
         outcome: {
           description: 'Outcome description',
-          assessmentQuestions: ['Question 1'],
+          maturityAssessment: ['Assessment 1'],
           maturityLevels: {
             level1: 'Level 1',
             level2: 'Level 2',
@@ -30,7 +31,7 @@ describe('CapabilityList', () => {
         },
         role: {
           description: 'Role description',
-          assessmentQuestions: ['Question 1'],
+          maturityAssessment: ['Assessment 1'],
           maturityLevels: {
             level1: 'Level 1',
             level2: 'Level 2',
@@ -41,7 +42,7 @@ describe('CapabilityList', () => {
         },
         businessProcess: {
           description: 'Business Process description',
-          assessmentQuestions: ['Question 1'],
+          maturityAssessment: ['Assessment 1'],
           maturityLevels: {
             level1: 'Level 1',
             level2: 'Level 2',
@@ -52,7 +53,7 @@ describe('CapabilityList', () => {
         },
         information: {
           description: 'Information description',
-          assessmentQuestions: ['Question 1'],
+          maturityAssessment: ['Assessment 1'],
           maturityLevels: {
             level1: 'Level 1',
             level2: 'Level 2',
@@ -63,7 +64,7 @@ describe('CapabilityList', () => {
         },
         technology: {
           description: 'Technology description',
-          assessmentQuestions: ['Question 1'],
+          maturityAssessment: ['Assessment 1'],
           maturityLevels: {
             level1: 'Level 1',
             level2: 'Level 2',
@@ -76,15 +77,16 @@ describe('CapabilityList', () => {
     },
     {
       id: 'capability-2',
-      name: 'Capability 2',
-      domainName: 'Domain 2',
-      version: '1.0',
+      capabilityAreaName: 'Capability 2',
+      capabilityDomainName: 'Domain 2',
+      capabilityVersion: '1.0',
+      capabilityAreaCreated: '2025-06-02',
+      capabilityAreaLastUpdated: '2025-06-02',
       description: 'Description for capability 2',
-      lastUpdated: '2025-06-02',
       dimensions: {
         outcome: {
           description: 'Outcome description',
-          assessmentQuestions: ['Question 1'],
+          maturityAssessment: ['Assessment 1'],
           maturityLevels: {
             level1: 'Level 1',
             level2: 'Level 2',
@@ -95,7 +97,7 @@ describe('CapabilityList', () => {
         },
         role: {
           description: 'Role description',
-          assessmentQuestions: ['Question 1'],
+          maturityAssessment: ['Assessment 1'],
           maturityLevels: {
             level1: 'Level 1',
             level2: 'Level 2',
@@ -106,7 +108,7 @@ describe('CapabilityList', () => {
         },
         businessProcess: {
           description: 'Business Process description',
-          assessmentQuestions: ['Question 1'],
+          maturityAssessment: ['Assessment 1'],
           maturityLevels: {
             level1: 'Level 1',
             level2: 'Level 2',
@@ -117,7 +119,7 @@ describe('CapabilityList', () => {
         },
         information: {
           description: 'Information description',
-          assessmentQuestions: ['Question 1'],
+          maturityAssessment: ['Assessment 1'],
           maturityLevels: {
             level1: 'Level 1',
             level2: 'Level 2',
@@ -128,7 +130,7 @@ describe('CapabilityList', () => {
         },
         technology: {
           description: 'Technology description',
-          assessmentQuestions: ['Question 1'],
+          maturityAssessment: ['Assessment 1'],
           maturityLevels: {
             level1: 'Level 1',
             level2: 'Level 2',

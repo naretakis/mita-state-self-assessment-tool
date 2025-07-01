@@ -1,7 +1,7 @@
 ---
 capabilityDomain: Provider
 capabilityArea: Provider Management
-version: 1.1
+capabilityVersion: 1.1
 capabilityAreaCreated: 2025-06-01
 capabilityAreaLastUpdated: 2025-06-05
 assessmentCreated: 

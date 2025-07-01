@@ -155,10 +155,10 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
   const name = frontMatter.capabilityArea;
   const id = `${domainName.toLowerCase()}-${name.toLowerCase().replace(/\s+/g, '-')}`;
 
-  // Extract domain description
-  const domainRegex = new RegExp(`## Capability Domain: ${domainName}[\\r\\n]+(.*?)(?=##)`, 's');
-  const domainMatch = content.match(domainRegex);
-  const domainDescription = domainMatch ? domainMatch[1].trim() : '';
+  // Extract domain description (unused but kept for future use)
+  // const domainRegex = new RegExp(`## Capability Domain: ${domainName}[\\r\\n]+(.*?)(?=##)`, 's');
+  // const domainMatch = content.match(domainRegex);
+  // const domainDescription = domainMatch ? domainMatch[1].trim() : '';
 
   // Extract capability description
   const descriptionRegex = new RegExp(`## Capability Area: ${name}[\\r\\n]+(.*?)(?=##|$)`, 's');
@@ -190,16 +190,14 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
       dimensions.outcome.description = descriptionText;
     }
 
-    // Assessment Questions
+    // Maturity Assessment
     if (outcomesSection.includes('### Assessment Questions')) {
       const questionsText = outcomesSection
         .split('### Assessment Questions')[1]
         .split('### Maturity Level Definitions')[0]
         .trim();
       const questions = questionsText.split(/\r?\n/).filter(q => q.trim());
-      dimensions.outcome.assessmentQuestions = questions.map(q =>
-        q.replace(/^\d+\.\s*/, '').trim()
-      );
+      dimensions.outcome.maturityAssessment = questions.map(q => q.replace(/^\d+\.\s*/, '').trim());
     }
 
     // Maturity Levels
@@ -254,14 +252,14 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
       dimensions.role.description = descriptionText;
     }
 
-    // Assessment Questions
+    // Maturity Assessment
     if (rolesSection.includes('### Assessment Questions')) {
       const questionsText = rolesSection
         .split('### Assessment Questions')[1]
         .split('### Maturity Level Definitions')[0]
         .trim();
       const questions = questionsText.split(/\r?\n/).filter(q => q.trim());
-      dimensions.role.assessmentQuestions = questions.map(q => q.replace(/^\d+\.\s*/, '').trim());
+      dimensions.role.maturityAssessment = questions.map(q => q.replace(/^\d+\.\s*/, '').trim());
     }
 
     // Maturity Levels
@@ -318,14 +316,14 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
       dimensions.businessProcess.description = descriptionText;
     }
 
-    // Assessment Questions
+    // Maturity Assessment
     if (businessProcessSection.includes('### Assessment Questions')) {
       const questionsText = businessProcessSection
         .split('### Assessment Questions')[1]
         .split('### Maturity Level Definitions')[0]
         .trim();
       const questions = questionsText.split(/\r?\n/).filter(q => q.trim());
-      dimensions.businessProcess.assessmentQuestions = questions.map(q =>
+      dimensions.businessProcess.maturityAssessment = questions.map(q =>
         q.replace(/^\d+\.\s*/, '').trim()
       );
     }
@@ -382,14 +380,14 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
       dimensions.information.description = descriptionText;
     }
 
-    // Assessment Questions
+    // Maturity Assessment
     if (informationSection.includes('### Assessment Questions')) {
       const questionsText = informationSection
         .split('### Assessment Questions')[1]
         .split('### Maturity Level Definitions')[0]
         .trim();
       const questions = questionsText.split(/\r?\n/).filter(q => q.trim());
-      dimensions.information.assessmentQuestions = questions.map(q =>
+      dimensions.information.maturityAssessment = questions.map(q =>
         q.replace(/^\d+\.\s*/, '').trim()
       );
     }
@@ -446,14 +444,14 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
       dimensions.technology.description = descriptionText;
     }
 
-    // Assessment Questions
+    // Maturity Assessment
     if (technologySection.includes('### Assessment Questions')) {
       const questionsText = technologySection
         .split('### Assessment Questions')[1]
         .split('### Maturity Level Definitions')[0]
         .trim();
       const questions = questionsText.split(/\r?\n/).filter(q => q.trim());
-      dimensions.technology.assessmentQuestions = questions.map(q =>
+      dimensions.technology.maturityAssessment = questions.map(q =>
         q.replace(/^\d+\.\s*/, '').trim()
       );
     }
@@ -499,12 +497,11 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
 
   return {
     id,
-    name,
-    domainName,
-    domainDescription,
-    moduleName: '', // Not provided in the sample, could be extracted if needed
-    version: String(frontMatter.version), // Convert to string to match test expectations
-    lastUpdated: frontMatter.capabilityAreaLastUpdated,
+    capabilityAreaName: name,
+    capabilityDomainName: domainName,
+    capabilityVersion: String(frontMatter.capabilityVersion),
+    capabilityAreaCreated: formatDate(frontMatter.capabilityAreaCreated),
+    capabilityAreaLastUpdated: formatDate(frontMatter.capabilityAreaLastUpdated),
     description,
     dimensions,
   };
@@ -517,7 +514,7 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
 function createEmptyDimension(): DimensionDefinition {
   return {
     description: '',
-    assessmentQuestions: [],
+    maturityAssessment: [],
     maturityLevels: {
       level1: '',
       level2: '',
@@ -526,4 +523,22 @@ function createEmptyDimension(): DimensionDefinition {
       level5: '',
     },
   };
+}
+
+/**
+ * Format date to YYYY-MM-DD string
+ * @param date Date value to format
+ * @returns Formatted date string
+ */
+function formatDate(date: unknown): string {
+  if (!date) {
+    return '';
+  }
+  if (typeof date === 'string') {
+    return date;
+  }
+  if (date instanceof Date) {
+    return date.toISOString().split('T')[0];
+  }
+  return String(date);
 }

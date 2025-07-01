@@ -20,7 +20,7 @@ export function CapabilityList({ domainFilter, onSelectCapability }: CapabilityL
 
   // Filter capabilities by domain if a filter is provided
   const filteredCapabilities = domainFilter
-    ? capabilities.filter(cap => cap.domainName === domainFilter)
+    ? capabilities.filter(cap => cap.capabilityDomainName === domainFilter)
     : capabilities;
 
   // Handle capability selection
@@ -53,10 +53,10 @@ export function CapabilityList({ domainFilter, onSelectCapability }: CapabilityL
             className={selectedId === capability.id ? 'selected' : ''}
             onClick={() => handleSelect(capability)}
           >
-            <h3>{capability.name}</h3>
+            <h3>{capability.capabilityAreaName}</h3>
             <div className="capability-meta">
-              <span>Domain: {capability.domainName}</span>
-              <span>Version: {capability.version}</span>
+              <span>Domain: {capability.capabilityDomainName}</span>
+              <span>Version: {capability.capabilityVersion}</span>
             </div>
             <p>{capability.description.substring(0, 100)}...</p>
           </li>

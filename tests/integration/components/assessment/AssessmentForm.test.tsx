@@ -12,7 +12,7 @@ import { render, screen } from '../../../utils/test-utils';
 const AssessmentForm = ({ assessment, onSave }) => (
   <div>
     <h1>Assessment Form</h1>
-    <div data-testid="assessment-title">{assessment.title}</div>
+    <div data-testid="assessment-title">{assessment.stateName}</div>
     <button onClick={() => onSave(assessment)} data-testid="save-button">
       Save Assessment
     </button>
@@ -24,7 +24,7 @@ describe('AssessmentForm Integration', () => {
     render(<AssessmentForm assessment={mockAssessmentData} onSave={jest.fn()} />);
 
     expect(screen.getByText('Assessment Form')).toBeInTheDocument();
-    expect(screen.getByTestId('assessment-title')).toHaveTextContent(mockAssessmentData.title);
+    expect(screen.getByTestId('assessment-title')).toHaveTextContent(mockAssessmentData.stateName);
   });
 
   test('calls onSave when save button is clicked', async () => {

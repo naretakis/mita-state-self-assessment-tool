@@ -1,38 +1,12 @@
 import { parseMarkdown, extractSections } from './markdownParser';
 
-/**
- * Interface for capability dimensions
- */
-export interface CapabilityDimension {
-  description: string;
-  assessmentQuestions: string[];
-  maturityLevels: {
-    level1: string;
-    level2: string;
-    level3: string;
-    level4: string;
-    level5: string;
-  };
-}
+import type { CapabilityDefinition, DimensionDefinition, CapabilityFrontMatter } from '../types';
 
 /**
- * Interface for capability definition
+ * Interface for capability dimensions (backward compatibility)
  */
-export interface CapabilityDefinition {
-  id: string;
-  name: string;
-  domainName: string;
-  moduleName: string;
-  version: string;
-  lastUpdated: string;
-  description: string;
-  dimensions: {
-    outcome: CapabilityDimension;
-    role: CapabilityDimension;
-    businessProcess: CapabilityDimension;
-    information: CapabilityDimension;
-    technology: CapabilityDimension;
-  };
+export interface CapabilityDimension extends DimensionDefinition {
+  assessmentQuestions?: string[];
 }
 
 /**
@@ -43,24 +17,36 @@ export interface CapabilityDefinition {
 export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition {
   const { metadata, content } = parseMarkdown(markdown);
   const sections = extractSections(content);
+  const frontMatter = metadata as CapabilityFrontMatter;
 
-  // Extract dimensions
+  // Extract capability domain and area descriptions
+  const domainSection = sections['Capability Domain'] || '';
+  const areaSection = sections['Capability Area'] || '';
+  const description = areaSection || domainSection || '';
+
+  // Extract dimensions based on the new structure
   const dimensions = {
-    outcome: parseDimension(sections['Outcome Dimension'] || ''),
-    role: parseDimension(sections['Roles Dimension'] || ''),
-    businessProcess: parseDimension(sections['Business Processes Dimension'] || ''),
-    information: parseDimension(sections['Information Dimension'] || ''),
-    technology: parseDimension(sections['Technology Dimension'] || ''),
+    outcome: parseDimension(sections['Outcomes'] || ''),
+    role: parseDimension(sections['Roles'] || ''),
+    businessProcess: parseDimension(sections['Business Processes'] || ''),
+    information: parseDimension(sections['Information'] || ''),
+    technology: parseDimension(sections['Technology'] || ''),
   };
 
+  // Generate ID from domain and area names
+  const id = `${frontMatter.capabilityDomain}-${frontMatter.capabilityArea}`
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '');
+
   return {
-    id: (metadata.id as string) || '',
-    name: metadata.title || '',
-    domainName: (metadata.businessArea as string) || '',
-    moduleName: (metadata.category as string) || '',
-    version: (metadata.version as string) || '1.0',
-    lastUpdated: (metadata.lastUpdated as string) || new Date().toISOString().split('T')[0],
-    description: sections['Description'] || '',
+    id,
+    capabilityDomainName: frontMatter.capabilityDomain,
+    capabilityAreaName: frontMatter.capabilityArea,
+    capabilityVersion: frontMatter.capabilityVersion || '1.0',
+    capabilityAreaCreated: frontMatter.capabilityAreaCreated,
+    capabilityAreaLastUpdated: frontMatter.capabilityAreaLastUpdated,
+    description,
     dimensions,
   };
 }
@@ -70,31 +56,28 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
  * @param content Dimension section content
  * @returns Parsed dimension
  */
-function parseDimension(content: string): CapabilityDimension {
-  // Extract description (first paragraph)
-  const descriptionMatch = content.match(/^(.*?)(?=\n\n|\n###|$)/m);
-  const description = descriptionMatch ? descriptionMatch[0].trim() : '';
+function parseDimension(content: string): DimensionDefinition {
+  // Extract description from the Description subsection
+  const descriptionMatch = content.match(/### Description\s+([\s\S]*?)(?=###|$)/m);
+  const description = descriptionMatch ? descriptionMatch[1].trim() : '';
 
-  // Extract assessment questions
-  const questionsSection = content.match(/### Assessment Questions\s+([\s\S]*?)(?=###|$)/m);
-  const questionsContent = questionsSection ? questionsSection[1].trim() : '';
-  const questions = questionsContent
-    .split('\n')
-    .filter(line => line.trim().startsWith('- ') || line.trim().startsWith('* '))
-    .map(line => line.replace(/^[*-]\s+/, '').trim());
+  // Extract maturity assessment text
+  const assessmentMatch = content.match(/### .*Maturity Level Assessment\s+([\s\S]*?)(?=####|$)/m);
+  const assessmentText = assessmentMatch ? assessmentMatch[1].trim() : '';
+  const maturityAssessment = assessmentText ? [assessmentText] : [];
 
-  // Extract maturity levels
+  // Extract maturity levels with more specific patterns
   const maturityLevels = {
-    level1: extractMaturityLevel(content, 'Level 1'),
-    level2: extractMaturityLevel(content, 'Level 2'),
-    level3: extractMaturityLevel(content, 'Level 3'),
-    level4: extractMaturityLevel(content, 'Level 4'),
-    level5: extractMaturityLevel(content, 'Level 5'),
+    level1: extractMaturityLevel(content, 'Level 1: Initial'),
+    level2: extractMaturityLevel(content, 'Level 2: Repeatable'),
+    level3: extractMaturityLevel(content, 'Level 3: Defined'),
+    level4: extractMaturityLevel(content, 'Level 4: Managed'),
+    level5: extractMaturityLevel(content, 'Level 5: Optimized'),
   };
 
   return {
     description,
-    assessmentQuestions: questions,
+    maturityAssessment,
     maturityLevels,
   };
 }
@@ -102,11 +85,11 @@ function parseDimension(content: string): CapabilityDimension {
 /**
  * Extract maturity level content
  * @param content Dimension content
- * @param levelName Level name to extract
+ * @param levelName Level name to extract (e.g., "Level 1: Initial")
  * @returns Level content
  */
 function extractMaturityLevel(content: string, levelName: string): string {
-  const levelRegex = new RegExp(`### ${levelName}\\s+([\\s\\S]*?)(?=###|$)`);
+  const levelRegex = new RegExp(`#### ${levelName.replace(':', '\\:')}\\s+([\\s\\S]*?)(?=####|$)`);
   const match = content.match(levelRegex);
   return match ? match[1].trim() : '';
 }

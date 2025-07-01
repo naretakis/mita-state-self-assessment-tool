@@ -6,27 +6,24 @@ export interface Assessment {
   createdAt: string;
   updatedAt: string;
   status: AssessmentStatus;
-  capabilities: CapabilityAssessment[];
+  capabilities: CapabilityAreaAssessment[];
   metadata: AssessmentMetadata;
 }
 
 export type AssessmentStatus = 'not-started' | 'in-progress' | 'completed';
 
 export interface AssessmentMetadata {
-  version: string;
+  assessmentVersion: string;
   completedBy?: string;
-  reviewedBy?: string;
-  submissionDate?: string;
+  completionDate?: string;
   notes?: string;
 }
 
-export interface CapabilityAssessment {
+export interface CapabilityAreaAssessment {
   id: string;
-  capabilityId: string;
-  name: string;
-  domainName: string;
-  moduleName: string;
-  status: AssessmentStatus;
+  capabilityDomainName: string;
+  capabilityAreaName: string;
+  status: 'not-started' | 'in-progress' | 'completed';
   dimensions: {
     outcome: DimensionAssessment;
     role: DimensionAssessment;
@@ -48,12 +45,11 @@ export interface DimensionAssessment {
 
 export interface CapabilityDefinition {
   id: string;
-  name: string;
-  domainName: string;
-  domainDescription?: string;
-  moduleName: string;
-  version: string;
-  lastUpdated: string;
+  capabilityDomainName: string;
+  capabilityAreaName: string;
+  capabilityVersion: string;
+  capabilityAreaCreated: string;
+  capabilityAreaLastUpdated: string;
   description: string;
   dimensions: {
     outcome: DimensionDefinition;
@@ -66,7 +62,7 @@ export interface CapabilityDefinition {
 
 export interface DimensionDefinition {
   description: string;
-  assessmentQuestions: string[];
+  maturityAssessment: string[];
   maturityLevels: {
     level1: string;
     level2: string;
@@ -89,13 +85,60 @@ export interface AssessmentSummary {
 export interface CapabilityFrontMatter {
   capabilityDomain: string;
   capabilityArea: string;
-  version: string;
+  capabilityVersion: string;
   capabilityAreaCreated: string;
   capabilityAreaLastUpdated: string;
   assessmentCreated?: string;
   assessmentUpdated?: string;
   assessmentStatus?: AssessmentStatus;
 }
+
+// Storage Manager Interface
+export interface StorageManager {
+  saveAssessment(assessment: Assessment): Promise<boolean>;
+  loadAssessment(id: string): Promise<Assessment | null>;
+  listAssessments(): Promise<AssessmentSummary[]>;
+  deleteAssessment(id: string): Promise<boolean>;
+  exportAssessment(id: string): Promise<Blob>;
+  importAssessment(file: File): Promise<Assessment>;
+}
+
+// Content Manager Interface
+export interface ContentManager {
+  loadCapabilityDefinitions(): Promise<CapabilityDefinition[]>;
+  getCapability(id: string): Promise<CapabilityDefinition | null>;
+  getCapabilitiesByDomain(domainName: string): Promise<CapabilityDefinition[]>;
+}
+
+// Assessment Context Interface
+export interface AssessmentContext {
+  currentAssessment: Assessment | null;
+  loading: boolean;
+  error: Error | null;
+  createAssessment: (stateName: string) => Promise<string>;
+  loadAssessment: (id: string) => Promise<void>;
+  saveAssessment: () => Promise<boolean>;
+  updateCapabilityDimension: (
+    capabilityId: string,
+    dimension: 'outcome' | 'role' | 'businessProcess' | 'information' | 'technology',
+    data: Partial<DimensionAssessment>
+  ) => void;
+  exportAssessment: (format: 'json' | 'pdf' | 'csv') => Promise<void>;
+}
+
+// ORBIT Dimensions constant
+export const ORBIT_DIMENSIONS = {
+  outcome: 'outcome',
+  role: 'role',
+  businessProcess: 'businessProcess',
+  information: 'information',
+  technology: 'technology',
+} as const;
+
+export type OrbitDimension = keyof typeof ORBIT_DIMENSIONS;
+
+// Backward compatibility alias
+export type CapabilityAssessment = CapabilityAreaAssessment;
 
 // Legacy data structure for migration
 export interface AssessmentData {

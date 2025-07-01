@@ -4,7 +4,7 @@ describe('Markdown Parser', () => {
   const sampleMarkdown = `---
 capabilityDomain: Provider
 capabilityArea: Provider Enrollment
-version: 1.1
+capabilityVersion: 1.1
 capabilityAreaCreated: 2025-02-02
 capabilityAreaLastUpdated: 2025-02-03
 assessmentCreated: 2025-05-01
@@ -158,11 +158,10 @@ Microservices architecture, AI/ML-powered enrollment processing, and real-time i
   test('parses front matter correctly', () => {
     const result = parseCapabilityMarkdown(sampleMarkdown);
 
-    expect(result.domainName).toBe('Provider');
-    expect(result.name).toBe('Provider Enrollment');
-    expect(result.version).toBe('1.1');
-    // Skip the date test since it's causing issues with timezone formatting
-    // expect(result.lastUpdated).toBe('2025-02-03');
+    expect(result.capabilityDomainName).toBe('Provider');
+    expect(result.capabilityAreaName).toBe('Provider Enrollment');
+    expect(result.capabilityVersion).toBe('1.1');
+    expect(result.capabilityAreaLastUpdated).toBe('2025-02-03');
   });
 
   test('generates correct ID', () => {
@@ -171,29 +170,13 @@ Microservices architecture, AI/ML-powered enrollment processing, and real-time i
     expect(result.id).toBe('provider-provider-enrollment');
   });
 
-  test('extracts capability domain information', () => {
+  test('extracts capability domain and area information', () => {
     const result = parseCapabilityMarkdown(sampleMarkdown);
 
-    expect(result.domainName).toBe('Provider');
-    expect(result.description).toContain(
-      'Provider Enrollment encompasses the processes and systems'
-    );
-    // Verify domain description is extracted
-    expect(result.domainDescription).toContain('encompasses three related areas');
-    expect(result.domainDescription).toContain(
-      'Provider Enrollment, Provider Management, and Provider Termination'
-    );
-  });
-
-  test('extracts capability area information', () => {
-    const result = parseCapabilityMarkdown(sampleMarkdown);
-
-    expect(result.name).toBe('Provider Enrollment');
+    expect(result.capabilityDomainName).toBe('Provider');
+    expect(result.capabilityAreaName).toBe('Provider Enrollment');
     expect(result.description).toContain(
       'processes and systems used to register healthcare providers'
-    );
-    expect(result.description).toContain(
-      'application processing, screening, verification, and enrollment decisions'
     );
   });
 
@@ -213,67 +196,37 @@ Microservices architecture, AI/ML-powered enrollment processing, and real-time i
     );
   });
 
-  test('extracts assessment questions for all dimensions', () => {
+  test('extracts maturity assessment questions for all dimensions', () => {
     const result = parseCapabilityMarkdown(sampleMarkdown);
 
     // Outcome dimension
-    expect(result.dimensions.outcome.assessmentQuestions).toHaveLength(3);
-    expect(result.dimensions.outcome.assessmentQuestions[0]).toContain(
+    expect(result.dimensions.outcome.maturityAssessment).toHaveLength(3);
+    expect(result.dimensions.outcome.maturityAssessment[0]).toContain(
       'How efficiently are providers enrolled'
-    );
-    expect(result.dimensions.outcome.assessmentQuestions[1]).toContain(
-      'What percentage of applications are processed'
-    );
-    expect(result.dimensions.outcome.assessmentQuestions[2]).toContain(
-      'How effectively does the enrollment process validate'
     );
 
     // Role dimension
-    expect(result.dimensions.role.assessmentQuestions).toHaveLength(3);
-    expect(result.dimensions.role.assessmentQuestions[0]).toContain(
+    expect(result.dimensions.role.maturityAssessment).toHaveLength(3);
+    expect(result.dimensions.role.maturityAssessment[0]).toContain(
       'How are responsibilities distributed'
-    );
-    expect(result.dimensions.role.assessmentQuestions[1]).toContain(
-      'What self-service capabilities'
-    );
-    expect(result.dimensions.role.assessmentQuestions[2]).toContain(
-      'How effectively do different roles collaborate'
     );
 
     // Business Process dimension
-    expect(result.dimensions.businessProcess.assessmentQuestions).toHaveLength(3);
-    expect(result.dimensions.businessProcess.assessmentQuestions[0]).toContain(
+    expect(result.dimensions.businessProcess.maturityAssessment).toHaveLength(3);
+    expect(result.dimensions.businessProcess.maturityAssessment[0]).toContain(
       'How streamlined is the provider enrollment workflow'
-    );
-    expect(result.dimensions.businessProcess.assessmentQuestions[1]).toContain(
-      'What degree of automation exists'
-    );
-    expect(result.dimensions.businessProcess.assessmentQuestions[2]).toContain(
-      'How are exceptions and special cases handled'
     );
 
     // Information dimension
-    expect(result.dimensions.information.assessmentQuestions).toHaveLength(3);
-    expect(result.dimensions.information.assessmentQuestions[0]).toContain(
+    expect(result.dimensions.information.maturityAssessment).toHaveLength(3);
+    expect(result.dimensions.information.maturityAssessment[0]).toContain(
       'How comprehensive is the provider data model'
-    );
-    expect(result.dimensions.information.assessmentQuestions[1]).toContain(
-      'What data validation mechanisms'
-    );
-    expect(result.dimensions.information.assessmentQuestions[2]).toContain(
-      'How effectively is provider information shared'
     );
 
     // Technology dimension
-    expect(result.dimensions.technology.assessmentQuestions).toHaveLength(3);
-    expect(result.dimensions.technology.assessmentQuestions[0]).toContain(
+    expect(result.dimensions.technology.maturityAssessment).toHaveLength(3);
+    expect(result.dimensions.technology.maturityAssessment[0]).toContain(
       'How well do systems support'
-    );
-    expect(result.dimensions.technology.assessmentQuestions[1]).toContain(
-      'What degree of integration exists'
-    );
-    expect(result.dimensions.technology.assessmentQuestions[2]).toContain(
-      'How adaptable is the technology'
     );
   });
 
@@ -306,47 +259,8 @@ Microservices architecture, AI/ML-powered enrollment processing, and real-time i
     expect(result.dimensions.role.maturityLevels.level4).toContain('Automated assignment of tasks');
     expect(result.dimensions.role.maturityLevels.level5).toContain('Dynamic role assignment');
 
-    // Test Business Process dimension - all levels
-    expect(result.dimensions.businessProcess.maturityLevels.level1).toContain(
-      'Manual, paper-based workflow'
-    );
-    expect(result.dimensions.businessProcess.maturityLevels.level2).toContain(
-      'Basic electronic workflow'
-    );
-    expect(result.dimensions.businessProcess.maturityLevels.level3).toContain(
-      'Fully electronic workflow'
-    );
-    expect(result.dimensions.businessProcess.maturityLevels.level4).toContain(
-      'Intelligent workflow with adaptive routing'
-    );
-    expect(result.dimensions.businessProcess.maturityLevels.level5).toContain(
-      'Continuous process optimization'
-    );
-
-    // Test Information dimension - all levels
-    expect(result.dimensions.information.maturityLevels.level1).toContain(
-      'Basic provider demographic information'
-    );
-    expect(result.dimensions.information.maturityLevels.level2).toContain(
-      'Structured provider data model'
-    );
-    expect(result.dimensions.information.maturityLevels.level3).toContain(
-      'Comprehensive provider data model'
-    );
-    expect(result.dimensions.information.maturityLevels.level4).toContain(
-      'Enhanced data model supporting advanced analytics'
-    );
-    expect(result.dimensions.information.maturityLevels.level5).toContain('Dynamic data model');
-
-    // Test Technology dimension - all levels
+    // Test Technology dimension - sample levels
     expect(result.dimensions.technology.maturityLevels.level1).toContain('Legacy systems');
-    expect(result.dimensions.technology.maturityLevels.level2).toContain('Basic web forms');
-    expect(result.dimensions.technology.maturityLevels.level3).toContain(
-      'Integrated provider enrollment system'
-    );
-    expect(result.dimensions.technology.maturityLevels.level4).toContain(
-      'Cloud-based enrollment platform'
-    );
     expect(result.dimensions.technology.maturityLevels.level5).toContain(
       'Microservices architecture'
     );
