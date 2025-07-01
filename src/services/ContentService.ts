@@ -94,16 +94,37 @@ export class ContentService {
       ];
 
       const capabilities: CapabilityDefinition[] = [];
+      
+      // Get the base path by detecting it from the current location
+      const getBasePath = () => {
+        if (typeof window === 'undefined') return '';
+        
+        const pathname = window.location.pathname;
+        // Check if we're on GitHub Pages with a base path
+        if (pathname.includes('/mita-state-self-assessment-tool')) {
+          if (pathname.includes('/dev/')) {
+            return '/mita-state-self-assessment-tool/dev';
+          } else if (pathname.includes('/test/')) {
+            return '/mita-state-self-assessment-tool/test';
+          } else {
+            return '/mita-state-self-assessment-tool';
+          }
+        }
+        return '';
+      };
+      
+      const basePath = getBasePath();
 
       for (const filename of capabilityFiles) {
         try {
-          const response = await fetch(`/content/${filename}`);
+          const url = `${basePath}/content/${filename}`;
+          const response = await fetch(url);
           if (response.ok) {
             const content = await response.text();
             const capability = this.parseCapabilityContent(content);
             capabilities.push(capability);
           } else {
-            console.warn(`Failed to load ${filename}: ${response.statusText}`);
+            console.warn(`Failed to load ${filename}: ${response.status} ${response.statusText}`);
           }
         } catch (error) {
           console.warn(`Error loading ${filename}:`, error);
