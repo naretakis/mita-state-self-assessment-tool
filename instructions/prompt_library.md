@@ -137,88 +137,112 @@ Following our architecture in instructions/architecture.md, help me create a Rea
 
 ## Development Phase 3: Core Feature Implementation
 
-### Assessment Form Component
+### Landing Page Component
 
 ```
-Following the assessment workflow in instructions/assessment_workflow.md, help me create a React component for assessing a single ORBIT dimension that:
+Following the user journey in instructions/assessment_workflow.md, help me create a landing page component that:
 
-1. Takes a dimension definition and current assessment state as props
-2. Renders the assessment questions and maturity level options
-3. Provides fields for evidence and notes
-4. Handles user input and state updates
-5. Validates input data
+1. Displays welcome message and tool overview with clear navigation options
+2. Provides "Getting Started" link to proceed to user dashboard
+3. Includes "About MITA" link to framework information page
+4. Loads quickly with minimal dependencies and accessible entry points
+5. Uses CMS Design System components for visual consistency
 ```
 
-### LocalStorage Service
+### User Dashboard Component
 
 ```
-Based on the storage approach described in instructions/data_models.md, please implement 
-a storage service that:
+Based on the dashboard workflow in instructions/assessment_workflow.md, help me create a user dashboard component that:
 
-1. Provides methods to save and load assessment data from localStorage
-2. Falls back to IndexedDB for larger data sets
-3. Handles storage quotas and errors gracefully
-4. Implements the StorageManager interface defined in instructions/data_models.md
+1. Loads and displays saved assessments from browser storage with progress indicators
+2. Shows assessment metadata (dates, domains, completion status) for each assessment
+3. Provides "Begin New Assessment" and "Open Existing Assessment" actions
+4. Displays assessment states (Not Started, In Progress, Completed, Reviewed, Exported)
+5. Integrates with storage service to manage saved assessments
 ```
 
-### Decision Tree Navigator
+### MITA Information Page
 
 ```
-Following the decision tree navigation described in instructions/assessment_workflow.md, 
-please create a React component that:
+Following the information flow in instructions/assessment_workflow.md, help me create a MITA information page that:
 
-1. Guides users through the capability assessment process across all five ORBIT dimensions (Outcome, Role, Business Process, Information, Technology)
-2. Shows progress and completion status for each dimension
-3. Allows users to navigate between capabilities and ORBIT dimensions in a structured way
-4. Maintains assessment state across browser sessions using our storage service
-5. Implements the workflow pattern shown in the decision tree diagram in assessment-workflow.md
+1. Presents educational content about MITA framework in accessible format
+2. Includes external link to official MITA website (opens in new tab)
+3. Provides "Getting Started" link to proceed to dashboard
+4. Maintains user's place in application flow with clear navigation pathways
+5. Uses proper semantic structure for screen reader support
 ```
 
-### Dashboard Component
+### Assessment Setup Component
 
 ```
-Based on the assessment workflow described in instructions/assessment_workflow.md, help me create a dashboard component that:
+Based on the assessment setup flow in instructions/assessment_workflow.md, help me create a component that:
 
-1. Shows a list of in-progress and completed assessments
-2. Displays summary maturity scores for each assessment
-3. Provides actions like create, continue, and export
-4. Uses the CMS Design System components for visual consistency
+1. Displays capability domains and areas in organized, selectable structure
+2. Validates that at least one capability area is selected before proceeding
+3. Saves selections to browser storage and generates customized assessment flow
+4. Provides navigation back to modify selections and review before proceeding
+5. Links to begin the guided assessment walkthrough
 ```
 
-### Phase 1: Preparation Components
+### Guided Assessment Walkthrough
 
 ```
-Based on the Preparation phase described in instructions/assessment_workflow.md, please help me create a landing page component that:
+Following the guided assessment process in instructions/assessment_workflow.md, help me create a multi-page assessment component that:
 
-1. Provides options to create a new assessment or resume existing ones
-2. Includes a form for capturing state name and assessment metadata
-3. Displays instructions and framework overview
-4. Integrates with our storage service to list saved assessments
-5. Follows the visual design patterns from the CMS Design System
+1. Presents assessment questions in logical sequence with capability overview
+2. Implements systematic ORBIT dimension evaluation (Outcome, Role, Business Process, Information, Technology)
+3. Provides maturity level selection, evidence documentation, and advancement planning fields
+4. Auto-saves user inputs every 30 seconds and validates required fields
+5. Supports forward/backward navigation and tracks completion status across dimensions
 ```
 
-### Phase 2: Assessment Components
+### ORBIT Dimension Assessment Form
 
 ```
-Based on the Assessment phase described in instructions/assessment_workflow.md, please help me implement the core assessment experience including:
+Based on the form structure in instructions/assessment_workflow.md, help me create a dimension assessment component that:
 
-1. A capability selector component for choosing domains and capability areas
-2. Assessment form components for each ORBIT dimension
-3. Progress tracking indicators
-4. Save functionality that persists assessment data to browser storage
-5. Navigation between capability areas and dimensions
+1. Includes dimension overview, reference materials, and structured assessment questions
+2. Provides maturity selection controls (radio buttons) and evidence text areas
+3. Contains advancement plans section and general notes field
+4. Handles user input validation and state updates
+5. Integrates with the guided walkthrough navigation flow
 ```
 
-### Phase 3: Collaboration Components
+### Assessment Results Component
 
 ```
-Based on the Collaboration phase described in instructions/assessment_workflow.md, please help me implement the collaboration features including:
+Following the assessment results workflow in instructions/assessment_workflow.md, help me create a results component that:
 
-1. Section-specific export functionality to PDF and CSV
-2. Data import capability from previously exported files
-3. Validation of imported data against our schema
-4. Merge functionality to combine updates from multiple sources
-5. User feedback for successful import/export operations
+1. Calculates and displays MITA maturity scores for assessed capability areas
+2. Provides visualization of results across capability areas
+3. Generates formatted PDF/CSV reports for download
+4. Updates assessment status to "Completed" and adds to user dashboard
+5. Includes navigation back to dashboard and sharing options
+```
+
+### Assessment Management Component
+
+```
+Based on the assessment management flow in instructions/assessment_workflow.md, help me create a component that:
+
+1. Loads existing assessment data from browser storage
+2. Provides "Update/Edit" and "View" (read-only) modes for existing assessments
+3. Maintains data integrity during updates and tracks modification dates
+4. Provides confirmation dialogs for destructive actions like delete
+5. Supports version history and assessment archiving
+```
+
+### Browser Storage Service
+
+```
+Following the storage implementation in instructions/assessment_workflow.md, help me create a storage service that:
+
+1. Uses localStorage for assessment metadata and IndexedDB for detailed assessment data
+2. Implements autosave every 30 seconds and explicit user-triggered save
+3. Provides JSON export/import functionality for data transfer between sessions
+4. Handles storage quotas and errors gracefully with user feedback
+5. Supports assessment state management (Not Started, In Progress, Completed, etc.)
 ```
 
 ### Error Boundary Component
