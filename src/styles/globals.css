@@ -1,3 +1,5 @@
+@import './cms-design-system.css';
+
 :root {
   --primary-color: #0071bc;
   --secondary-color: #112e51;

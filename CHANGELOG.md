@@ -3,6 +3,41 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
+## [0.4.0] - 2025-07-01
+
+### Landing Page Implementation
+- Created professional landing page component with CMS Design System integration
+- Implemented responsive layout with government-standard styling and typography
+- Added navigation buttons for "Getting Started" and "About MITA" with proper routing
+- Created key features section highlighting tool capabilities
+- Added browser-based tool information callout for user reassurance
+- Implemented proper accessibility structure with ARIA labels and semantic HTML
+
+### User Interface Pages
+- Created dashboard placeholder page with consistent styling and navigation
+- Implemented About MITA information page with framework details and external links
+- Added proper page metadata and SEO optimization
+- Ensured consistent visual hierarchy across all pages
+
+### CSS and Styling System
+- Resolved CMS Design System CSS loading issues for reliable styling
+- Created custom CSS file with essential CMS Design System styles
+- Implemented government-standard colors, typography, and component styling
+- Added responsive grid system and utility classes
+- Fixed styling issues that caused pages to display as plain text
+
+### Development Workflow Improvements
+- Enhanced npm run check script to include build verification
+- Updated Jest configuration to handle CSS imports properly
+- Added comprehensive unit tests for landing page component
+- Improved error handling and CSS loading reliability
+
+### Code Quality and Testing
+- Fixed import order and linting issues across new components
+- Added proper TypeScript interfaces and component documentation
+- Implemented comprehensive test coverage for new components
+- Ensured all code passes formatting, linting, and build checks
+
 ## [0.3.0] - 2025-06-06
 
 ### Content Structure Implementation

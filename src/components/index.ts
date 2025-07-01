@@ -1,5 +1,6 @@
 // Layout components
 export { default as Layout } from './layout/Layout';
+export { default as LandingPage } from './layout/LandingPage';
 
 // Common components
 export { default as Button } from './common/Button';

@@ -1,5 +1,4 @@
 import React from 'react';
-import '@cmsgov/design-system/dist/css/index.css';
 
 interface CMSProviderProps {
   children: React.ReactNode;

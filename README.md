@@ -16,6 +16,7 @@ For detailed project documentation, including architecture, workflows, and devel
 
 ## Key Features
 
+- **Professional User Interface**: Modern landing page with government-standard CMS Design System styling
 - **In-browser functionality**: Works entirely in the browser with local storage
 - **MITA NextGen Framework**: Full integration with the capability-based ORBIT dimensions
 - **Decision tree-guided assessment**: Intuitive workflow for completing assessments
@@ -92,7 +93,7 @@ mita-state-self-assessment-tool/
 - `npm run test:coverage`: Generate test coverage report
 - `npm run dev`: Start the development server
 - `npm run build`: Build the application for production
-- `npm run check`: Run formatting checks, linting, and tests
+- `npm run check`: Run formatting checks, linting, tests, and build verification
 - `npm start`: Start the production server
 - `npm run export`: Export the application as static HTML
 
@@ -218,9 +219,19 @@ The application follows accessibility best practices:
 
 The Minimum Lovable Product (MLP) focuses on core functionality by August 2025:
 
-### In Scope
-- In-browser functionality with local storage
-- MITA NextGen Framework integration
+### Completed ✅
+- Professional landing page with CMS Design System integration
+- MITA NextGen Framework content structure and parsing
+- Browser storage services with fallback mechanisms
+- Content loading and management system
+- Multi-branch deployment infrastructure
+
+### In Progress 🚧
+- User dashboard for assessment management
+- Assessment setup and capability selection
+- Guided assessment walkthrough
+
+### Planned 📋
 - Decision tree-guided assessment process
 - Basic maturity visualization and reporting
 - PDF and CSV export functionality
