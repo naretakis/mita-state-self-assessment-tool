@@ -227,11 +227,12 @@ The Minimum Lovable Product (MLP) focuses on core functionality by August 2025:
 - Browser storage services with fallback mechanisms
 - Content loading and management system
 - User dashboard for assessment management
+- Assessment setup with domain/area selection and card-based UI
 - Multi-branch deployment infrastructure
 
 ### In Progress 🚧
-- Assessment setup and capability selection
 - Guided assessment walkthrough
+- ORBIT dimension assessment forms
 
 ### Planned 📋
 - Decision tree-guided assessment process

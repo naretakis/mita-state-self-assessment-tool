@@ -35,23 +35,14 @@ export class ContentService {
   }
 
   /**
-   * Fetch capabilities from API endpoint
+   * Fetch capabilities from content files
    * This method is used in the browser environment
    */
   private async fetchCapabilitiesFromAPI(): Promise<void> {
     try {
-      // For now, we'll use mock data in the client
-      // In a real implementation, you would fetch from an API endpoint
-      this.capabilities = this.getMockCapabilities();
-
-      // Example of how you would fetch from an API:
-      // const response = await fetch('/api/capabilities');
-      // if (!response.ok) {
-      //   throw new Error(`Failed to fetch capabilities: ${response.statusText}`);
-      // }
-      // this.capabilities = await response.json();
+      this.capabilities = await this.getMockCapabilities();
     } catch (error) {
-      console.error('Failed to fetch capabilities from API:', error);
+      console.error('Failed to fetch capabilities from content files:', error);
       throw error;
     }
   }
@@ -90,79 +81,41 @@ export class ContentService {
   }
 
   /**
-   * Get mock capabilities for development
-   * This is a temporary solution until we have a proper API
+   * Get capabilities by loading from content files
+   * This loads the actual capability definitions from markdown files
    */
-  private getMockCapabilities(): CapabilityDefinition[] {
-    // Return a simple mock capability for development purposes
-    return [
-      {
-        id: 'mock-capability-1',
-        capabilityDomainName: 'Business Relationship Management',
-        capabilityAreaName: 'Client Management',
-        capabilityVersion: '1.0',
-        capabilityAreaCreated: '2023-01-01',
-        capabilityAreaLastUpdated: '2023-01-01',
-        description: 'This is a mock capability for development purposes.',
-        dimensions: {
-          outcome: {
-            description: 'Mock outcome dimension',
-            maturityAssessment: ['Select the level that most closely aligns to your business'],
-            maturityLevels: {
-              level1: 'Level 1 description',
-              level2: 'Level 2 description',
-              level3: 'Level 3 description',
-              level4: 'Level 4 description',
-              level5: 'Level 5 description',
-            },
-          },
-          role: {
-            description: 'Mock role dimension',
-            maturityAssessment: ['Select the level that most closely aligns to your business'],
-            maturityLevels: {
-              level1: 'Level 1 description',
-              level2: 'Level 2 description',
-              level3: 'Level 3 description',
-              level4: 'Level 4 description',
-              level5: 'Level 5 description',
-            },
-          },
-          businessProcess: {
-            description: 'Mock business process dimension',
-            maturityAssessment: ['Select the level that most closely aligns to your business'],
-            maturityLevels: {
-              level1: 'Level 1 description',
-              level2: 'Level 2 description',
-              level3: 'Level 3 description',
-              level4: 'Level 4 description',
-              level5: 'Level 5 description',
-            },
-          },
-          information: {
-            description: 'Mock information dimension',
-            maturityAssessment: ['Select the level that most closely aligns to your business'],
-            maturityLevels: {
-              level1: 'Level 1 description',
-              level2: 'Level 2 description',
-              level3: 'Level 3 description',
-              level4: 'Level 4 description',
-              level5: 'Level 5 description',
-            },
-          },
-          technology: {
-            description: 'Mock technology dimension',
-            maturityAssessment: ['Select the level that most closely aligns to your business'],
-            maturityLevels: {
-              level1: 'Level 1 description',
-              level2: 'Level 2 description',
-              level3: 'Level 3 description',
-              level4: 'Level 4 description',
-              level5: 'Level 5 description',
-            },
-          },
-        },
-      },
-    ];
+  private async getMockCapabilities(): Promise<CapabilityDefinition[]> {
+    try {
+      // List of capability files to load
+      const capabilityFiles = [
+        'provider-enrollment.md',
+        'provider-management.md',
+        'provider-termination.md',
+      ];
+
+      const capabilities: CapabilityDefinition[] = [];
+
+      for (const filename of capabilityFiles) {
+        try {
+          const response = await fetch(`/content/${filename}`);
+          if (response.ok) {
+            const content = await response.text();
+            const capability = this.parseCapabilityContent(content);
+            capabilities.push(capability);
+          } else {
+            console.warn(`Failed to load ${filename}: ${response.statusText}`);
+          }
+        } catch (error) {
+          console.warn(`Error loading ${filename}:`, error);
+        }
+      }
+
+      return capabilities;
+    } catch (error) {
+      console.error('Error loading capabilities:', error);
+      // Return empty array if loading fails
+      return [];
+    }
   }
 }
 

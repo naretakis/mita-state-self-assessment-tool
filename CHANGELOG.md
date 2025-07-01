@@ -5,6 +5,52 @@ This changelog documents the development process of the MITA State Self-Assessme
 
 ## [0.4.0] - 2025-07-01
 
+### Assessment Setup Component - Major UI/UX Improvements
+- **Implemented Two-Step Domain Selection Process**: Updated Assessment Setup to follow proper workflow where users first select Capability Domains, then select specific Capability Areas within those domains
+- **Enhanced Visual Design with Card-Based Layout**: Converted domain sections into professional card-based interface with responsive grid layout (2-column on desktop, stacked on mobile)
+- **Improved Visual Hierarchy**: Added stronger visual differentiation between Capability Domains and their child Capability Areas using enhanced card styling with primary color borders and backgrounds
+- **Fixed Checkbox Alignment Issues**: Resolved checkbox display problems by implementing inline-block layout instead of flexbox, ensuring checkboxes appear properly aligned with their labels
+- **Added Domain Status Indicators**: Implemented status badges ("Available" vs "Coming Soon") and proper messaging for domains without content
+- **Enhanced User Experience**: Added bulk selection controls ("Select All"/"Deselect All"), selection counters, and improved spacing throughout the interface
+- **Implemented Industry Best Practices**: Applied hierarchical selection patterns commonly used in enterprise applications for multi-level selection interfaces
+- **Improved Accessibility**: Maintained proper form controls, ARIA labels, and keyboard navigation support throughout the redesign
+- **Added Placeholder Domains**: Included future capability domains (Claims Management, Care Management, Financial Management) with appropriate "Coming Soon" messaging
+- **Enhanced Card Styling**: Applied primary color theming with stronger borders, subtle shadows, and improved visual separation between domain cards
+
+### Technical Improvements
+- **Simplified Component Architecture**: Removed complex step-based navigation in favor of streamlined single-page selection interface
+- **Improved State Management**: Enhanced domain and capability selection state handling with proper validation
+- **Better Error Handling**: Added comprehensive validation and user feedback for selection requirements
+- **Responsive Design**: Ensured card layout works effectively across all screen sizes
+- **Code Quality**: Maintained TypeScript type safety and proper component structure throughout redesign
+
+### User Dashboard Implementation
+- Created comprehensive UserDashboard component with assessment management capabilities
+- Implemented assessment display with progress indicators, status badges, and metadata
+- Added "Begin New Assessment" and "Continue Assessment" functionality
+- Integrated export functionality for downloading assessments as JSON files
+- Implemented delete functionality with confirmation dialogs for data safety
+- Added loading states, error handling, and storage unavailability messaging
+- Created responsive layout with CMS Design System styling and accessibility features
+
+### Assessment Navigation Infrastructure
+- Updated dashboard page to integrate UserDashboard component with StorageProvider
+- Created placeholder pages for new assessment creation (/assessment/new)
+- Added dynamic assessment detail page (/assessment/[id]) for viewing/editing assessments
+- Implemented proper Next.js routing and page metadata
+
+### Component Architecture Enhancements
+- Added dashboard component directory with clean export structure
+- Integrated with existing StorageProvider and EnhancedStorageService
+- Maintained TypeScript type safety throughout dashboard implementation
+- Created modular component structure for future assessment features
+
+### Testing and Quality Assurance
+- Added comprehensive unit tests for UserDashboard component
+- Implemented proper mocking for storage service in tests
+- Ensured all formatting, linting, and build checks pass
+- Maintained 100% test coverage for new dashboard functionality
+
 ### Landing Page Implementation
 - Created professional landing page component with CMS Design System integration
 - Implemented responsive layout with government-standard styling and typography
@@ -38,32 +84,6 @@ This changelog documents the development process of the MITA State Self-Assessme
 - Implemented comprehensive test coverage for new components
 - Ensured all code passes formatting, linting, and build checks
 
-### User Dashboard Implementation
-- Created comprehensive UserDashboard component with assessment management capabilities
-- Implemented assessment display with progress indicators, status badges, and metadata
-- Added "Begin New Assessment" and "Continue Assessment" functionality
-- Integrated export functionality for downloading assessments as JSON files
-- Implemented delete functionality with confirmation dialogs for data safety
-- Added loading states, error handling, and storage unavailability messaging
-- Created responsive layout with CMS Design System styling and accessibility features
-
-### Assessment Navigation Infrastructure
-- Updated dashboard page to integrate UserDashboard component with StorageProvider
-- Created placeholder pages for new assessment creation (/assessment/new)
-- Added dynamic assessment detail page (/assessment/[id]) for viewing/editing assessments
-- Implemented proper Next.js routing and page metadata
-
-### Component Architecture Enhancements
-- Added dashboard component directory with clean export structure
-- Integrated with existing StorageProvider and EnhancedStorageService
-- Maintained TypeScript type safety throughout dashboard implementation
-- Created modular component structure for future assessment features
-
-### Testing and Quality Assurance
-- Added comprehensive unit tests for UserDashboard component
-- Implemented proper mocking for storage service in tests
-- Ensured all formatting, linting, and build checks pass
-- Maintained 100% test coverage for new dashboard functionality
 
 ## [0.3.0] - 2025-06-06
 
