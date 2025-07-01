@@ -17,11 +17,11 @@ For detailed project documentation, including architecture, workflows, and devel
 ## Key Features
 
 - **Professional User Interface**: Modern landing page with government-standard CMS Design System styling
+- **Assessment Dashboard**: Comprehensive dashboard for managing assessments with progress tracking
 - **In-browser functionality**: Works entirely in the browser with local storage
 - **MITA NextGen Framework**: Full integration with the capability-based ORBIT dimensions
 - **Decision tree-guided assessment**: Intuitive workflow for completing assessments
-- **Maturity visualization**: Interactive dashboards showing maturity across capabilities
-- **Export functionality**: Generate PDF and CSV reports for sharing and documentation
+- **Data Management**: Export/import functionality for assessment data portability
 - **Multi-branch deployment**: Supports parallel development with isolated environments
 
 ## Getting Started
@@ -67,10 +67,12 @@ mita-state-self-assessment-tool/
 │   ├── components/      # React components
 │   │   ├── assessment/  # Assessment-specific components
 │   │   ├── common/      # Shared UI components
+│   │   ├── dashboard/   # Dashboard components
 │   │   ├── layout/      # Layout components
-│   │   └── reporting/   # Reporting and visualization components
+│   │   └── storage/     # Storage management components
 │   ├── hooks/           # Custom React hooks
 │   ├── pages/           # Next.js pages
+│   │   └── assessment/  # Assessment-related pages
 │   ├── services/        # Application services
 │   ├── styles/          # CSS styles
 │   ├── types/           # TypeScript type definitions
@@ -224,10 +226,10 @@ The Minimum Lovable Product (MLP) focuses on core functionality by August 2025:
 - MITA NextGen Framework content structure and parsing
 - Browser storage services with fallback mechanisms
 - Content loading and management system
+- User dashboard for assessment management
 - Multi-branch deployment infrastructure
 
 ### In Progress 🚧
-- User dashboard for assessment management
 - Assessment setup and capability selection
 - Guided assessment walkthrough
 
