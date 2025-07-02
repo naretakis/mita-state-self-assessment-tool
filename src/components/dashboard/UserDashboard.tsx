@@ -52,7 +52,20 @@ interface AssessmentCardProps {
 function AssessmentCard({ assessment, onDelete, onExport }: AssessmentCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [capabilityInfo, setCapabilityInfo] = useState<string>('');
+  const { loadAssessment } = useStorageContext();
   const statusInfo = getStatusInfo(assessment.status);
+
+  // Load capability information
+  React.useEffect(() => {
+    loadAssessment(assessment.id).then(fullAssessment => {
+      if (fullAssessment?.capabilities) {
+        const domains = [...new Set(fullAssessment.capabilities.map(c => c.capabilityDomainName))];
+        const areas = fullAssessment.capabilities.map(c => c.capabilityAreaName);
+        setCapabilityInfo(`Domains: ${domains.join(', ')}\nAreas: ${areas.join(', ')}`);
+      }
+    });
+  }, [assessment.id, loadAssessment]);
 
   const handleDelete = async () => {
     setIsDeleting(true);
@@ -71,51 +84,40 @@ function AssessmentCard({ assessment, onDelete, onExport }: AssessmentCardProps)
   return (
     <div className="ds-c-card ds-u-margin-bottom--3">
       <div className="ds-c-card__body">
-        <div className="ds-l-row ds-u-align-items--center ds-u-margin-bottom--2">
-          <div className="ds-l-col--auto">
-            <h3 className="ds-h3 ds-u-margin--0">{assessment.stateName}</h3>
-          </div>
-          <div className="ds-l-col--auto ds-u-margin-left--auto">
-            <span className={`ds-c-badge ${statusInfo.className}`}>{statusInfo.label}</span>
-          </div>
+        <div className="ds-u-margin-bottom--3">
+          <h3 className="ds-h3 ds-u-margin--0">State: {assessment.stateName}</h3>
+          {capabilityInfo && (
+            <div className="ds-u-margin-top--1">
+              <div className="ds-text--small ds-u-color--muted" style={{ whiteSpace: 'pre-line' }}>
+                {capabilityInfo}
+              </div>
+            </div>
+          )}
         </div>
 
+        {/* Assessment Details */}
         <div className="ds-u-margin-bottom--3">
-          <div className="ds-l-row ds-u-margin-bottom--1">
-            <div className="ds-l-col--6">
-              <span className="ds-text--small ds-u-color--muted">Created:</span>
-              <br />
-              <span className="ds-text--small">{formatDate(assessment.createdAt)}</span>
-            </div>
-            <div className="ds-l-col--6">
-              <span className="ds-text--small ds-u-color--muted">Last Updated:</span>
-              <br />
-              <span className="ds-text--small">{formatDate(assessment.updatedAt)}</span>
+          {/* Status */}
+          <div className="ds-u-margin-bottom--2">
+            <span className="ds-text--small ds-u-color--muted">Status:</span>
+            <div className="ds-u-margin-top--1">
+              <span className={`ds-c-badge ${statusInfo.className}`}>{statusInfo.label}</span>
             </div>
           </div>
 
-          {/* Progress indicator */}
-          <div className="ds-u-margin-top--2">
-            <div className="ds-l-row ds-u-align-items--center ds-u-margin-bottom--1">
-              <div className="ds-l-col--auto">
-                <span className="ds-text--small ds-u-color--muted">Progress:</span>
-              </div>
-              <div className="ds-l-col--auto ds-u-margin-left--auto">
-                <span className="ds-text--small ds-u-font-weight--bold">
-                  {assessment.completionPercentage}%
-                </span>
-              </div>
+          {/* Created Date */}
+          <div className="ds-u-margin-bottom--2">
+            <span className="ds-text--small ds-u-color--muted">Created:</span>
+            <div className="ds-u-margin-top--1">
+              <span className="ds-text--small">{formatDate(assessment.createdAt)}</span>
             </div>
-            <div className="ds-c-progress-bar">
-              <div
-                className="ds-c-progress-bar__fill"
-                style={{ width: `${assessment.completionPercentage}%` }}
-                role="progressbar"
-                aria-valuenow={assessment.completionPercentage}
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-label={`Assessment ${assessment.completionPercentage}% complete`}
-              />
+          </div>
+
+          {/* Last Updated Date */}
+          <div className="ds-u-margin-bottom--2">
+            <span className="ds-text--small ds-u-color--muted">Last Updated:</span>
+            <div className="ds-u-margin-top--1">
+              <span className="ds-text--small">{formatDate(assessment.updatedAt)}</span>
             </div>
           </div>
         </div>
