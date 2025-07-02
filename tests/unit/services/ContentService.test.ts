@@ -30,7 +30,8 @@ describe('ContentService', () => {
       mockFetch
         .mockResolvedValueOnce({
           ok: true,
-          text: () => Promise.resolve(`---
+          text: () =>
+            Promise.resolve(`---
 capabilityDomain: Provider
 capabilityArea: Provider Enrollment
 capabilityVersion: 1.1
@@ -42,7 +43,8 @@ Test content`),
         } as Response)
         .mockResolvedValueOnce({
           ok: true,
-          text: () => Promise.resolve(`---
+          text: () =>
+            Promise.resolve(`---
 capabilityDomain: Provider
 capabilityArea: Provider Management
 capabilityVersion: 1.1
@@ -54,7 +56,8 @@ Test content`),
         } as Response)
         .mockResolvedValueOnce({
           ok: true,
-          text: () => Promise.resolve(`---
+          text: () =>
+            Promise.resolve(`---
 capabilityDomain: Provider
 capabilityArea: Provider Termination
 capabilityVersion: 1.1
@@ -68,9 +71,15 @@ Test content`),
       await contentService.initialize();
 
       // Verify that fetch was called with the correct dev branch base path
-      expect(mockFetch).toHaveBeenCalledWith('/mita-state-self-assessment-tool/dev/content/provider-enrollment.md');
-      expect(mockFetch).toHaveBeenCalledWith('/mita-state-self-assessment-tool/dev/content/provider-management.md');
-      expect(mockFetch).toHaveBeenCalledWith('/mita-state-self-assessment-tool/dev/content/provider-termination.md');
+      expect(mockFetch).toHaveBeenCalledWith(
+        '/mita-state-self-assessment-tool/dev/content/provider-enrollment.md'
+      );
+      expect(mockFetch).toHaveBeenCalledWith(
+        '/mita-state-self-assessment-tool/dev/content/provider-management.md'
+      );
+      expect(mockFetch).toHaveBeenCalledWith(
+        '/mita-state-self-assessment-tool/dev/content/provider-termination.md'
+      );
     });
 
     it('should detect main branch base path correctly', async () => {
@@ -86,7 +95,8 @@ Test content`),
       mockFetch
         .mockResolvedValueOnce({
           ok: true,
-          text: () => Promise.resolve(`---
+          text: () =>
+            Promise.resolve(`---
 capabilityDomain: Provider
 capabilityArea: Provider Enrollment
 ---
@@ -94,7 +104,8 @@ Test content`),
         } as Response)
         .mockResolvedValueOnce({
           ok: true,
-          text: () => Promise.resolve(`---
+          text: () =>
+            Promise.resolve(`---
 capabilityDomain: Provider
 capabilityArea: Provider Management
 ---
@@ -102,7 +113,8 @@ Test content`),
         } as Response)
         .mockResolvedValueOnce({
           ok: true,
-          text: () => Promise.resolve(`---
+          text: () =>
+            Promise.resolve(`---
 capabilityDomain: Provider
 capabilityArea: Provider Termination
 ---
@@ -112,9 +124,15 @@ Test content`),
       await contentService.initialize();
 
       // Verify that fetch was called with the correct main branch base path
-      expect(mockFetch).toHaveBeenCalledWith('/mita-state-self-assessment-tool/content/provider-enrollment.md');
-      expect(mockFetch).toHaveBeenCalledWith('/mita-state-self-assessment-tool/content/provider-management.md');
-      expect(mockFetch).toHaveBeenCalledWith('/mita-state-self-assessment-tool/content/provider-termination.md');
+      expect(mockFetch).toHaveBeenCalledWith(
+        '/mita-state-self-assessment-tool/content/provider-enrollment.md'
+      );
+      expect(mockFetch).toHaveBeenCalledWith(
+        '/mita-state-self-assessment-tool/content/provider-management.md'
+      );
+      expect(mockFetch).toHaveBeenCalledWith(
+        '/mita-state-self-assessment-tool/content/provider-termination.md'
+      );
     });
 
     it('should handle local development (no base path)', async () => {
@@ -130,7 +148,8 @@ Test content`),
       mockFetch
         .mockResolvedValueOnce({
           ok: true,
-          text: () => Promise.resolve(`---
+          text: () =>
+            Promise.resolve(`---
 capabilityDomain: Provider
 capabilityArea: Provider Enrollment
 ---
@@ -138,7 +157,8 @@ Test content`),
         } as Response)
         .mockResolvedValueOnce({
           ok: true,
-          text: () => Promise.resolve(`---
+          text: () =>
+            Promise.resolve(`---
 capabilityDomain: Provider
 capabilityArea: Provider Management
 ---
@@ -146,7 +166,8 @@ Test content`),
         } as Response)
         .mockResolvedValueOnce({
           ok: true,
-          text: () => Promise.resolve(`---
+          text: () =>
+            Promise.resolve(`---
 capabilityDomain: Provider
 capabilityArea: Provider Termination
 ---
@@ -168,7 +189,8 @@ Test content`),
       mockFetch
         .mockResolvedValueOnce({
           ok: true,
-          text: () => Promise.resolve(`---
+          text: () =>
+            Promise.resolve(`---
 capabilityDomain: Provider
 capabilityArea: Provider Enrollment
 capabilityVersion: 1.1
@@ -186,7 +208,8 @@ Provider Enrollment encompasses the processes for registering healthcare provide
         } as Response)
         .mockResolvedValueOnce({
           ok: true,
-          text: () => Promise.resolve(`---
+          text: () =>
+            Promise.resolve(`---
 capabilityDomain: Provider
 capabilityArea: Provider Management
 capabilityVersion: 1.1
@@ -199,7 +222,8 @@ Provider Management encompasses ongoing provider processes.`),
         } as Response)
         .mockResolvedValueOnce({
           ok: true,
-          text: () => Promise.resolve(`---
+          text: () =>
+            Promise.resolve(`---
 capabilityDomain: Provider
 capabilityArea: Provider Termination
 capabilityVersion: 1.1

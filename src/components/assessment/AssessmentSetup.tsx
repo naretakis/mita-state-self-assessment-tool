@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
 import { ContentService } from '../../services/ContentService';
 import enhancedStorageService from '../../services/EnhancedStorageService';
+import styles from '../../styles/AssessmentSetup.module.css';
 
-import type { CapabilityDefinition, Assessment, CapabilityAreaAssessment } from '../../types';
+import type { Assessment, CapabilityAreaAssessment, CapabilityDefinition } from '../../types';
 
 interface AssessmentSetupProps {
   onAssessmentCreated?: (assessmentId: string) => void;
@@ -27,6 +28,7 @@ interface CapabilitySelection {
 const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }) => {
   const router = useRouter();
   const [stateName, setStateName] = useState('');
+  const [systemName, setSystemName] = useState('');
   const [capabilities, setCapabilities] = useState<CapabilityDefinition[]>([]);
   const [domains, setDomains] = useState<DomainSelection[]>([]);
   const [selections, setSelections] = useState<CapabilitySelection[]>([]);
@@ -34,6 +36,7 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
+  const [expandedDomains, setExpandedDomains] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     loadCapabilities();
@@ -68,9 +71,9 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
           selected: false,
           areas,
         })),
-        { name: 'Claims Management', selected: false, areas: [] },
-        { name: 'Care Management', selected: false, areas: [] },
+        { name: 'Claims Processing', selected: false, areas: [] },
         { name: 'Financial Management', selected: false, areas: [] },
+        { name: 'Eligibility and Enrollment', selected: false, areas: [] },
       ];
 
       setDomains(initialDomains);
@@ -212,6 +215,7 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
         capabilities: capabilityAssessments,
         metadata: {
           assessmentVersion: '1.0',
+          systemName: systemName.trim() || undefined,
           notes: '',
         },
       };
@@ -247,6 +251,18 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
     return domainSelections.length > 0 && domainSelections.every(s => s.selected);
   };
 
+  const toggleDomainExpansion = (domainName: string) => {
+    setExpandedDomains(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(domainName)) {
+        newSet.delete(domainName);
+      } else {
+        newSet.add(domainName);
+      }
+      return newSet;
+    });
+  };
+
   if (loading) {
     return (
       <div className="ds-base">
@@ -270,7 +286,9 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
                 Assessment Setup
               </h1>
               <p className="ds-text--lead">
-                Select the capability domains and areas you want to include in your MITA assessment.
+                Choose the capability domains and specific areas you want to assess. Each domain
+                contains related capability areas that address different aspects of your Medicaid
+                system.
               </p>
             </header>
 
@@ -298,128 +316,183 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
                 createAssessment();
               }}
             >
-              <div className="ds-c-field ds-u-margin-bottom--6">
-                <label htmlFor="state-name" className="ds-c-label">
-                  State Name <span className="ds-u-color--error">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="state-name"
-                  name="state-name"
-                  className="ds-c-field"
-                  value={stateName}
-                  onChange={e => setStateName(e.target.value)}
-                  required
-                  aria-describedby="state-name-hint"
-                />
-                <div id="state-name-hint" className="ds-c-field__hint">
-                  Enter the name of your state for this assessment.
+              <div className="ds-l-row ds-u-margin-bottom--6">
+                <div className="ds-l-col--12 ds-l-md-col--6">
+                  <div className="ds-c-field">
+                    <label htmlFor="state-name" className="ds-c-label">
+                      State Name <span className="ds-u-color--error">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="state-name"
+                      name="state-name"
+                      className="ds-c-field"
+                      value={stateName}
+                      onChange={e => setStateName(e.target.value)}
+                      required
+                      aria-describedby="state-name-hint"
+                    />
+                    <div id="state-name-hint" className="ds-c-field__hint">
+                      Enter the name of your state for this assessment.
+                    </div>
+                  </div>
+                </div>
+                <div className="ds-l-col--12 ds-l-md-col--6">
+                  <div className="ds-c-field">
+                    <label htmlFor="system-name" className="ds-c-label">
+                      System Name
+                    </label>
+                    <input
+                      type="text"
+                      id="system-name"
+                      name="system-name"
+                      className="ds-c-field"
+                      value={systemName}
+                      onChange={e => setSystemName(e.target.value)}
+                      aria-describedby="system-name-hint"
+                    />
+                    <div id="system-name-hint" className="ds-c-field__hint">
+                      Enter your unique system name if applicable.
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <fieldset className="ds-c-fieldset ds-u-margin-bottom--6">
                 <legend className="ds-c-label">
-                  Capability Selection <span className="ds-u-color--error">*</span>
+                  Domain and Capability Selection <span className="ds-u-color--error">*</span>
                 </legend>
-                <div className="ds-c-field__hint ds-u-margin-bottom--3">
-                  Select the capability areas you want to assess. You must select at least one area.
-                  {getSelectionCount() > 0 && (
-                    <span className="ds-u-display--block ds-u-margin-top--1 ds-u-font-weight--bold ds-u-color--success">
-                      {getSelectionCount()} area{getSelectionCount() !== 1 ? 's' : ''} selected
-                    </span>
-                  )}
+                <div className="ds-c-field__hint ds-u-margin-bottom--4">
+                  Select the capability domains and areas you want to assess. You must select at
+                  least one area to proceed.
                 </div>
 
-                <div className="ds-l-row">
-                  {domains.map(domain => (
-                    <div
-                      key={domain.name}
-                      className="ds-l-col--12 ds-l-md-col--6 ds-u-margin-bottom--4"
-                    >
-                      <div className="ds-u-border--3 ds-u-border-color--primary-light ds-u-border-radius ds-u-padding--4 ds-u-bg--primary-lightest ds-u-height--full ds-u-shadow--2">
-                        <div className="ds-u-display--flex ds-u-justify-content--between ds-u-align-items--flex-start ds-u-margin-bottom--3">
-                          <div>
-                            <h3 className="ds-h4 ds-u-margin--0 ds-u-margin-bottom--1 ds-u-font-weight--bold ds-u-color--primary">
-                              {domain.name}
-                            </h3>
-                            {domain.areas.length > 0 ? (
-                              <span className="ds-u-font-size--sm ds-u-color--muted">
-                                {domain.areas.length} area{domain.areas.length !== 1 ? 's' : ''}{' '}
-                                available
-                              </span>
-                            ) : (
-                              <span className="ds-u-font-size--sm ds-u-color--muted">
-                                Coming in future release
-                              </span>
-                            )}
-                          </div>
-                          {domain.areas.length > 0 ? (
-                            <span className="ds-c-badge ds-c-badge--success">Available</span>
-                          ) : (
-                            <span className="ds-c-badge ds-c-badge--info">Coming Soon</span>
-                          )}
-                        </div>
+                <div className="ds-c-alert ds-c-alert--lightweight ds-u-margin-bottom--4">
+                  <div className="ds-c-alert__body">
+                    <p className="ds-c-alert__text">
+                      <strong>
+                        {getSelectionCount()} capability area
+                        {getSelectionCount() !== 1 ? 's' : ''} selected
+                      </strong>{' '}
+                      for assessment
+                    </p>
+                  </div>
+                </div>
 
-                        {domain.areas.length > 0 ? (
-                          <>
-                            <div className="ds-u-display--flex ds-u-justify-content--between ds-u-align-items--center ds-u-margin-bottom--3 ds-u-padding-top--2 ds-u-border-top--1 ds-u-border-color--gray-lighter">
-                              <span className="ds-u-font-size--sm ds-u-font-weight--semibold">
-                                {getSelectionCount(domain.name)} of {domain.areas.length} selected
-                              </span>
+                <div className={styles.capabilityDomains}>
+                  {domains.map(domain => (
+                    <div key={domain.name} className="ds-u-margin-bottom--4">
+                      <div
+                        className={`ds-c-card ${styles.domainCard} ${
+                          domain.areas.length === 0 ? styles.domainCardDisabled : ''
+                        } ${getSelectionCount(domain.name) > 0 ? styles.domainCardSelected : ''}`}
+                      >
+                        <div className={styles.domainHeader}>
+                          <button
+                            type="button"
+                            className={styles.domainToggle}
+                            onClick={() => toggleDomainExpansion(domain.name)}
+                            aria-expanded={expandedDomains.has(domain.name)}
+                          >
+                            <div className={styles.domainTitle}>
+                              <h3 className="ds-h4 ds-u-margin--0 ds-u-color--primary">
+                                <span className={styles.expandIcon}>
+                                  {expandedDomains.has(domain.name) ? '▼' : '▶'}
+                                </span>
+                                {domain.name} Domain
+                              </h3>
+                              <div className="domain-meta ds-u-margin-top--1">
+                                {domain.areas.length > 0 ? (
+                                  <>
+                                    <span className="ds-text--small ds-u-color--muted">
+                                      {domain.areas.length} capability area
+                                      {domain.areas.length !== 1 ? 's' : ''}
+                                    </span>
+                                    {getSelectionCount(domain.name) > 0 && (
+                                      <span
+                                        className={`ds-text--small ds-u-margin-left--2 ${styles.selectionCount}`}
+                                      >
+                                        • {getSelectionCount(domain.name)} selected
+                                      </span>
+                                    )}
+                                  </>
+                                ) : (
+                                  <span className="ds-text--small ds-u-color--muted">
+                                    Coming in future release
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </button>
+                          <div className={styles.domainActions}>
+                            {domain.areas.length > 0 && expandedDomains.has(domain.name) && (
                               <button
                                 type="button"
-                                className="ds-c-button ds-c-button--outline ds-c-button--small"
+                                className="ds-c-button ds-c-button--transparent ds-c-button--small"
                                 onClick={() =>
                                   handleSelectAll(domain.name, !isDomainFullySelected(domain.name))
                                 }
                               >
                                 {isDomainFullySelected(domain.name) ? 'Deselect All' : 'Select All'}
                               </button>
-                            </div>
-                            <div className="ds-u-margin-left--1">
+                            )}
+                            {domain.areas.length === 0 && (
+                              <span className={`${styles.availabilityBadge} ds-text--small`}>
+                                Coming Soon
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {domain.areas.length > 0 && expandedDomains.has(domain.name) && (
+                          <div className="ds-u-margin-top--3 ds-u-padding-top--3 ds-u-border-top--1">
+                            <div className={styles.areasGrid}>
                               {domain.areas.map(capability => {
                                 const selection = selections.find(s => s.id === capability.id);
                                 return (
-                                  <div key={capability.id} className="ds-u-margin-bottom--3">
+                                  <div key={capability.id} className={styles.areaOption}>
                                     <label
                                       htmlFor={`capability-${capability.id}`}
-                                      className="ds-u-cursor--pointer ds-u-display--block"
+                                      className={`${styles.areaCard} ${
+                                        selection?.selected ? styles.areaCardSelected : ''
+                                      }`}
                                     >
-                                      <input
-                                        type="checkbox"
-                                        id={`capability-${capability.id}`}
-                                        name="capabilities"
-                                        value={capability.id}
-                                        className="ds-u-display--inline-block ds-u-vertical-align--top ds-u-margin-right--2"
-                                        checked={selection?.selected || false}
-                                        onChange={e =>
-                                          handleSelectionChange(capability.id, e.target.checked)
-                                        }
-                                      />
-                                      <div
-                                        className="ds-u-display--inline-block ds-u-width--auto"
-                                        style={{ width: 'calc(100% - 24px)' }}
-                                      >
-                                        <span className="ds-u-font-weight--semibold ds-u-display--block">
-                                          {capability.capabilityAreaName}
-                                        </span>
-                                        {capability.description && (
-                                          <span className="ds-u-display--block ds-u-font-size--sm ds-u-color--muted ds-u-margin-top--1">
-                                            {capability.description.substring(0, 120)}
-                                            {capability.description.length > 120 ? '...' : ''}
-                                          </span>
-                                        )}
+                                      <div className={styles.areaCardHeader}>
+                                        <input
+                                          type="checkbox"
+                                          id={`capability-${capability.id}`}
+                                          name="capabilities"
+                                          value={capability.id}
+                                          className={styles.areaCheckbox}
+                                          checked={selection?.selected || false}
+                                          onChange={e =>
+                                            handleSelectionChange(capability.id, e.target.checked)
+                                          }
+                                        />
+                                        <div className={styles.areaContent}>
+                                          <h4 className={styles.areaTitle}>
+                                            {capability.capabilityAreaName}
+                                          </h4>
+                                          {capability.description && (
+                                            <p className={styles.areaDescription}>
+                                              {capability.description.substring(0, 100)}
+                                              {capability.description.length > 100 ? '...' : ''}
+                                            </p>
+                                          )}
+                                        </div>
                                       </div>
                                     </label>
                                   </div>
                                 );
                               })}
                             </div>
-                          </>
-                        ) : (
-                          <div className="ds-u-padding-top--2 ds-u-border-top--1 ds-u-border-color--gray-lighter">
+                          </div>
+                        )}
+
+                        {domain.areas.length === 0 && expandedDomains.has(domain.name) && (
+                          <div className="ds-u-margin-top--3 ds-u-padding-top--3 ds-u-border-top--1">
                             <p className="ds-u-color--muted ds-u-font-size--sm ds-u-margin--0 ds-u-text-align--center">
-                              Capability areas will be available in future releases.
+                              Capability areas for this domain will be available in future releases.
                             </p>
                           </div>
                         )}

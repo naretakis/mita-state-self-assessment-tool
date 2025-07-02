@@ -94,11 +94,13 @@ export class ContentService {
       ];
 
       const capabilities: CapabilityDefinition[] = [];
-      
+
       // Get the base path by detecting it from the current location
       const getBasePath = () => {
-        if (typeof window === 'undefined') return '';
-        
+        if (typeof window === 'undefined') {
+          return '';
+        }
+
         const pathname = window.location.pathname;
         // Check if we're on GitHub Pages with a base path
         if (pathname.includes('/mita-state-self-assessment-tool')) {
@@ -112,7 +114,7 @@ export class ContentService {
         }
         return '';
       };
-      
+
       const basePath = getBasePath();
 
       for (const filename of capabilityFiles) {
