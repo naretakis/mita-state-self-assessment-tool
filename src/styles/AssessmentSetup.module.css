@@ -41,6 +41,21 @@
   text-align: left;
   width: 100%;
   display: block;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.domainToggle:hover {
+  background: none;
+}
+
+.domainToggle:focus {
+  outline: none;
+}
+
+.domainCard:hover {
+  border-color: #0071bc;
+  box-shadow: 0 2px 4px rgba(0, 113, 188, 0.1);
 }
 
 .domainCardDisabled .domainToggle {
@@ -50,6 +65,11 @@
 .domainCardDisabled .domainToggle:hover {
   background: none;
   color: inherit;
+}
+
+.domainCardDisabled:hover {
+  border-color: #d6d7d9;
+  box-shadow: none;
 }
 
 .expandIcon {

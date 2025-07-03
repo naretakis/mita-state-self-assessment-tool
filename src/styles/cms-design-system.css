@@ -113,6 +113,14 @@
   color: #0071bc !important;
 }
 
+.ds-u-color--muted {
+  color: #5c5c5c !important;
+}
+
+.ds-u-color--error {
+  color: #d83933 !important;
+}
+
 /* Buttons */
 .ds-c-button {
   display: inline-block;

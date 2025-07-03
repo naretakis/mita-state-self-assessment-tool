@@ -52,17 +52,27 @@ interface AssessmentCardProps {
 function AssessmentCard({ assessment, onDelete, onExport }: AssessmentCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [capabilityInfo, setCapabilityInfo] = useState<string>('');
   const { loadAssessment } = useStorageContext();
   const statusInfo = getStatusInfo(assessment.status);
 
-  // Load capability information
+  const [systemName, setSystemName] = useState<string>('');
+
+  const [domains, setDomains] = useState<string[]>([]);
+  const [areas, setAreas] = useState<string[]>([]);
+
+  // Load capability information and system name
   React.useEffect(() => {
     loadAssessment(assessment.id).then(fullAssessment => {
       if (fullAssessment?.capabilities) {
-        const domains = [...new Set(fullAssessment.capabilities.map(c => c.capabilityDomainName))];
-        const areas = fullAssessment.capabilities.map(c => c.capabilityAreaName);
-        setCapabilityInfo(`Domains: ${domains.join(', ')}\nAreas: ${areas.join(', ')}`);
+        const domainList = [
+          ...new Set(fullAssessment.capabilities.map(c => c.capabilityDomainName)),
+        ];
+        const areaList = fullAssessment.capabilities.map(c => c.capabilityAreaName);
+        setDomains(domainList);
+        setAreas(areaList);
+      }
+      if (fullAssessment?.metadata?.systemName) {
+        setSystemName(fullAssessment.metadata.systemName);
       }
     });
   }, [assessment.id, loadAssessment]);
@@ -86,10 +96,22 @@ function AssessmentCard({ assessment, onDelete, onExport }: AssessmentCardProps)
       <div className="ds-c-card__body">
         <div className="ds-u-margin-bottom--3">
           <h3 className="ds-h3 ds-u-margin--0">State: {assessment.stateName}</h3>
-          {capabilityInfo && (
-            <div className="ds-u-margin-top--1">
-              <div className="ds-text--small ds-u-color--muted" style={{ whiteSpace: 'pre-line' }}>
-                {capabilityInfo}
+          {systemName && (
+            <h3 className="ds-h3 ds-u-margin--0 ds-u-margin-top--2">System Name: {systemName}</h3>
+          )}
+          {domains.length > 0 && (
+            <div className="ds-u-margin-top--2">
+              <div className="ds-u-margin-bottom--2">
+                <span className="ds-text--small ds-u-color--muted">Domains:</span>
+                <div className="ds-u-margin-top--1">
+                  <span className="ds-text--small">{domains.join(', ')}</span>
+                </div>
+              </div>
+              <div className="ds-u-margin-bottom--2">
+                <span className="ds-text--small ds-u-color--muted">Areas:</span>
+                <div className="ds-u-margin-top--1">
+                  <span className="ds-text--small">{areas.join(', ')}</span>
+                </div>
               </div>
             </div>
           )}

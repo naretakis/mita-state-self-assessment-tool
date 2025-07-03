@@ -401,7 +401,7 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
                                 </span>
                                 {domain.name} Domain
                               </h3>
-                              <div className="domain-meta ds-u-margin-top--1">
+                              <div className="ds-u-margin-top--1">
                                 {domain.areas.length > 0 ? (
                                   <>
                                     <span className="ds-text--small ds-u-color--muted">
