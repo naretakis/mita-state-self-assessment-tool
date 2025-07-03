@@ -20,7 +20,11 @@ For detailed project documentation, including architecture, workflows, and devel
 - **Assessment Dashboard**: Comprehensive dashboard for managing assessments with progress tracking
 - **In-browser functionality**: Works entirely in the browser with local storage
 - **MITA NextGen Framework**: Full integration with the capability-based ORBIT dimensions
-- **Decision tree-guided assessment**: Intuitive workflow for completing assessments
+- **Guided Assessment Workflow**: Step-by-step assessment process with capability overviews and dimension-specific forms
+- **Interactive Maturity Level Selection**: Card-based selection interface with validation and supporting evidence collection
+- **Real-time Progress Tracking**: Visual progress indicators with auto-save functionality and completion status
+- **Comprehensive Results and Reporting**: Maturity score calculations, interactive charts, and detailed analysis
+- **Assessment Results Visualization**: Bar charts for overall scores and radar charts for ORBIT dimension comparisons
 - **Data Management**: Export/import functionality for assessment data portability
 - **Multi-branch deployment**: Supports parallel development with isolated environments
 
@@ -229,15 +233,21 @@ The Minimum Lovable Product (MLP) focuses on core functionality by August 2025:
 - User dashboard for assessment management
 - Assessment setup with domain/area selection and card-based UI
 - Multi-branch deployment infrastructure
+- **Guided assessment walkthrough with step-by-step navigation**
+- **ORBIT dimension assessment forms with maturity level selection**
+- **Assessment results with maturity score calculations and visualizations**
+- **PDF and CSV export functionality for assessment results**
+- **Auto-save functionality with progress tracking**
+- **Interactive charts and comprehensive reporting**
 
 ### In Progress 🚧
-- Guided assessment walkthrough
-- ORBIT dimension assessment forms
+- Advanced assessment analytics and insights
+- Assessment comparison features
 
 ### Planned 📋
-- Decision tree-guided assessment process
-- Basic maturity visualization and reporting
-- PDF and CSV export functionality
+- Assessment templates and customization options
+- Bulk assessment operations
+- Advanced filtering and search capabilities
 
 ### Future Enhancements (Post-MLP)
 - Authentication and access control

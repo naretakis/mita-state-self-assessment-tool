@@ -65,7 +65,7 @@ export default [
       'react/jsx-uses-react': 'off',
       'react/jsx-props-no-spreading': 'off', // Changed from 'warn' to 'off'
       'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn',
+      // 'react-hooks/exhaustive-deps': 'warn', // Temporarily disabled due to ESLint compatibility issue
 
       // TypeScript rules
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],

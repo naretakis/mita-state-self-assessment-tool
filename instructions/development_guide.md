@@ -59,9 +59,16 @@ This document provides implementation guidelines and best practices for developi
 src/
 ├── components/
 │   ├── assessment/         # Assessment-specific components
+│   │   ├── AssessmentResults.tsx    # Results page with charts and exports
+│   │   ├── AssessmentSetup.tsx      # Domain/capability selection
+│   │   ├── CapabilityOverview.tsx   # Capability information display
+│   │   ├── DimensionAssessment.tsx  # ORBIT dimension assessment forms
+│   │   ├── GuidedAssessment.tsx     # Main assessment workflow
+│   │   └── ProgressTracker.tsx      # Progress and auto-save indicators
 │   ├── common/             # Shared UI components
+│   ├── dashboard/          # Dashboard and assessment management
 │   ├── layout/             # Layout components
-│   ├── reporting/          # Reporting and visualization components
+│   ├── storage/            # Storage management components
 │   └── index.ts            # Component exports
 ```
 
@@ -87,10 +94,13 @@ src/
 ### Assessment Data Flow
 
 1. **Load Content**: Parse YAML/Markdown files into typed structures
-2. **User Input**: Capture through controlled components
-3. **State Updates**: Use immutable update patterns
-4. **Persistence**: Save to browser storage at appropriate intervals
-5. **Export**: Generate structured formats for sharing
+2. **Assessment Setup**: User selects capability domains and areas
+3. **Guided Assessment**: Step-by-step progression through capability overviews and dimension assessments
+4. **User Input**: Capture maturity levels, evidence, and supporting information through controlled components
+5. **State Updates**: Use immutable update patterns with real-time state synchronization
+6. **Auto-Save**: Automatic persistence every 30 seconds with manual save options
+7. **Results Calculation**: Compute maturity scores and generate visualizations
+8. **Export**: Generate PDF reports and CSV data for sharing and analysis
 
 ### Browser Storage Strategy
 

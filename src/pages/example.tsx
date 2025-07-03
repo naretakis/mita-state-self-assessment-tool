@@ -1,5 +1,3 @@
-import path from 'path';
-
 import { useState } from 'react';
 
 import { ContentProvider, CapabilityList } from '../components/content';
@@ -12,7 +10,7 @@ import type { CapabilityDefinition } from '../types';
  */
 export default function ExamplePage() {
   const [selectedCapability, setSelectedCapability] = useState<CapabilityDefinition | null>(null);
-  const contentDirectory = path.join(process.cwd(), 'public', 'content');
+  const contentDirectory = '/content';
 
   const handleCapabilitySelect = (capability: CapabilityDefinition) => {
     setSelectedCapability(capability);

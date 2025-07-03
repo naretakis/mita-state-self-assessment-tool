@@ -97,7 +97,7 @@ export function extractCapabilityLevels(content: string): CapabilityLevel[] {
  */
 export function extractSections(content: string): Record<string, string> {
   const sections: Record<string, string> = {};
-  const sectionRegex = /## ([^\n]+)[\r\n]+([\s\S]*?)(?=## [^\n]+|$)/g;
+  const sectionRegex = /## ([^\n\r]+)\s*\n([\s\S]*?)(?=\n## |$)/g;
 
   let match;
   while ((match = sectionRegex.exec(content)) !== null) {

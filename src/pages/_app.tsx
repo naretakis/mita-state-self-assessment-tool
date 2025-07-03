@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { CMSProvider, ErrorBoundary } from '../components';
+import { StorageProvider } from '../components/storage/StorageProvider';
 
 import type { AppProps } from 'next/app';
 
@@ -25,7 +26,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ErrorBoundary>
       <CMSProvider>
-        <Component {...pageProps} />
+        <StorageProvider>
+          <Component {...pageProps} />
+        </StorageProvider>
       </CMSProvider>
     </ErrorBoundary>
   );

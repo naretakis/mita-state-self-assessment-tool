@@ -123,6 +123,7 @@ export interface AssessmentContext {
     dimension: 'outcome' | 'role' | 'businessProcess' | 'information' | 'technology',
     data: Partial<DimensionAssessment>
   ) => void;
+  updateAssessmentStatus: (id: string, status: AssessmentStatus) => Promise<void>;
   exportAssessment: (format: 'json' | 'pdf' | 'csv') => Promise<void>;
 }
 

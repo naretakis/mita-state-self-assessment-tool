@@ -58,11 +58,11 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
  */
 function parseDimension(content: string): DimensionDefinition {
   // Extract description from the Description subsection
-  const descriptionMatch = content.match(/### Description\s+([\s\S]*?)(?=###|$)/m);
+  const descriptionMatch = content.match(/### Description\s*\n([\s\S]*?)(?=###|$)/m);
   const description = descriptionMatch ? descriptionMatch[1].trim() : '';
 
   // Extract maturity assessment text
-  const assessmentMatch = content.match(/### .*Maturity Level Assessment\s+([\s\S]*?)(?=####|$)/m);
+  const assessmentMatch = content.match(/### Maturity Level Assessment\s*\n([\s\S]*?)(?=####|$)/m);
   const assessmentText = assessmentMatch ? assessmentMatch[1].trim() : '';
   const maturityAssessment = assessmentText ? [assessmentText] : [];
 
@@ -89,9 +89,26 @@ function parseDimension(content: string): DimensionDefinition {
  * @returns Level content
  */
 function extractMaturityLevel(content: string, levelName: string): string {
-  const levelRegex = new RegExp(`#### ${levelName.replace(':', '\\:')}\\s+([\\s\\S]*?)(?=####|$)`);
-  const match = content.match(levelRegex);
-  return match ? match[1].trim() : '';
+  // Simple string splitting approach that's more reliable
+  const levelHeader = `#### ${levelName}`;
+  const startIndex = content.indexOf(levelHeader);
+
+  if (startIndex === -1) {
+    return '';
+  }
+
+  // Find the start of content after the header
+  const contentStart = startIndex + levelHeader.length;
+  let contentEnd = content.length;
+
+  // Find the next level header
+  const nextLevelIndex = content.indexOf('#### Level', contentStart);
+  if (nextLevelIndex !== -1) {
+    contentEnd = nextLevelIndex;
+  }
+
+  const result = content.substring(contentStart, contentEnd).trim();
+  return result;
 }
 
 /**

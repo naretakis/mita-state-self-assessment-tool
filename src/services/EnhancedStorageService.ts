@@ -249,6 +249,22 @@ export class EnhancedStorageService implements StorageManager {
   }
 
   /**
+   * Update assessment status
+   */
+  async updateAssessmentStatus(id: string, status: AssessmentStatus): Promise<boolean> {
+    const assessment = await this.loadAssessment(id);
+
+    if (!assessment) {
+      return false;
+    }
+
+    assessment.status = status;
+    assessment.updatedAt = new Date().toISOString();
+
+    return await this.saveAssessment(assessment);
+  }
+
+  /**
    * Get storage information
    */
   async getStorageInfo(): Promise<StorageInfo> {

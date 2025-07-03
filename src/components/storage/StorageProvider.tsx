@@ -4,7 +4,7 @@ import { createContext, useContext, useState, useEffect, type ReactNode } from '
 
 import enhancedStorageService from '../../services/EnhancedStorageService';
 
-import type { Assessment, AssessmentSummary } from '../../types';
+import type { Assessment, AssessmentSummary, AssessmentStatus } from '../../types';
 
 interface StorageContextType {
   isInitialized: boolean;
@@ -17,6 +17,7 @@ interface StorageContextType {
   deleteAssessment: (id: string) => Promise<boolean>;
   exportAssessment: (id: string) => Promise<Blob>;
   importAssessment: (file: File) => Promise<Assessment>;
+  updateAssessmentStatus: (id: string, status: AssessmentStatus) => Promise<boolean>;
   refreshAssessmentList: () => Promise<void>;
 }
 
@@ -138,6 +139,25 @@ export function StorageProvider({ children }: StorageProviderProps) {
     }
   };
 
+  // Update assessment status
+  const updateAssessmentStatus = async (id: string, status: AssessmentStatus): Promise<boolean> => {
+    try {
+      setError(null);
+      const result = await enhancedStorageService.updateAssessmentStatus(id, status);
+
+      if (result) {
+        // Refresh assessment list to reflect the status change
+        const summaries = await enhancedStorageService.listAssessments();
+        setAssessmentSummaries(summaries);
+      }
+
+      return result;
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error('Failed to update assessment status'));
+      return false;
+    }
+  };
+
   // Refresh assessment list
   const refreshAssessmentList = async (): Promise<void> => {
     try {
@@ -160,6 +180,7 @@ export function StorageProvider({ children }: StorageProviderProps) {
     deleteAssessment,
     exportAssessment,
     importAssessment,
+    updateAssessmentStatus,
     refreshAssessmentList,
   };
 

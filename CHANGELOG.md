@@ -3,6 +3,56 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
+## [0.5.0] - 2025-07-03
+
+### Guided Assessment Implementation - Complete Assessment Workflow
+- **Implemented Full Guided Assessment Component**: Created comprehensive GuidedAssessment component that guides users through step-by-step assessment of each capability area across all ORBIT dimensions
+- **Added Capability Overview Steps**: Implemented CapabilityOverview component that provides context and information about each capability area before dimension assessment
+- **Created Dimension Assessment Forms**: Built DimensionAssessment component with interactive maturity level selection, supporting evidence collection, and comprehensive form validation
+- **Implemented Progress Tracking**: Added ProgressTracker component showing current step, total steps, completion percentage, and auto-save status with visual indicators
+- **Added Auto-Save Functionality**: Implemented automatic saving every 30 seconds during assessment with visual feedback and last-saved timestamps
+- **Created Assessment Navigation**: Built intuitive step-by-step navigation with Previous/Next buttons and proper validation before proceeding
+- **Implemented Assessment Results Page**: Created comprehensive AssessmentResults component with maturity score calculations, visualizations, and detailed reporting
+
+### Assessment Data Flow and Persistence
+- **Fixed Critical Data Persistence Bug**: Resolved issue where maturity level selections weren't being saved properly by ensuring final assessment state is saved before navigation to results
+- **Enhanced Storage Integration**: Improved integration between GuidedAssessment component and EnhancedStorageService for reliable data persistence
+- **Added Real-time State Updates**: Implemented proper state management to ensure all user selections are immediately reflected in the assessment data structure
+- **Created Robust Error Handling**: Added comprehensive error handling throughout the assessment workflow with user-friendly error messages
+
+### Assessment Results and Visualization
+- **Implemented Maturity Score Calculations**: Created calculateMaturityScores function that computes overall scores and dimension-specific scores for each capability area
+- **Added Interactive Charts**: Integrated Chart.js with Bar charts for overall scores and Radar charts for ORBIT dimension comparisons
+- **Created Summary Dashboard**: Built results summary with overall average, capability area count, and domain coverage statistics
+- **Implemented Detailed Results Table**: Added comprehensive table showing all maturity levels across dimensions with proper formatting
+- **Added Export Functionality**: Created PDF and CSV export capabilities with detailed assessment data and visualizations
+
+### User Experience Enhancements
+- **Enhanced Maturity Level Selection**: Implemented card-based maturity level selection with visual feedback, hover effects, and clear selection indicators
+- **Added Form Validation**: Created comprehensive validation for required maturity level selections with user-friendly error messages
+- **Implemented Assessment Details Collection**: Added fields for supporting evidence, barriers, advancement plans, and additional notes for each dimension
+- **Created Target Maturity Level Selection**: Added optional target maturity level selection for future planning
+- **Enhanced Visual Design**: Applied consistent CMS Design System styling throughout assessment components with proper spacing and typography
+
+### Technical Architecture Improvements
+- **Modular Component Design**: Created reusable assessment components with clear separation of concerns and proper TypeScript interfaces
+- **Enhanced State Management**: Implemented robust state management for complex assessment data with proper immutability patterns
+- **Improved Error Boundaries**: Added comprehensive error handling and loading states throughout the assessment workflow
+- **Optimized Performance**: Implemented efficient re-rendering patterns and proper useCallback/useMemo usage for performance optimization
+- **Enhanced Type Safety**: Added comprehensive TypeScript interfaces for all assessment-related data structures
+
+### Assessment Workflow Integration
+- **Connected Assessment Setup to Guided Assessment**: Seamlessly integrated capability area selection with the guided assessment workflow
+- **Implemented Assessment Continuation**: Added ability to resume incomplete assessments from the dashboard with proper state restoration
+- **Created Assessment Completion Flow**: Built complete flow from setup through guided assessment to results with proper navigation and data persistence
+- **Added Assessment Status Management**: Implemented proper status tracking (not-started, in-progress, completed) throughout the assessment lifecycle
+
+### Testing and Quality Assurance
+- **Added Debugging Infrastructure**: Implemented comprehensive logging for troubleshooting data flow issues during development
+- **Enhanced Error Handling**: Added robust error handling with proper user feedback throughout the assessment process
+- **Improved Code Quality**: Maintained consistent code style and TypeScript type safety across all new components
+- **Performance Optimization**: Ensured efficient rendering and state updates for smooth user experience during assessments
+
 ## [0.4.0] - 2025-07-01
 
 ### Assessment Setup Component - Major UI/UX Improvements
