@@ -457,6 +457,11 @@ export class EnhancedStorageService implements StorageManager {
       const completionPercentage =
         totalDimensions > 0 ? Math.round((completedDimensions / totalDimensions) * 100) : 0;
 
+      // Extract capability information
+      const domains = [...new Set(assessment.capabilities.map(c => c.capabilityDomainName))];
+      const areas = assessment.capabilities.map(c => c.capabilityAreaName);
+      const systemName = assessment.metadata?.systemName;
+
       // Update metadata
       metadata[assessment.id] = {
         id: assessment.id,
@@ -465,6 +470,9 @@ export class EnhancedStorageService implements StorageManager {
         updatedAt: assessment.updatedAt,
         status: assessment.status,
         completionPercentage,
+        systemName,
+        domains,
+        areas,
       };
 
       localStorage.setItem(this.localStorageMetaKey, JSON.stringify(metadata));
@@ -514,6 +522,11 @@ export class EnhancedStorageService implements StorageManager {
       const completionPercentage =
         totalDimensions > 0 ? Math.round((completedDimensions / totalDimensions) * 100) : 0;
 
+      // Extract capability information
+      const domains = [...new Set(assessment.capabilities.map(c => c.capabilityDomainName))];
+      const areas = assessment.capabilities.map(c => c.capabilityAreaName);
+      const systemName = assessment.metadata?.systemName;
+
       // Save the summary
       await db.put('summaries', {
         id: assessment.id,
@@ -522,6 +535,9 @@ export class EnhancedStorageService implements StorageManager {
         updatedAt: assessment.updatedAt,
         status: assessment.status,
         completionPercentage,
+        systemName,
+        domains,
+        areas,
       });
 
       await db.close();

@@ -14,6 +14,7 @@ export type AssessmentStatus = 'not-started' | 'in-progress' | 'completed';
 
 export interface AssessmentMetadata {
   assessmentVersion: string;
+  systemName?: string;
   completedBy?: string;
   completionDate?: string;
   notes?: string;
@@ -79,6 +80,9 @@ export interface AssessmentSummary {
   updatedAt: string;
   status: AssessmentStatus;
   completionPercentage: number;
+  systemName?: string;
+  domains?: string[];
+  areas?: string[];
 }
 
 // Front matter metadata interface

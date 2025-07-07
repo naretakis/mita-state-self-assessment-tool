@@ -52,30 +52,7 @@ interface AssessmentCardProps {
 function AssessmentCard({ assessment, onDelete, onExport }: AssessmentCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const { loadAssessment } = useStorageContext();
   const statusInfo = getStatusInfo(assessment.status);
-
-  const [systemName, setSystemName] = useState<string>('');
-
-  const [domains, setDomains] = useState<string[]>([]);
-  const [areas, setAreas] = useState<string[]>([]);
-
-  // Load capability information and system name
-  React.useEffect(() => {
-    loadAssessment(assessment.id).then(fullAssessment => {
-      if (fullAssessment?.capabilities) {
-        const domainList = [
-          ...new Set(fullAssessment.capabilities.map(c => c.capabilityDomainName)),
-        ];
-        const areaList = fullAssessment.capabilities.map(c => c.capabilityAreaName);
-        setDomains(domainList);
-        setAreas(areaList);
-      }
-      if (fullAssessment?.metadata?.systemName) {
-        setSystemName(fullAssessment.metadata.systemName);
-      }
-    });
-  }, [assessment.id, loadAssessment]);
 
   const handleDelete = async () => {
     setIsDeleting(true);
@@ -96,23 +73,27 @@ function AssessmentCard({ assessment, onDelete, onExport }: AssessmentCardProps)
       <div className="ds-c-card__body">
         <div className="ds-u-margin-bottom--3">
           <h3 className="ds-h3 ds-u-margin--0">State: {assessment.stateName}</h3>
-          {systemName && (
-            <h3 className="ds-h3 ds-u-margin--0 ds-u-margin-top--2">System Name: {systemName}</h3>
+          {assessment.systemName && (
+            <h3 className="ds-h3 ds-u-margin--0 ds-u-margin-top--2">
+              System Name: {assessment.systemName}
+            </h3>
           )}
-          {domains.length > 0 && (
+          {assessment.domains && assessment.domains.length > 0 && (
             <div className="ds-u-margin-top--2">
               <div className="ds-u-margin-bottom--2">
                 <span className="ds-text--small ds-u-color--muted">Domains:</span>
                 <div className="ds-u-margin-top--1">
-                  <span className="ds-text--small">{domains.join(', ')}</span>
+                  <span className="ds-text--small">{assessment.domains.join(', ')}</span>
                 </div>
               </div>
-              <div className="ds-u-margin-bottom--2">
-                <span className="ds-text--small ds-u-color--muted">Areas:</span>
-                <div className="ds-u-margin-top--1">
-                  <span className="ds-text--small">{areas.join(', ')}</span>
+              {assessment.areas && assessment.areas.length > 0 && (
+                <div className="ds-u-margin-bottom--2">
+                  <span className="ds-text--small ds-u-color--muted">Areas:</span>
+                  <div className="ds-u-margin-top--1">
+                    <span className="ds-text--small">{assessment.areas.join(', ')}</span>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           )}
         </div>

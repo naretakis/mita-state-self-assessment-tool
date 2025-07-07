@@ -3,6 +3,20 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
+## [0.5.1] - 2025-07-07
+
+### Performance Improvements
+- **Fixed Dashboard Loading Performance Issue**: Resolved critical performance bug where clicking "Getting Started" caused 15-20 second loading delay and page flashing
+- **Enhanced AssessmentSummary Data Structure**: Added systemName, domains, and areas fields to AssessmentSummary to eliminate expensive full assessment loads
+- **Optimized Storage Service**: Updated EnhancedStorageService to pre-compute and store summary information during assessment saves
+- **Improved User Experience**: Dashboard now loads instantly with all assessment details displayed immediately
+- **Reduced Database Operations**: Eliminated N database calls (where N = number of assessments) on dashboard load, improving from O(n) to O(1) complexity
+
+### Technical Improvements
+- **Enhanced Type Definitions**: Updated AssessmentSummary and AssessmentMetadata interfaces to support new summary fields
+- **Backward Compatibility**: Maintained full compatibility with existing assessment data while adding new optimization features
+- **Code Quality**: All changes follow project formatting, linting, and testing standards
+
 ## [0.5.0] - 2025-07-03
 
 ### Guided Assessment Implementation - Complete Assessment Workflow
