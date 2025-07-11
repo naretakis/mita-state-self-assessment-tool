@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { CMSProvider, ErrorBoundary } from '../components';
+import PrototypeBanner from '../components/common/PrototypeBanner';
 import { StorageProvider } from '../components/storage/StorageProvider';
 
 import type { AppProps } from 'next/app';
@@ -27,6 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <ErrorBoundary>
       <CMSProvider>
         <StorageProvider>
+          <PrototypeBanner />
           <Component {...pageProps} />
         </StorageProvider>
       </CMSProvider>

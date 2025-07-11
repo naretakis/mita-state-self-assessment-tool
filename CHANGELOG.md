@@ -3,6 +3,21 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
+## [0.5.2] - 2025-07-11
+
+### User Experience Improvements
+- **Added Global Prototype Banner**: Implemented site-wide banner explaining the Minimum Lovable Prototype status and iterative development approach
+- **Enhanced User Communication**: Added clear messaging about placeholder content while MITA workstreams finalize framework details
+- **Improved Feedback Collection**: Added direct links to GitHub repository and issue tracker for user feedback and engagement
+- **Professional Styling**: Applied CMS Design System styling with warning colors and proper visual hierarchy for the prototype banner
+- **External Link Integration**: Added secure external links to 18F's agile approach documentation and project repository
+
+### Technical Implementation
+- **Created PrototypeBanner Component**: Built reusable banner component with TypeScript interfaces and modular CSS styling
+- **Global App Integration**: Added banner to _app.tsx for consistent display across all application pages
+- **Accessibility Compliance**: Implemented proper HTML structure with semantic elements and external link security attributes
+- **Code Quality**: Maintained project formatting, linting, and build standards throughout implementation
+
 ## [0.5.1] - 2025-07-07
 
 ### Performance Improvements

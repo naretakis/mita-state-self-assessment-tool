@@ -3,6 +3,8 @@ import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
+import PrototypeBanner from '../common/PrototypeBanner';
+
 import styles from './Layout.module.css';
 
 interface LayoutProps {
@@ -32,6 +34,8 @@ const Layout: React.FC<LayoutProps> = ({ children, title = 'MITA State Self-Asse
           <h1 className={`${styles.title} ds-h1`}>MITA State Self-Assessment Tool</h1>
         </div>
       </header>
+
+      <PrototypeBanner />
 
       <main className={`${styles.main} ds-u-padding--2`}>{children}</main>
 
