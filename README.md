@@ -28,52 +28,45 @@ For detailed project documentation, including architecture, workflows, and devel
 - **Data Management**: Export/import functionality for assessment data portability
 - **Multi-branch deployment**: Supports parallel development with isolated environments
 
-## Getting Started
+## **Multi-branch deployment**: Supports three environments simultaneously:
+  - Production (`main` branch): [https://naretakis.github.io/mita-state-self-assessment-tool/](https://naretakis.github.io/mita-state-self-assessment-tool/)
+  - Development (`dev` branch): [https://naretakis.github.io/mita-state-self-assessment-tool/dev/](https://naretakis.github.io/mita-state-self-assessment-tool/dev/)
+  - Testing (`test` branch): [https://naretakis.github.io/mita-state-self-assessment-tool/test/](https://naretakis.github.io/mita-state-self-assessment-tool/test/)
 
-### Prerequisites
+## Contributing
 
-- Node.js 18.0.0 or higher
-- npm or yarn
-- Git
+Contributions are welcome! This project follows an open-source approach to enable community contributions.
 
-### Installation
+Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution guidelines, including:
+- Development workflow and branch strategy
+- Code standards and quality requirements
+- Pull request process
+- Issue reporting guidelines
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/username/mita-state-self-assessment-tool.git
-   cd mita-state-self-assessment-tool
-   ```
+For detailed development information, review the [development guide](instructions/development_guide.md) in the instructions folder.
 
-2. Install dependencies:
-   ```
-   npm install
-   ```
-
-3. Create a `.env.local` file based on `.env.local.example`:
-   ```
-   cp .env.local.example .env.local
-   ```
-
-4. Start the development server:
-   ```
-   npm run dev
-   ```
-
-5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+See [CHANGELOG.md](CHANGELOG.md) for version history and recent changes.
 
 ## Project Structure
 
 ```
 mita-state-self-assessment-tool/
+├── .github/
+│   ├── ISSUE_TEMPLATE/  # GitHub issue templates
+│   ├── workflows/       # CI/CD configuration
+│   └── pull_request_template.md
 ├── public/
 │   └── content/         # MITA capability definitions in Markdown
 ├── src/
 │   ├── components/      # React components
 │   │   ├── assessment/  # Assessment-specific components
 │   │   ├── common/      # Shared UI components
+│   │   ├── content/     # Content display components
 │   │   ├── dashboard/   # Dashboard components
 │   │   ├── layout/      # Layout components
+│   │   ├── reporting/   # Reporting and visualization components
 │   │   └── storage/     # Storage management components
+│   ├── examples/        # Code examples and demonstrations
 │   ├── hooks/           # Custom React hooks
 │   ├── pages/           # Next.js pages
 │   │   └── assessment/  # Assessment-related pages
@@ -83,7 +76,14 @@ mita-state-self-assessment-tool/
 │   └── utils/           # Utility functions
 ├── instructions/        # Project documentation
 ├── tests/               # Test files
-├── .github/workflows/   # CI/CD configuration
+│   ├── e2e/            # End-to-end tests
+│   ├── fixtures/       # Test data and mocks
+│   ├── integration/    # Integration tests
+│   ├── unit/           # Unit tests
+│   └── utils/          # Test utilities
+├── CHANGELOG.md         # Version history and changes
+├── CONTRIBUTING.md      # Contribution guidelines
+├── DEPENDENCY_UPDATES.md # Dependency management log
 └── [config files]       # Various configuration files
 ```
 
@@ -137,10 +137,6 @@ The application is deployed to GitHub Pages using GitHub Actions:
 A workflow file (`.github/workflows/deploy.yml`) handles automated deployment with multi-branch support:
 
 - **Triggers**: Runs on pushes to `main`, `dev`, and `test` branches
-- **Multi-branch deployment**: Supports three environments simultaneously:
-  - Production (`main` branch): https://naretakis.github.io/mita-state-self-assessment-tool/
-  - Development (`dev` branch): https://naretakis.github.io/mita-state-self-assessment-tool/dev/
-  - Testing (`test` branch): https://naretakis.github.io/mita-state-self-assessment-tool/test/
 - **Content preservation**: Downloads existing site content before deployment to preserve all environments
 - **Branch-specific builds**: Each branch builds with the correct base path configuration
 - **Single deployment target**: All branches deploy to the same GitHub Pages site but in different directories
@@ -164,17 +160,7 @@ A workflow file (`.github/workflows/deploy.yml`) handles automated deployment wi
    - Each environment is accessible at its respective URL
    - The workflow preserves all environments during each deployment
 
-## MITA Framework Structure
-
-The MITA NextGen framework uses a capability-based approach organized around ORBIT dimensions:
-
-- **O**utcomes: Business results and objectives
-- **R**oles: Who performs functions and responsibilities
-- **B**usiness Processes: Workflows and procedures
-- **I**nformation: Data structure and sharing
-- **T**echnology: Technical implementation
-
-Each capability is assessed across these dimensions with maturity levels from 1 (Initial) to 5 (Optimized).
+## ContentService Structure
 
 The application includes a ContentService that loads capability definitions from markdown files and provides methods to access them by ID or domain. The capability definitions are parsed using the capabilityParser utility.
 
@@ -214,12 +200,53 @@ The application follows accessibility best practices:
 - [TypeScript](https://www.typescriptlang.org/) - Type-safe JavaScript
 - [CMS Design System](https://design.cms.gov/) - UI component library
 - [Chart.js](https://www.chartjs.org/) - Data visualization
+- [React Chart.js 2](https://react-chartjs-2.js.org/) - React wrapper for Chart.js
 - [jsPDF](https://github.com/parallax/jsPDF) - PDF generation
+- [jsPDF AutoTable](https://github.com/simonbengtsson/jsPDF-AutoTable) - Table generation for PDFs
 - [gray-matter](https://github.com/jonschlinkert/gray-matter) - Front matter parser
 - [react-markdown](https://github.com/remarkjs/react-markdown) - Markdown renderer
+- [remark-gfm](https://github.com/remarkjs/remark-gfm) - GitHub Flavored Markdown support
 - [js-yaml](https://github.com/nodeca/js-yaml) - YAML parsing
 - [idb](https://github.com/jakearchibald/idb) - IndexedDB with Promises
 - [Jest](https://jestjs.io/) - Testing framework
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) - Component testing utilities
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 (GPL-3.0) - see the LICENSE file for details.
+
+## How to Get Started Running the Tool Locally
+
+### Prerequisites
+
+- Node.js 18.0.0 or higher
+- npm or yarn
+- Git
+
+### Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/username/mita-state-self-assessment-tool.git
+   cd mita-state-self-assessment-tool
+   ```
+
+2. Install dependencies:
+   ```
+   npm install
+   ```
+
+3. Create a `.env.local` file based on `.env.local.example`:
+   ```
+   cp .env.local.example .env.local
+   ```
+
+4. Start the development server:
+   ```
+   npm run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
 ## Development Roadmap
 
@@ -255,23 +282,3 @@ The Minimum Lovable Product (MLP) focuses on core functionality by August 2025:
 - Centralized data repository
 - APD integration
 - Advanced analytics
-
-## Contributing
-
-Contributions are welcome! This project follows an open-source approach to enable community contributions.
-
-### Contribution Guidelines
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Run tests (`npm test`)
-5. Commit your changes (`git commit -m 'Add some amazing feature'`)
-6. Push to the branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
-
-Please review the development guidelines in the [instructions folder](instructions/development_guide.md) before contributing.
-
-## License
-
-This project is licensed under the GNU General Public License v3.0 (GPL-3.0) - see the LICENSE file for details.
