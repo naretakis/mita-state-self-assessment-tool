@@ -74,8 +74,12 @@ jobs:
           npm run build
           # Create dev directory if it doesn't exist
           mkdir -p site/dev
-          # Copy to dev directory
-          cp -r out/* site/dev/
+          # Copy to dev directory, removing the nested base path
+          if [ -d "out/mita-state-self-assessment-tool/dev" ]; then
+            cp -r out/mita-state-self-assessment-tool/dev/* site/dev/
+          else
+            cp -r out/* site/dev/
+          fi
 
       - name: Build for test branch
         if: steps.branch-name.outputs.BRANCH_NAME == 'test'
@@ -85,8 +89,12 @@ jobs:
           npm run build
           # Create test directory if it doesn't exist
           mkdir -p site/test
-          # Copy to test directory
-          cp -r out/* site/test/
+          # Copy to test directory, removing the nested base path
+          if [ -d "out/mita-state-self-assessment-tool/test" ]; then
+            cp -r out/mita-state-self-assessment-tool/test/* site/test/
+          else
+            cp -r out/* site/test/
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
