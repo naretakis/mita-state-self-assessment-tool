@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>MITA State Self-Assessment Tool</title>
+        <title>MITA State Self-Assessment Tool - TEST PAGE</title>
         <meta
           name="description"
           content="Assess the maturity of your Medicaid systems using the MITA NextGen capability-based framework"
