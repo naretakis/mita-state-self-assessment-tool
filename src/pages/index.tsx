@@ -1,4 +1,3 @@
-
 import Head from 'next/head';
 
 import LandingPage from '../components/layout/LandingPage';
