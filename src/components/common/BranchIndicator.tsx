@@ -5,21 +5,30 @@ import { useRouter } from 'next/router';
 const BranchIndicator = () => {
   const router = useRouter();
   const [branch, setBranch] = useState<string>('');
+  const [debugInfo, setDebugInfo] = useState<string>('');
 
   useEffect(() => {
     const path = router.asPath;
-    if (path.includes('/dev/')) {
+    const basePath = router.basePath;
+    const pathname = router.pathname;
+    
+    // Debug info
+    setDebugInfo(`Path: ${path}, BasePath: ${basePath}, Pathname: ${pathname}`);
+    
+    // Check if we're in a subdirectory deployment
+    if (basePath.includes('/dev') || path.startsWith('/dev')) {
       setBranch('dev');
-    } else if (path.includes('/test/')) {
+    } else if (basePath.includes('/test') || path.startsWith('/test')) {
       setBranch('test');
     } else {
       setBranch('main');
     }
-  }, [router.asPath]);
+  }, [router.asPath, router.basePath, router.pathname]);
 
-  if (!branch || branch === 'main') {
-    return null;
-  }
+  // Always show for debugging
+  // if (!branch || branch === 'main') {
+  //   return null;
+  // }
 
   const getBranchColor = () => {
     switch (branch) {
@@ -38,6 +47,8 @@ const BranchIndicator = () => {
         <span className={`ds-text--small ${getBranchColor()}`}>
           <strong>Environment: {branch.toUpperCase()}</strong>
         </span>
+        <br />
+        <small style={{ fontSize: '10px', opacity: 0.7 }}>{debugInfo}</small>
       </div>
     </div>
   );
