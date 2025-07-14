@@ -49,12 +49,12 @@ jobs:
           
       - name: Extract existing site
         run: |
+          mkdir -p site
           if [ -f existing-site/artifact.tar ]; then
-            mkdir -p site
             tar -xf existing-site/artifact.tar -C site
-          else
-            mkdir -p site
           fi
+          # Ensure .nojekyll exists at root level
+          touch site/.nojekyll
           ls -la site
 
       - name: Build for main branch
@@ -65,8 +65,6 @@ jobs:
           npm run build
           # Copy to site root, preserving other directories
           cp -r out/* site/
-          # Ensure .nojekyll exists
-          touch site/.nojekyll
 
       - name: Build for dev branch
         if: steps.branch-name.outputs.BRANCH_NAME == 'dev'
@@ -78,8 +76,6 @@ jobs:
           mkdir -p site/dev
           # Copy to dev directory
           cp -r out/* site/dev/
-          # Ensure .nojekyll exists
-          touch site/.nojekyll
 
       - name: Build for test branch
         if: steps.branch-name.outputs.BRANCH_NAME == 'test'
@@ -91,8 +87,6 @@ jobs:
           mkdir -p site/test
           # Copy to test directory
           cp -r out/* site/test/
-          # Ensure .nojekyll exists
-          touch site/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
