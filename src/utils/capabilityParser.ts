@@ -19,10 +19,23 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
   const sections = extractSections(content);
   const frontMatter = metadata as CapabilityFrontMatter;
 
-  // Extract capability domain and area descriptions
-  const domainSection = sections['Capability Domain'] || '';
-  const areaSection = sections['Capability Area'] || '';
-  const description = areaSection || domainSection || '';
+  // Extract capability domain and area descriptions directly from the content
+  let domainDescription = '';
+  let areaDescription = '';
+
+  if (content.includes('## Capability Domain:')) {
+    domainDescription = content
+      .split('## Capability Domain:')[1]
+      .split('## Capability Area:')[0]
+      .trim();
+  }
+
+  if (content.includes('## Capability Area:')) {
+    areaDescription = content.split('## Capability Area:')[1].split('## ')[0].trim();
+  }
+
+  // Keep the original description for backward compatibility
+  const description = areaDescription || domainDescription || '';
 
   // Extract dimensions based on the new structure
   const dimensions = {
@@ -47,6 +60,8 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
     capabilityAreaCreated: frontMatter.capabilityAreaCreated,
     capabilityAreaLastUpdated: frontMatter.capabilityAreaLastUpdated,
     description,
+    domainDescription,
+    areaDescription,
     dimensions,
   };
 }

@@ -52,6 +52,8 @@ export interface CapabilityDefinition {
   capabilityAreaCreated: string;
   capabilityAreaLastUpdated: string;
   description: string;
+  domainDescription: string;
+  areaDescription: string;
   dimensions: {
     outcome: DimensionDefinition;
     role: DimensionDefinition;

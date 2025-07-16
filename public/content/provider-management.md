@@ -20,7 +20,7 @@ Provider Management encompasses the processes and systems used to maintain curre
 ## Outcomes
 
 ### Description
-The Outcomes dimension focuses on the results and effectiveness of the provider enrollment process.
+The Outcomes dimension focuses on the results and effectiveness of the provider management process.
 
 ### Maturity Level Assessment
 
@@ -42,29 +42,29 @@ Continuous provider information monitoring with automated verification against e
 ## Roles
 
 ### Description
-The Roles dimension addresses the responsibilities and interactions of staff and providers in the enrollment process.
+The Roles dimension addresses the responsibilities and interactions of staff and providers in the management process.
 
 ### Maturity Level Assessment
 
 #### Level 1: Initial
-Provider enrollment specialists manually process applications with limited provider self-service capabilities and siloed responsibilities across enrollment steps.
+Provider management specialists manually process applications with limited provider self-service capabilities and siloed responsibilities across management steps.
 
 #### Level 2: Repeatable
-Providers can submit applications online, staff roles are focused on specific verification tasks, with limited coordination between enrollment teams.
+Providers can submit applications online, staff roles are focused on specific verification tasks, with limited coordination between management teams.
 
 #### Level 3: Defined
-Provider self-service for most enrollment functions, specialized staff handle exceptions and complex cases, with coordinated roles across enrollment workflow.
+Provider self-service for most management functions, specialized staff handle exceptions and complex cases, with coordinated roles across management workflow.
 
 #### Level 4: Managed
-Automated assignment of tasks based on expertise, cross-trained staff with decision support tools, and collaborative enrollment teams.
+Automated assignment of tasks based on expertise, cross-trained staff with decision support tools, and collaborative management teams.
 
 #### Level 5: Optimized
-Dynamic role assignment based on enrollment complexity, continuous learning systems support staff decisions, with seamless coordination across programs and agencies.
+Dynamic role assignment based on management complexity, continuous learning systems support staff decisions, with seamless coordination across programs and agencies.
 
 ## Business Processes
 
 ### Description
-The Business Processes dimension covers the workflows, procedures, and operational aspects of provider enrollment.
+The Business Processes dimension covers the workflows, procedures, and operational aspects of provider management.
 
 ### Maturity Level Assessment
 
@@ -81,12 +81,12 @@ Fully electronic workflow with parallel processing where possible and automated 
 Intelligent workflow with adaptive routing, automated exception handling, and predictive workload management.
 
 #### Level 5: Optimized
-Continuous process optimization with cross-program enrollment coordination and real-time adaptation to regulatory changes.
+Continuous process optimization with cross-program management coordination and real-time adaptation to regulatory changes.
 
 ## Information
 
 ### Description
-The Information dimension addresses the data, data models, and information management aspects of provider enrollment.
+The Information dimension addresses the data, data models, and information management aspects of provider management.
 
 ### Maturity Level Assessment
 
@@ -108,7 +108,7 @@ Dynamic data model adapting to changing requirements, continuous data quality mo
 ## Technology
 
 ### Description
-The Technology dimension covers the systems, infrastructure, and technical capabilities supporting provider enrollment.
+The Technology dimension covers the systems, infrastructure, and technical capabilities supporting provider management.
 
 ### Maturity Level Assessment
 
@@ -116,13 +116,13 @@ The Technology dimension covers the systems, infrastructure, and technical capab
 Legacy systems with limited integration, manual data entry and verification, and minimal automation.
 
 #### Level 2: Repeatable
-Basic web forms for provider enrollment, document management system, and limited system integration.
+Basic web forms for provider management, document management system, and limited system integration.
 
 #### Level 3: Defined
-Integrated provider enrollment system, automated workflow management, and API-based integration with verification sources.
+Integrated provider management system, automated workflow management, and API-based integration with verification sources.
 
 #### Level 4: Managed
-Cloud-based enrollment platform, advanced analytics and decision support, and comprehensive API ecosystem.
+Cloud-based management platform, advanced analytics and decision support, and comprehensive API ecosystem.
 
 #### Level 5: Optimized
-Microservices architecture, AI/ML-powered enrollment processing, and real-time integration with federal and state systems.
+Microservices architecture, AI/ML-powered management processing, and real-time integration with federal and state systems.

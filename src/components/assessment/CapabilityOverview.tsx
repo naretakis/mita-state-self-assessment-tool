@@ -19,15 +19,15 @@ const CapabilityOverview: React.FC<CapabilityOverviewProps> = ({
     <div className="ds-l-row ds-u-justify-content--center">
       <div className="ds-l-col--12 ds-l-lg-col--10">
         <header className="ds-u-margin-bottom--6">
-          <div className="ds-u-margin-bottom--2">
-            <span className="ds-c-badge ds-c-badge--info">
-              {definition.capabilityDomainName} Domain
-            </span>
-          </div>
-          <h1 className="ds-display--1 ds-u-margin-bottom--3 ds-u-color--primary">
-            {definition.capabilityAreaName}
+          <h1 className="ds-h2 ds-u-margin-bottom--2 ds-u-color--primary">
+            Domain: {definition.capabilityDomainName}
           </h1>
-          <p className="ds-text--lead ds-u-measure--wide">{definition.description}</p>
+          <p className="ds-text--lead ds-u-margin-bottom--4">{definition.domainDescription}</p>
+
+          <h2 className="ds-h3 ds-u-margin-bottom--2 ds-u-color--primary">
+            Capability Area: {definition.capabilityAreaName}
+          </h2>
+          <p className="ds-text--lead">{definition.areaDescription}</p>
         </header>
 
         <div className="ds-c-card ds-u-margin-bottom--6">
@@ -37,7 +37,6 @@ const CapabilityOverview: React.FC<CapabilityOverviewProps> = ({
               You will assess this capability area across five ORBIT dimensions. Each dimension
               represents a different aspect of your system's maturity:
             </p>
-
             <div className="ds-l-row">
               <div className="ds-l-col--12 ds-l-md-col--6">
                 <ul className="ds-c-list ds-c-list--bare">
@@ -71,61 +70,32 @@ const CapabilityOverview: React.FC<CapabilityOverviewProps> = ({
           </div>
         </div>
 
-        <div className="ds-c-card ds-u-margin-bottom--6">
-          <div className="ds-c-card__body">
-            <h2 className="ds-h3 ds-u-margin-bottom--3">Maturity Levels</h2>
-            <p className="ds-u-margin-bottom--4">
-              For each dimension, you'll select a maturity level from 1 to 5:
-            </p>
-
-            <div className="ds-l-row">
-              <div className="ds-l-col--12">
-                <dl className="ds-c-list ds-c-list--bare">
-                  <div className="ds-u-margin-bottom--2">
-                    <dt className="ds-u-font-weight--bold ds-u-color--primary">
-                      Level 1 - Initial:
-                    </dt>
-                    <dd>Ad hoc processes with limited documentation</dd>
-                  </div>
-                  <div className="ds-u-margin-bottom--2">
-                    <dt className="ds-u-font-weight--bold ds-u-color--primary">
-                      Level 2 - Repeatable:
-                    </dt>
-                    <dd>Basic processes with some documentation and consistency</dd>
-                  </div>
-                  <div className="ds-u-margin-bottom--2">
-                    <dt className="ds-u-font-weight--bold ds-u-color--primary">
-                      Level 3 - Defined:
-                    </dt>
-                    <dd>Documented and standardized processes</dd>
-                  </div>
-                  <div className="ds-u-margin-bottom--2">
-                    <dt className="ds-u-font-weight--bold ds-u-color--primary">
-                      Level 4 - Managed:
-                    </dt>
-                    <dd>Measured and controlled processes with metrics</dd>
-                  </div>
-                  <div className="ds-u-margin-bottom--2">
-                    <dt className="ds-u-font-weight--bold ds-u-color--primary">
-                      Level 5 - Optimized:
-                    </dt>
-                    <dd>Continuously improving processes with innovation</dd>
-                  </div>
-                </dl>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div className="ds-c-alert ds-c-alert--lightweight ds-u-margin-bottom--6">
           <div className="ds-c-alert__body">
-            <h3 className="ds-c-alert__heading">Assessment Tips</h3>
+            <h3 className="ds-c-alert__heading">Getting Started Tips</h3>
             <ul className="ds-c-alert__text ds-c-list">
-              <li>Be honest in your assessment - this helps identify improvement opportunities</li>
-              <li>Provide specific evidence to support your maturity level selections</li>
+              <li>
+                Attest with an honest assessment - select the maturity level that best aligns with
+                your knowledge
+              </li>
+              <li>Provide written details that support your maturity level selections</li>
               <li>Document barriers and challenges you face</li>
               <li>Include advancement plans for areas needing improvement</li>
-              <li>Your responses are automatically saved every 30 seconds</li>
+              <li>Your responses are automatically saved as you proceed through the tool</li>
+            </ul>
+            <br />
+            <h4 className="ds-c-alert__heading">Materials You May Need</h4>
+            <ul className="ds-c-alert__text ds-c-list">
+              <li>Subject matter experts who know the business areas</li>
+              <li>Standard operating procedures</li>
+              <li>Policy and technical manuals</li>
+              <li>SLA documentation</li>
+              <li>Links (URLs) to internal and external resources</li>
+              <li>Operating workbooks</li>
+              <li>Vendor SMEs</li>
+              <li>Workflow and system diagrams</li>
+              <li>Prior MITA State Self-Assessments</li>
+              <li>Other relevant documents</li>
             </ul>
           </div>
         </div>
