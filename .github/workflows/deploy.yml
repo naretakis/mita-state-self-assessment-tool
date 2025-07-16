@@ -11,10 +11,10 @@ permissions:
   pages: write
   id-token: write
 
-# Allow one concurrent deployment
+# Allow one concurrent deployment per branch
 concurrency:
-  group: "pages"
-  cancel-in-progress: true
+  group: "pages-${{ github.ref_name }}"
+  cancel-in-progress: false
 
 jobs:
   # Single build job that handles all branches
@@ -37,25 +37,31 @@ jobs:
         id: branch-name
         run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
       - name: Download existing site
         id: download-artifact
-        uses: dawidd6/action-download-artifact@v2
+        uses: actions/download-artifact@v4
         continue-on-error: true
         with:
           name: github-pages
           path: existing-site
-          workflow: deploy.yml
-          workflow_conclusion: success
           
       - name: Extract existing site
         run: |
           mkdir -p site
           if [ -f existing-site/artifact.tar ]; then
-            tar -xf existing-site/artifact.tar -C site
+            cd site
+            tar -xf ../existing-site/artifact.tar
+            cd ..
           fi
           # Ensure .nojekyll exists at root level
           touch site/.nojekyll
-          ls -la site
+          # Create branch directories if they don't exist
+          mkdir -p site/dev site/test
+          echo "Current site structure:"
+          find site -type f | head -20
 
       - name: Build for main branch
         if: steps.branch-name.outputs.BRANCH_NAME == 'main'
@@ -64,7 +70,7 @@ jobs:
         run: |
           npm run build
           # Copy to site root, preserving other directories
-          cp -r out/* site/
+          rsync -av --exclude='dev' --exclude='test' out/ site/
 
       - name: Build for dev branch
         if: steps.branch-name.outputs.BRANCH_NAME == 'dev'
@@ -72,14 +78,11 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: /mita-state-self-assessment-tool/dev
         run: |
           npm run build
-          # Create dev directory if it doesn't exist
+          # Remove existing dev directory and recreate
+          rm -rf site/dev
           mkdir -p site/dev
-          # Copy to dev directory, removing the nested base path
-          if [ -d "out/mita-state-self-assessment-tool/dev" ]; then
-            cp -r out/mita-state-self-assessment-tool/dev/* site/dev/
-          else
-            cp -r out/* site/dev/
-          fi
+          # Copy build output to dev directory
+          cp -r out/* site/dev/
 
       - name: Build for test branch
         if: steps.branch-name.outputs.BRANCH_NAME == 'test'
@@ -87,15 +90,19 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: /mita-state-self-assessment-tool/test
         run: |
           npm run build
-          # Create test directory if it doesn't exist
+          # Remove existing test directory and recreate
+          rm -rf site/test
           mkdir -p site/test
-          # Copy to test directory, removing the nested base path
-          if [ -d "out/mita-state-self-assessment-tool/test" ]; then
-            cp -r out/mita-state-self-assessment-tool/test/* site/test/
-          else
-            cp -r out/* site/test/
-          fi
+          # Copy build output to test directory
+          cp -r out/* site/test/
 
+      - name: List final site structure
+        run: |
+          echo "Final site structure:"
+          find site -name "*.html" | head -10
+          echo "Directory sizes:"
+          du -sh site/* 2>/dev/null || echo "No subdirectories"
+          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
