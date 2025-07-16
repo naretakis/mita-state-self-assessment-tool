@@ -78,15 +78,16 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: /mita-state-self-assessment-tool/dev
         run: |
           npm run build
+          echo "=== DEV BUILD OUTPUT STRUCTURE ==="
+          find out -type f -name "*.html" | head -10
+          ls -la out/
           # Remove existing dev directory and recreate
           rm -rf site/dev
           mkdir -p site/dev
-          # Handle nested build output structure
-          if [ -d "out/mita-state-self-assessment-tool/dev" ]; then
-            cp -r out/mita-state-self-assessment-tool/dev/* site/dev/
-          else
-            cp -r out/* site/dev/
-          fi
+          # Copy all build output to dev directory
+          cp -r out/* site/dev/
+          echo "=== DEV SITE STRUCTURE ==="
+          find site/dev -name "*.html" | head -5
 
       - name: Build for test branch
         if: steps.branch-name.outputs.BRANCH_NAME == 'test'
@@ -94,15 +95,16 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: /mita-state-self-assessment-tool/test
         run: |
           npm run build
+          echo "=== TEST BUILD OUTPUT STRUCTURE ==="
+          find out -type f -name "*.html" | head -10
+          ls -la out/
           # Remove existing test directory and recreate
           rm -rf site/test
           mkdir -p site/test
-          # Handle nested build output structure
-          if [ -d "out/mita-state-self-assessment-tool/test" ]; then
-            cp -r out/mita-state-self-assessment-tool/test/* site/test/
-          else
-            cp -r out/* site/test/
-          fi
+          # Copy all build output to test directory
+          cp -r out/* site/test/
+          echo "=== TEST SITE STRUCTURE ==="
+          find site/test -name "*.html" | head -5
 
       - name: List final site structure
         run: |
