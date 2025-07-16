@@ -17,11 +17,21 @@ const nextConfig = {
   },
   
   // Base path configuration - use environment variable for multi-branch deployment
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH || (process.env.NODE_ENV === 'production' ? '/mita-state-self-assessment-tool' : ''),
+  basePath: (() => {
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH;
+    if (basePath === '/mita-state-self-assessment-tool/dev') return '/dev';
+    if (basePath === '/mita-state-self-assessment-tool/test') return '/test';
+    return basePath || (process.env.NODE_ENV === 'production' ? '/mita-state-self-assessment-tool' : '');
+  })(),
   // Enable trailing slashes for GitHub Pages compatibility
   trailingSlash: true,
   // Add assetPrefix for GitHub Pages - use environment variable for multi-branch deployment
-  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || (process.env.NODE_ENV === 'production' ? '/mita-state-self-assessment-tool' : ''),
+  assetPrefix: (() => {
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH;
+    if (basePath === '/mita-state-self-assessment-tool/dev') return '/mita-state-self-assessment-tool/dev';
+    if (basePath === '/mita-state-self-assessment-tool/test') return '/mita-state-self-assessment-tool/test';
+    return basePath || (process.env.NODE_ENV === 'production' ? '/mita-state-self-assessment-tool' : '');
+  })(),
   
   // Ignore TypeScript errors during build
   typescript: {
