@@ -55,13 +55,16 @@ jobs:
             cd site
             tar -xf ../existing-site/artifact.tar
             cd ..
-          else
-            echo "No existing site found, creating fresh structure"
           fi
           
           # Ensure directories exist
           mkdir -p site/dev site/test
           touch site/.nojekyll
+          
+          # Create a simple index.html if none exists
+          if [ ! -f site/index.html ]; then
+            echo '<h1>MITA Tool</h1><p><a href="/mita-state-self-assessment-tool/">Main</a> | <a href="/mita-state-self-assessment-tool/dev/">Dev</a> | <a href="/mita-state-self-assessment-tool/test/">Test</a></p>' > site/index.html
+          fi
           
           echo "=== EXISTING SITE STRUCTURE ==="
           find site -type f | head -20
@@ -77,12 +80,17 @@ jobs:
             npm run build
             echo "=== MAIN BUILD OUTPUT ==="
             ls -la out/
-            # Only copy main files, don't touch dev/test directories
+            # Copy main files, preserving dev/test subdirectories
             find out -maxdepth 1 -type f -exec cp {} site/ \;
-            # Remove existing main _next and content, then copy new ones
-            rm -rf site/_next site/content
-            if [ -d "out/_next" ]; then cp -r out/_next site/; fi
-            if [ -d "out/content" ]; then cp -r out/content site/; fi
+            # Copy assets but preserve subdirectory assets
+            if [ -d "out/_next" ]; then 
+              rm -rf site/_next
+              cp -r out/_next site/
+            fi
+            if [ -d "out/content" ]; then 
+              rm -rf site/content
+              cp -r out/content site/
+            fi
             
           elif [ "$BRANCH" == "dev" ]; then
             export NEXT_PUBLIC_BASE_PATH="/mita-state-self-assessment-tool/dev"
