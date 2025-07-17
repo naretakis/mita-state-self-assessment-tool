@@ -17,13 +17,13 @@ const nextConfig = {
   },
   
   // Base path configuration - use environment variable for multi-branch deployment
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH || (process.env.NODE_ENV === 'production' ? '/mita-state-self-assessment-tool' : ''),
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
   
   // Enable trailing slashes for GitHub Pages compatibility
   trailingSlash: true,
   
   // Add assetPrefix for GitHub Pages - use environment variable for multi-branch deployment
-  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || (process.env.NODE_ENV === 'production' ? '/mita-state-self-assessment-tool' : ''),
+  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || '',
   
   // Ignore TypeScript errors during build
   typescript: {
