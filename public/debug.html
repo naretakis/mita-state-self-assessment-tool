@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Info</title>
+</head>
+<body>
+    <h1>Debug Information</h1>
+    <p>Current URL: <span id="url"></span></p>
+    <p>Base Path: <span id="basePath"></span></p>
+    <p>Asset Prefix: <span id="assetPrefix"></span></p>
+    
+    <h2>Links Test</h2>
+    <ul>
+        <li><a href="/">Root</a></li>
+        <li><a href="/dev/">Dev</a></li>
+        <li><a href="/test/">Test</a></li>
+        <li><a href="/dashboard/">Dashboard</a></li>
+    </ul>
+    
+    <script>
+        document.getElementById('url').textContent = window.location.href;
+        document.getElementById('basePath').textContent = window.location.pathname.split('/')[1] || 'none';
+        document.getElementById('assetPrefix').textContent = document.querySelector('script[src*="_next"]')?.src.split('/_next')[0] || 'none';
+    </script>
+</body>
+</html>
