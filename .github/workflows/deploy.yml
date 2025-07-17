@@ -88,10 +88,14 @@ jobs:
             npm run build
             echo "=== DEV BUILD OUTPUT ==="
             ls -la out/
+            find out -name "*.html" | head -5
             # Clear and rebuild dev directory
             rm -rf site/dev
             mkdir -p site/dev
             cp -r out/* site/dev/
+            echo "=== DEV SITE AFTER COPY ==="
+            ls -la site/dev/
+            find site/dev -name "*.html" | head -5
             
           elif [ "$BRANCH" == "test" ]; then
             export NEXT_PUBLIC_BASE_PATH="/mita-state-self-assessment-tool/test"
@@ -99,12 +103,26 @@ jobs:
             npm run build
             echo "=== TEST BUILD OUTPUT ==="
             ls -la out/
+            find out -name "*.html" | head -5
             # Clear and rebuild test directory
             rm -rf site/test
             mkdir -p site/test
             cp -r out/* site/test/
+            echo "=== TEST SITE AFTER COPY ==="
+            ls -la site/test/
+            find site/test -name "*.html" | head -5
           fi
 
+      - name: Ensure 404 files for subdirectories
+        run: |
+          # Copy 404.html to subdirectories if they exist and have content
+          if [ -d "site/dev" ] && [ "$(ls -A site/dev)" ]; then
+            cp public/404.html site/dev/404.html
+          fi
+          if [ -d "site/test" ] && [ "$(ls -A site/test)" ]; then
+            cp public/404.html site/test/404.html
+          fi
+          
       - name: Debug final structure
         run: |
           echo "=== FINAL SITE STRUCTURE ==="
@@ -113,6 +131,8 @@ jobs:
           du -sh site/* 2>/dev/null || echo "No subdirectories"
           echo "=== ASSET PATHS ==="
           find site -name "_next" -type d
+          echo "=== INDEX FILES ==="
+          find site -name "index.html" -exec echo "{}:" \; -exec head -3 {} \;
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
