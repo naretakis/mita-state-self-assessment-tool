@@ -55,16 +55,25 @@ jobs:
             cd site
             tar -xf ../existing-site/artifact.tar
             cd ..
+          else
+            echo "No artifact found, downloading from live site..."
+            # Download existing deployments from live site
+            curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/dev/index.html -o /tmp/dev-check.html && {
+              echo "Dev site exists, downloading..."
+              mkdir -p site/dev
+              wget -r -np -nH -P site/ --cut-dirs=1 -A "*.html,*.js,*.css,*.md" https://naretakis.github.io/mita-state-self-assessment-tool/dev/ 2>/dev/null || echo "Dev download failed"
+            } || echo "No dev site found"
+            
+            curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/test/index.html -o /tmp/test-check.html && {
+              echo "Test site exists, downloading..."
+              mkdir -p site/test  
+              wget -r -np -nH -P site/ --cut-dirs=1 -A "*.html,*.js,*.css,*.md" https://naretakis.github.io/mita-state-self-assessment-tool/test/ 2>/dev/null || echo "Test download failed"
+            } || echo "No test site found"
           fi
           
           # Ensure directories exist
           mkdir -p site/dev site/test
           touch site/.nojekyll
-          
-          # Create a simple index.html if none exists
-          if [ ! -f site/index.html ]; then
-            echo '<h1>MITA Tool</h1><p><a href="/mita-state-self-assessment-tool/">Main</a> | <a href="/mita-state-self-assessment-tool/dev/">Dev</a> | <a href="/mita-state-self-assessment-tool/test/">Test</a></p>' > site/index.html
-          fi
           
           echo "=== EXISTING SITE STRUCTURE ==="
           find site -type f | head -20
