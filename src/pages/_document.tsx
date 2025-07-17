@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         {/* Add a base tag to ensure all relative URLs are resolved correctly */}
-        <base href="/" />
+        <base href={process.env.NEXT_PUBLIC_BASE_PATH ? `${process.env.NEXT_PUBLIC_BASE_PATH}/` : '/'} />
         {/* Add a script to fix paths at runtime */}
         <script
           dangerouslySetInnerHTML={{
