@@ -140,13 +140,15 @@ jobs:
       - name: Debug final structure
         run: |
           echo "=== FINAL SITE STRUCTURE ==="
-          find site -name "*.html" | sort
-          echo "=== DIRECTORY SIZES ==="
-          du -sh site/* 2>/dev/null || echo "No subdirectories"
-          echo "=== ASSET PATHS ==="
-          find site -name "_next" -type d
+          find site -type f | sort
+          echo "=== DIRECTORY TREE ==="
+          tree site || ls -laR site
+          echo "=== SUBDIRECTORY CHECK ==="
+          ls -la site/
+          echo "Dev exists: $([ -d site/dev ] && echo YES || echo NO)"
+          echo "Test exists: $([ -d site/test ] && echo YES || echo NO)"
           echo "=== INDEX FILES ==="
-          find site -name "index.html" -exec echo "{}:" \; -exec head -3 {} \;
+          find site -name "index.html" -exec echo "{}:" \; -exec head -1 {} \;
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
