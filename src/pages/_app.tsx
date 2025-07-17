@@ -13,24 +13,16 @@ import '../styles/globals.css';
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
-  // Handle GitHub Pages SPA routing
+  // Update the base href dynamically based on the current path
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      // Handle redirect from 404.html
-      const redirect = sessionStorage.redirect;
-      delete sessionStorage.redirect;
-      if (redirect && redirect !== location.href) {
-        router.replace(redirect);
-      }
-
-      // Update base href
       const baseElement = document.querySelector('base');
       if (baseElement) {
         const basePath = router.basePath || '';
         baseElement.setAttribute('href', `${basePath}/`);
       }
     }
-  }, [router]);
+  }, [router.basePath]);
 
   return (
     <ErrorBoundary>

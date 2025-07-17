@@ -80,6 +80,7 @@ jobs:
           rm -rf site/dev
           mkdir -p site/dev
           cp -r out/* site/dev/
+          cp public/404.html site/dev/404.html
 
       - name: Build for test branch
         if: steps.branch-name.outputs.BRANCH_NAME == 'test'
@@ -90,6 +91,7 @@ jobs:
           rm -rf site/test
           mkdir -p site/test
           cp -r out/* site/test/
+          cp public/404.html site/test/404.html
 
       - name: List final site structure
         run: |
