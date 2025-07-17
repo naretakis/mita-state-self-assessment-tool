@@ -77,8 +77,10 @@ jobs:
             npm run build
             echo "=== MAIN BUILD OUTPUT ==="
             ls -la out/
-            # Copy to root, preserving subdirectories
+            # Only copy main files, don't touch dev/test directories
             find out -maxdepth 1 -type f -exec cp {} site/ \;
+            # Remove existing main _next and content, then copy new ones
+            rm -rf site/_next site/content
             if [ -d "out/_next" ]; then cp -r out/_next site/; fi
             if [ -d "out/content" ]; then cp -r out/content site/; fi
             
