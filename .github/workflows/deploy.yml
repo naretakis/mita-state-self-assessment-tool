@@ -123,15 +123,19 @@ jobs:
             find site/test -name "*.html" | head -5
           fi
 
-      - name: Ensure 404 files for subdirectories
+      - name: Ensure proper files for subdirectories
         run: |
-          # Copy 404.html to subdirectories if they exist and have content
+          # Ensure .nojekyll and 404.html in subdirectories
           if [ -d "site/dev" ] && [ "$(ls -A site/dev)" ]; then
+            touch site/dev/.nojekyll
             cp public/404.html site/dev/404.html
           fi
           if [ -d "site/test" ] && [ "$(ls -A site/test)" ]; then
+            touch site/test/.nojekyll  
             cp public/404.html site/test/404.html
           fi
+          # Ensure root .nojekyll
+          touch site/.nojekyll
           
       - name: Debug final structure
         run: |
