@@ -41,57 +41,49 @@ jobs:
         uses: actions/configure-pages@v4
         
       - name: Download existing site
-        id: download-artifact
-        uses: actions/download-artifact@v4
         continue-on-error: true
-        with:
-          name: github-pages
-          path: existing-site
+        run: |
+          curl -s https://naretakis.github.io/mita-state-self-assessment-tool/sitemap.txt > /dev/null 2>&1 || echo "No existing site"
           
-      - name: Extract existing site
+      - name: Setup site structure
         run: |
-          mkdir -p site
-          if [ -f existing-site/artifact.tar ]; then
-            cd site
-            tar -xf ../existing-site/artifact.tar
-            cd ..
-          fi
-          # Ensure .nojekyll exists at root level
-          touch site/.nojekyll
-          # Create branch directories if they don't exist
           mkdir -p site/dev site/test
-          echo "Current site structure:"
-          find site -type f | head -20
+          touch site/.nojekyll
+          
+          # Download existing main site if it exists
+          if [ "${{ steps.branch-name.outputs.BRANCH_NAME }}" != "main" ]; then
+            curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/index.html -o site/index.html || echo "No main site yet"
+            curl -s -f -r 0-1000000 https://naretakis.github.io/mita-state-self-assessment-tool/_next/ -o /dev/null && 
+            wget -r -np -nH -nd -P site/_next/ https://naretakis.github.io/mita-state-self-assessment-tool/_next/ 2>/dev/null || echo "No main assets"
+          fi
+          
+          # Download existing dev site if it exists and we're not building dev
+          if [ "${{ steps.branch-name.outputs.BRANCH_NAME }}" != "dev" ]; then
+            curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/dev/index.html -o site/dev/index.html || echo "No dev site yet"
+          fi
+          
+          # Download existing test site if it exists and we're not building test
+          if [ "${{ steps.branch-name.outputs.BRANCH_NAME }}" != "test" ]; then
+            curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/test/index.html -o site/test/index.html || echo "No test site yet"
+          fi
 
-      - name: Build for main branch
-        if: steps.branch-name.outputs.BRANCH_NAME == 'main'
-        env:
-          NEXT_PUBLIC_BASE_PATH: /mita-state-self-assessment-tool
+      - name: Build and deploy
         run: |
-          npm run build
-          rsync -av --exclude='dev' --exclude='test' out/ site/
-
-      - name: Build for dev branch
-        if: steps.branch-name.outputs.BRANCH_NAME == 'dev'
-        env:
-          NEXT_PUBLIC_BASE_PATH: /mita-state-self-assessment-tool/dev
-        run: |
-          npm run build
-          rm -rf site/dev
-          mkdir -p site/dev
-          cp -r out/* site/dev/
-          cp public/404.html site/dev/404.html
-
-      - name: Build for test branch
-        if: steps.branch-name.outputs.BRANCH_NAME == 'test'
-        env:
-          NEXT_PUBLIC_BASE_PATH: /mita-state-self-assessment-tool/test
-        run: |
-          npm run build
-          rm -rf site/test
-          mkdir -p site/test
-          cp -r out/* site/test/
-          cp public/404.html site/test/404.html
+          if [ "${{ steps.branch-name.outputs.BRANCH_NAME }}" == "main" ]; then
+            export NEXT_PUBLIC_BASE_PATH=/mita-state-self-assessment-tool
+            npm run build
+            cp -r out/* site/
+          elif [ "${{ steps.branch-name.outputs.BRANCH_NAME }}" == "dev" ]; then
+            export NEXT_PUBLIC_BASE_PATH=/mita-state-self-assessment-tool/dev
+            npm run build
+            rm -rf site/dev/*
+            cp -r out/* site/dev/
+          elif [ "${{ steps.branch-name.outputs.BRANCH_NAME }}" == "test" ]; then
+            export NEXT_PUBLIC_BASE_PATH=/mita-state-self-assessment-tool/test
+            npm run build
+            rm -rf site/test/*
+            cp -r out/* site/test/
+          fi
 
       - name: List final site structure
         run: |
