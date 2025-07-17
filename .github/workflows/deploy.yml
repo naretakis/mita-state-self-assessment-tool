@@ -57,18 +57,31 @@ jobs:
             cd ..
           else
             echo "No artifact found, downloading from live site..."
-            # Download existing deployments from live site
-            curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/dev/index.html -o /tmp/dev-check.html && {
-              echo "Dev site exists, downloading..."
-              mkdir -p site/dev
-              wget -r -np -nH -P site/ --cut-dirs=1 -A "*.html,*.js,*.css,*.md" https://naretakis.github.io/mita-state-self-assessment-tool/dev/ 2>/dev/null || echo "Dev download failed"
-            } || echo "No dev site found"
+            # Always try to download main site files
+            curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/index.html -o site/index.html || echo "No main site found"
+            curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/debug.html -o site/debug.html || echo "No main debug found"
             
-            curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/test/index.html -o /tmp/test-check.html && {
-              echo "Test site exists, downloading..."
-              mkdir -p site/test  
-              wget -r -np -nH -P site/ --cut-dirs=1 -A "*.html,*.js,*.css,*.md" https://naretakis.github.io/mita-state-self-assessment-tool/test/ 2>/dev/null || echo "Test download failed"
-            } || echo "No test site found"
+            # Download main assets if they exist
+            mkdir -p site/_next
+            wget -r -np -nH -P site/ --cut-dirs=1 -A "*.js,*.css" https://naretakis.github.io/mita-state-self-assessment-tool/_next/ 2>/dev/null || echo "No main assets found"
+            
+            # Download existing dev site if not building dev
+            if [ "${{ steps.branch-name.outputs.BRANCH_NAME }}" != "dev" ]; then
+              curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/dev/index.html -o /tmp/dev-check.html && {
+                echo "Dev site exists, downloading..."
+                mkdir -p site/dev
+                wget -r -np -nH -P site/ --cut-dirs=1 -A "*.html,*.js,*.css,*.md" https://naretakis.github.io/mita-state-self-assessment-tool/dev/ 2>/dev/null || echo "Dev download failed"
+              } || echo "No dev site found"
+            fi
+            
+            # Download existing test site if not building test
+            if [ "${{ steps.branch-name.outputs.BRANCH_NAME }}" != "test" ]; then
+              curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/test/index.html -o /tmp/test-check.html && {
+                echo "Test site exists, downloading..."
+                mkdir -p site/test  
+                wget -r -np -nH -P site/ --cut-dirs=1 -A "*.html,*.js,*.css,*.md" https://naretakis.github.io/mita-state-self-assessment-tool/test/ 2>/dev/null || echo "Test download failed"
+              } || echo "No test site found"
+            fi
           fi
           
           # Ensure directories exist
