@@ -61,9 +61,8 @@ jobs:
             curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/index.html -o site/index.html || echo "No main site found"
             curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/debug.html -o site/debug.html || echo "No main debug found"
             
-            # Download main assets if they exist
-            mkdir -p site/_next
-            wget -r -np -nH -P site/ --cut-dirs=1 -A "*.js,*.css" https://naretakis.github.io/mita-state-self-assessment-tool/_next/ 2>/dev/null || echo "No main assets found"
+            # Download main assets recursively
+            wget -r -np -nH -P site/ --cut-dirs=1 -A "*.js,*.css,*.html" -R "dev/*,test/*" https://naretakis.github.io/mita-state-self-assessment-tool/ 2>/dev/null || echo "No main assets found"
             
             # Download existing dev site if not building dev
             if [ "${{ steps.branch-name.outputs.BRANCH_NAME }}" != "dev" ]; then
