@@ -130,16 +130,33 @@ mita-state-self-assessment-tool/
 
 ## Deployment
 
-The application is deployed to GitHub Pages using GitHub Actions:
+The application uses a robust multi-branch deployment system to GitHub Pages with complete environment isolation:
 
-### GitHub Actions Workflow
+### Multi-Branch Deployment Architecture
 
-A workflow file (`.github/workflows/deploy.yml`) handles automated deployment with multi-branch support:
+The deployment system supports three completely isolated environments:
+- **Production** (`main` branch): [https://naretakis.github.io/mita-state-self-assessment-tool/](https://naretakis.github.io/mita-state-self-assessment-tool/)
+- **Development** (`dev` branch): [https://naretakis.github.io/mita-state-self-assessment-tool/dev/](https://naretakis.github.io/mita-state-self-assessment-tool/dev/)
+- **Testing** (`test` branch): [https://naretakis.github.io/mita-state-self-assessment-tool/test/](https://naretakis.github.io/mita-state-self-assessment-tool/test/)
 
-- **Triggers**: Runs on pushes to `main`, `dev`, and `test` branches
-- **Content preservation**: Downloads existing site content before deployment to preserve all environments
-- **Branch-specific builds**: Each branch builds with the correct base path configuration
-- **Single deployment target**: All branches deploy to the same GitHub Pages site but in different directories
+### GitHub Actions Workflow Features
+
+The `.github/workflows/deploy.yml` workflow provides:
+
+- **Automatic Deployment**: Triggers on pushes to `main`, `dev`, and `test` branches
+- **Environment Isolation**: Each branch deploys to its own subdirectory with proper base path configuration
+- **Content Preservation**: Intelligent preservation of existing deployments when building other branches
+- **Artifact Management**: Uses GitHub Actions artifacts with fallback to live site downloading for reliability
+- **Branch-Specific Configuration**: Each environment builds with correct base paths and asset prefixes
+- **Concurrent Deployment Protection**: Prevents deployment conflicts with proper concurrency controls
+
+### Deployment Process
+
+1. **Content Preservation**: Downloads existing site content to preserve all environments
+2. **Branch Detection**: Automatically detects which branch is being deployed
+3. **Environment-Specific Build**: Builds with correct base path (`/mita-state-self-assessment-tool`, `/mita-state-self-assessment-tool/dev`, or `/mita-state-self-assessment-tool/test`)
+4. **Selective Deployment**: Only updates the target environment while preserving others
+5. **Asset Optimization**: Ensures proper routing and asset loading for each environment
 
 ### Setup Instructions
 
@@ -147,18 +164,29 @@ A workflow file (`.github/workflows/deploy.yml`) handles automated deployment wi
    - Go to repository Settings > Pages
    - Set the source to "GitHub Actions"
 
-2. **Configure Next.js**:
-   - The `next.config.js` file is already configured to use the correct base paths
-   - Environment variables set in the workflow control the base path for each branch
+2. **Next.js Configuration**:
+   - `next.config.js` automatically configures base paths based on environment variables
+   - `_document.tsx` sets correct base href for each environment
+   - Static export configuration optimized for GitHub Pages
 
 3. **Branch Management**:
    - Push to `main` for production updates
-   - Push to `dev` for development environment updates
+   - Push to `dev` for development environment updates  
    - Push to `test` for testing environment updates
+   - Each push automatically deploys to its respective environment
 
-4. **Accessing Deployments**:
-   - Each environment is accessible at its respective URL
-   - The workflow preserves all environments during each deployment
+4. **Environment Access**:
+   - All environments remain accessible simultaneously
+   - No cross-environment interference or downtime during deployments
+   - Each environment functions independently with proper routing
+
+### Technical Implementation
+
+- **Base Path Handling**: Dynamic base path configuration based on deployment environment
+- **Asset Path Resolution**: Proper asset prefix configuration for subdirectory deployments
+- **Client-Side Routing**: Custom 404.html handling for SPA routing in subdirectories
+- **Fallback Mechanisms**: Robust fallback from artifact download to live site preservation
+- **Deployment Verification**: Comprehensive logging and debugging for deployment troubleshooting
 
 ## ContentService Structure
 
