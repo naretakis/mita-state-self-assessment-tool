@@ -45,7 +45,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
                     href="/dashboard"
                     className="ds-c-button ds-c-button--primary ds-c-button--big ds-u-display--block"
                   >
-                    Getting Started
+                    Get Started
                   </Link>
                   <p className="ds-text--small ds-u-margin-top--2 ds-u-margin-bottom--0">
                     Begin a new assessment or manage existing ones
@@ -53,11 +53,28 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
                 </div>
                 <div className="ds-l-col--12 ds-l-sm-col--6 ds-l-md-col--4 ds-u-margin-bottom--3">
                   <Link
-                    href="/about-mita"
+                    href="/about-tool"
+                    className="ds-c-button ds-c-button--transparent ds-c-button--big ds-u-display--block"
+                  >
+                    About This Tool
+                  </Link>
+                  <p className="ds-text--small ds-u-margin-top--2 ds-u-margin-bottom--0">
+                    How the the SS-A tool works, and how we're building it open source
+                  </p>
+                </div>
+                <div className="ds-l-col--12 ds-l-sm-col--6 ds-l-md-col--4 ds-u-margin-bottom--3">
+                  <a
+                    href="https://cmsgov.github.io/Medicaid-Information-Technology-Architecture-MITA-4/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="ds-c-button ds-c-button--transparent ds-c-button--big ds-u-display--block"
                   >
                     About MITA
-                  </Link>
+                    <svg className="ds-u-margin-left--1" width="16" height="16" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+                      <path d="M10.5 1.5h-3v1h1.793L4.146 7.646l.708.708L10 3.207V5h1V1.5z"/>
+                      <path d="M9 9H3V3h3V2H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6H9v3z"/>
+                    </svg>
+                  </a>
                   <p className="ds-text--small ds-u-margin-top--2 ds-u-margin-bottom--0">
                     Learn about the MITA NextGen framework
                   </p>
@@ -76,6 +93,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
                   <p className="ds-c-alert__text">
                     This tool works entirely in your browser with no server required. Your
                     assessment data is stored locally and never transmitted to external servers.
+                    <strong> Note: Clearing your browser history or data will remove your saved assessments.</strong>
                   </p>
                 </div>
               </div>

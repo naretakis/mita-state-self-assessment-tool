@@ -3,6 +3,28 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
+## [0.5.4] - 2025-07-18
+
+### Landing Page Navigation and Content Improvements
+- **Enhanced Navigation Structure**: Reordered landing page buttons for better user flow: Get Started, SS-A Tool Info, About MITA
+- **Added External Link Indicators**: Implemented external link icon for "About MITA" button to clearly indicate it opens in a new tab
+- **Created Tool Information Page**: Added new `/about-tool` page focused on tool development, open source approach, and contribution opportunities
+- **Updated About MITA Link**: Changed "About MITA" button to link directly to CMS GitHub MITA documentation instead of internal page
+- **Enhanced User Warnings**: Added prominent warning about browser history clearing removing saved assessment data
+- **Improved Content Organization**: Restructured landing page content to better guide users through available options
+
+### User Experience Enhancements
+- **Better Information Architecture**: Separated tool-specific information from MITA framework information for clearer user understanding
+- **Enhanced Call-to-Action Flow**: Improved button ordering to prioritize primary user actions (Get Started) followed by supporting information
+- **Visual Accessibility Improvements**: Added appropriately sized external link icons for better visual recognition
+- **Data Persistence Awareness**: Added clear warnings about local storage limitations to prevent user data loss
+
+### Technical Implementation
+- **New Page Creation**: Created `about-tool.tsx` with comprehensive tool information, development approach, and GitHub integration
+- **Link Management**: Updated internal routing to use new page structure while maintaining external links to official MITA documentation
+- **Icon Implementation**: Added scalable SVG external link icons with proper accessibility attributes
+- **Content Updates**: Enhanced landing page messaging to better communicate tool capabilities and limitations
+
 ## [0.5.3] - 2025-07-17
 
 ### Deployment System Overhaul - Robust Multi-Branch Architecture
