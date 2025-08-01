@@ -1,5 +1,7 @@
 # MITA State Self-Assessment Tool - Development Guide
 
+> **⚠️ DEPRECATED**: This file has been migrated to `.kiro/steering/development-workflow.md` and `.kiro/steering/coding-standards.md`. Please use the Kiro steering files for current development standards.
+
 ## Development Approach
 
 This document provides implementation guidelines and best practices for developing the MITA State Self-Assessment Tool using Amazon Q Developer. Following these guidelines will ensure consistent, high-quality code and an effective development process.
@@ -93,22 +95,29 @@ src/
 
 ### Assessment Data Flow
 
-1. **Load Content**: Parse YAML/Markdown files into typed structures
-2. **Assessment Setup**: User selects capability domains and areas
-3. **Guided Assessment**: Step-by-step progression through capability overviews and dimension assessments
-4. **User Input**: Capture maturity levels, evidence, and supporting information through controlled components
-5. **State Updates**: Use immutable update patterns with real-time state synchronization
-6. **Auto-Save**: Automatic persistence every 30 seconds with manual save options
-7. **Results Calculation**: Compute maturity scores and generate visualizations
-8. **Export**: Generate PDF reports and CSV data for sharing and analysis
+1. **Content Loading**: Parse Markdown files with YAML front matter into typed CapabilityDefinition structures using ContentService
+2. **Assessment Setup**: User selects capability domains and areas through AssessmentSetup component with card-based UI
+3. **Assessment Creation**: Create Assessment object with selected capabilities and initialize dimension data structures
+4. **Guided Workflow**: GuidedAssessment orchestrates step-by-step progression through:
+   - CapabilityOverview: Display capability context and ORBIT dimension information
+   - DimensionAssessment: Individual ORBIT dimension forms with maturity level selection (1-5)
+5. **User Input Capture**: Collect maturity levels, evidence, barriers, plans, and notes through controlled form components
+6. **State Management**: Use React state with immutable update patterns and real-time synchronization
+7. **Auto-Save**: EnhancedStorageService automatically persists data every 30 seconds with localStorage/IndexedDB fallbacks
+8. **Progress Tracking**: ProgressTracker component shows current step, completion percentage, and save status
+9. **Results Calculation**: AssessmentResults component computes overall and dimension-specific maturity scores
+10. **Visualization**: Generate interactive Bar and Radar charts using Chart.js for data visualization
+11. **Export**: Generate PDF reports with jsPDF and CSV data exports for sharing and analysis
 
 ### Browser Storage Strategy
 
-1. **Storage Service**: Abstract storage operations behind a service
-2. **Progressive Enhancement**: Check for storage availability
-3. **Error Handling**: Gracefully handle storage failures
-4. **Size Limitations**: Monitor storage usage and warn users
-5. **Data Export**: Provide export options as backup mechanism
+1. **EnhancedStorageService**: Comprehensive storage service with tiered approach (localStorage primary, IndexedDB fallback)
+2. **Storage Detection**: Automatic detection of available storage mechanisms with graceful degradation
+3. **Data Persistence**: Assessment data automatically saved with metadata for quick dashboard loading
+4. **Error Handling**: Robust error handling with user-friendly messages and recovery options
+5. **Size Management**: Monitor storage usage and provide warnings when approaching limits
+6. **Import/Export**: JSON import/export functionality for data portability and backup
+7. **Assessment Summaries**: Pre-computed summary data to optimize dashboard performance
 
 ## Testing Approach
 

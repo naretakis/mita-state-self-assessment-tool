@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Content Validation",
+  "description": "Validate YAML/Markdown content files for proper structure and format",
+  "version": "1",
+  "when": {
+    "type": "manual"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Validate the currently open content file based on our Content Management System spec requirements:\n\n**YAML Front Matter Validation:**\n1. Required fields: capabilityDomain, capabilityArea, capabilityVersion\n2. Date fields: capabilityAreaCreated, capabilityAreaLastUpdated\n3. Optional assessment fields: assessmentCreated, assessmentUpdated, assessmentStatus\n\n**Content Structure Validation:**\n4. Proper markdown heading hierarchy (## for domains/areas, ### for dimensions)\n5. All five ORBIT dimensions present: Outcomes, Roles, Business Processes, Information, Technology\n6. Each dimension has: Description, Maturity Level Assessment, and all 5 maturity levels\n7. Consistent maturity level format: #### Level X: [Name]\n\n**MITA Framework Compliance:**\n8. Domain and capability area descriptions are clear and comprehensive\n9. Maturity level definitions follow the 1-5 scale properly\n10. Content aligns with MITA NextGen capability-based approach\n\n**File Naming Convention:**\n11. Follows [domain]-[capability-area].md format (lowercase, hyphenated)\n\nReport any issues found and provide specific corrections. If the file is valid, confirm compliance with our content standards."
+  }
+}

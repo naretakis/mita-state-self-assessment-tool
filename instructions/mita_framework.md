@@ -1,5 +1,7 @@
 # MITA NextGen Framework Structure
 
+> **⚠️ DEPRECATED**: This file has been migrated to `.kiro/specs/content-management-system/` with detailed requirements and implementation guidance. Please use the Kiro spec for current MITA framework integration work.
+
 ## Overview
 
 The Medicaid Information Technology Architecture (MITA) NextGen framework represents a significant evolution from the previous MITA 3.0 approach. This document outlines the structure and organization of the MITA NextGen capability-based model, which forms the foundation of the State Self-Assessment (SS-A) Tool.

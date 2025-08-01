@@ -1,5 +1,7 @@
 # MITA State Self-Assessment Tool - Data Models
 
+> **⚠️ DEPRECATED**: This file has been migrated to multiple Kiro specs including `.kiro/specs/storage-and-data-management/`, `.kiro/specs/content-management-system/`, and others. Please use the relevant Kiro specs for current data model information.
+
 ## Overview
 
 This document describes the data structures and storage approaches used in the MITA State Self-Assessment (SS-A) Tool. Understanding these models is essential for implementing the application's state management, persistence, and export functionality.
@@ -28,18 +30,19 @@ type AssessmentStatus =
 
 interface AssessmentMetadata {
   assessmentVersion: string;    // Assessment version
+  systemName?: string;          // System name (optional)
   completedBy?: string;         // Person completing the assessment
   completionDate?: string;      // Date of completion (if applicable)
   notes?: string;               // General assessment notes
 }
 ```
 
-### Capability Assessment
+### Capability Area Assessment
 
 Represents an assessment of a specific capability area:
 
 ```TypeScript
-interface CapabilityAssessment {
+interface CapabilityAreaAssessment {
   id: string;                   // Unique identifier
   capabilityDomainName: string; // Capability domain name
   capabilityAreaName: string;   // Capability area name
@@ -60,12 +63,12 @@ Represents the assessment of a single ORBIT dimension:
 
 ```TypeScript
 interface DimensionAssessment {
-  maturityLevel: number;        // Selected maturity level (1-5)
+  maturityLevel: number;        // Selected maturity level (0-5, 0 = not started)
   evidence: string;             // Evidence supporting selected level
   barriers: string;             // Barriers to advancement
   plans: string;                // Plans for improvement
   notes: string;                // Additional notes
-  targetMaturityLevel?: number; // Target maturity level
+  targetMaturityLevel?: number; // Target maturity level (optional)
   lastUpdated: string;          // ISO date string of last update
 }
 ```
@@ -145,6 +148,9 @@ interface AssessmentSummary {
   updatedAt: string;
   status: AssessmentStatus;
   completionPercentage: number;
+  systemName?: string;
+  domains?: string[];
+  areas?: string[];
 }
 ```
 

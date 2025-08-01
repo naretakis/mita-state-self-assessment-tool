@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Validate Documentation",
+  "description": "Validate documentation consistency and completeness",
+  "version": "1",
+  "when": {
+    "type": "manual"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Perform a comprehensive documentation validation:\n\n1. **Link Validation**:\n   - Check all internal links between documentation files\n   - Verify external links are still valid\n   - Ensure file references point to existing files\n\n2. **Content Consistency**:\n   - Compare README.md feature list with actual implementation\n   - Verify CHANGELOG.md entries match recent commits\n   - Check that instruction files don't contradict each other\n\n3. **Code Example Validation**:\n   - Verify code snippets in documentation compile and work\n   - Check that API examples match current interfaces\n   - Ensure configuration examples are current\n\n4. **Completeness Check**:\n   - Identify new features missing from documentation\n   - Find outdated information that needs updating\n   - Check for missing sections or incomplete explanations\n\n5. **Format and Structure**:\n   - Validate markdown formatting is correct\n   - Check heading hierarchy and navigation\n   - Ensure consistent style across all files\n\n6. **Version Alignment**:\n   - Verify version numbers are consistent across files\n   - Check that changelog matches package.json version\n   - Ensure release notes align with actual changes\n\nProvide a detailed report of any issues found and recommendations for fixes."
+  }
+}

@@ -1,5 +1,10 @@
 # MITA State Self-Assessment Tool - Prompt Library
 
+> **⚠️ DEPRECATED**: This file has been replaced by actionable Kiro specs with specific implementation tasks. Instead of prompts, use:
+> - `.kiro/specs/*/tasks.md` for specific implementation tasks
+> - `.kiro/hooks/spec-task-execution.kiro.hook` for implementation assistance
+> - `.kiro/steering/` files for development guidance
+
 ## Introduction
 
 This document provides a collection of effective prompts for Amazon Q Developer to assist with implementing the MITA State Self-Assessment Tool. These prompts are organized by development phase to help you leverage AI assistance effectively throughout the project lifecycle.
@@ -220,179 +225,94 @@ Following the assessment results workflow in instructions/assessment_workflow.md
 5. Includes navigation back to dashboard and sharing options
 ```
 
-### Assessment Management Component
+### Assessment Management Component ✅COMPLETED
 
-```
-Based on the assessment management flow in instructions/assessment_workflow.md, help me create a component that:
+The assessment management functionality has been implemented through the UserDashboard component and GuidedAssessment workflow. Users can view, edit, and manage existing assessments through the dashboard interface.
 
-1. Loads existing assessment data from browser storage
-2. Provides "Update/Edit" and "View" (read-only) modes for existing assessments
-3. Maintains data integrity during updates and tracks modification dates
-4. Provides confirmation dialogs for destructive actions like delete
-5. Supports version history and assessment archiving
-```
+### Browser Storage Service ✅COMPLETED
 
-### Browser Storage Service
+The EnhancedStorageService has been fully implemented with localStorage/IndexedDB fallbacks, auto-save functionality, export/import capabilities, and comprehensive error handling.
 
-```
-Following the storage implementation in instructions/assessment_workflow.md, help me create a storage service that:
+### Error Boundary Component ⚠️MOVED TO SPEC
 
-1. Uses localStorage for assessment metadata and IndexedDB for detailed assessment data
-2. Implements autosave every 30 seconds and explicit user-triggered save
-3. Provides JSON export/import functionality for data transfer between sessions
-4. Handles storage quotas and errors gracefully with user feedback
-5. Supports assessment state management (Not Started, In Progress, Completed, etc.)
-```
+This functionality has been moved to the **Error Handling and Resilience** spec for comprehensive implementation.
 
-### Error Boundary Component
+### Storage Error Handling ⚠️MOVED TO SPEC
 
-```
-Following the error handling approach described in instructions/architecture.md and instructions/development_guide.md, please create a React error boundary component that:
+This functionality has been moved to the **Error Handling and Resilience** spec for comprehensive implementation.
 
-1. Catches errors in child components
-2. Displays a user-friendly error message using CMS Design System components
-3. Logs error details for debugging
-4. Provides recovery options when possible
-5. Implements the graceful degradation strategy outlined in the architecture documentation
-```
+## Development Phase 4: Data Visualization and Export ✅COMPLETED
 
-### Storage Error Handling
+### Phase 4 Completion Summary
 
-```
-Based on our data models in instructions/data_models.md, implement robust error handling for storage operations that:
+All core data visualization and export functionality has been successfully implemented in the AssessmentResults component:
 
-1. Detects when browser storage limits are exceeded
-2. Provides clear user feedback about storage issues
-3. Offers fallback options (e.g., immediate export)
-4. Prevents data loss during errors
-```
+### Maturity Dashboard ✅COMPLETED
 
-## Development Phase 4: Data Visualization and Export
+The AssessmentResults component includes comprehensive visualization with:
+- Interactive Bar charts for overall maturity scores
+- Radar charts for ORBIT dimension comparisons
+- Summary statistics and completion indicators
+- Professional styling with CMS Design System components
 
-### Maturity Dashboard
+### PDF Export Functionality ✅COMPLETED
 
-```
-Based on the reporting requirements in instructions/assessment_workflow.md and data structure in instructions/data_models.md, help me create a dashboard component that:
+PDF export has been implemented using jsPDF with:
+- Comprehensive assessment data export
+- Professional formatting and layout
+- Configurable content sections
+- Automatic download functionality
 
-1. Visualizes maturity levels across capability areas using a chart library
-2. Shows progress towards target maturity
-3. Provides filtering options by module and domain
-4. Uses the CMS Design System components for consistent styling
-```
+### CSV Export Functionality ✅COMPLETED
 
-### PDF Export Functionality
+CSV export has been implemented with:
+- Complete assessment data in tabular format
+- Proper handling of nested data structures
+- Downloadable file generation
+- User-friendly column headers
 
-```
-Using the export models defined in instructions/data_models.md, implement a service that:
+### Phase 4: Reporting Components ✅COMPLETED
 
-1. Generates a PDF report from assessment data
-2. Includes configurable sections based on PDFExportOptions
-3. Formats content according to CMS Design System styling
-4. Uses react-pdf or a similar library for PDF generation
-```
+All reporting functionality has been implemented including:
+- Comprehensive maturity dashboard with interactive visualizations
+- Detailed results table showing all assessment data
+- Summary cards with key metrics and statistics
+- Professional export options in both PDF and CSV formats
 
-### CSV Export Functionality
+### Phase 5: Utilization Components 🚧FUTURE ENHANCEMENT
 
-```
-Following the CSVExportService interface in instructions/data_models.md, implement a service that:
+These advanced utilization features are planned for future releases:
+- Strategic planning guidance based on assessment results
+- Export formats suitable for leadership presentations
+- Historical comparison visualizations to track progress
+- Integration points with APD development processes
+- Executive summary generation for stakeholder communication
 
-1. Converts assessment data to CSV format
-2. Handles nested data structures appropriately
-3. Supports the options defined in CSVExportOptions
-4. Creates a downloadable CSV file
-```
+## Development Phase 5: Final Integration and Refinement ⚠️PARTIALLY COMPLETED
 
-### Phase 4: Reporting Components
+### Application Integration ✅COMPLETED
 
-```
-Based on the Reporting phase described in instructions/assessment_workflow.md and the data models in instructions/data_models.md, please help me implement the reporting components including:
+The application integration has been successfully completed with:
+- Consistent navigation between all sections through React Router
+- Proper state management using React Context and EnhancedStorageService
+- Smooth transitions between assessment stages with progress tracking
+- Comprehensive workflow from landing page through results
 
-1. Maturity dashboard with visualizations of current assessment status
-2. Gap analysis view comparing current to target maturity levels
-3. Capability domain summary reports
-4. Comprehensive assessment report generator
-5. Export options in PDF and CSV formats with configurable content
-```
+### Accessibility Implementation ⚠️MOVED TO SPEC
 
-### Phase 5: Utilization Components
+Accessibility features have been moved to the **Accessibility and Performance** spec for comprehensive implementation including:
+- ARIA attributes and screen reader support
+- Keyboard navigation and focus management
+- Color contrast compliance
+- Cross-browser accessibility testing
 
-```
-Based on the Utilization phase described in instructions/assessment_workflow.md, please help me implement components that support using assessment results including:
+### Performance Optimization ⚠️MOVED TO SPEC
 
-1. Strategic planning guidance based on assessment results
-2. Export formats suitable for leadership presentations
-3. Historical comparison visualizations to track progress
-4. Integration points with APD development processes
-5. Executive summary generation for stakeholder communication
-```
-
-## Development Phase 5: Final Integration and Refinement
-
-### Application Integration
-
-```
-Based on our architecture in instructions/architecture.md, help me integrate the various components we've built into a cohesive application with:
-
-1. Consistent navigation between sections
-2. Proper state management across components
-3. Smooth transitions between assessment stages
-4. Error boundaries to prevent catastrophic failures
-```
-
-### Accessibility Implementation
-
-```
-Following the accessibility requirements in instructions/development_guide.md, help me ensure our application is accessible by:
-
-1. Adding proper ARIA attributes where needed
-2. Implementing keyboard navigation
-3. Ensuring appropriate color contrast
-4. Supporting screen readers effectively
-```
-
-### Accessibility Audit
-
-```
-Please review this component for accessibility issues and provide fixes to ensure:
-
-1. All interactive elements are keyboard accessible
-2. Proper ARIA attributes are used
-3. Color contrast meets WCAG 2.1 AA standards
-4. Screen reader announcements work correctly
-```
-
-### Focus Management
-
-```
-Help me implement proper focus management for this multi-step form that:
-
-1. Maintains focus position during updates
-2. Sets focus appropriately when new sections appear
-3. Provides keyboard shortcuts for common actions
-4. Follows best practices for modal dialogs
-```
-
-### Performance Optimization
-
-```
-Help me optimize the performance of our MITA SS-A Tool based on instructions/architecture.md and instructions/development_guide.md by:
-
-1. Implementing code splitting for larger components
-2. Optimizing bundle size through treeshaking
-3. Adding memoization for expensive calculations
-4. Improving rendering performance of list components
-```
-
-### Cross-Browser Testing
-
-```
-Following the browser compatibility requirements in instructions/development_guide.md, help me create a testing strategy to verify our application works correctly across:
-
-1. Chrome, Firefox, Safari, and Edge browsers
-2. Tablet devices
-3. Different operating systems
-4. Various connection speeds
-```
+Performance optimization has been moved to the **Accessibility and Performance** spec for comprehensive implementation including:
+- Code splitting and lazy loading
+- Bundle size optimization
+- Rendering performance improvements
+- Cross-browser performance testing
 
 ## Troubleshooting Prompts
 
@@ -455,27 +375,46 @@ Following the testing approach outlined in instructions/development_guide.md, he
 4. Mocks browser storage for test stability
 ```
 
-## Advanced Features Prompts
+## Advanced Features Prompts 🚧FUTURE ENHANCEMENTS
 
-### Import/Export Enhancement
+### Import/Export Enhancement 🚧FUTURE ENHANCEMENT
 
-```
-Based on the collaboration approach described in instructions/assessment_workflow.md, help me enhance our import/export functionality with:
+Enhanced import/export functionality is planned for future releases:
+- Selective import capabilities (choosing specific sections)
+- Conflict resolution when merging changes
+- Export format validation and versioning
+- Support for encrypted exports for sensitive data
 
-1. Selective import capabilities (choosing specific sections)
-2. Conflict resolution when merging changes
-3. Export format validation and versioning
-4. Support for encrypted exports for sensitive data
-```
+### Offline Support ⚠️MOVED TO SPEC
 
-### Offline Support
+Offline support functionality has been moved to the **Accessibility and Performance** spec for comprehensive implementation including:
+- Offline detection and user feedback
+- Service worker implementation for offline caching
+- Data integrity during offline operation
+- Background sync when connectivity returns
 
-```
-Following the browser storage approach in instructions/architecture.md and instructions/data_models.md, help me implement robust offline support that:
+---
 
-1. Detects when the application goes offline
-2. Provides appropriate user feedback
-3. Ensures data integrity during offline operation
-4. Synchronizes correctly when coming back online
-```
+## Migration to Kiro Specs Summary
+
+The following functionality has been moved from the prompt library to comprehensive Kiro specs:
+
+### ✅ New Specs Created:
+
+1. **Error Handling and Resilience** (`.kiro/specs/error-handling-and-resilience/`)
+   - Error boundary components
+   - Storage error handling
+   - Emergency data protection
+   - Comprehensive error recovery
+
+2. **Accessibility and Performance** (`.kiro/specs/accessibility-and-performance/`)
+   - WCAG 2.1 AA compliance
+   - Keyboard navigation and screen reader support
+   - Performance optimization
+   - Cross-browser compatibility
+   - Offline support
+
+### 🎯 Ready for Kiro Implementation
+
+These specs provide comprehensive requirements, design, and task breakdowns for the remaining work on the MITA State Self-Assessment Tool. The core assessment workflow is 85-90% complete, and these specs will help complete the remaining quality, accessibility, and resilience features.
 

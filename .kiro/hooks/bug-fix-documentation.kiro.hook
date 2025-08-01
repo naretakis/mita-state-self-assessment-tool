@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Document Bug Fix",
+  "description": "Update documentation when bugs are fixed",
+  "version": "1",
+  "when": {
+    "type": "manual"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A bug has been fixed. Please update the relevant documentation:\n\n1. **CHANGELOG.md Entry**:\n   - Add an entry under the 'Fixed' section for the current version\n   - Describe the bug that was fixed and its impact\n   - Include any workarounds that are no longer needed\n\n2. **README.md Updates** (if applicable):\n   - Remove any workaround instructions that are no longer needed\n   - Update known issues section if the bug was listed there\n   - Revise usage instructions if the fix changes user interaction\n\n3. **Instructions Folder Updates** (if applicable):\n   - Update development_guide.md if the bug revealed process gaps\n   - Revise architecture.md if the fix required structural changes\n   - Update troubleshooting sections with lessons learned\n\n4. **Process Improvements**: If the bug revealed documentation gaps or process issues, suggest improvements to prevent similar issues.\n\nPlease review the bug fix and update all relevant documentation files accordingly."
+  }
+}

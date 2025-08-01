@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Accessibility Review",
+  "description": "Review components for WCAG 2.1 AA compliance",
+  "version": "1",
+  "when": {
+    "type": "manual"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Review the currently open component file for WCAG 2.1 AA accessibility compliance. Based on the accessibility requirements in our Accessibility and Performance spec, check for:\n\n**Core Accessibility Requirements:**\n1. Proper ARIA labels and descriptions for all interactive elements\n2. Keyboard navigation support with logical tab order\n3. Color contrast requirements (4.5:1 for normal text, 3:1 for large text)\n4. Screen reader compatibility with semantic HTML\n5. Focus management during interactions and state changes\n6. Alternative text for images and visual content\n\n**MITA-Specific Considerations:**\n7. Form accessibility for assessment inputs\n8. Chart and visualization accessibility\n9. Progress indicator accessibility\n10. Error message accessibility\n\n**Testing Recommendations:**\n- Test with keyboard-only navigation\n- Verify screen reader announcements\n- Check color contrast ratios\n- Validate ARIA attributes\n\nProvide specific code recommendations and highlight any accessibility violations found."
+  }
+}

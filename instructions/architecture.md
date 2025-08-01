@@ -1,5 +1,7 @@
 # MITA State Self-Assessment Tool - Architecture Overview
 
+> **⚠️ DEPRECATED**: This file has been migrated to `.kiro/steering/architecture-guidelines.md` and `.kiro/specs/` for comprehensive architectural guidance. Please use the Kiro specs for current development work.
+
 ## System Architecture
 
 The MITA SS-A Tool follows a modern, browser-based architecture that emphasizes content-code separation and client-side processing. This document outlines the technical architecture to guide Amazon Q Developer in implementing the application.
@@ -37,25 +39,25 @@ The MITA SS-A Tool follows a modern, browser-based architecture that emphasizes 
 
 #### Assessment Components
 
-* **CapabilitySelector**: Allows users to select capability domain and capability areas for assessment
-* **AssessmentForm**: Dynamic form generation based on capability structure
-* **DecisionTreeNavigator**: Guides users through the assessment process
-* **ProgressTracker**: Displays progress through the assessment
+* **AssessmentSetup**: Allows users to select capability domains and areas for assessment
+* **GuidedAssessment**: Main orchestration component managing step-by-step assessment workflow
+* **CapabilityOverview**: Displays capability information before assessment begins
+* **DimensionAssessment**: Handles individual ORBIT dimension assessment with maturity level selection
+* **ProgressTracker**: Displays progress through the assessment with auto-save status
 
 #### Reporting Components
 
-* **MaturityDashboard**: Visualizes maturity levels across capabilities
-* **SummaryView**: Provides high-level overview of assessment results
-* **ExportComponent**: Handles PDF and CSV generation and download
+* **AssessmentResults**: Comprehensive results page with maturity score calculations and visualizations
+* **UserDashboard**: Assessment management dashboard with progress indicators and export functionality
+* **Chart Components**: Interactive Bar and Radar charts using Chart.js for data visualization
 
 ### 2. Application Layer
 
 #### Core Services
 
-* **ContentService**: Loads and manages capability definitions from YAML/Markdown
-* **AssessmentService**: Handles assessment logic and state
-* **StorageService**: Manages browser storage operations
-* **ExportService**: Generates PDF and CSV exports
+* **ContentService**: Loads and manages capability definitions from Markdown files
+* **EnhancedStorageService**: Manages browser storage operations with localStorage/IndexedDB fallbacks
+* **Assessment Components**: Handle assessment logic and state management through React components
 
 #### State Management
 
@@ -109,45 +111,38 @@ The application uses a tiered approach to browser storage:
 ### Storage Schema
 
 ```TypeScript
-interface AssessmentData {
-  assessmentId: string;
+interface Assessment {
+  id: string;
   stateName: string;
   createdAt: string;
   updatedAt: string;
-  status: 'in-progress' | 'completed';
-  capabilities: {
-    [capabilityId: string]: {
-      id: string;
-      name: string;
-      dimensions: {
-        outcome: {
-          maturityLevel: number;
-          notes: string;
-          evidence: string;
-        },
-        role: {
-          maturityLevel: number;
-          notes: string;
-          evidence: string;
-        },
-        businessProcess: {
-          maturityLevel: number;
-          notes: string;
-          evidence: string;
-        },
-        information: {
-          maturityLevel: number;
-          notes: string;
-          evidence: string;
-        },
-        technology: {
-          maturityLevel: number;
-          notes: string;
-          evidence: string;
-        }
-      }
-    }
-  }
+  status: 'not-started' | 'in-progress' | 'completed';
+  capabilities: CapabilityAreaAssessment[];
+  metadata: AssessmentMetadata;
+}
+
+interface CapabilityAreaAssessment {
+  id: string;
+  capabilityDomainName: string;
+  capabilityAreaName: string;
+  status: 'not-started' | 'in-progress' | 'completed';
+  dimensions: {
+    outcome: DimensionAssessment;
+    role: DimensionAssessment;
+    businessProcess: DimensionAssessment;
+    information: DimensionAssessment;
+    technology: DimensionAssessment;
+  };
+}
+
+interface DimensionAssessment {
+  maturityLevel: number;
+  evidence: string;
+  barriers: string;
+  plans: string;
+  notes: string;
+  targetMaturityLevel?: number;
+  lastUpdated: string;
 }
 ```
 

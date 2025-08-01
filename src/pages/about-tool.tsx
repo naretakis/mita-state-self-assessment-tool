@@ -33,23 +33,41 @@ const AboutTool: React.FC = () => {
               <section className="ds-u-margin-bottom--6">
                 <h2 className="ds-h2 ds-u-margin-bottom--3">What is This Tool?</h2>
                 <p className="ds-u-margin-bottom--3">
-                  The MITA State Self-Assessment Tool is a modern, browser-based application that helps state Medicaid agencies assess the maturity of their systems using the MITA NextGen capability-based framework. Unlike traditional assessment tools, this application works entirely in your browser with no server required.
+                  The MITA State Self-Assessment Tool is a modern, browser-based application that
+                  helps state Medicaid agencies assess the maturity of their systems using the MITA
+                  NextGen capability-based framework. Unlike traditional assessment tools, this
+                  application works entirely in your browser with no server required.
                 </p>
 
                 <h3 className="ds-h3 ds-u-margin-bottom--2">Key Capabilities</h3>
                 <ul className="ds-c-list ds-u-margin-bottom--4">
-                  <li><strong>Browser-Based:</strong> Works entirely in your browser with local data storage</li>
-                  <li><strong>MITA NextGen Integration:</strong> Full integration with the capability-based ORBIT framework</li>
-                  <li><strong>Guided Assessment:</strong> Step-by-step workflow with decision tree navigation</li>
-                  <li><strong>Comprehensive Reporting:</strong> PDF and CSV exports with interactive visualizations</li>
-                  <li><strong>Privacy-First:</strong> Your data never leaves your browser</li>
+                  <li>
+                    <strong>Browser-Based:</strong> Works entirely in your browser with local data
+                    storage
+                  </li>
+                  <li>
+                    <strong>MITA NextGen Integration:</strong> Full integration with the
+                    capability-based ORBIT framework
+                  </li>
+                  <li>
+                    <strong>Guided Assessment:</strong> Step-by-step workflow with decision tree
+                    navigation
+                  </li>
+                  <li>
+                    <strong>Comprehensive Reporting:</strong> PDF and CSV exports with interactive
+                    visualizations
+                  </li>
+                  <li>
+                    <strong>Privacy-First:</strong> Your data never leaves your browser
+                  </li>
                 </ul>
               </section>
 
               <section className="ds-u-margin-bottom--6">
                 <h2 className="ds-h2 ds-u-margin-bottom--3">Our Development Approach</h2>
                 <p className="ds-u-margin-bottom--3">
-                  This tool is being developed using a modern, open-source approach that prioritizes accessibility, usability, and community collaboration.
+                  This tool is being developed using a modern, open-source approach that prioritizes
+                  accessibility, usability, and community collaboration.
                 </p>
 
                 <div className="ds-l-row ds-u-margin-bottom--4">
@@ -82,23 +100,31 @@ const AboutTool: React.FC = () => {
                   We maintain three parallel environments to support continuous development:
                 </p>
                 <ul className="ds-c-list ds-u-margin-bottom--4">
-                  <li><strong>Production:</strong> Stable releases for end users</li>
-                  <li><strong>Development:</strong> Latest features and improvements</li>
-                  <li><strong>Testing:</strong> Experimental features and testing</li>
+                  <li>
+                    <strong>Production:</strong> Stable releases for end users
+                  </li>
+                  <li>
+                    <strong>Development:</strong> Latest features and improvements
+                  </li>
+                  <li>
+                    <strong>Testing:</strong> Experimental features and testing
+                  </li>
                 </ul>
               </section>
 
               <section className="ds-u-margin-bottom--6">
                 <h2 className="ds-h2 ds-u-margin-bottom--3">Open Source & Community</h2>
                 <p className="ds-u-margin-bottom--3">
-                  This project follows an open-source approach to enable community contributions and transparency. We believe that better tools come from collaborative development.
+                  This project follows an open-source approach to enable community contributions and
+                  transparency. We believe that better tools come from collaborative development.
                 </p>
 
                 <div className="ds-c-alert ds-c-alert--lightweight ds-u-margin-bottom--4">
                   <div className="ds-c-alert__body">
                     <h3 className="ds-c-alert__heading">Get Involved</h3>
                     <p className="ds-c-alert__text ds-u-margin-bottom--3">
-                      Whether you're a developer, state agency user, or interested in MITA assessments, there are ways to contribute to this project.
+                      Whether you're a developer, state agency user, or interested in MITA
+                      assessments, there are ways to contribute to this project.
                     </p>
                     <div className="ds-l-row">
                       <div className="ds-l-col--12 ds-l-sm-col--6 ds-u-margin-bottom--2">
@@ -109,7 +135,10 @@ const AboutTool: React.FC = () => {
                           className="ds-c-button ds-c-button--primary ds-u-display--block"
                         >
                           View on GitHub
-                          <span className="ds-u-visibility--screen-reader"> (opens in new tab)</span>
+                          <span className="ds-u-visibility--screen-reader">
+                            {' '}
+                            (opens in new tab)
+                          </span>
                         </a>
                       </div>
                       <div className="ds-l-col--12 ds-l-sm-col--6">
@@ -120,7 +149,10 @@ const AboutTool: React.FC = () => {
                           className="ds-c-button ds-c-button--transparent ds-u-display--block"
                         >
                           Contributing Guide
-                          <span className="ds-u-visibility--screen-reader"> (opens in new tab)</span>
+                          <span className="ds-u-visibility--screen-reader">
+                            {' '}
+                            (opens in new tab)
+                          </span>
                         </a>
                       </div>
                     </div>
@@ -153,14 +185,17 @@ const AboutTool: React.FC = () => {
               <section className="ds-u-margin-bottom--6">
                 <h2 className="ds-h2 ds-u-margin-bottom--3">Project Status</h2>
                 <p className="ds-u-margin-bottom--3">
-                  We're currently working toward a Minimum Lovable Product (MLP) with core functionality targeted for September 2025. The tool already includes guided assessment workflows, comprehensive reporting, and multi-environment deployment.
+                  We're currently working toward a Minimum Lovable Product (MLP) with core
+                  functionality targeted for September 2025. The tool already includes guided
+                  assessment workflows, comprehensive reporting, and multi-environment deployment.
                 </p>
 
                 <div className="ds-c-alert ds-c-alert--warn ds-c-alert--lightweight">
                   <div className="ds-c-alert__body">
                     <h3 className="ds-c-alert__heading">Development Status</h3>
                     <p className="ds-c-alert__text">
-                      This tool is actively under development. While core functionality is working, we're continuously adding features and improvements based on user feedback.
+                      This tool is actively under development. While core functionality is working,
+                      we're continuously adding features and improvements based on user feedback.
                     </p>
                   </div>
                 </div>

@@ -1,5 +1,16 @@
 # MITA State Self-Assessment (SS-A) Tool - Project Overview
 
+> **⚠️ DEPRECATED NOTICE**
+> 
+> **This instructions folder has been superseded by comprehensive Kiro specs.**
+> 
+> **For current development guidance, please use:**
+> - **Kiro Specs**: `.kiro/specs/` - Detailed requirements, design, and implementation tasks
+> - **Kiro Steering**: `.kiro/steering/` - Development standards and architectural guidelines  
+> - **Kiro Hooks**: `.kiro/hooks/` - Automated quality checks and workflows
+> 
+> **This folder is maintained for historical reference only.**
+
 ## Introduction
 
 This document serves as the main entry point for understanding the MITA State Self-Assessment (SS-A) Tool project. The SS-A Tool is designed to help state Medicaid agencies assess the maturity of their Medicaid systems using the new MITA NextGen capability-based framework.
@@ -25,26 +36,36 @@ This Instructions folder contains essential context for developing the SS-A Tool
 5. [Development Guide](development_guide.md) - Implementation guidelines and best practices
 6. [Prompt Library](prompt_library.md) - Effective prompts for Amazon Q Developer
 
-## Project Scope
+## Project Status
 
-The Minimum Lovable Product (MLP) focuses on delivering core functionality by August 2025:
+The Minimum Lovable Product (MLP) is substantially complete with core functionality delivered:
 
-### Core Capabilities (In Scope)
+### Completed Core Capabilities ✅
 
-* In-browser functionality with local storage
-* MITA NextGen Framework integration
-* Decision tree-guided assessment process
-* Basic maturity visualization and reporting
-* PDF and CSV export functionality
+* ✅ Complete in-browser functionality with robust localStorage/IndexedDB storage
+* ✅ Full MITA NextGen Framework integration with capability definition parsing
+* ✅ Comprehensive guided assessment workflow with step-by-step navigation
+* ✅ Interactive maturity level selection with card-based UI
+* ✅ Advanced maturity visualization with Bar and Radar charts using Chart.js
+* ✅ Professional reporting with PDF and CSV export functionality
+* ✅ Auto-save functionality with real-time progress tracking
+* ✅ Assessment state management and restoration
+* ✅ Multi-branch deployment infrastructure (production, dev, test)
 
-### Future Capabilities (Out of Scope for MLP)
+### In Progress 🚧
+
+* Test suite improvements and bug fixes
+* Accessibility validation and enhancements
+* Performance optimization for large assessments
+
+### Future Enhancements (Post-MLP)
 
 * Authentication and access control
 * Advanced collaboration features
+* Assessment comparison and analytics
 * Centralized data repository
 * APD integration
-* Advanced analytics
-* ... and much more (our plan is to just keep iterating)
+* Advanced analytics and insights
 
 ## Technical Stack
 
@@ -73,14 +94,22 @@ To begin development:
 3. Follow the phased implementation approach in the GenAI Implementation Plan
 4. Use the prompt library to effectively leverage Amazon Q Developer
 
-## Success Criteria
+## Success Criteria Status
 
-The MLP will be considered successful if it achieves:
+The MLP has achieved significant progress toward success criteria:
 
-1. Working prototype demonstrating core functionality by August 2025
-2. Adoption by 3-5 pilot states for initial testing
-3. Positive feedback on usability and value from state users
-4. Documentation sufficient for open-source collaboration
-5. Alignment with latest CMS Design System standards
-6. Establishment of foundation for future enhancements
+1. ✅ **Working Prototype**: Core functionality is 85-90% complete and operational
+2. 🚧 **Pilot Testing**: Ready for pilot state testing with minor bug fixes needed
+3. ✅ **User Experience**: Professional UI with CMS Design System integration
+4. ✅ **Documentation**: Comprehensive documentation for open-source collaboration
+5. ✅ **Design Standards**: Full alignment with CMS Design System standards
+6. ✅ **Foundation**: Solid architecture established for future enhancements
+
+### Current Status
+The assessment workflow is functionally complete with users able to:
+- Select capability domains and areas for assessment
+- Complete guided assessments across all ORBIT dimensions
+- View comprehensive results with interactive visualizations
+- Export detailed reports in PDF and CSV formats
+- Manage multiple assessments through an intuitive dashboard
 

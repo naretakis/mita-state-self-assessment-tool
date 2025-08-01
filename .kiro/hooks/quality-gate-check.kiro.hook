@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Quality Gate Check",
+  "description": "Run comprehensive code quality checks before committing changes",
+  "version": "1",
+  "when": {
+    "type": "manual"
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "npm run check",
+    "description": "Run complete quality check suite (format, lint, type-check, test, build)",
+    "successMessage": "✅ All quality checks passed! Code is ready for commit.",
+    "errorMessage": "❌ Quality checks failed. Please fix issues before committing."
+  }
+}

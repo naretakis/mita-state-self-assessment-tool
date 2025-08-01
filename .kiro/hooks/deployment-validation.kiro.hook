@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Deployment Validation",
+  "description": "Validate deployment readiness and multi-branch deployment health",
+  "version": "1",
+  "when": {
+    "type": "manual"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Validate deployment readiness based on our Multi-Branch Deployment Infrastructure spec:\n\n**1. Build Validation:**\n- Confirm `npm run build` completes successfully\n- Verify static export generates properly\n- Check for any build warnings or errors\n\n**2. Environment Configuration:**\n- Validate Next.js base path configuration for target environment\n- Confirm environment variables are properly set\n- Check asset prefix configuration for subdirectory deployment\n\n**3. Multi-Branch Deployment Check:**\n- Verify current branch is one of: main, dev, test\n- Confirm GitHub Actions workflow will trigger properly\n- Check that deployment won't interfere with other environments\n\n**4. Content Validation:**\n- Ensure all MITA capability content files are valid\n- Verify content loading works in production build\n- Check for any missing or corrupted content files\n\n**5. Functionality Testing:**\n- Test critical user workflows in production build\n- Verify assessment creation, completion, and results work\n- Check export functionality (PDF/CSV) operates correctly\n- Confirm storage mechanisms work properly\n\n**6. Performance Check:**\n- Verify bundle size is within acceptable limits\n- Check for any performance regressions\n- Confirm lazy loading and code splitting work properly\n\n**7. Accessibility Validation:**\n- Run accessibility checks on built application\n- Verify keyboard navigation and screen reader support\n- Check color contrast and semantic structure\n\nProvide deployment readiness assessment and any blocking issues that need resolution."
+  }
+}

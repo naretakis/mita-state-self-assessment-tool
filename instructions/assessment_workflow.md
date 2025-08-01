@@ -1,5 +1,7 @@
 # MITA State Self-Assessment Tool - Assessment Workflow
 
+> **⚠️ DEPRECATED**: This file has been migrated to `.kiro/specs/assessment-workflow/` with detailed requirements, design, and implementation tasks. Please use the Kiro spec for current development work.
+
 ## Overview
 
 This document outlines the assessment workflow and user journey for the MITA State Self-Assessment (SS-A) Tool. It describes how users navigate through the assessment process, from initial setup to final reporting.
@@ -97,35 +99,40 @@ flowchart TD
 ### Guided Assessment Process
 
 #### User Actions
-* Progress through multi-page assessment questions
-* Select maturity levels for each ORBIT dimension
-* Provide supporting evidence in text fields
-* Document advancement plans
-* Save progress at any point
-* Navigate between assessment pages
+* Progress through multi-step assessment workflow (overview → dimension assessments)
+* Select maturity levels (1-5) for each ORBIT dimension using card-based interface
+* Provide supporting evidence, barriers, advancement plans, and notes in text fields
+* Set optional target maturity levels for future planning
+* Save progress manually or rely on auto-save every 30 seconds
+* Navigate between assessment steps with Previous/Next buttons
 
 #### System Behavior
-* Present assessment questions in logical sequence
-* Auto-save user inputs every 30 seconds
-* Validate required fields before allowing progression
-* Track completion status across all dimensions
-* Provide contextual help and reference materials
-* Support both forward and backward navigation
+* Present capability overview before dimension assessment begins
+* Guide users through each ORBIT dimension systematically
+* Auto-save user inputs every 30 seconds with visual feedback
+* Validate required maturity level selection before allowing progression
+* Track completion status across all dimensions and capabilities
+* Provide real-time progress indicators showing current step and overall completion
+* Support both forward and backward navigation with proper state management
 
 ### Assessment Results
 
 #### User Actions
-* Review MITA maturity scores for assessed capability areas
-* Generate and download assessment reports
+* Review comprehensive MITA maturity scores and visualizations
+* View interactive Bar charts for overall scores and Radar charts for ORBIT dimension comparisons
+* Examine detailed results table showing all maturity levels across dimensions
+* Generate and download assessment reports (PDF/CSV)
 * Return to dashboard to access other assessments
 * Share results with stakeholders
 
 #### System Behavior
-* Calculate and display maturity scores based on user inputs
-* Generate formatted PDF/CSV reports
-* Update assessment status to "Completed"
-* Add completed assessment to user's dashboard
-* Provide visualization of results across capability areas
+* Calculate overall maturity scores and dimension-specific scores for each capability area
+* Generate interactive visualizations using Chart.js (Bar charts and Radar charts)
+* Display summary statistics (overall average, capability count, domain coverage)
+* Provide detailed results table with all assessment data
+* Generate formatted PDF and CSV exports with comprehensive assessment data
+* Update assessment status to "Completed" automatically
+* Add completed assessment to user's dashboard with completion indicators
 
 ### Assessment Management
 

@@ -70,9 +70,16 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
                     className="ds-c-button ds-c-button--transparent ds-c-button--big ds-u-display--block"
                   >
                     About MITA
-                    <svg className="ds-u-margin-left--1" width="16" height="16" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
-                      <path d="M10.5 1.5h-3v1h1.793L4.146 7.646l.708.708L10 3.207V5h1V1.5z"/>
-                      <path d="M9 9H3V3h3V2H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6H9v3z"/>
+                    <svg
+                      className="ds-u-margin-left--1"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 12 12"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path d="M10.5 1.5h-3v1h1.793L4.146 7.646l.708.708L10 3.207V5h1V1.5z" />
+                      <path d="M9 9H3V3h3V2H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6H9v3z" />
                     </svg>
                   </a>
                   <p className="ds-text--small ds-u-margin-top--2 ds-u-margin-bottom--0">
@@ -93,7 +100,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
                   <p className="ds-c-alert__text">
                     This tool works entirely in your browser with no server required. Your
                     assessment data is stored locally and never transmitted to external servers.
-                    <strong> Note: Clearing your browser history or data will remove your saved assessments.</strong>
+                    <strong>
+                      {' '}
+                      Note: Clearing your browser history or data will remove your saved
+                      assessments.
+                    </strong>
                   </p>
                 </div>
               </div>
