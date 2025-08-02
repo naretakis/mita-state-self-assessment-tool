@@ -86,3 +86,63 @@ Use `npm run check` as the single command that runs all quality checks:
 
 ### Continuous Integration Alignment
 Local `npm run check` should match CI/CD pipeline checks to prevent build failures
+
+## Error Handling Patterns
+
+### Using Error Boundaries
+Wrap components with appropriate error boundaries:
+
+```typescript
+// General error boundary
+<ErrorBoundary context="Component Name" onRetry={handleRetry}>
+  <YourComponent />
+</ErrorBoundary>
+
+// Assessment-specific error boundary
+<AssessmentErrorBoundary 
+  assessmentId={assessmentId}
+  onRetry={handleRetry}
+  onExportData={handleExport}
+>
+  <AssessmentComponent />
+</AssessmentErrorBoundary>
+```
+
+### Using the Error Handler Hook
+```typescript
+import { useErrorHandler } from '../hooks/useErrorHandler';
+
+function MyComponent() {
+  const errorHandler = useErrorHandler();
+
+  const handleOperation = async () => {
+    try {
+      await riskyOperation();
+    } catch (error) {
+      errorHandler.setError(error as Error, {
+        operation: 'riskyOperation',
+        context: 'additional context'
+      });
+    }
+  };
+
+  if (errorHandler.isStorageError) {
+    return (
+      <StorageErrorHandler
+        error={errorHandler.error.originalError}
+        onRetry={() => errorHandler.retry(handleOperation)}
+        onContinueOffline={() => errorHandler.clearError()}
+      />
+    );
+  }
+
+  return <div>Component content</div>;
+}
+```
+
+### Error Handling Best Practices
+- **Categorize Errors**: Use the error handler hook to properly categorize errors
+- **Provide Recovery**: Always offer users a way to recover from errors
+- **Preserve Data**: Use export functionality to prevent data loss
+- **User-Friendly Messages**: Show clear, actionable error messages
+- **Context Logging**: Include relevant context for debugging

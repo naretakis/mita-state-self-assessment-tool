@@ -3,6 +3,24 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
+## [0.6.1] - 2025-02-01
+
+### Added
+- **Comprehensive Error Handling System**: Implemented robust error handling throughout the assessment workflow
+  - Added specialized `AssessmentErrorBoundary` with data export and recovery capabilities
+  - Created `StorageErrorHandler` for storage-specific error scenarios with fallback mechanisms
+  - Implemented `useErrorHandler` hook for consistent error categorization and retry logic
+  - Enhanced existing `ErrorBoundary` with user-friendly messages and recovery paths
+- **Data Preservation During Errors**: Assessment data can be exported even when storage fails
+- **Error Recovery Options**: Multiple recovery paths including retry, refresh, export data, and continue offline
+- **User-Friendly Error Messages**: Categorized error messages based on error type (storage, network, validation, content)
+- **Comprehensive Unit Tests**: Added extensive test coverage for all error handling scenarios
+
+### Enhanced
+- **Assessment Workflow Reliability**: Integrated error handling throughout `GuidedAssessment` and `AssessmentSetup` components
+- **Storage Resilience**: Enhanced storage operations with better error detection and recovery
+- **User Experience**: Clear error messaging and recovery options prevent data loss and user frustration
+
 ## [0.6.0] - 2025-01-31
 
 ### Assessment Workflow Implementation - Complete Feature

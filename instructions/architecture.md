@@ -188,10 +188,42 @@ interface DimensionAssessment {
 
 ## Error Handling Approach
 
-1. **Graceful Degradation**: Ensure core functionality works despite errors
-2. **Meaningful Messages**: Clear error messaging for users
-3. **Recovery Options**: Provide paths to recover from common errors
-4. **Data Protection**: Prevent data loss during errors
+### Comprehensive Error Handling System
+
+The application implements a multi-layered error handling approach:
+
+1. **Error Boundaries**: React error boundaries catch JavaScript errors and provide recovery options
+   - `ErrorBoundary`: General error boundary with retry functionality and user-friendly messages
+   - `AssessmentErrorBoundary`: Specialized boundary for assessment workflow with data export capabilities
+
+2. **Storage Error Handling**: Dedicated handling for browser storage issues
+   - `StorageErrorHandler`: Provides storage-specific error messages and recovery options
+   - Automatic fallback from localStorage to IndexedDB
+   - Data export functionality when storage fails
+
+3. **Error Categorization**: Systematic error classification for appropriate handling
+   - Storage errors (quota, unavailable, corruption)
+   - Network errors (connection issues, timeouts)
+   - Validation errors (user input, data integrity)
+   - Content errors (parsing, loading failures)
+
+4. **Recovery Mechanisms**:
+   - **Retry Logic**: Automatic retry with exponential backoff for transient errors
+   - **Data Preservation**: Export functionality to prevent data loss during errors
+   - **Graceful Degradation**: Continue offline when storage is unavailable
+   - **User Guidance**: Clear instructions for manual recovery steps
+
+5. **Error Context**: Comprehensive error logging with context for debugging
+   - Error categorization and metadata
+   - User action context and timestamp
+   - Component stack traces for development
+
+### Error Handling Components
+
+- **useErrorHandler Hook**: Centralized error handling logic with categorization and retry functionality
+- **StorageErrorHandler Component**: UI component for storage-specific error scenarios
+- **AssessmentErrorBoundary Component**: Specialized error boundary for assessment workflow
+- **Enhanced ErrorBoundary**: Improved general error boundary with recovery options
 
 ## Technical Decisions Rationale
 

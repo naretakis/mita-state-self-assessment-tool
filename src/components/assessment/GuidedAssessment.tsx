@@ -44,6 +44,7 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const errorHandler = useErrorHandler();
 
   // Auto-save every 30 seconds
   useEffect(() => {
@@ -128,6 +129,8 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
 
     try {
       setSaving(true);
+      errorHandler.clearError(); // Clear any previous errors
+
       const updatedAssessment = {
         ...assessment,
         updatedAt: new Date().toISOString(),
@@ -138,13 +141,22 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
       if (success) {
         setLastSaved(new Date());
         setAssessment(updatedAssessment);
+        setError(null); // Clear any previous error state
+      } else {
+        throw new Error('Failed to save assessment: Storage operation returned false');
       }
     } catch (err) {
       console.error('Failed to save assessment:', err);
+      errorHandler.setError(err as Error, {
+        assessmentId: assessment.id,
+        operation: 'save',
+        timestamp: new Date().toISOString(),
+      });
+      setError('Failed to save your progress. Your work may not be preserved.');
     } finally {
       setSaving(false);
     }
-  }, [assessment, saving]);
+  }, [assessment, saving, errorHandler]);
 
   const updateDimension = (
     capabilityId: string,
@@ -279,45 +291,90 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
   const currentDefinition = getCurrentCapabilityDefinition();
 
   return (
-    <div className="ds-base">
-      <div className="ds-l-container ds-u-padding-y--4">
-        <ProgressTracker
-          currentStep={currentStepIndex + 1}
-          totalSteps={steps.length}
-          completionPercentage={getCompletionPercentage()}
-          saving={saving}
-          lastSaved={lastSaved}
-        />
-
-        <main role="main" className="ds-u-margin-top--4">
-          {currentStep.type === 'overview' && currentCapability && currentDefinition && (
-            <CapabilityOverview
-              capability={currentCapability}
-              definition={currentDefinition}
-              onNext={handleNext}
-              onPrevious={currentStepIndex > 0 ? handlePrevious : undefined}
+    <AssessmentErrorBoundary
+      assessmentId={assessmentId}
+      onRetry={() => window.location.reload()}
+      onExportData={() => {
+        // Export will be handled by the error boundary
+      }}
+    >
+      <div className="ds-base">
+        <div className="ds-l-container ds-u-padding-y--4">
+          {/* Show storage error handler if there's a storage error */}
+          {errorHandler.isStorageError && errorHandler.error && (
+            <StorageErrorHandler
+              error={errorHandler.error.originalError}
+              assessment={assessment || undefined}
+              onRetry={() => errorHandler.retry(saveAssessment)}
+              onContinueOffline={() => {
+                errorHandler.clearError();
+                setError(null);
+              }}
+              className="ds-u-margin-bottom--3"
             />
           )}
 
-          {currentStep.type === 'dimension' &&
-            currentCapability &&
-            currentDefinition &&
-            currentStep.dimension && (
-              <DimensionAssessment
-                capability={currentCapability}
-                definition={currentDefinition}
-                dimension={currentStep.dimension}
-                onUpdate={data =>
-                  updateDimension(currentCapability.id, currentStep.dimension!, data)
-                }
-                onNext={handleNext}
-                onPrevious={handlePrevious}
-                onSave={saveAssessment}
-              />
+          {/* Show general error message if not a storage error */}
+          {error && !errorHandler.isStorageError && (
+            <div className="ds-c-alert ds-c-alert--error ds-u-margin-bottom--3" role="alert">
+              <div className="ds-c-alert__body">
+                <p className="ds-c-alert__text">{error}</p>
+              </div>
+            </div>
+          )}
+
+          <ProgressTracker
+            currentStep={currentStepIndex + 1}
+            totalSteps={steps.length}
+            completionPercentage={getCompletionPercentage()}
+            saving={saving}
+            lastSaved={lastSaved}
+          />
+
+          <main role="main" className="ds-u-margin-top--4">
+            {currentStep.type === 'overview' && currentCapability && currentDefinition && (
+              <AssessmentErrorBoundary
+                assessmentId={assessmentId}
+                onRetry={() => setCurrentStepIndex(currentStepIndex)} // Retry current step
+              >
+                <CapabilityOverview
+                  capability={currentCapability}
+                  definition={currentDefinition}
+                  onNext={handleNext}
+                  onPrevious={currentStepIndex > 0 ? handlePrevious : undefined}
+                />
+              </AssessmentErrorBoundary>
             )}
-        </main>
+
+            {currentStep.type === 'dimension' &&
+              currentCapability &&
+              currentDefinition &&
+              currentStep.dimension && (
+                <AssessmentErrorBoundary
+                  assessmentId={assessmentId}
+                  onRetry={() => setCurrentStepIndex(currentStepIndex)} // Retry current step
+                >
+                  <DimensionAssessment
+                    capability={currentCapability}
+                    definition={currentDefinition}
+                    dimension={currentStep.dimension}
+                    onUpdate={data =>
+                      updateDimension(
+                        currentCapability.id,
+                        currentStep.dimension as OrbitDimension,
+                        data
+                      )
+                    }
+                    onNext={handleNext}
+                    onPrevious={handlePrevious}
+                    onSave={saveAssessment}
+                  />
+                </AssessmentErrorBoundary>
+              )}
+          </main>
+        </div>
       </div>
-    </div>
+    </AssessmentErrorBoundary>
   );
 };
 

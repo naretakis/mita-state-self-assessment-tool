@@ -249,6 +249,70 @@ tests/
 3. Implement error boundary components
 4. Add verbose error logging
 
+## Error Handling Patterns
+
+### Using Error Boundaries
+
+The application provides several error boundary components for different scenarios:
+
+```typescript
+// General error boundary for any component
+<ErrorBoundary context="Component Name" onRetry={handleRetry}>
+  <YourComponent />
+</ErrorBoundary>
+
+// Specialized assessment error boundary with data export
+<AssessmentErrorBoundary 
+  assessmentId={assessmentId}
+  onRetry={handleRetry}
+  onExportData={handleExport}
+>
+  <AssessmentComponent />
+</AssessmentErrorBoundary>
+```
+
+### Using the Error Handler Hook
+
+```typescript
+import { useErrorHandler } from '../hooks/useErrorHandler';
+
+function MyComponent() {
+  const errorHandler = useErrorHandler();
+
+  const handleOperation = async () => {
+    try {
+      await riskyOperation();
+    } catch (error) {
+      errorHandler.setError(error as Error, {
+        operation: 'riskyOperation',
+        context: 'additional context'
+      });
+    }
+  };
+
+  // Show storage-specific error handling
+  if (errorHandler.isStorageError) {
+    return (
+      <StorageErrorHandler
+        error={errorHandler.error.originalError}
+        onRetry={() => errorHandler.retry(handleOperation)}
+        onContinueOffline={() => errorHandler.clearError()}
+      />
+    );
+  }
+
+  return <div>Component content</div>;
+}
+```
+
+### Error Handling Best Practices
+
+1. **Categorize Errors**: Use the error handler hook to properly categorize errors
+2. **Provide Recovery**: Always offer users a way to recover from errors
+3. **Preserve Data**: Use export functionality to prevent data loss
+4. **User-Friendly Messages**: Show clear, actionable error messages
+5. **Context Logging**: Include relevant context for debugging
+
 ### Rendering Problems
 
 1. Check component dependencies
