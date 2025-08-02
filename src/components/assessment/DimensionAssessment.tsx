@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+
+import { useAnnouncements } from '../../hooks/useAnnouncements';
+import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 
 import type {
   CapabilityAreaAssessment,
@@ -36,6 +39,23 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
 }) => {
   const [formData, setFormData] = useState(capability.dimensions[dimension]);
   const [validationError, setValidationError] = useState<string | null>(null);
+  const errorRef = useRef<HTMLDivElement>(null);
+
+  // Accessibility hooks
+  const { containerRef } = useKeyboardNavigation({
+    onArrowKeys: direction => {
+      if (direction === 'up' || direction === 'down') {
+        // Navigate between maturity level options
+        const currentLevel = formData.maturityLevel;
+        if (direction === 'up' && currentLevel > 1) {
+          handleInputChange('maturityLevel', currentLevel - 1);
+        } else if (direction === 'down' && currentLevel < 5) {
+          handleInputChange('maturityLevel', currentLevel + 1);
+        }
+      }
+    },
+  });
+  const { announceError, announceSuccess } = useAnnouncements();
 
   useEffect(() => {
     setFormData(capability.dimensions[dimension]);
@@ -48,12 +68,24 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
 
     if (validationError && field === 'maturityLevel' && Number(value) > 0) {
       setValidationError(null);
+      announceSuccess(`Maturity level ${value} selected`);
     }
   };
 
   const validateForm = (): boolean => {
     if (formData.maturityLevel === 0) {
-      setValidationError('Please select a maturity level to continue.');
+      const errorMessage = 'Please select a maturity level to continue.';
+      setValidationError(errorMessage);
+      announceError(errorMessage);
+
+      // Focus the first maturity level option
+      setTimeout(() => {
+        const firstOption = document.getElementById('maturity-1');
+        if (firstOption) {
+          firstOption.focus();
+        }
+      }, 100);
+
       return false;
     }
     setValidationError(null);
@@ -74,7 +106,7 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
   const maturityLevels = dimensionDefinition?.maturityLevels;
 
   return (
-    <div className="ds-l-row ds-u-justify-content--center">
+    <div className="ds-l-row ds-u-justify-content--center" ref={containerRef}>
       <div className="ds-l-col--12 ds-l-lg-col--10">
         <header className="ds-u-margin-bottom--6">
           <h1 className="ds-display--1 ds-u-margin-bottom--2 ds-u-color--primary">
@@ -94,7 +126,12 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
         </header>
 
         {validationError && (
-          <div className="ds-c-alert ds-c-alert--warn ds-u-margin-bottom--4">
+          <div
+            ref={errorRef}
+            className="ds-c-alert ds-c-alert--warn ds-u-margin-bottom--4"
+            role="alert"
+            aria-live="assertive"
+          >
             <div className="ds-c-alert__body">
               <h2 className="ds-c-alert__heading">Validation Error</h2>
               <p className="ds-c-alert__text">{validationError}</p>
@@ -105,7 +142,10 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
         <form className="ds-u-margin-bottom--6">
           <fieldset className="ds-c-fieldset ds-u-margin-bottom--6">
             <legend className="ds-c-label ds-u-margin-bottom--3">
-              Maturity Level Selection <span className="ds-u-color--error">*</span>
+              Maturity Level Selection{' '}
+              <span className="ds-u-color--error" aria-label="required">
+                *
+              </span>
             </legend>
             <div className="ds-c-field__hint ds-u-margin-bottom--4">
               Select the maturity level that best describes your current state for this dimension.
@@ -113,7 +153,7 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
 
             <div className="ds-u-margin-bottom--4">
               {maturityLevels && Object.keys(maturityLevels).length > 0 ? (
-                <div style={{ display: 'grid', gap: '1rem' }}>
+                <div className="maturity-level-grid">
                   {Object.entries(maturityLevels).map(([level, description]) => {
                     const levelNumber = parseInt(level.replace('level', ''));
                     const levelLabels = [
@@ -128,6 +168,7 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
                       <label
                         key={level}
                         htmlFor={`maturity-${levelNumber}`}
+                        className={`maturity-level-card ${isSelected ? 'selected' : ''}`}
                         style={{
                           display: 'block',
                           padding: '1rem',
@@ -137,6 +178,8 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
                           cursor: 'pointer',
                           transition: 'all 0.2s ease',
                           boxShadow: isSelected ? '0 2px 8px rgba(0, 169, 28, 0.15)' : 'none',
+                          minHeight: '44px',
+                          position: 'relative',
                         }}
                         onMouseEnter={e => {
                           if (!isSelected) {
@@ -152,6 +195,12 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
                             e.currentTarget.style.transform = 'translateY(0)';
                           }
                         }}
+                        onKeyDown={e => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            handleInputChange('maturityLevel', levelNumber);
+                          }
+                        }}
                       >
                         <input
                           type="radio"
@@ -162,7 +211,8 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
                           onChange={e =>
                             handleInputChange('maturityLevel', parseInt(e.target.value))
                           }
-                          style={{ display: 'none' }}
+                          aria-describedby={`maturity-${levelNumber}-desc`}
+                          className="ds-c-choice"
                         />
                         <div
                           style={{
@@ -179,7 +229,10 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
                             <span style={{ color: '#00a91c', fontSize: '1.25rem' }}>✓</span>
                           )}
                         </div>
-                        <div style={{ fontSize: '0.875rem', color: '#5c5c5c', lineHeight: '1.4' }}>
+                        <div
+                          id={`maturity-${levelNumber}-desc`}
+                          style={{ fontSize: '0.875rem', color: '#5c5c5c', lineHeight: '1.4' }}
+                        >
                           {description && description.trim()
                             ? description
                             : 'No description available'}
@@ -312,28 +365,35 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
           )}
         </form>
 
-        <div className="ds-u-display--flex ds-u-justify-content--between ds-u-align-items--center">
+        <nav className="assessment-navigation" aria-label="Assessment navigation">
           <button
             type="button"
             className="ds-c-button ds-c-button--transparent"
             onClick={onPrevious}
+            aria-label="Go to previous step"
           >
             ← Previous
           </button>
 
-          <div className="ds-u-display--flex ds-u-align-items--center">
+          <div className="button-group ds-u-display--flex ds-u-align-items--center">
             <button
               type="button"
               className="ds-c-button ds-c-button--transparent ds-u-margin-right--2"
               onClick={handleSave}
+              aria-label="Save current progress"
             >
               Save Progress
             </button>
-            <button type="button" className="ds-c-button ds-c-button--primary" onClick={handleNext}>
+            <button
+              type="button"
+              className="ds-c-button ds-c-button--primary"
+              onClick={handleNext}
+              aria-label="Continue to next step"
+            >
               Next →
             </button>
           </div>
-        </div>
+        </nav>
       </div>
     </div>
   );

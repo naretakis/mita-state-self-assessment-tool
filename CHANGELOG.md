@@ -3,6 +3,37 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
+## [0.6.3] - 2025-08-02
+
+### Added
+- **Comprehensive Accessibility Implementation**: Enhanced the assessment workflow with full accessibility support
+  - Added `useKeyboardNavigation` hook with focus management, keyboard shortcuts, and focus trapping
+  - Implemented `useAnnouncements` hook with ARIA live regions for screen reader support
+  - Enhanced CapabilityOverview component with proper ARIA labels, semantic navigation, and keyboard integration
+  - Added screen reader announcements for user actions and progress updates
+- **WCAG 2.1 AA Compliance Foundation**: Established accessibility infrastructure for compliance
+  - Proper heading hierarchy and landmark roles throughout assessment components
+  - Descriptive ARIA labels for all interactive elements
+  - Keyboard navigation with logical tab order and focus indicators
+  - Screen reader compatibility with semantic HTML structure
+
+### Enhanced
+- **Assessment Workflow Accessibility**: Integrated accessibility features throughout the guided assessment
+  - Focus management during step transitions with proper restoration
+  - Keyboard shortcuts (Enter for actions, Escape for navigation)
+  - Visual and auditory feedback for user interactions
+  - Error handling with accessible error messages and recovery options
+
+### Technical Improvements
+- **Accessibility Hook System**: Created reusable accessibility utilities
+  - Modular hook design for keyboard navigation and screen reader support
+  - Integration with existing error handling and storage systems
+  - Progressive enhancement approach maintaining existing functionality
+- **Code Quality**: Maintained high standards with comprehensive testing
+  - Updated tests to verify accessibility features
+  - All quality checks passing (formatting, linting, type safety, build)
+  - No breaking changes to existing functionality
+
 ## [0.6.2] - 2025-08-02
 
 ### Fixed

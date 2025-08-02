@@ -2,7 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useAnnouncements } from '../../hooks/useAnnouncements';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 import { ContentService } from '../../services/ContentService';
 import enhancedStorageService from '../../services/EnhancedStorageService';
 
@@ -48,6 +50,13 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
   const [error, setError] = useState<string | null>(null);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const errorHandler = useErrorHandler();
+
+  // Accessibility hooks
+  const { containerRef, restoreFocus } = useKeyboardNavigation({
+    onEscape: () => router.push('/dashboard'),
+    trapFocus: true,
+  });
+  const { announceStepChange, announceError, announceSuccess, LiveRegions } = useAnnouncements();
 
   // Auto-save every 30 seconds
   useEffect(() => {
@@ -145,6 +154,7 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
         setLastSaved(new Date());
         setAssessment(updatedAssessment);
         setError(null); // Clear any previous error state
+        announceSuccess('Assessment progress saved successfully');
       } else {
         throw new Error('Failed to save assessment: Storage operation returned false');
       }
@@ -155,11 +165,13 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
         operation: 'save',
         timestamp: new Date().toISOString(),
       });
-      setError('Failed to save your progress. Your work may not be preserved.');
+      const errorMessage = 'Failed to save your progress. Your work may not be preserved.';
+      setError(errorMessage);
+      announceError(errorMessage);
     } finally {
       setSaving(false);
     }
-  }, [assessment, saving, errorHandler]);
+  }, [assessment, saving, errorHandler, announceSuccess, announceError]);
 
   const updateDimension = (
     capabilityId: string,
@@ -197,6 +209,20 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
   const navigateToStep = (stepIndex: number) => {
     if (stepIndex >= 0 && stepIndex < steps.length) {
       setCurrentStepIndex(stepIndex);
+
+      // Announce step change to screen readers
+      const step = steps[stepIndex];
+      if (step) {
+        const capability = capabilities.find(cap => cap.id === step.capabilityId);
+        const stepName =
+          step.type === 'overview'
+            ? `${capability?.capabilityAreaName} Overview`
+            : `${capability?.capabilityAreaName} - ${step.dimension} Assessment`;
+        announceStepChange(stepName, stepIndex + 1, steps.length);
+      }
+
+      // Restore focus to main content
+      setTimeout(() => restoreFocus(), 100);
     }
   };
 
@@ -301,7 +327,19 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
         // Export will be handled by the error boundary
       }}
     >
-      <div className="ds-base">
+      <div className="ds-base" ref={containerRef} tabIndex={-1}>
+        <LiveRegions />
+
+        {/* Skip link for keyboard users */}
+        <a
+          href="#main-content"
+          className="ds-c-skip-nav"
+          onFocus={e => (e.target.style.position = 'static')}
+          onBlur={e => (e.target.style.position = 'absolute')}
+        >
+          Skip to main content
+        </a>
+
         <div className="ds-l-container ds-u-padding-y--4">
           {/* Show storage error handler if there's a storage error */}
           {errorHandler.isStorageError && errorHandler.error && (
@@ -334,7 +372,7 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
             lastSaved={lastSaved}
           />
 
-          <main role="main" className="ds-u-margin-top--4">
+          <main role="main" id="main-content" className="ds-u-margin-top--4" tabIndex={-1}>
             {currentStep.type === 'overview' && currentCapability && currentDefinition && (
               <AssessmentErrorBoundary
                 assessmentId={assessmentId}

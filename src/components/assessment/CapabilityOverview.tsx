@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { useAnnouncements } from '../../hooks/useAnnouncements';
+import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
+
 import type { CapabilityAreaAssessment, CapabilityDefinition } from '../../types';
 
 interface CapabilityOverviewProps {
@@ -15,31 +18,49 @@ const CapabilityOverview: React.FC<CapabilityOverviewProps> = ({
   onNext,
   onPrevious,
 }) => {
+  const { containerRef } = useKeyboardNavigation({
+    onEnter: onNext,
+  });
+  const { announceSuccess } = useAnnouncements();
+
+  const handleNext = () => {
+    announceSuccess(`Starting assessment for ${definition.capabilityAreaName}`);
+    onNext();
+  };
   return (
-    <div className="ds-l-row ds-u-justify-content--center">
+    <div className="ds-l-row ds-u-justify-content--center" ref={containerRef}>
       <div className="ds-l-col--12 ds-l-lg-col--10">
         <header className="ds-u-margin-bottom--6">
           <h1 className="ds-h2 ds-u-margin-bottom--2 ds-u-color--primary">
             Domain: {definition.capabilityDomainName}
           </h1>
-          <p className="ds-text--lead ds-u-margin-bottom--4">{definition.domainDescription}</p>
+          <p className="ds-text--lead ds-u-margin-bottom--4" id="domain-description">
+            {definition.domainDescription}
+          </p>
 
           <h2 className="ds-h3 ds-u-margin-bottom--2 ds-u-color--primary">
             Capability Area: {definition.capabilityAreaName}
           </h2>
-          <p className="ds-text--lead">{definition.areaDescription}</p>
+          <p className="ds-text--lead" id="area-description">
+            {definition.areaDescription}
+          </p>
         </header>
 
         <div className="ds-c-card ds-u-margin-bottom--6">
           <div className="ds-c-card__body">
-            <h2 className="ds-h3 ds-u-margin-bottom--3">Assessment Overview</h2>
+            <h2 className="ds-h3 ds-u-margin-bottom--3" id="assessment-overview">
+              Assessment Overview
+            </h2>
             <p className="ds-u-margin-bottom--4">
               You will assess this capability area across five ORBIT dimensions. Each dimension
               represents a different aspect of your system's maturity:
             </p>
             <div className="ds-l-row">
               <div className="ds-l-col--12 ds-l-md-col--6">
-                <ul className="ds-c-list ds-c-list--bare">
+                <ul className="ds-c-list ds-c-list--bare" aria-labelledby="orbit-dimensions-1">
+                  <h3 className="sr-only" id="orbit-dimensions-1">
+                    ORBIT Dimensions Part 1
+                  </h3>
                   <li className="ds-u-margin-bottom--2">
                     <strong className="ds-u-color--primary">Outcomes:</strong> Business results and
                     objectives
@@ -55,7 +76,10 @@ const CapabilityOverview: React.FC<CapabilityOverviewProps> = ({
                 </ul>
               </div>
               <div className="ds-l-col--12 ds-l-md-col--6">
-                <ul className="ds-c-list ds-c-list--bare">
+                <ul className="ds-c-list ds-c-list--bare" aria-labelledby="orbit-dimensions-2">
+                  <h3 className="sr-only" id="orbit-dimensions-2">
+                    ORBIT Dimensions Part 2
+                  </h3>
                   <li className="ds-u-margin-bottom--2">
                     <strong className="ds-u-color--primary">Information:</strong> Data structure and
                     sharing
@@ -100,12 +124,13 @@ const CapabilityOverview: React.FC<CapabilityOverviewProps> = ({
           </div>
         </div>
 
-        <div className="ds-u-display--flex ds-u-justify-content--between ds-u-align-items--center">
+        <nav className="assessment-navigation" aria-label="Capability overview navigation">
           {onPrevious ? (
             <button
               type="button"
               className="ds-c-button ds-c-button--transparent"
               onClick={onPrevious}
+              aria-label="Go to previous capability"
             >
               ← Previous
             </button>
@@ -113,10 +138,16 @@ const CapabilityOverview: React.FC<CapabilityOverviewProps> = ({
             <div />
           )}
 
-          <button type="button" className="ds-c-button ds-c-button--primary" onClick={onNext}>
+          <button
+            type="button"
+            className="ds-c-button ds-c-button--primary"
+            onClick={handleNext}
+            aria-describedby="assessment-overview"
+            aria-label={`Begin assessment for ${definition.capabilityAreaName}`}
+          >
             Begin Assessment →
           </button>
-        </div>
+        </nav>
       </div>
     </div>
   );

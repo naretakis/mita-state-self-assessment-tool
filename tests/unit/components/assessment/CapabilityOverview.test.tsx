@@ -252,10 +252,12 @@ describe('CapabilityOverview', () => {
     expect(h2Elements[1]).toHaveTextContent('Assessment Overview');
 
     // Check for proper button accessibility
-    const beginButton = screen.getByRole('button', { name: 'Begin Assessment →' });
+    const beginButton = screen.getByRole('button', {
+      name: 'Begin assessment for Provider Enrollment',
+    });
     expect(beginButton).toBeInTheDocument();
 
-    const previousButton = screen.getByRole('button', { name: '← Previous' });
+    const previousButton = screen.getByRole('button', { name: 'Go to previous capability' });
     expect(previousButton).toBeInTheDocument();
   });
 });

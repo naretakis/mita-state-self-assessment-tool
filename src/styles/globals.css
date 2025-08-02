@@ -1,4 +1,5 @@
 @import './cms-design-system.css';
+@import './responsive.css';
 
 :root {
   --primary-color: #0071bc;
