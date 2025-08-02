@@ -3,7 +3,7 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
-## [0.6.1] - 2025-02-01
+## [0.6.1] - 2025-08-01
 
 ### Added
 - **Comprehensive Error Handling System**: Implemented robust error handling throughout the assessment workflow
@@ -21,7 +21,7 @@ This changelog documents the development process of the MITA State Self-Assessme
 - **Storage Resilience**: Enhanced storage operations with better error detection and recovery
 - **User Experience**: Clear error messaging and recovery options prevent data loss and user frustration
 
-## [0.6.0] - 2025-01-31
+## [0.6.0] - 2025-08-01
 
 ### Assessment Workflow Implementation - Complete Feature
 - **Complete Assessment Workflow**: The guided assessment workflow is now fully implemented and functional, representing approximately 85-90% completion of the core assessment functionality
