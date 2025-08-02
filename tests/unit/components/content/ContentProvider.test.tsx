@@ -10,12 +10,14 @@ jest.mock('../../../../src/components/content/ContentLoader', () => {
         capabilities: [
           {
             id: 'test-capability',
-            name: 'Test Capability',
-            domainName: 'Test Domain',
-            domainDescription: 'Test Domain Description',
-            version: '1.0',
-            lastUpdated: '2025-06-01',
+            capabilityAreaName: 'Test Capability',
+            capabilityDomainName: 'Test Domain',
+            capabilityVersion: '1.0',
+            capabilityAreaCreated: '2025-06-01',
+            capabilityAreaLastUpdated: '2025-06-01',
             description: 'Test description',
+            domainDescription: 'Test Domain Description',
+            areaDescription: 'Test description',
             dimensions: {
               outcome: {
                 description: 'Outcome description',
@@ -81,8 +83,8 @@ jest.mock('../../../../src/components/content/ContentLoader', () => {
           if (id === 'test-capability') {
             return {
               id: 'test-capability',
-              name: 'Test Capability',
-              domainName: 'Test Domain',
+              capabilityAreaName: 'Test Capability',
+              capabilityDomainName: 'Test Domain',
             };
           }
           return null;
@@ -92,8 +94,8 @@ jest.mock('../../../../src/components/content/ContentLoader', () => {
             return [
               {
                 id: 'test-capability',
-                name: 'Test Capability',
-                domainName: 'Test Domain',
+                capabilityAreaName: 'Test Capability',
+                capabilityDomainName: 'Test Domain',
               },
             ];
           }
@@ -118,7 +120,7 @@ const TestComponent = () => {
     <div>
       <h1>Content Loaded</h1>
       <p>Total Capabilities: {capabilities.length}</p>
-      {capability && <p>Capability Name: {capability.name}</p>}
+      {capability && <p>Capability Name: {capability.capabilityAreaName}</p>}
       <p>Domain Capabilities: {domainCapabilities.length}</p>
     </div>
   );

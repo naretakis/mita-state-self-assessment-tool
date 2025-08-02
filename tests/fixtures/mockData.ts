@@ -61,7 +61,7 @@ export const mockUserData = {
 };
 
 // Export individual mock objects for easier testing
-export { mockDimensionAssessment, mockCapabilityAreaAssessment };
+export { mockCapabilityAreaAssessment, mockDimensionAssessment };
 
 // Mock capability definition
 export const mockCapabilityDefinition: CapabilityDefinition = {
@@ -72,6 +72,9 @@ export const mockCapabilityDefinition: CapabilityDefinition = {
   capabilityAreaCreated: '2025-06-01',
   capabilityAreaLastUpdated: '2025-06-05',
   description:
+    'Provider Enrollment encompasses the processes and systems used to register healthcare providers',
+  domainDescription: 'The Provider capability domain encompasses provider-related processes.',
+  areaDescription:
     'Provider Enrollment encompasses the processes and systems used to register healthcare providers',
   dimensions: {
     outcome: {

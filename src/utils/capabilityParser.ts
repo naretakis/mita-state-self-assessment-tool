@@ -1,6 +1,6 @@
-import { parseMarkdown, extractSections } from './markdownParser';
+import { extractSections, parseMarkdown } from './markdownParser';
 
-import type { CapabilityDefinition, DimensionDefinition, CapabilityFrontMatter } from '../types';
+import type { CapabilityDefinition, CapabilityFrontMatter, DimensionDefinition } from '../types';
 
 /**
  * Interface for capability dimensions (backward compatibility)
@@ -17,7 +17,20 @@ export interface CapabilityDimension extends DimensionDefinition {
 export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition {
   const { metadata, content } = parseMarkdown(markdown);
   const sections = extractSections(content);
-  const frontMatter = metadata as CapabilityFrontMatter;
+  // Map ContentMetadata to CapabilityFrontMatter
+  const frontMatter: CapabilityFrontMatter = {
+    capabilityDomain: (metadata as any).capabilityDomain || metadata.businessArea || '',
+    capabilityArea: (metadata as any).capabilityArea || metadata.title || '',
+    capabilityVersion: (metadata as any).capabilityVersion || metadata.version || '1.0',
+    capabilityAreaCreated:
+      (metadata as any).capabilityAreaCreated ||
+      metadata.lastUpdated ||
+      new Date().toISOString().split('T')[0],
+    capabilityAreaLastUpdated:
+      (metadata as any).capabilityAreaLastUpdated ||
+      metadata.lastUpdated ||
+      new Date().toISOString().split('T')[0],
+  };
 
   // Extract capability domain and area descriptions directly from the content
   let domainDescription = '';

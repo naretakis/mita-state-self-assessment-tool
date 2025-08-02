@@ -48,6 +48,17 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     console.error('Detailed error information:', errorDetails);
   }
 
+  componentDidUpdate(prevProps: ErrorBoundaryProps): void {
+    // Reset error state if children change after a retry
+    if (this.state.hasError && prevProps.children !== this.props.children) {
+      this.setState({
+        hasError: false,
+        error: undefined,
+        errorInfo: undefined,
+      });
+    }
+  }
+
   handleRetry = (): void => {
     this.setState(prevState => ({
       hasError: false,
@@ -115,7 +126,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
                 {canRetry && (
                   <Button
                     onClick={this.handleRetry}
-                    variation="primary"
+                    variation="solid"
                     className="ds-u-margin-right--2"
                   >
                     Try Again
@@ -124,13 +135,13 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
                 <Button
                   onClick={this.handleRefresh}
-                  variation={canRetry ? 'transparent' : 'primary'}
+                  variation={canRetry ? 'ghost' : 'solid'}
                   className="ds-u-margin-right--2"
                 >
                   Refresh Page
                 </Button>
 
-                <Button onClick={() => (window.location.href = '/')} variation="transparent">
+                <Button onClick={() => (window.location.href = '/')} variation="ghost">
                   Go to Home
                 </Button>
               </div>

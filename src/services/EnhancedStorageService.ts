@@ -1,4 +1,4 @@
-import type { Assessment, AssessmentSummary, AssessmentStatus, StorageManager } from '../types';
+import type { Assessment, AssessmentStatus, AssessmentSummary, StorageManager } from '../types';
 
 /**
  * Interface for storage options
@@ -294,7 +294,7 @@ export class EnhancedStorageService implements StorageManager {
     }
 
     try {
-      const { openDB } = await import('idb');
+      const { openDB, deleteDB } = await import('idb');
       const testDb = await openDB('__idb_test__', 1, {
         upgrade(db) {
           db.createObjectStore('test');
@@ -302,7 +302,7 @@ export class EnhancedStorageService implements StorageManager {
       });
 
       await testDb.close();
-      await testDb.delete();
+      await deleteDB('__idb_test__');
       return true;
     } catch {
       return false;
@@ -558,7 +558,25 @@ export class EnhancedStorageService implements StorageManager {
 
     try {
       const { openDB } = await import('idb');
-      const db = await openDB('mita-assessments', 1);
+      const db = await openDB('mita-assessments', 1, {
+        upgrade(db) {
+          if (!db.objectStoreNames.contains('assessments')) {
+            const store = db.createObjectStore('assessments', { keyPath: 'id' });
+            store.createIndex('updatedAt', 'updatedAt');
+          }
+
+          if (!db.objectStoreNames.contains('summaries')) {
+            db.createObjectStore('summaries', { keyPath: 'id' });
+          }
+        },
+      });
+
+      // Check if assessments store exists before trying to access it
+      if (!db.objectStoreNames.contains('assessments')) {
+        await db.close();
+        return null;
+      }
+
       const assessment = await db.get('assessments', id);
       await db.close();
 
@@ -579,7 +597,25 @@ export class EnhancedStorageService implements StorageManager {
 
     try {
       const { openDB } = await import('idb');
-      const db = await openDB('mita-assessments', 1);
+      const db = await openDB('mita-assessments', 1, {
+        upgrade(db) {
+          if (!db.objectStoreNames.contains('assessments')) {
+            const store = db.createObjectStore('assessments', { keyPath: 'id' });
+            store.createIndex('updatedAt', 'updatedAt');
+          }
+
+          if (!db.objectStoreNames.contains('summaries')) {
+            db.createObjectStore('summaries', { keyPath: 'id' });
+          }
+        },
+      });
+
+      // Check if summaries store exists before trying to access it
+      if (!db.objectStoreNames.contains('summaries')) {
+        await db.close();
+        return [];
+      }
+
       const summaries = await db.getAll('summaries');
       await db.close();
 
@@ -600,11 +636,28 @@ export class EnhancedStorageService implements StorageManager {
 
     try {
       const { openDB } = await import('idb');
-      const db = await openDB('mita-assessments', 1);
-      await db.delete('assessments', id);
-      await db.delete('summaries', id);
-      await db.close();
+      const db = await openDB('mita-assessments', 1, {
+        upgrade(db) {
+          if (!db.objectStoreNames.contains('assessments')) {
+            const store = db.createObjectStore('assessments', { keyPath: 'id' });
+            store.createIndex('updatedAt', 'updatedAt');
+          }
 
+          if (!db.objectStoreNames.contains('summaries')) {
+            db.createObjectStore('summaries', { keyPath: 'id' });
+          }
+        },
+      });
+
+      // Only delete if the stores exist
+      if (db.objectStoreNames.contains('assessments')) {
+        await db.delete('assessments', id);
+      }
+      if (db.objectStoreNames.contains('summaries')) {
+        await db.delete('summaries', id);
+      }
+
+      await db.close();
       return true;
     } catch (error) {
       console.error('Error deleting from IndexedDB:', error);

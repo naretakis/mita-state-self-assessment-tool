@@ -17,7 +17,8 @@ describe('ContentService', () => {
 
   beforeEach(() => {
     contentService = new ContentService('/content');
-    mockFetch.mockClear();
+    mockFetch.mockReset(); // Reset mock implementation, not just call history
+    console.warn = jest.fn(); // Suppress console.warn in tests
   });
 
   afterEach(() => {

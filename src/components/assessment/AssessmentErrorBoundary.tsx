@@ -166,18 +166,14 @@ class AssessmentErrorBoundary extends Component<
             )}
 
             <div className="ds-u-margin-top--3">
-              <Button
-                onClick={this.handleRetry}
-                variation="primary"
-                className="ds-u-margin-right--2"
-              >
+              <Button onClick={this.handleRetry} variation="solid" className="ds-u-margin-right--2">
                 Try Again
               </Button>
 
               {this.props.assessmentId && (
                 <Button
                   onClick={this.handleExportData}
-                  variation="transparent"
+                  variation="ghost"
                   disabled={this.state.isExporting}
                   className="ds-u-margin-right--2"
                 >
@@ -185,7 +181,7 @@ class AssessmentErrorBoundary extends Component<
                 </Button>
               )}
 
-              <Button onClick={() => (window.location.href = '/dashboard')} variation="transparent">
+              <Button onClick={() => (window.location.href = '/dashboard')} variation="ghost">
                 Return to Dashboard
               </Button>
             </div>

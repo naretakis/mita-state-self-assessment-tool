@@ -204,7 +204,7 @@ describe('ErrorBoundary', () => {
     const detailsElement = screen.getByText('Technical Details');
     fireEvent.click(detailsElement);
 
-    expect(screen.getByText('Error: Detailed test error')).toBeInTheDocument();
+    expect(screen.getByText('Detailed test error')).toBeInTheDocument();
   });
 
   it('renders custom fallback when provided', () => {
@@ -293,6 +293,6 @@ describe('ErrorBoundary', () => {
     const detailsElement = screen.getByText('Technical Details');
     fireEvent.click(detailsElement);
 
-    expect(screen.getByText('Error: Error without stack')).toBeInTheDocument();
+    expect(screen.getByText('Error without stack')).toBeInTheDocument();
   });
 });

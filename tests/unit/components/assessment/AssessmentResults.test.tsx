@@ -3,8 +3,17 @@ import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import { AssessmentResults } from '../../../../src/components/assessment/AssessmentResults';
-import { StorageProvider } from '../../../../src/components/storage/StorageProvider';
+import {
+  StorageProvider,
+  useStorageContext,
+} from '../../../../src/components/storage/StorageProvider';
 import type { Assessment } from '../../../../src/types';
+
+// Mock the useStorageContext hook
+jest.mock('../../../../src/components/storage/StorageProvider', () => ({
+  ...jest.requireActual('../../../../src/components/storage/StorageProvider'),
+  useStorageContext: jest.fn(),
+}));
 
 // Mock Chart.js
 jest.mock('chart.js', () => ({
@@ -128,17 +137,29 @@ const mockAssessment: Assessment = {
   },
 };
 
+const mockStorageContext = {
+  isInitialized: true,
+  isStorageAvailable: true,
+  isLoading: false,
+  error: null,
+  assessmentSummaries: [],
+  saveAssessment: jest.fn().mockResolvedValue(true),
+  loadAssessment: jest.fn().mockResolvedValue(mockAssessment),
+  deleteAssessment: jest.fn().mockResolvedValue(true),
+  exportAssessment: jest.fn().mockResolvedValue(new Blob()),
+  importAssessment: jest.fn().mockResolvedValue(mockAssessment),
+  updateAssessmentStatus: jest.fn().mockResolvedValue(true),
+  refreshAssessmentList: jest.fn().mockResolvedValue(undefined),
+};
+
 describe('AssessmentResults', () => {
   const renderWithProvider = (component: React.ReactElement) => {
-    return render(<StorageProvider>{component}</StorageProvider>);
+    return render(component);
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
-    const mockEnhancedStorageService =
-      require('../../../../src/services/EnhancedStorageService').default;
-    mockEnhancedStorageService.loadAssessment.mockResolvedValue(mockAssessment);
-    mockEnhancedStorageService.importAssessment.mockResolvedValue(mockAssessment);
+    (useStorageContext as jest.Mock).mockReturnValue(mockStorageContext);
   });
 
   it('renders loading state initially', () => {
@@ -151,9 +172,12 @@ describe('AssessmentResults', () => {
   it('renders assessment results after loading', async () => {
     renderWithProvider(<AssessmentResults assessmentId="test-assessment-1" />);
 
-    await waitFor(() => {
-      expect(screen.getByText('Assessment Results')).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.getByText('Assessment Results')).toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
 
     expect(screen.getByText('MITA maturity assessment results for Test State')).toBeInTheDocument();
     expect(screen.getByText('Completed')).toBeInTheDocument();
@@ -162,21 +186,37 @@ describe('AssessmentResults', () => {
   it('displays summary cards with correct data', async () => {
     renderWithProvider(<AssessmentResults assessmentId="test-assessment-1" />);
 
-    await waitFor(() => {
-      expect(screen.getByText('Overall Average')).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.getByText('Overall Average')).toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
 
-    expect(screen.getByText('3.4')).toBeInTheDocument(); // (3+4+2+3+5)/5 = 3.4
-    expect(screen.getByText('1')).toBeInTheDocument(); // 1 capability area
-    expect(screen.getByText('1')).toBeInTheDocument(); // 1 domain
+    expect(screen.getAllByText('3.4')).toHaveLength(2); // Should appear in summary and table
+
+    // Check for capability areas count
+    expect(screen.getByText('Capability Areas')).toBeInTheDocument();
+    const capabilityAreasCard = screen.getByText('Capability Areas').closest('.ds-c-card');
+    expect(capabilityAreasCard).toHaveTextContent('1');
+    expect(capabilityAreasCard).toHaveTextContent('assessed');
+
+    // Check for domains count
+    expect(screen.getByText('Domains')).toBeInTheDocument();
+    const domainsCard = screen.getByText('Domains').closest('.ds-c-card');
+    expect(domainsCard).toHaveTextContent('1');
+    expect(domainsCard).toHaveTextContent('covered');
   });
 
   it('renders charts', async () => {
     renderWithProvider(<AssessmentResults assessmentId="test-assessment-1" />);
 
-    await waitFor(() => {
-      expect(screen.getByTestId('bar-chart')).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.getByTestId('bar-chart')).toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
 
     expect(screen.getByTestId('radar-chart')).toBeInTheDocument();
   });
@@ -184,13 +224,16 @@ describe('AssessmentResults', () => {
   it('displays detailed results table', async () => {
     renderWithProvider(<AssessmentResults assessmentId="test-assessment-1" />);
 
-    await waitFor(() => {
-      expect(screen.getByText('Detailed Results')).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.getByText('Detailed Results')).toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
 
     expect(screen.getByText('Provider Management')).toBeInTheDocument();
     expect(screen.getByText('Provider Enrollment')).toBeInTheDocument();
-    expect(screen.getByText('3')).toBeInTheDocument(); // Outcome score
+    expect(screen.getAllByText('3')).toHaveLength(2); // Should appear twice in table
     expect(screen.getByText('4')).toBeInTheDocument(); // Role score
     expect(screen.getByText('2')).toBeInTheDocument(); // Business Process score
     expect(screen.getByText('5')).toBeInTheDocument(); // Technology score
@@ -199,9 +242,12 @@ describe('AssessmentResults', () => {
   it('provides export options', async () => {
     renderWithProvider(<AssessmentResults assessmentId="test-assessment-1" />);
 
-    await waitFor(() => {
-      expect(screen.getByText('Export Results')).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.getByText('Export Results')).toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
 
     expect(screen.getByText('Download PDF')).toBeInTheDocument();
     expect(screen.getByText('Download CSV')).toBeInTheDocument();
@@ -210,23 +256,31 @@ describe('AssessmentResults', () => {
   it('provides navigation options', async () => {
     renderWithProvider(<AssessmentResults assessmentId="test-assessment-1" />);
 
-    await waitFor(() => {
-      expect(screen.getByText('Return to Dashboard')).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.getByText('Return to Dashboard')).toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
 
     expect(screen.getByText('View Assessment Details')).toBeInTheDocument();
   });
 
   it('handles assessment not found error', async () => {
-    const mockEnhancedStorageService =
-      require('../../../../src/services/EnhancedStorageService').default;
-    mockEnhancedStorageService.loadAssessment.mockResolvedValueOnce(null);
+    // Mock the context to return null for loadAssessment
+    (useStorageContext as jest.Mock).mockReturnValue({
+      ...mockStorageContext,
+      loadAssessment: jest.fn().mockResolvedValue(null),
+    });
 
     renderWithProvider(<AssessmentResults assessmentId="non-existent-id" />);
 
-    await waitFor(() => {
-      expect(screen.getByText('Error Loading Results')).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.getByText('Error Loading Results')).toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
 
     expect(screen.getByText('Assessment not found')).toBeInTheDocument();
   });

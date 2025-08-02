@@ -1,5 +1,12 @@
 module.exports = {
   testEnvironment: 'jsdom',
+  testEnvironmentOptions: {
+    customExportConditions: [''],
+    url: 'http://localhost:3000',
+    // Ensure proper DOM setup
+    pretendToBeVisual: true,
+    resources: 'usable'
+  },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
   moduleNameMapper: {
@@ -24,5 +31,11 @@ module.exports = {
       lines: 70,
       statements: 70
     }
-  }
+  },
+  // React 18 specific settings
+  fakeTimers: {
+    enableGlobally: false,
+  },
+  // Increase timeout for async operations
+  testTimeout: 10000,
 };

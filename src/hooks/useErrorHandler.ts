@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 export interface ErrorInfo {
   type: 'storage' | 'network' | 'validation' | 'content' | 'unknown';
@@ -34,6 +34,9 @@ export function useErrorHandler(): ErrorHandlerState & ErrorHandlerActions {
     isRetrying: false,
     retryCount: 0,
   });
+
+  const stateRef = useRef(state);
+  stateRef.current = state;
 
   const categorizeError = useCallback((error: Error): ErrorInfo['type'] => {
     const message = error.message.toLowerCase();
@@ -135,11 +138,13 @@ export function useErrorHandler(): ErrorHandlerState & ErrorHandlerActions {
 
   const retry = useCallback(
     async (retryFn: () => Promise<void> | void) => {
-      if (!state.error?.recoverable) {
+      // Check current state using ref for synchronous access
+      if (!stateRef.current.error?.recoverable) {
         console.warn('Attempted to retry non-recoverable error');
         return;
       }
 
+      // Set isRetrying to true
       setState(prev => ({
         ...prev,
         isRetrying: true,
@@ -156,27 +161,29 @@ export function useErrorHandler(): ErrorHandlerState & ErrorHandlerActions {
         }));
       } catch (retryError) {
         // If retry fails, update the error and increment retry count
-        const newRetryCount = state.retryCount + 1;
-        const type = categorizeError(retryError as Error);
+        setState(prev => {
+          const newRetryCount = prev.retryCount + 1;
+          const type = categorizeError(retryError as Error);
 
-        setState(prev => ({
-          ...prev,
-          error: {
-            type,
-            message: (retryError as Error).message,
-            originalError: retryError as Error,
-            timestamp: new Date(),
-            context: prev.error?.context,
-            recoverable: isRecoverable(type, retryError as Error) && newRetryCount < 3, // Max 3 retries
-          },
-          isRetrying: false,
-          retryCount: newRetryCount,
-        }));
+          return {
+            ...prev,
+            error: {
+              type,
+              message: (retryError as Error).message,
+              originalError: retryError as Error,
+              timestamp: new Date(),
+              context: prev.error?.context,
+              recoverable: isRecoverable(type, retryError as Error) && newRetryCount < 3, // Max 3 retries
+            },
+            isRetrying: false,
+            retryCount: newRetryCount,
+          };
+        });
 
         console.error('Retry failed:', retryError);
       }
     },
-    [state.error?.recoverable, state.retryCount, categorizeError, isRecoverable]
+    [categorizeError, isRecoverable]
   );
 
   return {

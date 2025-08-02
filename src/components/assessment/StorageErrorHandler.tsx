@@ -194,7 +194,7 @@ const StorageErrorHandler: React.FC<StorageErrorHandlerProps> = ({
               <Button
                 key={index}
                 onClick={option.action}
-                variation={option.primary ? 'primary' : 'transparent'}
+                variation={option.primary ? 'solid' : 'ghost'}
                 disabled={option.disabled}
                 className="ds-u-margin-right--2 ds-u-margin-bottom--1"
               >

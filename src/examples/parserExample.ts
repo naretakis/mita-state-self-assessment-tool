@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { parseCapabilityMarkdown, loadCapabilityDefinitions } from '../utils/capabilityParser';
+import { loadCapabilityDefinitions, parseCapabilityMarkdown } from '../utils/capabilityParser';
 
 /**
  * Example demonstrating how to use the markdown parser
@@ -18,17 +18,17 @@ async function runParserExample() {
 
     console.log('Parsed capability:');
     console.log(`- ID: ${capability.id}`);
-    console.log(`- Name: ${capability.name}`);
-    console.log(`- Domain: ${capability.domainName}`);
-    console.log(`- Version: ${capability.version}`);
-    console.log(`- Last Updated: ${capability.lastUpdated}`);
+    console.log(`- Name: ${capability.capabilityAreaName}`);
+    console.log(`- Domain: ${capability.capabilityDomainName}`);
+    console.log(`- Version: ${capability.capabilityVersion}`);
+    console.log(`- Last Updated: ${capability.capabilityAreaLastUpdated}`);
     console.log(`- Description: ${capability.description.substring(0, 100)}...`);
 
     // Display outcome dimension details
     console.log('\nOutcome Dimension:');
     console.log(`- Description: ${capability.dimensions.outcome.description}`);
     console.log('- Assessment Questions:');
-    capability.dimensions.outcome.assessmentQuestions.forEach((q, i) => {
+    capability.dimensions.outcome.maturityAssessment.forEach((q, i) => {
       console.log(`  ${i + 1}. ${q}`);
     });
 
@@ -42,12 +42,15 @@ async function runParserExample() {
 
     // Example 2: Load all capability definitions from a directory
     console.log('\nExample 2: Loading all capability definitions from directory');
-    const capabilities = await loadCapabilityDefinitions(contentDir);
+    // Read all markdown files from the directory
+    const files = fs.readdirSync(contentDir).filter(file => file.endsWith('.md'));
+    const capabilityData = files.map(file => fs.readFileSync(path.join(contentDir, file), 'utf8'));
+    const capabilities = loadCapabilityDefinitions(capabilityData);
     console.log(`Loaded ${capabilities.length} capability definitions`);
 
     // Display summary of all loaded capabilities
     capabilities.forEach((cap, i) => {
-      console.log(`\nCapability ${i + 1}: ${cap.name} (${cap.domainName})`);
+      console.log(`\nCapability ${i + 1}: ${cap.capabilityAreaName} (${cap.capabilityDomainName})`);
     });
   } catch (error) {
     console.error('Error in parser example:', error);

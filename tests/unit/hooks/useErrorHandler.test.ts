@@ -5,6 +5,7 @@ import { useErrorHandler } from '../../../src/hooks/useErrorHandler';
 describe('useErrorHandler', () => {
   beforeEach(() => {
     console.error = jest.fn(); // Suppress console.error in tests
+    console.warn = jest.fn(); // Suppress console.warn in tests
   });
 
   afterEach(() => {
@@ -120,6 +121,7 @@ describe('useErrorHandler', () => {
     });
 
     expect(result.current.error).not.toBeNull();
+    expect(result.current.error?.recoverable).toBe(true);
 
     await act(async () => {
       await result.current.retry(mockRetryFn);
@@ -138,6 +140,8 @@ describe('useErrorHandler', () => {
     act(() => {
       result.current.setError(new Error('Initial error'));
     });
+
+    expect(result.current.error?.recoverable).toBe(true);
 
     await act(async () => {
       await result.current.retry(mockRetryFn);
@@ -164,7 +168,7 @@ describe('useErrorHandler', () => {
     });
 
     expect(mockRetryFn).not.toHaveBeenCalled();
-    expect(console.error).toHaveBeenCalledWith('Attempted to retry non-recoverable error');
+    expect(console.warn).toHaveBeenCalledWith('Attempted to retry non-recoverable error');
   });
 
   it('limits retry attempts to 3', async () => {
@@ -174,6 +178,8 @@ describe('useErrorHandler', () => {
     act(() => {
       result.current.setError(new Error('Recoverable error'));
     });
+
+    expect(result.current.error?.recoverable).toBe(true);
 
     // First retry
     await act(async () => {
@@ -199,7 +205,7 @@ describe('useErrorHandler', () => {
 
   it('sets isRetrying flag during retry', async () => {
     const { result } = renderHook(() => useErrorHandler());
-    let resolveRetry: () => void;
+    let resolveRetry: (() => void) | undefined;
     const mockRetryFn = jest.fn(
       () =>
         new Promise<void>(resolve => {
@@ -211,18 +217,29 @@ describe('useErrorHandler', () => {
       result.current.setError(new Error('Recoverable error'));
     });
 
-    const retryPromise = act(async () => {
-      await result.current.retry(mockRetryFn);
+    expect(result.current.error?.recoverable).toBe(true);
+
+    // Start the retry but don't await it yet
+    const retryPromise = result.current.retry(mockRetryFn);
+
+    // Check that isRetrying is set to true
+    await act(async () => {
+      // Give the state update a chance to process
+      await new Promise(resolve => setTimeout(resolve, 0));
     });
 
     expect(result.current.isRetrying).toBe(true);
 
     // Resolve the retry
     act(() => {
-      resolveRetry();
+      if (resolveRetry) {
+        resolveRetry();
+      }
     });
 
-    await retryPromise;
+    await act(async () => {
+      await retryPromise;
+    });
 
     expect(result.current.isRetrying).toBe(false);
   });
@@ -234,6 +251,8 @@ describe('useErrorHandler', () => {
     act(() => {
       result.current.setError(new Error('Recoverable error'));
     });
+
+    expect(result.current.error?.recoverable).toBe(true);
 
     await act(async () => {
       await result.current.retry(mockRetryFn);
@@ -251,6 +270,8 @@ describe('useErrorHandler', () => {
     act(() => {
       result.current.setError(new Error('Initial error'), originalContext);
     });
+
+    expect(result.current.error?.recoverable).toBe(true);
 
     await act(async () => {
       await result.current.retry(mockRetryFn);

@@ -2,12 +2,15 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { ContentService } from '../../services/ContentService';
 import enhancedStorageService from '../../services/EnhancedStorageService';
 
+import AssessmentErrorBoundary from './AssessmentErrorBoundary';
 import CapabilityOverview from './CapabilityOverview';
 import DimensionAssessment from './DimensionAssessment';
 import ProgressTracker from './ProgressTracker';
+import StorageErrorHandler from './StorageErrorHandler';
 
 import type {
   Assessment,

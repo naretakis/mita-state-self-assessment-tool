@@ -2,8 +2,8 @@
  * Utility for dynamic imports with proper TypeScript typing
  */
 
-import React, { lazy, Suspense } from 'react';
 import type { ComponentType, LazyExoticComponent } from 'react';
+import React, { lazy, Suspense } from 'react';
 
 /**
  * Dynamically import a component
@@ -29,7 +29,7 @@ export function LazyComponent<T>(
 ): JSX.Element {
   const { component, fallback = React.createElement('div', null, 'Loading...'), ...rest } = props;
 
-  return React.createElement(Suspense, { fallback }, React.createElement(component, rest));
+  return React.createElement(Suspense, { fallback }, React.createElement(component, rest as any));
 }
 
 /**

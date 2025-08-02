@@ -166,7 +166,7 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
   const description = descriptionMatch ? descriptionMatch[1].trim() : '';
 
   // Initialize dimensions
-  const dimensions: Record<string, DimensionDefinition> = {
+  const dimensions = {
     outcome: createEmptyDimension(),
     role: createEmptyDimension(),
     businessProcess: createEmptyDimension(),
@@ -503,6 +503,8 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
     capabilityAreaCreated: formatDate(frontMatter.capabilityAreaCreated),
     capabilityAreaLastUpdated: formatDate(frontMatter.capabilityAreaLastUpdated),
     description,
+    domainDescription: `The ${domainName} capability domain encompasses ${domainName.toLowerCase()}-related processes.`,
+    areaDescription: description,
     dimensions,
   };
 }

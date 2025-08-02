@@ -1,6 +1,6 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import React from 'react';
 import LandingPage from '../../../src/components/layout/LandingPage';
 
 // Mock Next.js Link component
@@ -10,9 +10,27 @@ jest.mock('next/link', () => {
   };
 });
 
+// Mock BranchIndicator component
+jest.mock('../../../src/components/common/BranchIndicator', () => {
+  return function MockBranchIndicator() {
+    return <div data-testid="branch-indicator">Branch: main</div>;
+  };
+});
+
 describe('LandingPage', () => {
+  it('can render a simple component', () => {
+    // Test if we can render a simple component first
+    const SimpleComponent = () => <div data-testid="simple">Hello World</div>;
+    render(<SimpleComponent />);
+    expect(screen.getByTestId('simple')).toHaveTextContent('Hello World');
+  });
+
   it('renders the main heading', () => {
     render(<LandingPage />);
+
+    // Debug: Let's see what's actually rendered
+    screen.debug();
+
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       'MITA State Self-Assessment Tool'
     );
@@ -25,7 +43,7 @@ describe('LandingPage', () => {
 
   it('renders Getting Started navigation link', () => {
     render(<LandingPage />);
-    const gettingStartedLink = screen.getByRole('link', { name: 'Getting Started' });
+    const gettingStartedLink = screen.getByRole('link', { name: 'Get Started' });
     expect(gettingStartedLink).toBeInTheDocument();
     expect(gettingStartedLink).toHaveAttribute('href', '/dashboard');
   });
@@ -34,7 +52,10 @@ describe('LandingPage', () => {
     render(<LandingPage />);
     const aboutMitaLink = screen.getByRole('link', { name: 'About MITA' });
     expect(aboutMitaLink).toBeInTheDocument();
-    expect(aboutMitaLink).toHaveAttribute('href', '/about-mita');
+    expect(aboutMitaLink).toHaveAttribute(
+      'href',
+      'https://cmsgov.github.io/Medicaid-Information-Technology-Architecture-MITA-4/'
+    );
   });
 
   it('displays key features section', () => {

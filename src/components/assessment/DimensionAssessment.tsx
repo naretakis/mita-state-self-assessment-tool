@@ -46,7 +46,7 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
     setFormData(updatedData);
     onUpdate(updatedData);
 
-    if (validationError && field === 'maturityLevel' && value > 0) {
+    if (validationError && field === 'maturityLevel' && Number(value) > 0) {
       setValidationError(null);
     }
   };

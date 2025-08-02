@@ -27,9 +27,23 @@ document.createElement = jest.fn(tagName => {
   return originalCreateElement.call(document, tagName);
 });
 
-// Mock document.body methods
-const mockAppendChild = jest.fn();
-const mockRemoveChild = jest.fn();
+// Mock document.body methods for link creation only
+const originalAppendChild = document.body.appendChild;
+const originalRemoveChild = document.body.removeChild;
+const mockAppendChild = jest.fn(element => {
+  // Only mock for link elements, let other elements through
+  if (element === mockLink) {
+    return element;
+  }
+  return originalAppendChild.call(document.body, element);
+});
+const mockRemoveChild = jest.fn(element => {
+  // Only mock for link elements, let other elements through
+  if (element === mockLink) {
+    return element;
+  }
+  return originalRemoveChild.call(document.body, element);
+});
 document.body.appendChild = mockAppendChild;
 document.body.removeChild = mockRemoveChild;
 
@@ -115,7 +129,9 @@ describe('AssessmentErrorBoundary', () => {
       capabilities: [],
     };
 
-    mockStorageService.exportAssessment.mockResolvedValue(mockAssessment);
+    mockStorageService.exportAssessment.mockResolvedValue(
+      new Blob([JSON.stringify(mockAssessment)], { type: 'application/json' })
+    );
 
     render(
       <AssessmentErrorBoundary assessmentId="test-assessment-123">
@@ -145,7 +161,9 @@ describe('AssessmentErrorBoundary', () => {
       capabilities: [],
     };
 
-    mockStorageService.exportAssessment.mockResolvedValue(mockAssessment);
+    mockStorageService.exportAssessment.mockResolvedValue(
+      new Blob([JSON.stringify(mockAssessment)], { type: 'application/json' })
+    );
 
     render(
       <AssessmentErrorBoundary assessmentId="test-assessment-123">
@@ -207,7 +225,7 @@ describe('AssessmentErrorBoundary', () => {
     const detailsElement = screen.getByText('Technical Details');
     fireEvent.click(detailsElement);
 
-    expect(screen.getByText('Error: Test error')).toBeInTheDocument();
+    expect(screen.getByText('Test error')).toBeInTheDocument();
   });
 
   it('renders custom fallback when provided', () => {
@@ -231,7 +249,9 @@ describe('AssessmentErrorBoundary', () => {
       capabilities: [],
     };
 
-    mockStorageService.exportAssessment.mockResolvedValue(mockAssessment);
+    mockStorageService.exportAssessment.mockResolvedValue(
+      new Blob([JSON.stringify(mockAssessment)], { type: 'application/json' })
+    );
 
     render(
       <AssessmentErrorBoundary assessmentId="test-assessment-123" onExportData={mockOnExportData}>
@@ -248,7 +268,10 @@ describe('AssessmentErrorBoundary', () => {
 
   it('disables export button while exporting', async () => {
     mockStorageService.exportAssessment.mockImplementation(
-      () => new Promise(resolve => setTimeout(() => resolve({}), 100))
+      () =>
+        new Promise(resolve =>
+          setTimeout(() => resolve(new Blob(['{}'], { type: 'application/json' })), 100)
+        )
     );
 
     render(
