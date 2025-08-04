@@ -129,7 +129,7 @@ function AssessmentCard({ assessment, onDelete, onExport }: AssessmentCardProps)
         <div className="ds-l-row ds-u-flex-wrap--wrap">
           <div className="ds-l-col--auto ds-u-margin-right--2 ds-u-margin-bottom--1">
             <Link
-              href={`/assessment/${assessment.id}`}
+              href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/assessment/${assessment.id}`}
               className="ds-c-button ds-c-button--primary ds-c-button--small"
             >
               {assessment.status === 'completed' ? 'View Assessment' : 'Continue Assessment'}
@@ -298,7 +298,7 @@ export function UserDashboard() {
             <div className="ds-l-row ds-u-flex-wrap--wrap">
               <div className="ds-l-col--auto ds-u-margin-right--2 ds-u-margin-bottom--2">
                 <Link
-                  href="/assessment/new"
+                  href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/assessment/new`}
                   className="ds-c-button ds-c-button--primary ds-c-button--big"
                 >
                   Begin New Assessment

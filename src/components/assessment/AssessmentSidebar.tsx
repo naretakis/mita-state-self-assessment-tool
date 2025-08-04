@@ -188,7 +188,8 @@ const AssessmentSidebar: React.FC<AssessmentSidebarProps> = React.memo(
     );
 
     const handleResultsClick = React.useCallback(() => {
-      const resultsUrl = `/assessment/${assessment.id}/results`;
+      const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+      const resultsUrl = `${basePath}/assessment/${assessment.id}/results`;
       window.location.href = resultsUrl;
     }, [assessment.id]);
 

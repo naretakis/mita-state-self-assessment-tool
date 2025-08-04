@@ -300,16 +300,17 @@ describe('AssessmentSidebar', () => {
   });
 
   describe('Results Button', () => {
-    it('opens results in new window when clicked', () => {
-      const mockOpen = jest.fn();
-      window.open = mockOpen;
+    it('navigates to results page when clicked', () => {
+      // Mock window.location.href
+      delete (window as any).location;
+      window.location = { href: '' } as any;
 
       render(<AssessmentSidebar {...defaultProps} />);
 
       const resultsButton = screen.getByText('View Results');
       fireEvent.click(resultsButton);
 
-      expect(mockOpen).toHaveBeenCalledWith('/assessment/test-assessment/results', '_blank');
+      expect(window.location.href).toBe('/assessment/test-assessment/results');
     });
   });
 
