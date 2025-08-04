@@ -21,13 +21,38 @@ For detailed project documentation, including architecture, workflows, and devel
 - **In-browser functionality**: Works entirely in the browser with local storage
 - **MITA NextGen Framework**: Full integration with the capability-based ORBIT dimensions
 - **Guided Assessment Workflow**: Step-by-step assessment process with capability overviews and dimension-specific forms
+- **Assessment Sidebar Navigation**: Industry-standard collapsible sidebar with capability progress tracking, direct section navigation, and mobile-responsive overlay design
 - **Interactive Maturity Level Selection**: Card-based selection interface with validation and supporting evidence collection
-- **Real-time Progress Tracking**: Visual progress indicators with auto-save functionality and completion status
+- **Real-time Progress Tracking**: Sticky header with completion percentage, save status indicators, and step-by-step progress visualization
 - **Comprehensive Results and Reporting**: Maturity score calculations, interactive charts, and detailed analysis
 - **Assessment Results Visualization**: Bar charts for overall scores and radar charts for ORBIT dimension comparisons
 - **Data Management**: Export/import functionality for assessment data portability
 - **Robust Error Handling**: Comprehensive error boundaries with data preservation and recovery options
 - **Multi-branch deployment**: Supports parallel development with isolated environments
+
+### Navigation & User Experience
+
+#### Assessment Header Features
+- **Sticky Header Design**: Always-visible header that stays at the top during assessment navigation
+- **Development Banner**: Prominent prototype status banner with links to feedback and documentation
+- **Dashboard Navigation**: Quick return to dashboard with keyboard shortcut support (Alt+D)
+- **Assessment Context**: Clear display of assessment name, system name, and current step information
+- **Progress Tracking**: Real-time completion percentage with step counter (e.g., "Step 3 of 15")
+- **Auto-Save Status**: Visual indicators showing "Saving...", "Saved [timestamp]", or "Not saved" states
+- **Mobile-Responsive**: Adaptive layout with touch-friendly controls and optimized mobile navigation
+- **Keyboard Shortcuts**: Alt+S to toggle sidebar, Alt+D for dashboard navigation
+
+#### Assessment Sidebar Features
+- **Capability-Based Navigation**: Organized by capability areas with expandable sections for ORBIT dimensions
+- **Progress Indicators**: Visual completion tracking with percentage bars for each capability area
+- **Direct Section Access**: Jump to any assessment section without sequential navigation requirements
+- **Collapsible Design**: Desktop sidebar can be collapsed to maximize content area with persistent state
+- **Mobile Overlay**: Transforms to full-screen overlay on mobile devices with backdrop and swipe gestures
+- **Status Indicators**: Visual icons showing completed (✓), current (●), and pending (○) states for each step
+- **Results Access**: Quick access to assessment results with keyboard shortcut (Alt+R)
+- **Touch Gestures**: Swipe left to close on mobile devices for intuitive navigation
+- **Keyboard Navigation**: Full keyboard accessibility with proper focus management and ARIA support
+- **Auto-Expansion**: Automatically expands the capability section containing the current step
 
 ## **Multi-branch deployment**: Supports three environments simultaneously:
   - Production (`main` branch): [https://naretakis.github.io/mita-state-self-assessment-tool/](https://naretakis.github.io/mita-state-self-assessment-tool/)
@@ -284,17 +309,20 @@ Based on comprehensive Kiro specifications, here's the current implementation st
 
 ### 🎉 **Core Functionality Complete (~80% Overall)**
 
-#### ✅ **Assessment Workflow** (90% Complete)
+#### ✅ **Assessment Workflow** (95% Complete)
 *Spec: `.kiro/specs/assessment-workflow/`*
 - ✅ Complete guided assessment workflow with step-by-step navigation
 - ✅ Assessment setup with domain/capability area selection
 - ✅ ORBIT dimension assessment forms with interactive maturity level selection
 - ✅ Progress tracking with visual indicators and auto-save (every 30 seconds)
 - ✅ Assessment state restoration and workflow navigation
+- ✅ **NEW**: Assessment sidebar navigation with direct section access and progress indicators
+- ✅ **NEW**: Responsive mobile navigation with overlay design
+- ✅ **NEW**: Industry-standard navigation patterns for efficient assessment editing
 - ✅ **NEW**: Comprehensive error handling with data preservation and recovery options
 - ✅ **NEW**: Storage error handling with fallback mechanisms and export capabilities
 - ✅ **NEW**: User-friendly error boundaries with retry functionality
-- 🚧 Accessibility improvements and responsive design needed
+- 🚧 Advanced accessibility validation needed
 
 #### ✅ **Data Visualization and Reporting** (90% Complete)
 *Spec: `.kiro/specs/data-visualization-and-reporting/`*
@@ -386,7 +414,7 @@ Based on comprehensive Kiro specifications, here's the current implementation st
 
 | Feature Area | Tasks Complete | Tasks Remaining | Completion % |
 |---|---|---|---|
-| **Assessment Workflow** | 18/20 | 2 | 90% |
+| **Assessment Workflow** | 19/20 | 1 | 95% |
 | **Data Visualization** | 8/12 | 4 | 67% |
 | **Storage Management** | 7/12 | 5 | 58% |
 | **User Dashboard** | 5/12 | 7 | 42% |
@@ -394,7 +422,7 @@ Based on comprehensive Kiro specifications, here's the current implementation st
 | **Deployment Infrastructure** | 11/12 | 1 | 92% |
 | **Accessibility & Performance** | 7/12 | 5 | 58% |
 | **Error Handling** | 9/12 | 3 | 75% |
-| **TOTAL** | **71/102** | **31** | **70%** |
+| **TOTAL** | **72/102** | **30** | **71%** |
 
 ### 🎯 **Current Status**
 
@@ -427,4 +455,4 @@ Based on comprehensive Kiro specifications, here's the current implementation st
 - **Development Workflow**: Improved pre-commit checks and documentation validation
 - **Architecture Updates**: Comprehensive error handling patterns documented
 
-*Last Updated: August 2, 2025 - Based on recent accessibility implementation and error handling achievements*
+*Last Updated: August 2, 2025 - Based on recent sidebar navigation implementation and user feedback integration*

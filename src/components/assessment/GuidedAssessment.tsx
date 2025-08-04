@@ -9,9 +9,10 @@ import { ContentService } from '../../services/ContentService';
 import enhancedStorageService from '../../services/EnhancedStorageService';
 
 import AssessmentErrorBoundary from './AssessmentErrorBoundary';
+import AssessmentHeader from './AssessmentHeader';
+import AssessmentSidebar from './AssessmentSidebar';
 import CapabilityOverview from './CapabilityOverview';
 import DimensionAssessment from './DimensionAssessment';
-import ProgressTracker from './ProgressTracker';
 import StorageErrorHandler from './StorageErrorHandler';
 
 import type {
@@ -49,6 +50,8 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const errorHandler = useErrorHandler();
 
   // Accessibility hooks
@@ -319,6 +322,27 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
   const currentCapability = getCurrentCapability();
   const currentDefinition = getCurrentCapabilityDefinition();
 
+  const getCurrentStepName = (): string => {
+    if (!currentStep || !currentDefinition) {
+      return '';
+    }
+
+    if (currentStep.type === 'overview') {
+      return `${currentDefinition.capabilityAreaName} - Overview`;
+    } else if (currentStep.dimension) {
+      const dimensionLabels = {
+        outcome: 'Outcomes',
+        role: 'Roles',
+        businessProcess: 'Business Process',
+        information: 'Information',
+        technology: 'Technology',
+      };
+      return `${currentDefinition.capabilityAreaName} - ${dimensionLabels[currentStep.dimension]}`;
+    }
+
+    return currentDefinition.capabilityAreaName;
+  };
+
   return (
     <AssessmentErrorBoundary
       assessmentId={assessmentId}
@@ -331,16 +355,41 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
         <LiveRegions />
 
         {/* Skip link for keyboard users */}
-        <a
-          href="#main-content"
-          className="ds-c-skip-nav"
-          onFocus={e => (e.target.style.position = 'static')}
-          onBlur={e => (e.target.style.position = 'absolute')}
-        >
+        <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
 
-        <div className="ds-l-container ds-u-padding-y--4">
+        <AssessmentHeader
+          assessmentName={assessment.stateName}
+          systemName={assessment.metadata?.systemName}
+          currentStep={getCurrentStepName()}
+          onOpenSidebar={() => setMobileSidebarOpen(true)}
+          saving={saving}
+          lastSaved={lastSaved}
+          completionPercentage={getCompletionPercentage()}
+          currentStepIndex={currentStepIndex}
+          totalSteps={steps.length}
+        />
+
+        <AssessmentSidebar
+          assessment={assessment}
+          capabilities={capabilities}
+          steps={steps}
+          currentStepIndex={currentStepIndex}
+          onNavigateToStep={navigateToStep}
+          isCollapsed={sidebarCollapsed}
+          onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+          isMobileOpen={mobileSidebarOpen}
+          onMobileToggle={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+        />
+
+        <div
+          className={`ds-l-container ds-u-padding-y--2 assessment-main-content ${
+            sidebarCollapsed
+              ? 'assessment-main-content--sidebar-collapsed'
+              : 'assessment-main-content--sidebar-expanded'
+          }`}
+        >
           {/* Show storage error handler if there's a storage error */}
           {errorHandler.isStorageError && errorHandler.error && (
             <StorageErrorHandler
@@ -364,15 +413,7 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
             </div>
           )}
 
-          <ProgressTracker
-            currentStep={currentStepIndex + 1}
-            totalSteps={steps.length}
-            completionPercentage={getCompletionPercentage()}
-            saving={saving}
-            lastSaved={lastSaved}
-          />
-
-          <main role="main" id="main-content" className="ds-u-margin-top--4" tabIndex={-1}>
+          <main role="main" id="main-content" className="ds-u-margin-top--2" tabIndex={-1}>
             {currentStep.type === 'overview' && currentCapability && currentDefinition && (
               <AssessmentErrorBoundary
                 assessmentId={assessmentId}

@@ -19,15 +19,15 @@ export function parseCapabilityMarkdown(markdown: string): CapabilityDefinition 
   const sections = extractSections(content);
   // Map ContentMetadata to CapabilityFrontMatter
   const frontMatter: CapabilityFrontMatter = {
-    capabilityDomain: (metadata as any).capabilityDomain || metadata.businessArea || '',
-    capabilityArea: (metadata as any).capabilityArea || metadata.title || '',
-    capabilityVersion: (metadata as any).capabilityVersion || metadata.version || '1.0',
+    capabilityDomain: (metadata.capabilityDomain as string) || metadata.businessArea || '',
+    capabilityArea: (metadata.capabilityArea as string) || metadata.title || '',
+    capabilityVersion: (metadata.capabilityVersion as string) || metadata.version || '1.0',
     capabilityAreaCreated:
-      (metadata as any).capabilityAreaCreated ||
+      (metadata.capabilityAreaCreated as string) ||
       metadata.lastUpdated ||
       new Date().toISOString().split('T')[0],
     capabilityAreaLastUpdated:
-      (metadata as any).capabilityAreaLastUpdated ||
+      (metadata.capabilityAreaLastUpdated as string) ||
       metadata.lastUpdated ||
       new Date().toISOString().split('T')[0],
   };

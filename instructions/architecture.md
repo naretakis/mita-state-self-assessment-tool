@@ -41,6 +41,8 @@ The MITA SS-A Tool follows a modern, browser-based architecture that emphasizes 
 
 * **AssessmentSetup**: Allows users to select capability domains and areas for assessment
 * **GuidedAssessment**: Main orchestration component managing step-by-step assessment workflow
+* **AssessmentHeader**: Sticky header component with progress tracking, save status, and navigation controls
+* **AssessmentSidebar**: Collapsible navigation sidebar with capability-based organization and direct section access
 * **CapabilityOverview**: Displays capability information before assessment begins
 * **DimensionAssessment**: Handles individual ORBIT dimension assessment with maturity level selection
 * **ProgressTracker**: Displays progress through the assessment with auto-save status
