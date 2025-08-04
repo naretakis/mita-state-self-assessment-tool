@@ -96,7 +96,7 @@ const AssessmentSidebar: React.FC<AssessmentSidebarProps> = React.memo(
         // Alt + R to open results
         if (event.altKey && event.key === 'r') {
           event.preventDefault();
-          window.open(`/assessment/${assessment.id}/results`, '_blank');
+          handleResultsClick();
         }
       };
 
@@ -188,25 +188,8 @@ const AssessmentSidebar: React.FC<AssessmentSidebarProps> = React.memo(
     );
 
     const handleResultsClick = React.useCallback(() => {
-      try {
-        const resultsUrl = `/assessment/${assessment.id}/results`;
-        const newWindow = window.open(resultsUrl, '_blank');
-
-        // Check if popup was blocked
-        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-          // Fallback: navigate in current window
-          console.warn('Popup blocked, navigating in current window');
-          window.location.href = resultsUrl;
-        }
-      } catch (error) {
-        console.error('Failed to open results:', error);
-        // Fallback: try direct navigation
-        try {
-          window.location.href = `/assessment/${assessment.id}/results`;
-        } catch (fallbackError) {
-          console.error('Fallback navigation also failed:', fallbackError);
-        }
-      }
+      const resultsUrl = `/assessment/${assessment.id}/results`;
+      window.location.href = resultsUrl;
     }, [assessment.id]);
 
     const toggleCapability = React.useCallback((capabilityId: string) => {
@@ -466,8 +449,8 @@ const AssessmentSidebar: React.FC<AssessmentSidebarProps> = React.memo(
                   type="button"
                   className="assessment-sidebar__results-btn"
                   onClick={handleResultsClick}
-                  aria-label="View assessment results in new window (Alt+R)"
-                  title="View assessment results in new window (Alt+R)"
+                  aria-label="View assessment results (Alt+R)"
+                  title="View assessment results (Alt+R)"
                 >
                   <span className="assessment-sidebar__results-icon" aria-hidden="true">
                     📊
