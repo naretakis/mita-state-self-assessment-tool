@@ -8,8 +8,8 @@ import type { CapabilityAreaAssessment, CapabilityDefinition } from '../../types
 interface CapabilityOverviewProps {
   capability: CapabilityAreaAssessment;
   definition: CapabilityDefinition;
-  onNext: () => void;
-  onPrevious?: () => void;
+  onNext: () => Promise<void>;
+  onPrevious?: () => Promise<void>;
 }
 
 const CapabilityOverview: React.FC<CapabilityOverviewProps> = ({
@@ -23,9 +23,9 @@ const CapabilityOverview: React.FC<CapabilityOverviewProps> = ({
   });
   const { announceSuccess } = useAnnouncements();
 
-  const handleNext = () => {
+  const handleNext = async () => {
     announceSuccess(`Starting assessment for ${definition.capabilityAreaName}`);
-    onNext();
+    await onNext();
   };
   return (
     <div className="ds-l-row ds-u-justify-content--center" ref={containerRef}>

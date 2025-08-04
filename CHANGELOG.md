@@ -3,6 +3,28 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
+## [0.6.6] - 2025-08-03
+
+### Enhanced
+- **Navigation Auto-Save**: Implemented automatic saving when users navigate between assessment sections
+  - Added auto-save functionality to Previous/Next button navigation
+  - Integrated auto-save with sidebar navigation links for direct section access
+  - Enhanced save status display in assessment header to reflect navigation-triggered saves
+  - Updated all navigation handlers to be async and await save completion before navigation
+  - Maintained seamless user experience with real-time save status indicators
+  - Ensures user progress is preserved during all navigation actions without additional user input
+
+### Technical Improvements
+- **Async Navigation Pattern**: Updated navigation functions throughout assessment workflow
+  - Modified `navigateToStep`, `handleNext`, and `handlePrevious` functions to be async
+  - Updated component interfaces for `AssessmentSidebar`, `CapabilityOverview`, and `DimensionAssessment`
+  - Enhanced error handling for navigation-triggered save operations
+  - Maintained backward compatibility with existing assessment workflow
+- **Code Quality**: All changes pass formatting, linting, tests, and build verification
+  - 192 tests passing with 100% success rate
+  - No breaking changes to existing functionality
+  - Minimal implementation focused on core requirement
+
 ## [0.6.5] - 2025-08-03
 
 ### Added

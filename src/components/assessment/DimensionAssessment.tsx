@@ -15,9 +15,9 @@ interface DimensionAssessmentProps {
   definition: CapabilityDefinition;
   dimension: OrbitDimension;
   onUpdate: (data: Partial<DimensionData>) => void;
-  onNext: () => void;
-  onPrevious: () => void;
-  onSave: () => void;
+  onNext: () => Promise<void>;
+  onPrevious: () => Promise<void>;
+  onSave: () => Promise<void>;
 }
 
 const DIMENSION_LABELS: Record<OrbitDimension, string> = {
@@ -92,14 +92,18 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
     return true;
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (validateForm()) {
-      onNext();
+      await onNext();
     }
   };
 
-  const _handleSave = () => {
-    onSave();
+  const handlePrevious = async () => {
+    await onPrevious();
+  };
+
+  const _handleSave = async () => {
+    await onSave();
   };
 
   const dimensionDefinition = definition.dimensions[dimension];
@@ -357,7 +361,7 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
           <button
             type="button"
             className="ds-c-button ds-c-button--transparent"
-            onClick={onPrevious}
+            onClick={handlePrevious}
             aria-label="Go to previous step"
           >
             ← Previous

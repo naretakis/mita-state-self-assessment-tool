@@ -27,7 +27,7 @@ interface AssessmentSidebarProps {
   /** Index of the currently active step */
   currentStepIndex: number;
   /** Callback function when user navigates to a different step */
-  onNavigateToStep: (stepIndex: number) => void;
+  onNavigateToStep: (stepIndex: number) => Promise<void>;
   /** Whether the sidebar is collapsed on desktop */
   isCollapsed: boolean;
   /** Callback to toggle sidebar collapse state */
@@ -178,8 +178,8 @@ const AssessmentSidebar: React.FC<AssessmentSidebarProps> = React.memo(
     }, [isMobile, isMobileOpen, onMobileToggle]);
 
     const handleStepNavigation = React.useCallback(
-      (stepIndex: number) => {
-        onNavigateToStep(stepIndex);
+      async (stepIndex: number) => {
+        await onNavigateToStep(stepIndex);
         if (isMobile && onMobileToggle) {
           onMobileToggle();
         }

@@ -209,8 +209,11 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
     setAssessment(updatedAssessment);
   };
 
-  const navigateToStep = (stepIndex: number) => {
+  const navigateToStep = async (stepIndex: number) => {
     if (stepIndex >= 0 && stepIndex < steps.length) {
+      // Save before navigating
+      await saveAssessment();
+
       setCurrentStepIndex(stepIndex);
 
       // Announce step change to screen readers
@@ -231,7 +234,7 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
 
   const handleNext = async () => {
     if (currentStepIndex < steps.length - 1) {
-      navigateToStep(currentStepIndex + 1);
+      await navigateToStep(currentStepIndex + 1);
     } else {
       // Assessment complete - save before navigating
       await saveAssessment();
@@ -239,9 +242,9 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
     }
   };
 
-  const handlePrevious = () => {
+  const handlePrevious = async () => {
     if (currentStepIndex > 0) {
-      navigateToStep(currentStepIndex - 1);
+      await navigateToStep(currentStepIndex - 1);
     }
   };
 
