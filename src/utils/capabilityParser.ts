@@ -95,23 +95,41 @@ function parseDimension(content: string): DimensionDefinition {
   const maturityAssessment = assessmentText ? [assessmentText] : [];
 
   // Extract maturity levels with more specific patterns
+  const level1Content = extractMaturityLevel(content, 'Level 1: Ad Hoc');
+  const level2Content = extractMaturityLevel(content, 'Level 2: Compliant');
+  const level3Content = extractMaturityLevel(content, 'Level 3: Efficient');
+  const level4Content = extractMaturityLevel(content, 'Level 4: Optimized');
+  const level5Content = extractMaturityLevel(content, 'Level 5: Pioneering');
+
   const maturityLevels = {
-    level1: extractMaturityLevel(content, 'Level 1: Initial'),
-    level2: extractMaturityLevel(content, 'Level 2: Repeatable'),
-    level3: extractMaturityLevel(content, 'Level 3: Defined'),
-    level4: extractMaturityLevel(content, 'Level 4: Managed'),
-    level5: extractMaturityLevel(content, 'Level 5: Optimized'),
+    level1: level1Content,
+    level2: level2Content,
+    level3: level3Content,
+    level4: level4Content,
+    level5: level5Content,
+  };
+
+  // Extract checkbox items for each level
+  const checkboxItems = {
+    level1: extractCheckboxItems(level1Content),
+    level2: extractCheckboxItems(level2Content),
+    level3: extractCheckboxItems(level3Content),
+    level4: extractCheckboxItems(level4Content),
+    level5: extractCheckboxItems(level5Content),
   };
 
   return {
     description,
     maturityAssessment,
     maturityLevels,
+    checkboxItems: Object.values(checkboxItems).some(items => items.length > 0)
+      ? checkboxItems
+      : undefined,
   };
 }
 
 /**
- * Extract maturity level content
+ * Extract maturity level content and checkboxes
  * @param content Dimension content
  * @param levelName Level name to extract (e.g., "Level 1: Initial")
  * @returns Level content
@@ -137,6 +155,23 @@ function extractMaturityLevel(content: string, levelName: string): string {
 
   const result = content.substring(contentStart, contentEnd).trim();
   return result;
+}
+
+/**
+ * Extract checkbox items from maturity level content
+ * @param content Level content
+ * @returns Array of checkbox items
+ */
+function extractCheckboxItems(content: string): string[] {
+  const checkboxRegex = /^\s*-\s*\[\s*\]\s*(.+)$/gm;
+  const items: string[] = [];
+  let match;
+
+  while ((match = checkboxRegex.exec(content)) !== null) {
+    items.push(match[1].trim());
+  }
+
+  return items;
 }
 
 /**

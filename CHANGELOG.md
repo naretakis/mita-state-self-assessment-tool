@@ -3,6 +3,55 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
+## [0.6.7] - 2025-08-05
+
+### Added
+- **Interactive Checkbox Functionality for Provider Capabilities**: Enhanced assessment workflow with comprehensive checkbox support for detailed maturity level evaluation
+  - Added checkbox items to all Provider domain capability areas (Provider Enrollment, Provider Management, Provider Termination)
+  - Implemented interactive checkbox rendering in DimensionAssessment component with proper state management
+  - Enhanced capability parser to extract and process checkbox items from markdown content
+  - Added checkbox state persistence and restoration across assessment sessions
+  - Created responsive checkbox layout with proper accessibility support and touch-friendly design
+  - Integrated checkbox completion tracking with overall assessment progress indicators
+
+### Enhanced
+- **Provider Domain Content Structure**: Significantly expanded Provider capability definitions with actionable assessment criteria
+  - Updated Provider Enrollment capability with 6 checkbox items per maturity level across all ORBIT dimensions
+  - Enhanced Provider Management capability with comprehensive checkbox-based evaluation criteria
+  - Improved Provider Termination capability with detailed checkbox items for thorough assessment
+  - Added specific, measurable criteria for each maturity level to improve assessment accuracy
+  - Enhanced content structure to support both descriptive text and actionable checkbox items
+
+### Technical Improvements
+- **Enhanced Type System**: Updated TypeScript interfaces to support checkbox functionality throughout the application
+  - Added `checkboxItems` property to `DimensionDefinition` interface with level-specific checkbox arrays
+  - Enhanced `DimensionAssessment` interface with `checkboxes` property for state management
+  - Updated capability parser with robust checkbox extraction logic and error handling
+  - Improved type safety for checkbox-related operations across all assessment components
+- **Improved Content Parsing**: Enhanced markdown parsing capabilities for complex content structures
+  - Added sophisticated checkbox item extraction from markdown using regex patterns
+  - Implemented proper handling of mixed content (text descriptions + checkbox items)
+  - Enhanced error handling for malformed content with graceful degradation
+  - Optimized parsing performance for large capability definition files
+
+### User Experience Enhancements
+- **Interactive Assessment Interface**: Created more engaging and detailed assessment experience
+  - Checkbox items appear dynamically when users select specific maturity levels
+  - Visual feedback for checkbox interactions with proper hover and focus states
+  - Responsive design ensuring checkbox usability across desktop, tablet, and mobile devices
+  - Integrated checkbox completion with overall progress tracking and save functionality
+- **Improved Assessment Accuracy**: Enhanced assessment precision with granular evaluation criteria
+  - Users can now evaluate specific aspects of their systems within each maturity level
+  - Checkbox-based assessment provides more detailed and actionable feedback
+  - Better alignment with MITA framework requirements through specific evaluation criteria
+
+### Quality Assurance
+- **Comprehensive Testing**: All changes pass complete quality gate validation
+  - 192 tests passing with 100% success rate across all test suites
+  - Code formatting, linting, type checking, and build verification all successful
+  - No breaking changes to existing assessment functionality
+  - Backward compatibility maintained for existing assessment data
+
 ## [0.6.6] - 2025-08-03
 
 ### Enhanced

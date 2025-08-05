@@ -72,6 +72,14 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
     }
   };
 
+  const handleCheckboxChange = (levelKey: string, itemIndex: number, checked: boolean) => {
+    const checkboxKey = `${levelKey}-${itemIndex}`;
+    const updatedCheckboxes = { ...formData.checkboxes, [checkboxKey]: checked };
+    const updatedData = { ...formData, checkboxes: updatedCheckboxes };
+    setFormData(updatedData);
+    onUpdate(updatedData);
+  };
+
   const validateForm = (): boolean => {
     if (formData.maturityLevel === 0) {
       const errorMessage = 'Please select a maturity level to continue.';
@@ -160,13 +168,16 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
                 <div className="maturity-level-grid">
                   {Object.entries(maturityLevels).map(([level, description]) => {
                     const levelNumber = parseInt(level.replace('level', ''));
+                    // The description contains the full content, we need to extract just the description part
+                    // and create the level name based on the content structure
                     const levelLabels = [
-                      'Initial',
-                      'Repeatable',
-                      'Defined',
-                      'Managed',
+                      'Ad Hoc',
+                      'Compliant',
+                      'Efficient',
                       'Optimized',
+                      'Pioneering',
                     ];
+                    const levelName = `Level ${levelNumber}: ${levelLabels[levelNumber - 1]}`;
                     const isSelected = formData.maturityLevel === levelNumber;
                     return (
                       <label
@@ -242,7 +253,7 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
                           }}
                         >
                           <strong style={{ fontSize: '1.125rem', color: '#212121' }}>
-                            Level {levelNumber}: {levelLabels[levelNumber - 1]}
+                            {levelName}
                           </strong>
                           {isSelected && (
                             <span style={{ color: '#00a91c', fontSize: '1.25rem' }}>✓</span>
@@ -253,9 +264,232 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
                           style={{ fontSize: '0.875rem', color: '#5c5c5c', lineHeight: '1.4' }}
                         >
                           {description && description.trim()
-                            ? description
+                            ? description.split('\n').map((line, idx) => {
+                                if (line.trim().startsWith('- [ ]')) {
+                                  return null; // Skip checkbox lines in description
+                                }
+                                return (
+                                  <div key={idx}>
+                                    {line}
+                                    {idx < description.split('\n').length - 1 && <br />}
+                                  </div>
+                                );
+                              })
                             : 'No description available'}
                         </div>
+                        {isSelected &&
+                          dimensionDefinition?.checkboxItems?.[
+                            `level${levelNumber}` as keyof typeof dimensionDefinition.checkboxItems
+                          ] && (
+                            <div style={{ marginTop: '1rem', paddingLeft: '0.5rem' }}>
+                              {dimensionDefinition.checkboxItems[
+                                `level${levelNumber}` as keyof typeof dimensionDefinition.checkboxItems
+                              ]?.map((item, itemIndex) => {
+                                const checkboxKey = `level${levelNumber}-${itemIndex}`;
+                                const isChecked = formData.checkboxes?.[checkboxKey] || false;
+                                return (
+                                  <label
+                                    key={itemIndex}
+                                    style={{
+                                      display: 'flex',
+                                      alignItems: 'flex-start',
+                                      gap: '0.5rem',
+                                      marginBottom: '0.5rem',
+                                      fontSize: '0.875rem',
+                                      cursor: 'pointer',
+                                      maxWidth: '100%',
+                                      wordWrap: 'break-word',
+                                    }}
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      checked={isChecked}
+                                      onChange={e =>
+                                        handleCheckboxChange(
+                                          `level${levelNumber}`,
+                                          itemIndex,
+                                          e.target.checked
+                                        )
+                                      }
+                                      style={{
+                                        marginTop: '0.125rem',
+                                        flexShrink: 0,
+                                        minWidth: '16px',
+                                        width: '16px',
+                                        height: '16px',
+                                      }}
+                                    />
+                                    <span
+                                      style={{
+                                        lineHeight: '1.4',
+                                        flex: '1',
+                                        wordBreak: 'break-word',
+                                        overflowWrap: 'break-word',
+                                        color: '#212121',
+                                      }}
+                                    >
+                                      {item}
+                                    </span>
+                                  </label>
+                                );
+                              })}
+                            </div>
+                          )}
+                        {isSelected && (
+                          <div
+                            style={{
+                              marginTop: '1.5rem',
+                              paddingTop: '1rem',
+                              borderTop: '1px solid #e6e6e6',
+                            }}
+                          >
+                            <h4
+                              style={{
+                                fontSize: '1rem',
+                                fontWeight: '600',
+                                marginBottom: '1rem',
+                                color: '#212121',
+                              }}
+                            >
+                              Maturity Details
+                            </h4>
+
+                            <div style={{ marginBottom: '1rem' }}>
+                              <label
+                                htmlFor={`evidence-${levelNumber}`}
+                                style={{
+                                  display: 'block',
+                                  fontSize: '0.875rem',
+                                  fontWeight: '600',
+                                  marginBottom: '0.25rem',
+                                  color: '#212121',
+                                }}
+                              >
+                                Supporting Evidence
+                              </label>
+                              <div
+                                style={{
+                                  fontSize: '0.75rem',
+                                  color: '#5c5c5c',
+                                  marginBottom: '0.5rem',
+                                }}
+                              >
+                                Provide specific examples, documentation, or evidence that supports
+                                your maturity level selection.
+                              </div>
+                              <textarea
+                                id={`evidence-${levelNumber}`}
+                                className="ds-c-field"
+                                rows={3}
+                                value={formData.evidence}
+                                onChange={e => handleInputChange('evidence', e.target.value)}
+                                placeholder="Describe the evidence that supports your selected maturity level..."
+                                style={{ fontSize: '0.875rem', width: '100%' }}
+                              />
+                            </div>
+
+                            <div style={{ marginBottom: '1rem' }}>
+                              <label
+                                htmlFor={`barriers-${levelNumber}`}
+                                style={{
+                                  display: 'block',
+                                  fontSize: '0.875rem',
+                                  fontWeight: '600',
+                                  marginBottom: '0.25rem',
+                                  color: '#212121',
+                                }}
+                              >
+                                Barriers and Challenges
+                              </label>
+                              <div
+                                style={{
+                                  fontSize: '0.75rem',
+                                  color: '#5c5c5c',
+                                  marginBottom: '0.5rem',
+                                }}
+                              >
+                                Describe any barriers, challenges, or limitations that prevent
+                                higher maturity levels.
+                              </div>
+                              <textarea
+                                id={`barriers-${levelNumber}`}
+                                className="ds-c-field"
+                                rows={3}
+                                value={formData.barriers}
+                                onChange={e => handleInputChange('barriers', e.target.value)}
+                                placeholder="Describe barriers or challenges you face..."
+                                style={{ fontSize: '0.875rem', width: '100%' }}
+                              />
+                            </div>
+
+                            <div style={{ marginBottom: '1rem' }}>
+                              <label
+                                htmlFor={`plans-${levelNumber}`}
+                                style={{
+                                  display: 'block',
+                                  fontSize: '0.875rem',
+                                  fontWeight: '600',
+                                  marginBottom: '0.25rem',
+                                  color: '#212121',
+                                }}
+                              >
+                                Advancement Plans
+                              </label>
+                              <div
+                                style={{
+                                  fontSize: '0.75rem',
+                                  color: '#5c5c5c',
+                                  marginBottom: '0.5rem',
+                                }}
+                              >
+                                Describe your plans or strategies for advancing to higher maturity
+                                levels.
+                              </div>
+                              <textarea
+                                id={`plans-${levelNumber}`}
+                                className="ds-c-field"
+                                rows={3}
+                                value={formData.plans}
+                                onChange={e => handleInputChange('plans', e.target.value)}
+                                placeholder="Describe your plans for improvement..."
+                                style={{ fontSize: '0.875rem', width: '100%' }}
+                              />
+                            </div>
+
+                            <div style={{ marginBottom: '0' }}>
+                              <label
+                                htmlFor={`notes-${levelNumber}`}
+                                style={{
+                                  display: 'block',
+                                  fontSize: '0.875rem',
+                                  fontWeight: '600',
+                                  marginBottom: '0.25rem',
+                                  color: '#212121',
+                                }}
+                              >
+                                Additional Notes
+                              </label>
+                              <div
+                                style={{
+                                  fontSize: '0.75rem',
+                                  color: '#5c5c5c',
+                                  marginBottom: '0.5rem',
+                                }}
+                              >
+                                Any additional context, considerations, or notes for this dimension.
+                              </div>
+                              <textarea
+                                id={`notes-${levelNumber}`}
+                                className="ds-c-field"
+                                rows={3}
+                                value={formData.notes}
+                                onChange={e => handleInputChange('notes', e.target.value)}
+                                placeholder="Additional notes or context..."
+                                style={{ fontSize: '0.875rem', width: '100%' }}
+                              />
+                            </div>
+                          </div>
+                        )}
                       </label>
                     );
                   })}
@@ -272,86 +506,6 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
               )}
             </div>
           </fieldset>
-
-          {formData.maturityLevel > 0 && (
-            <div className="ds-u-margin-bottom--6">
-              <h3 className="ds-h3 ds-u-margin-bottom--3">Assessment Details</h3>
-
-              <div className="ds-c-field ds-u-margin-bottom--4">
-                <label htmlFor="evidence" className="ds-c-label">
-                  Supporting Evidence
-                </label>
-                <div className="ds-c-field__hint">
-                  Provide specific examples, documentation, or evidence that supports your maturity
-                  level selection.
-                </div>
-                <textarea
-                  id="evidence"
-                  name="evidence"
-                  className="ds-c-field"
-                  rows={4}
-                  value={formData.evidence}
-                  onChange={e => handleInputChange('evidence', e.target.value)}
-                  placeholder="Describe the evidence that supports your selected maturity level..."
-                />
-              </div>
-
-              <div className="ds-c-field ds-u-margin-bottom--4">
-                <label htmlFor="barriers" className="ds-c-label">
-                  Barriers and Challenges
-                </label>
-                <div className="ds-c-field__hint">
-                  Describe any barriers, challenges, or limitations that prevent higher maturity
-                  levels.
-                </div>
-                <textarea
-                  id="barriers"
-                  name="barriers"
-                  className="ds-c-field"
-                  rows={3}
-                  value={formData.barriers}
-                  onChange={e => handleInputChange('barriers', e.target.value)}
-                  placeholder="Describe barriers or challenges you face..."
-                />
-              </div>
-
-              <div className="ds-c-field ds-u-margin-bottom--4">
-                <label htmlFor="plans" className="ds-c-label">
-                  Advancement Plans
-                </label>
-                <div className="ds-c-field__hint">
-                  Describe your plans or strategies for advancing to higher maturity levels.
-                </div>
-                <textarea
-                  id="plans"
-                  name="plans"
-                  className="ds-c-field"
-                  rows={3}
-                  value={formData.plans}
-                  onChange={e => handleInputChange('plans', e.target.value)}
-                  placeholder="Describe your plans for improvement..."
-                />
-              </div>
-
-              <div className="ds-c-field ds-u-margin-bottom--4">
-                <label htmlFor="notes" className="ds-c-label">
-                  Additional Notes
-                </label>
-                <div className="ds-c-field__hint">
-                  Any additional context, considerations, or notes for this dimension.
-                </div>
-                <textarea
-                  id="notes"
-                  name="notes"
-                  className="ds-c-field"
-                  rows={3}
-                  value={formData.notes}
-                  onChange={e => handleInputChange('notes', e.target.value)}
-                  placeholder="Additional notes or context..."
-                />
-              </div>
-            </div>
-          )}
         </form>
 
         <nav

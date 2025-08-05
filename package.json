@@ -1,6 +1,6 @@
 {
   "name": "mita-state-self-assessment-tool",
-  "version": "0.6.0",
+  "version": "0.6.7",
   "private": true,
   "description": "A modern tool for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework",
   "author": "CMS MITA Team",

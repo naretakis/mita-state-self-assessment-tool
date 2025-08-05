@@ -42,6 +42,7 @@ export interface DimensionAssessment {
   notes: string;
   targetMaturityLevel?: number;
   lastUpdated: string;
+  checkboxes?: Record<string, boolean>;
 }
 
 export interface CapabilityDefinition {
@@ -72,6 +73,13 @@ export interface DimensionDefinition {
     level3: string;
     level4: string;
     level5: string;
+  };
+  checkboxItems?: {
+    level1?: string[];
+    level2?: string[];
+    level3?: string[];
+    level4?: string[];
+    level5?: string[];
   };
 }
 

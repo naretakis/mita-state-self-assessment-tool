@@ -174,6 +174,7 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
                 plans: '',
                 notes: '',
                 lastUpdated: now,
+                checkboxes: {},
               },
               role: {
                 maturityLevel: 0,
@@ -182,6 +183,7 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
                 plans: '',
                 notes: '',
                 lastUpdated: now,
+                checkboxes: {},
               },
               businessProcess: {
                 maturityLevel: 0,
@@ -190,6 +192,7 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
                 plans: '',
                 notes: '',
                 lastUpdated: now,
+                checkboxes: {},
               },
               information: {
                 maturityLevel: 0,
@@ -198,6 +201,7 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
                 plans: '',
                 notes: '',
                 lastUpdated: now,
+                checkboxes: {},
               },
               technology: {
                 maturityLevel: 0,
@@ -206,6 +210,7 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
                 plans: '',
                 notes: '',
                 lastUpdated: now,
+                checkboxes: {},
               },
             },
           };
