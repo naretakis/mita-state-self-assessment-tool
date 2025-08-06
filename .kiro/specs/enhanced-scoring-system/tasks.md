@@ -1,17 +1,13 @@
 # Implementation Plan
 
 - [x] 1. Create Enhanced Scoring Service
-
-
-
-
   - Create a centralized scoring service that handles all partial credit calculations
   - Implement core scoring algorithm: base score + (checked boxes / total boxes)
   - Add methods for dimension scoring, capability scoring, and level advancement detection
   - Include comprehensive error handling for missing or invalid checkbox data
   - _Requirements: 1.1, 1.2, 1.3_
 
-- [ ] 2. Update Field Labels in DimensionAssessment Component
+- [x] 2. Update Field Labels in DimensionAssessment Component
   - Replace generic "Maturity Details" field labels with specific names
   - Update labels to: "Supporting Description", "Barriers and Challenges", "Outcomes-Based Advancement Plans", "Additional Notes"
   - Ensure labels are used consistently in form fields, accessibility attributes, and help text
@@ -24,33 +20,33 @@
   - Add accessibility support for screen readers to announce level advancement suggestions
   - _Requirements: 1.4, 1.5_
 
-- [ ] 4. Add Real-time Score Display to DimensionAssessment
-  - Integrate scoring service to calculate and display current dimension score
-  - Show score updates in real-time as users check/uncheck boxes
-  - Display both base maturity level and partial credit earned from checkboxes
-  - Add visual indicators showing score calculation breakdown
-  - _Requirements: 1.1, 1.2, 1.3_
-
-- [ ] 5. Enhance AssessmentResults with Partial Credit Scoring
+- [ ] 4. Enhance AssessmentResults with Partial Credit Scoring
   - Update calculateMaturityScores function to use enhanced scoring service
   - Modify score display to show both base scores and partial credit
   - Update charts and visualizations to reflect enhanced scoring calculations
   - Ensure backward compatibility with existing assessments that lack checkbox data
   - _Requirements: 2.1, 2.2_
 
-- [ ] 6. Add Expandable Detail Sections to AssessmentResults
-  - Implement collapsible sections for each capability area in results display
-  - Show detailed assessment responses and selected checkboxes when expanded
-  - Add clear indicators of which maturity level was selected for each dimension
-  - Include checkbox completion status and contribution to partial credit
-  - _Requirements: 2.3, 2.4, 2.5, 2.6_
-
-- [ ] 7. Enhance AssessmentSidebar with Real-time Scoring
+- [ ] 5. Enhance AssessmentSidebar with Real-time Scoring
   - Add score calculation and display logic to sidebar progress indicators
   - Show numerical scores next to completion checkmarks for completed ORBIT dimensions
   - Implement real-time score updates as users make changes during assessment
   - Format scores to two decimal places and ensure proper accessibility labeling
   - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
+
+  - [ ] 6. Add Real-time Score Display to DimensionAssessment
+  - Integrate scoring service to calculate and display current dimension score
+  - Show score updates in real-time as users check/uncheck boxes
+  - Display both base maturity level and partial credit earned from checkboxes
+  - Add visual indicators showing score calculation breakdown
+  - _Requirements: 1.1, 1.2, 1.3_
+
+- [ ] 7. Add Expandable Detail Sections to AssessmentResults
+  - Implement collapsible sections for each capability area in results display
+  - Show detailed assessment responses and selected checkboxes when expanded
+  - Add clear indicators of which maturity level was selected for each dimension
+  - Include checkbox completion status and contribution to partial credit
+  - _Requirements: 2.3, 2.4, 2.5, 2.6_
 
 - [ ] 8. Implement Data Management for Unselected Maturity Levels
   - Add visual indicators to show when data exists in unselected maturity levels

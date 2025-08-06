@@ -6,6 +6,12 @@
   "when": {
     "type": "manual"
   },
+  "autoTrigger": {
+    "enabled": true,
+    "description": "Automatically suggest running this check when files are modified",
+    "filePatterns": ["src/**/*.tsx", "src/**/*.ts", "*.md", "package.json"],
+    "suggestion": "💡 Consider running the Pre-Commit Check hook to validate code quality and documentation updates"
+  },
   "then": {
     "type": "askAgent",
     "prompt": "Perform a comprehensive pre-commit check based on our development workflow standards:\n\n**1. Code Quality Validation:**\n- Run `npm run check` to verify formatting, linting, type-checking, tests, and build\n- Confirm all quality gates pass before proceeding\n\n**2. Documentation Updates:**\n- Check if new features require README.md updates\n- Verify CHANGELOG.md has entries for significant changes with current date (format: ## [Version] - YYYY-MM-DD)\n- Ensure code examples in documentation are current\n\n**3. Spec Alignment:**\n- Verify changes align with relevant Kiro specs\n- Check if new functionality requires spec updates\n- Confirm implementation follows architectural guidelines\n\n**4. Testing Coverage:**\n- Ensure new code has appropriate test coverage\n- Verify all tests pass and are meaningful\n- Check for any missing edge case tests\n\n**5. Accessibility Compliance:**\n- Review UI changes for WCAG 2.1 AA compliance\n- Verify keyboard navigation and screen reader support\n- Check color contrast and semantic HTML usage\n\n**6. Performance Impact:**\n- Consider bundle size impact of changes\n- Verify no performance regressions introduced\n- Check for proper memoization and optimization\n\nProvide a go/no-go recommendation for committing these changes."

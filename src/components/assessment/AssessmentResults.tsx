@@ -1,19 +1,19 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
   BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Filler,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  RadialLinearScale,
   Title,
   Tooltip,
-  Legend,
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
 } from 'chart.js';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -194,7 +194,10 @@ function generatePDF(
         yPosition += 8;
 
         if (data.evidence) {
-          const evidenceLines = doc.splitTextToSize(`Evidence: ${data.evidence}`, 160);
+          const evidenceLines = doc.splitTextToSize(
+            `Supporting Description: ${data.evidence}`,
+            160
+          );
           doc.text(evidenceLines, 30, yPosition);
           yPosition += evidenceLines.length * 5;
         }

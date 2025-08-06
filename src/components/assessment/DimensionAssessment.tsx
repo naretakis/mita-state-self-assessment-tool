@@ -365,7 +365,7 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
                                   color: '#212121',
                                 }}
                               >
-                                Supporting Evidence
+                                Supporting Description
                               </label>
                               <div
                                 style={{
@@ -433,7 +433,7 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
                                   color: '#212121',
                                 }}
                               >
-                                Advancement Plans
+                                Outcomes-Based Advancement Plans
                               </label>
                               <div
                                 style={{

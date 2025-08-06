@@ -7,7 +7,7 @@ This changelog documents the development process of the MITA State Self-Assessme
 
 ### Enhanced
 - **Improved Field Labeling for Assessment Forms**: Updated maturity detail field labels to provide clearer guidance for state assessment coordinators
-  - Changed "Supporting Evidence" to "Supporting Attestation" to better align with MITA framework terminology
+  - Changed "Supporting Evidence" to "Supporting Description" to better align with MITA framework terminology
   - Updated "Advancement Plans" to "Outcomes-Based Advancement Plans" to emphasize results-oriented planning
   - Maintained existing labels for "Barriers and Challenges" and "Additional Notes" as they were already appropriately descriptive
   - Applied label updates consistently across assessment forms, accessibility attributes, and PDF export functionality
