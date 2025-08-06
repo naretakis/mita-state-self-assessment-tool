@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "name": "Auto Quality Check",
+  "description": "Automatically run quality checks when saving TypeScript/React files",
+  "version": "1",
+  "when": {
+    "type": "fileSave",
+    "filePatterns": ["src/**/*.tsx", "src/**/*.ts"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "npm run lint:fix && npm run format",
+    "description": "Auto-fix linting and formatting issues on save",
+    "successMessage": "✅ Code formatted and linted",
+    "errorMessage": "⚠️ Some issues couldn't be auto-fixed"
+  }
+}

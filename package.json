@@ -24,6 +24,8 @@
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css}\"",
     "check": "npm run format:check && npm run lint && npm run test && npm run build",
     "check:full": "npm run format:check && npm run lint && npm run test && npm run build && npm run docs:check",
+    "check:quick": "npm run format:check && npm run lint",
+    "fix": "npm run format && npm run lint:fix",
     "docs:check": "echo \"📚 Documentation check: Please ensure CHANGELOG.md and README.md are updated for any new features or changes\"",
     "export": "next export"
   },

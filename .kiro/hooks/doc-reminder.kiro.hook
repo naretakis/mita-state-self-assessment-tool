@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "Documentation Reminder",
+  "description": "Remind about documentation updates when modifying significant files",
+  "version": "1",
+  "when": {
+    "type": "fileSave",
+    "filePatterns": ["src/components/**/*.tsx", "src/services/**/*.ts", "package.json"]
+  },
+  "throttle": {
+    "enabled": true,
+    "intervalMinutes": 30,
+    "description": "Only show reminder once per 30 minutes to avoid spam"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "I've modified significant code files. Please:\n\n1. **Quick Review**: Scan the recent changes to determine if they represent:\n   - New features that need README updates\n   - Bug fixes that need CHANGELOG entries\n   - Breaking changes that need documentation\n\n2. **Documentation Check**: If updates are needed, help me:\n   - Update CHANGELOG.md with appropriate entries\n   - Modify README.md for new features\n   - Update any relevant instruction files\n\n3. **Provide Summary**: Give me a quick summary of what documentation updates (if any) are recommended.\n\nKeep this brief and actionable - just tell me what needs updating and offer to help with the updates."
+  }
+}
