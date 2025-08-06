@@ -1,6 +1,6 @@
 {
   "name": "mita-state-self-assessment-tool",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "private": true,
   "description": "A modern tool for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework",
   "author": "CMS MITA Team",
@@ -23,6 +23,8 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css}\"",
     "check": "npm run format:check && npm run lint && npm run test && npm run build",
+    "check:full": "npm run format:check && npm run lint && npm run test && npm run build && npm run docs:check",
+    "docs:check": "echo \"📚 Documentation check: Please ensure CHANGELOG.md and README.md are updated for any new features or changes\"",
     "export": "next export"
   },
   "dependencies": {

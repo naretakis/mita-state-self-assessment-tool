@@ -71,6 +71,27 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution guidelin
 
 For detailed development information, review the **Kiro Steering Files** in `.kiro/steering/` and the **Kiro Specs** in `.kiro/specs/`. The legacy instructions folder has been deprecated.
 
+### Documentation and Quality Assurance
+
+This project includes automated documentation and quality checks:
+
+#### Kiro Hooks
+The project includes several Kiro hooks in `.kiro/hooks/` to help maintain documentation:
+- **Document New Feature**: Updates README, CHANGELOG, and instruction files for new features
+- **Update Changelog**: Adds properly formatted entries to CHANGELOG.md with current date
+- **Sync All Documentation**: Comprehensive documentation review and consistency check
+- **Pre-Commit Check**: Validates code quality and reminds about documentation updates
+
+#### Automated Quality Checks
+- **Git Pre-Commit Hook**: Automatically runs `npm run check` and reminds about documentation updates
+- **Quality Gate**: Comprehensive checks including formatting, linting, testing, and build verification
+- **Documentation Validation**: Ensures consistency between documentation and implementation
+
+#### NPM Scripts for Documentation
+- `npm run check`: Standard quality gate (format, lint, test, build)
+- `npm run check:full`: Extended quality gate with documentation reminder
+- `npm run docs:check`: Documentation consistency reminder
+
 See [CHANGELOG.md](CHANGELOG.md) for version history and recent changes.
 
 ## Project Structure

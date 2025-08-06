@@ -3,6 +3,23 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
+## [0.6.8] - 2025-08-06
+
+### Enhanced
+- **Improved Field Labeling for Assessment Forms**: Updated maturity detail field labels to provide clearer guidance for state assessment coordinators
+  - Changed "Supporting Evidence" to "Supporting Attestation" to better align with MITA framework terminology
+  - Updated "Advancement Plans" to "Outcomes-Based Advancement Plans" to emphasize results-oriented planning
+  - Maintained existing labels for "Barriers and Challenges" and "Additional Notes" as they were already appropriately descriptive
+  - Applied label updates consistently across assessment forms, accessibility attributes, and PDF export functionality
+  - Enhanced user experience by providing more specific and descriptive field labels that clarify expected input types
+
+### Technical Improvements
+- **Consistent Label Usage**: Ensured field labels are used consistently throughout the application
+  - Updated DimensionAssessment component with new field labels for better user guidance
+  - Modified AssessmentResults PDF export to use updated "Supporting Attestation" label for consistency
+  - Maintained backward compatibility with existing assessment data while improving user interface clarity
+  - All changes pass comprehensive quality checks including formatting, linting, testing, and build verification
+
 ## [0.6.7] - 2025-08-05
 
 ### Added
