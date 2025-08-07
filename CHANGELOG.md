@@ -3,6 +3,39 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
+## [0.6.9] - 2025-08-07
+
+### Added
+- **Enhanced Scoring System with Real-time Updates**: Comprehensive scoring system that provides immediate feedback and accurate maturity calculations
+  - **Real-time Sidebar Scoring**: Assessment sidebar now displays dynamic scores that update instantly as users complete checkboxes
+  - **Checkbox Partial Credit**: Each completed checkbox within the selected maturity level adds 0.25 points to the base score
+  - **Visual Score Indicators**: Current dimensions show blue badges with pulse animation, completed dimensions show green badges
+  - **Enhanced Results Page**: Results page now displays comprehensive scoring with base score + partial credit breakdowns
+  - **Accurate Visualizations**: All charts and graphs reflect enhanced scores including checkbox contributions
+  - **Comprehensive Export Data**: PDF and CSV exports include enhanced scoring data with detailed breakdowns
+
+### Enhanced
+- **Assessment Results Display**: Significantly improved results page to show true enhanced scores throughout
+  - **Score Breakdown Cards**: Each capability shows base score, partial credit, and final enhanced score
+  - **Dimension Score Details**: ORBIT dimension cards display enhanced final scores with bonus indicators
+  - **Assessment Detail Badges**: Changed from showing base maturity levels to displaying final enhanced scores
+  - **PDF Export Enhancement**: PDF reports now show enhanced scores with bonus breakdowns instead of base levels only
+  - **Chart Data Accuracy**: Bar charts and radar charts now reflect enhanced scores for accurate visualization
+
+### Fixed
+- **Scoring Service Integration**: Resolved import and instantiation issues across all assessment components
+  - **AssessmentSidebar**: Fixed missing ScoringService import that was causing "scoringService is not defined" errors
+  - **AssessmentResults**: Updated to use proper ScoringService instantiation and ContentService integration
+  - **DimensionAssessment**: Resolved TypeScript type errors and import order issues
+  - **Consistent Scoring Logic**: All components now use the same enhanced scoring algorithm for consistency
+
+### Technical Improvements
+- **Enhanced Service Architecture**: Improved scoring service integration across the application
+  - **Singleton Pattern**: Implemented consistent ScoringService instantiation across all components
+  - **Type Safety**: Fixed TypeScript type mismatches and import issues
+  - **Error Handling**: Added proper fallback scoring for backward compatibility
+  - **Code Quality**: Resolved linting issues and improved import organization
+
 ## [0.6.8] - 2025-08-06
 
 ### Enhanced

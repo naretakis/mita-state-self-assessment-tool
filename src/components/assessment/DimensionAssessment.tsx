@@ -2,6 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { useAnnouncements } from '../../hooks/useAnnouncements';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
+import { ScoringService } from '../../services/ScoringService';
+
+// Create a singleton instance
+const scoringService = new ScoringService();
 
 import type {
   CapabilityAreaAssessment,
@@ -35,7 +39,7 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
   onUpdate,
   onNext,
   onPrevious,
-  onSave,
+  onSave: _onSave,
 }) => {
   const [formData, setFormData] = useState(capability.dimensions[dimension]);
   const [validationError, setValidationError] = useState<string | null>(null);
@@ -55,6 +59,9 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
       }
     },
   });
+
+  // Type assertion to fix the ref type mismatch
+  const divRef = containerRef as React.RefObject<HTMLDivElement>;
   const { announceError, announceSuccess } = useAnnouncements();
 
   useEffect(() => {
@@ -78,6 +85,26 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
     const updatedData = { ...formData, checkboxes: updatedCheckboxes };
     setFormData(updatedData);
     onUpdate(updatedData);
+  };
+
+  // Check if user should be prompted to advance to next maturity level
+  const shouldShowLevelAdvancement = () => {
+    if (!dimensionDefinition?.checkboxItems) {
+      return false;
+    }
+
+    const checkboxItems = dimensionDefinition.checkboxItems;
+    return scoringService.shouldPromptLevelAdvancement(formData, checkboxItems);
+  };
+
+  // Get the next maturity level name for the advancement prompt
+  const getNextLevelName = () => {
+    const levelLabels = ['Ad Hoc', 'Compliant', 'Efficient', 'Optimized', 'Pioneering'];
+    const nextLevel = formData.maturityLevel + 1;
+    if (nextLevel <= 5) {
+      return `Level ${nextLevel}: ${levelLabels[nextLevel - 1]}`;
+    }
+    return null;
   };
 
   const validateForm = (): boolean => {
@@ -110,15 +137,11 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
     await onPrevious();
   };
 
-  const _handleSave = async () => {
-    await onSave();
-  };
-
   const dimensionDefinition = definition.dimensions[dimension];
   const maturityLevels = dimensionDefinition?.maturityLevels;
 
   return (
-    <div className="ds-l-row ds-u-justify-content--center" ref={containerRef}>
+    <div className="ds-l-row ds-u-justify-content--center" ref={divRef}>
       <div className="ds-l-col--12 ds-l-lg-col--10">
         <header className="ds-u-margin-bottom--6">
           <h1 className="ds-display--1 ds-u-margin-bottom--2 ds-u-color--primary">
@@ -351,8 +374,23 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
                                 color: '#212121',
                               }}
                             >
-                              Maturity Details
+                              Maturity Details for {levelName}
                             </h4>
+                            <div
+                              style={{
+                                fontSize: '0.75rem',
+                                color: '#5c5c5c',
+                                marginBottom: '1rem',
+                                padding: '0.5rem',
+                                backgroundColor: '#f8f9fa',
+                                borderRadius: '4px',
+                                border: '1px solid #dee2e6',
+                              }}
+                            >
+                              <strong>Note:</strong> These details apply to your selected maturity
+                              level ({levelName}). Only checkboxes from your selected level
+                              contribute to your final score.
+                            </div>
 
                             <div style={{ marginBottom: '1rem' }}>
                               <label
@@ -506,6 +544,31 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
               )}
             </div>
           </fieldset>
+
+          {/* Level Advancement Prompt */}
+          {shouldShowLevelAdvancement() && getNextLevelName() && (
+            <div
+              className="ds-c-alert ds-c-alert--success ds-u-margin-bottom--4"
+              role="alert"
+              aria-live="polite"
+              aria-label="Level advancement suggestion"
+            >
+              <div className="ds-c-alert__body">
+                <h3 className="ds-c-alert__heading">🎉 Great Progress!</h3>
+                <p className="ds-c-alert__text ds-u-margin-bottom--2">
+                  You've completed all checkboxes for your current maturity level. Consider whether
+                  your organization might be ready for <strong>{getNextLevelName()}</strong>.
+                </p>
+                <p
+                  className="ds-c-alert__text ds-u-margin-bottom--0"
+                  style={{ fontSize: '0.875rem', color: '#5c5c5c' }}
+                >
+                  Review the {getNextLevelName()} description above to see if it better reflects
+                  your current capabilities.
+                </p>
+              </div>
+            </div>
+          )}
         </form>
 
         <nav

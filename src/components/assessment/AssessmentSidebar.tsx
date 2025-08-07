@@ -1,6 +1,11 @@
 import React from 'react';
 
+import { ScoringService } from '../../services/ScoringService';
+
 import type { Assessment, CapabilityDefinition, OrbitDimension } from '../../types';
+
+// Create a singleton instance
+const scoringService = new ScoringService();
 
 /**
  * Represents a single step in the assessment workflow
@@ -52,6 +57,38 @@ const DIMENSION_LABELS: Record<OrbitDimension, string> = {
   businessProcess: 'Business Process',
   information: 'Information',
   technology: 'Technology',
+};
+
+/**
+ * Calculate the enhanced score for a specific dimension
+ * @param dimensionData - The dimension assessment data
+ * @param capabilityDefinition - The capability definition containing checkbox items
+ * @param dimension - The ORBIT dimension
+ * @returns The calculated score or null if not completed
+ */
+const calculateDimensionScore = (
+  dimensionData: unknown,
+  capabilityDefinition: CapabilityDefinition | undefined,
+  dimension: OrbitDimension
+): number | null => {
+  try {
+    // Check if dimension is completed (has a maturity level > 0)
+    if (!dimensionData || !dimensionData.maturityLevel || dimensionData.maturityLevel === 0) {
+      return null;
+    }
+
+    // Get checkbox items for this dimension
+    const checkboxItems = capabilityDefinition?.dimensions?.[dimension]?.checkboxItems || {};
+
+    // Calculate enhanced score using the scoring service
+    const enhancedScore = scoringService.calculateDimensionScore(dimensionData, checkboxItems);
+
+    return enhancedScore.finalScore;
+  } catch (error) {
+    console.warn('Error calculating dimension score:', error);
+    // Fallback to basic maturity level
+    return dimensionData?.maturityLevel || null;
+  }
 };
 
 /**
@@ -416,28 +453,59 @@ const AssessmentSidebar: React.FC<AssessmentSidebarProps> = React.memo(
                             </li>
                           )}
 
-                          {group.dimensionSteps.map(({ dimension, stepIndex }) => (
-                            <li key={dimension} className="assessment-sidebar__step">
-                              <button
-                                type="button"
-                                className={`assessment-sidebar__step-button assessment-sidebar__step-button--${getStepStatus(stepIndex)}`}
-                                onClick={() => handleStepNavigation(stepIndex)}
-                                aria-current={currentStepIndex === stepIndex ? 'step' : undefined}
-                                aria-label={`${DIMENSION_LABELS[dimension]} dimension - ${getStepStatus(stepIndex)} - Navigate to step ${stepIndex + 1}`}
-                              >
-                                <span className="assessment-sidebar__step-icon">
-                                  {getStepStatus(stepIndex) === 'completed'
-                                    ? '✓'
-                                    : getStepStatus(stepIndex) === 'current'
-                                      ? '●'
-                                      : '○'}
-                                </span>
-                                <span className="assessment-sidebar__step-label">
-                                  {DIMENSION_LABELS[dimension]}
-                                </span>
-                              </button>
-                            </li>
-                          ))}
+                          {group.dimensionSteps.map(({ dimension, stepIndex }) => {
+                            const stepStatus = getStepStatus(stepIndex);
+                            const assessmentCapability = assessment.capabilities.find(
+                              cap => cap.id === group.capability.id
+                            );
+                            const dimensionData = assessmentCapability?.dimensions?.[dimension];
+
+                            // Calculate score for completed dimensions and current dimension (real-time)
+                            const dimensionScore =
+                              stepStatus === 'completed' || stepStatus === 'current'
+                                ? calculateDimensionScore(
+                                    dimensionData,
+                                    group.capability,
+                                    dimension
+                                  )
+                                : null;
+
+                            return (
+                              <li key={dimension} className="assessment-sidebar__step">
+                                <button
+                                  type="button"
+                                  className={`assessment-sidebar__step-button assessment-sidebar__step-button--${stepStatus}`}
+                                  onClick={() => handleStepNavigation(stepIndex)}
+                                  aria-current={currentStepIndex === stepIndex ? 'step' : undefined}
+                                  aria-label={`${DIMENSION_LABELS[dimension]} dimension - ${stepStatus}${dimensionScore ? ` - Score: ${dimensionScore.toFixed(2)}` : ''} - Navigate to step ${stepIndex + 1}`}
+                                >
+                                  <span className="assessment-sidebar__step-icon">
+                                    {stepStatus === 'completed'
+                                      ? '✓'
+                                      : stepStatus === 'current'
+                                        ? '●'
+                                        : '○'}
+                                  </span>
+                                  <span className="assessment-sidebar__step-label">
+                                    {DIMENSION_LABELS[dimension]}
+                                  </span>
+                                  {dimensionScore !== null && (
+                                    <span
+                                      className={`assessment-sidebar__step-score ${
+                                        stepStatus === 'current'
+                                          ? 'assessment-sidebar__step-score--current'
+                                          : ''
+                                      }`}
+                                      aria-label={`${stepStatus === 'current' ? 'Current score: ' : 'Score: '}${dimensionScore.toFixed(2)} out of 5`}
+                                      title={`${stepStatus === 'current' ? 'Current score: ' : 'Score: '}${dimensionScore.toFixed(2)} out of 5`}
+                                    >
+                                      {dimensionScore.toFixed(2)}
+                                    </span>
+                                  )}
+                                </button>
+                              </li>
+                            );
+                          })}
                         </ul>
                       )}
                     </li>

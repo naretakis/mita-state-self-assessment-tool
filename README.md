@@ -24,7 +24,8 @@ For detailed project documentation, including architecture, workflows, and devel
 - **Assessment Sidebar Navigation**: Industry-standard collapsible sidebar with capability progress tracking, direct section navigation, and mobile-responsive overlay design
 - **Interactive Maturity Level Selection**: Card-based selection interface with validation, supporting evidence collection, and detailed checkbox-based evaluation criteria
 - **Real-time Progress Tracking**: Sticky header with completion percentage, save status indicators, and step-by-step progress visualization
-- **Comprehensive Results and Reporting**: Maturity score calculations, interactive charts, and detailed analysis
+- **Enhanced Scoring System**: Advanced maturity score calculations with checkbox partial credit, real-time score updates, and comprehensive scoring breakdown
+- **Comprehensive Results and Reporting**: Enhanced maturity score calculations, interactive charts, and detailed analysis with partial credit visualization
 - **Assessment Results Visualization**: Bar charts for overall scores and radar charts for ORBIT dimension comparisons
 - **Data Management**: Export/import functionality for assessment data portability
 - **Robust Error Handling**: Comprehensive error boundaries with data preservation and recovery options
@@ -44,10 +45,27 @@ For detailed project documentation, including architecture, workflows, and devel
 
 #### Assessment Sidebar Features
 - **Capability-Based Navigation**: Organized by capability areas with expandable sections for ORBIT dimensions
+- **Real-time Score Display**: Dynamic maturity scores that update instantly as users complete checkboxes
+- **Enhanced Scoring Visualization**: Shows base maturity level scores plus checkbox bonus points with visual indicators
 - **Progress Indicators**: Visual completion tracking with percentage bars for each capability area
 - **Direct Section Access**: Jump to any assessment section without sequential navigation requirements
 - **Collapsible Design**: Desktop sidebar can be collapsed to maximize content area with persistent state
 - **Mobile Overlay**: Transforms to full-screen overlay on mobile devices with backdrop and swipe gestures
+
+### Enhanced Scoring System
+
+#### Real-time Score Calculation
+- **Base Maturity Scores**: Traditional 1-5 maturity level scoring as the foundation
+- **Checkbox Partial Credit**: Additional 0.25 points per completed checkbox within the selected maturity level
+- **Dynamic Updates**: Scores update instantly in the sidebar as users interact with checkboxes
+- **Visual Feedback**: Current dimension highlighted with blue badges and pulse animation
+- **Completion Indicators**: Green badges for completed dimensions with final enhanced scores
+
+#### Comprehensive Results Display
+- **Enhanced Score Breakdown**: Results page shows base score + partial credit = final score
+- **Detailed Dimension Analysis**: Each ORBIT dimension displays enhanced scores with bonus indicators
+- **Interactive Visualizations**: Charts and graphs reflect true enhanced scores, not just base maturity levels
+- **Export Integration**: PDF and CSV exports include enhanced scoring data with detailed breakdowns
 - **Status Indicators**: Visual icons showing completed (✓), current (●), and pending (○) states for each step
 - **Results Access**: Quick access to assessment results with keyboard shortcut (Alt+R)
 - **Touch Gestures**: Swipe left to close on mobile devices for intuitive navigation
