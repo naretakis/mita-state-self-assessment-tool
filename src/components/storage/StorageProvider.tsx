@@ -1,10 +1,10 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 
 import enhancedStorageService from '../../services/EnhancedStorageService';
 
-import type { Assessment, AssessmentSummary, AssessmentStatus } from '../../types';
+import type { Assessment, AssessmentStatus, AssessmentSummary } from '../../types';
 
 interface StorageContextType {
   isInitialized: boolean;
@@ -84,13 +84,12 @@ export function StorageProvider({ children }: StorageProviderProps) {
   const loadAssessment = async (id: string): Promise<Assessment | null> => {
     try {
       setError(null);
-      setIsLoading(true);
+      // Don't set global loading state for individual assessment loads
+      // This prevents unnecessary re-renders across the app
       return await enhancedStorageService.loadAssessment(id);
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to load assessment'));
       return null;
-    } finally {
-      setIsLoading(false);
     }
   };
 
