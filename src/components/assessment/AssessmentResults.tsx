@@ -132,23 +132,23 @@ function generateCSV(assessment: Assessment, scores: MaturityScore[]): string {
     'Domain',
     'Capability Area',
     'Overall Score',
-    'Base Score',
-    'Partial Credit',
+    'Average Maturity Level',
+    'Checkbox Bonus',
     'Outcome Final',
-    'Outcome Base',
-    'Outcome Partial',
+    'Outcome Level',
+    'Outcome Bonus',
     'Role Final',
-    'Role Base',
-    'Role Partial',
+    'Role Level',
+    'Role Bonus',
     'Business Process Final',
-    'Business Process Base',
-    'Business Process Partial',
+    'Business Process Level',
+    'Business Process Bonus',
     'Information Final',
-    'Information Base',
-    'Information Partial',
+    'Information Level',
+    'Information Bonus',
     'Technology Final',
-    'Technology Base',
-    'Technology Partial',
+    'Technology Level',
+    'Technology Bonus',
   ];
   const rows = scores.map(score => [
     score.domain,
@@ -216,8 +216,8 @@ function generatePDF(
         'Domain',
         'Capability Area',
         'Overall',
-        'Base',
-        'Partial',
+        'Avg Level',
+        'Bonus',
         'Outcome',
         'Role',
         'Business Process',
@@ -671,8 +671,8 @@ export function AssessmentResults({ assessmentId }: AssessmentResultsProps) {
                                     marginBottom: '0.5rem',
                                   }}
                                 >
-                                  <span>Base Score:</span>
-                                  <strong>{score.baseScore.toFixed(2)}</strong>
+                                  <span>Average Maturity Level:</span>
+                                  <strong>{score.baseScore.toFixed(1)}</strong>
                                 </div>
                                 <div
                                   style={{
@@ -681,7 +681,7 @@ export function AssessmentResults({ assessmentId }: AssessmentResultsProps) {
                                     marginBottom: '0.5rem',
                                   }}
                                 >
-                                  <span>Partial Credit:</span>
+                                  <span>Checkbox Bonus:</span>
                                   <strong
                                     className={score.partialCredit > 0 ? 'ds-u-color--success' : ''}
                                   >

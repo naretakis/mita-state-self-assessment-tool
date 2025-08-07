@@ -205,7 +205,7 @@ export class ScoringService {
         capabilityArea: capability.capabilityAreaName,
         domain: capability.capabilityDomainName,
         overallScore: Math.round(overallScore * 100) / 100,
-        baseScore: Math.round(baseScore * 100) / 100,
+        baseScore: Math.round(baseScore * 100) / 100, // Keep as calculated average for now
         partialCredit: Math.round(partialCredit * 100) / 100,
         dimensionScores,
       };
