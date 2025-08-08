@@ -64,7 +64,7 @@ export class PerformanceOptimizer {
       // Rough estimation based on JSON string length
       const jsonString = JSON.stringify(data);
       return jsonString.length * 2; // Account for Unicode and processing overhead
-    } catch (error) {
+    } catch {
       // Fallback estimation
       return this.estimateObjectSize(data);
     }
@@ -319,14 +319,14 @@ export class PerformanceOptimizer {
           size += 4;
         } else if (current && typeof current === 'object') {
           for (const key in current) {
-            if (current.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(current, key)) {
               size += key.length * 2;
               stack.push(current[key]);
             }
           }
         }
       }
-    } catch (error) {
+    } catch {
       // Fallback for circular references
       size = 1024 * 1024; // 1MB estimate
     }
@@ -359,7 +359,7 @@ export class PerformanceOptimizer {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
-  private static async downloadWithWindow(blob: Blob, filename: string): Promise<void> {
+  private static async downloadWithWindow(blob: Blob, _filename: string): Promise<void> {
     const url = URL.createObjectURL(blob);
     const newWindow = window.open(url, '_blank');
 

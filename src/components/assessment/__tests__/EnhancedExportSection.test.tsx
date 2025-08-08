@@ -34,42 +34,46 @@ describe('EnhancedExportSection', () => {
   it('should render export section with title', () => {
     render(<EnhancedExportSection assessment={mockAssessment} />);
 
-    expect(screen.getByText('Export Assessment Results')).toBeInTheDocument();
+    expect(screen.getByText('Export')).toBeInTheDocument();
   });
 
-  it('should render export button', () => {
+  it('should render direct export buttons', () => {
     render(<EnhancedExportSection assessment={mockAssessment} />);
 
-    expect(screen.getByTestId('export-button')).toBeInTheDocument();
-    expect(screen.getByText('Export Assessment')).toBeInTheDocument();
+    expect(screen.getByText('PDF')).toBeInTheDocument();
+    expect(screen.getByText('CSV')).toBeInTheDocument();
+    expect(screen.getByText('JSON')).toBeInTheDocument();
+    expect(screen.getByText('Markdown')).toBeInTheDocument();
   });
 
   it('should display information about enhanced features', () => {
     render(<EnhancedExportSection assessment={mockAssessment} />);
 
     expect(screen.getByText(/enhanced scoring/i)).toBeInTheDocument();
-    expect(screen.getByText(/comprehensive metadata/i)).toBeInTheDocument();
+    expect(screen.getByText(/metadata/i)).toBeInTheDocument();
   });
 
   it('should display available formats', () => {
     render(<EnhancedExportSection assessment={mockAssessment} />);
 
-    expect(screen.getByText(/PDF:/)).toBeInTheDocument();
-    expect(screen.getByText(/CSV:/)).toBeInTheDocument();
-    expect(screen.getByText(/Markdown:/)).toBeInTheDocument();
-    expect(screen.getByText(/JSON:/)).toBeInTheDocument();
+    expect(screen.getByText('PDF')).toBeInTheDocument();
+    expect(screen.getByText('CSV')).toBeInTheDocument();
+    expect(screen.getByText('Markdown')).toBeInTheDocument();
+    expect(screen.getByText('JSON')).toBeInTheDocument();
   });
 
-  it("should display what's new section", () => {
+  it('should display direct export buttons', () => {
     render(<EnhancedExportSection assessment={mockAssessment} />);
 
-    expect(screen.getByText("What's New")).toBeInTheDocument();
-    expect(screen.getByText(/Enhanced Features:/)).toBeInTheDocument();
+    expect(screen.getByText('PDF')).toBeInTheDocument();
+    expect(screen.getByText('CSV')).toBeInTheDocument();
+    expect(screen.getByText('JSON')).toBeInTheDocument();
+    expect(screen.getByText('Markdown')).toBeInTheDocument();
   });
 
-  it('should display export format details in expandable section', () => {
+  it('should display export description', () => {
     render(<EnhancedExportSection assessment={mockAssessment} />);
 
-    expect(screen.getByText('Export Format Details')).toBeInTheDocument();
+    expect(screen.getByText(/All exports include complete assessment data/)).toBeInTheDocument();
   });
 });

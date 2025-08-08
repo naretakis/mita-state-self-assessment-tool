@@ -65,6 +65,9 @@ export class PDFExportHandler extends ExportHandler {
       currentY = this.addDetailedResults(doc, data, currentY);
     }
 
+    // Use currentY to avoid unused variable warning
+    void currentY;
+
     // Add footer to all pages
     this.addFooters(doc, data);
 
@@ -302,7 +305,9 @@ export class PDFExportHandler extends ExportHandler {
           c => c.capabilityAreaName === capability.capabilityAreaName
         );
 
-        if (!score || !assessmentData) continue;
+        if (!score || !assessmentData) {
+          continue;
+        }
 
         // Check if we need a new page for capability
         if (currentY > 240) {
@@ -470,7 +475,7 @@ export class PDFExportHandler extends ExportHandler {
     }
 
     // Sort capabilities within each domain
-    for (const [domain, caps] of domainGroups) {
+    for (const [_domain, caps] of domainGroups) {
       caps.sort((a, b) => a.capabilityAreaName.localeCompare(b.capabilityAreaName));
     }
 

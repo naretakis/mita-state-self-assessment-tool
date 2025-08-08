@@ -1,12 +1,9 @@
-import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { render, screen, waitFor } from '@testing-library/react';
+import React from 'react';
 
 import { AssessmentResults } from '../../../../src/components/assessment/AssessmentResults';
-import {
-  StorageProvider,
-  useStorageContext,
-} from '../../../../src/components/storage/StorageProvider';
+import { useStorageContext } from '../../../../src/components/storage/StorageProvider';
 import type { Assessment } from '../../../../src/types';
 
 // Mock the useStorageContext hook
@@ -193,7 +190,8 @@ describe('AssessmentResults', () => {
       { timeout: 3000 }
     );
 
-    expect(screen.getAllByText('3.4')).toHaveLength(2); // Should appear in summary and table
+    expect(screen.getByText('3.4')).toBeInTheDocument(); // Should appear in summary
+    expect(screen.getByText('3.40')).toBeInTheDocument(); // Should appear in detailed results with more precision
 
     // Check for capability areas count
     expect(screen.getByText('Capability Areas')).toBeInTheDocument();
@@ -233,10 +231,10 @@ describe('AssessmentResults', () => {
 
     expect(screen.getByText('Provider Management')).toBeInTheDocument();
     expect(screen.getByText('Provider Enrollment')).toBeInTheDocument();
-    expect(screen.getAllByText('3')).toHaveLength(2); // Should appear twice in table
-    expect(screen.getByText('4')).toBeInTheDocument(); // Role score
-    expect(screen.getByText('2')).toBeInTheDocument(); // Business Process score
-    expect(screen.getByText('5')).toBeInTheDocument(); // Technology score
+    expect(screen.getByText('3.40')).toBeInTheDocument(); // Overall score in detailed results
+
+    // The detailed dimension scores are now in an expandable section
+    // so they won't be visible until the section is expanded
   });
 
   it('provides export options', async () => {
@@ -244,13 +242,15 @@ describe('AssessmentResults', () => {
 
     await waitFor(
       () => {
-        expect(screen.getByText('Export Results')).toBeInTheDocument();
+        expect(screen.getByText('Export')).toBeInTheDocument();
+        expect(screen.getByText('PDF')).toBeInTheDocument();
+        expect(screen.getByText('CSV')).toBeInTheDocument();
       },
       { timeout: 3000 }
     );
 
-    expect(screen.getByText('Download PDF')).toBeInTheDocument();
-    expect(screen.getByText('Download CSV')).toBeInTheDocument();
+    expect(screen.getByText('PDF')).toBeInTheDocument();
+    expect(screen.getByText('CSV')).toBeInTheDocument();
   });
 
   it('provides navigation options', async () => {

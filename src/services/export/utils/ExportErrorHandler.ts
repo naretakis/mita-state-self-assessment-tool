@@ -240,7 +240,7 @@ export class ExportErrorHandler {
   /**
    * Log error for debugging while maintaining user privacy
    */
-  static logError(exportError: ExportError, userId?: string): void {
+  static logError(exportError: ExportError, _userId?: string): void {
     const logData = {
       type: exportError.type,
       message: exportError.message,
@@ -265,7 +265,7 @@ export class ExportErrorHandler {
         // Keep only last 10 errors
         const recentLogs = existingLogs.slice(-10);
         sessionStorage.setItem('export_error_logs', JSON.stringify(recentLogs));
-      } catch (e) {
+      } catch {
         // Ignore storage errors
       }
     }

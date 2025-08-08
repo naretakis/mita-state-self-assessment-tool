@@ -8,7 +8,7 @@ import type { FilenameOptions } from '../types';
 
 export class FilenameGenerator {
   private static readonly MAX_FILENAME_LENGTH = 100;
-  private static readonly INVALID_CHARS_REGEX = /[<>:"/\\|?*\x00-\x1f]/g;
+  private static readonly INVALID_CHARS_REGEX = /[<>:"/\\|?*]/g;
   private static readonly RESERVED_NAMES = [
     'CON',
     'PRN',

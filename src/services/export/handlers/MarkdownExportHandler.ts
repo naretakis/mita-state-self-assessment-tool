@@ -329,7 +329,7 @@ export class MarkdownExportHandler extends ExportHandler {
     }
 
     // Sort capabilities within each domain
-    for (const [domain, caps] of domainGroups) {
+    for (const [_domain, caps] of domainGroups) {
       caps.sort((a, b) => a.capabilityAreaName.localeCompare(b.capabilityAreaName));
     }
 
