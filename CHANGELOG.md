@@ -3,6 +3,49 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
+## [0.6.10] - 2025-08-07
+
+### Added
+- **Comprehensive Export Functionality**: Complete multi-format export system for assessment results
+  - **PDF Export**: Professional reports with charts, typography, and complete assessment data including enhanced scores
+  - **CSV Export**: Structured data export with capability areas, dimensions, scores, and all text content
+  - **JSON Export**: Complete raw data export for system integration and backup purposes
+  - **Markdown Export**: Human-readable format for documentation and sharing with proper formatting
+  - **Direct Action Interface**: Streamlined export buttons replacing complex modal dialogs
+  - **Error Handling**: Robust error handling with user feedback and retry mechanisms
+  - **Performance Optimization**: Efficient export processing with progress indicators
+
+### Enhanced
+- **Assessment Results Display**: Significantly improved results page layout and user experience
+  - **Compact Design**: Reduced vertical scrolling by 40-50% through optimized spacing and component sizing
+  - **Theme-Aware Contrast**: Fixed dark/light mode contrast issues with proper background and text color handling
+  - **Improved Button Sizing**: More appropriate button sizes with better hover states and accessibility
+  - **Enhanced Visual Hierarchy**: Better use of typography, spacing, and color coding for improved readability
+  - **Mobile Optimization**: Responsive design improvements for better mobile and tablet experience
+
+- **Dashboard Interface**: Updated assessment management interface
+  - **Button Text Updates**: Changed "View Assessment" to "Open Assessment" for clearer action indication
+  - **Results Access**: Added "View Results" button for completed assessments with direct navigation
+  - **Streamlined Actions**: Removed redundant export button from dashboard in favor of results page exports
+
+### Fixed
+- **Text Input Bug**: Resolved issue where spaces couldn't be typed in assessment text fields
+  - **Global Event Handler Conflicts**: Fixed keyboard shortcut handlers interfering with text input in textareas
+  - **Form Field Accessibility**: Ensured proper text input functionality in Supporting Description, Barriers and Challenges, Outcomes-Based Advancement Plans, and Additional Notes fields
+  - **Event Bubbling**: Added proper target element checking to prevent global shortcuts from affecting form inputs
+
+- **Dark Mode Contrast Issues**: Comprehensive fixes for theme-aware display
+  - **Background Color Handling**: Removed forced white backgrounds that caused contrast problems
+  - **Text Color Consistency**: Added explicit color classes for proper contrast in both light and dark modes
+  - **Interactive Element Styling**: Improved hover states and button styling for theme compatibility
+
+### Technical Improvements
+- **Export Service Architecture**: Comprehensive export system with modular handler design
+  - **Service Layer**: Centralized ExportService with format-specific handlers
+  - **Error Boundaries**: Proper error handling and user feedback throughout export process
+  - **Type Safety**: Full TypeScript implementation with proper type definitions
+  - **Performance**: Optimized export processing with efficient data handling
+
 ## [0.6.9] - 2025-08-07
 
 ### Added

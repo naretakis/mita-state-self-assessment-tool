@@ -125,6 +125,12 @@ const AssessmentSidebar: React.FC<AssessmentSidebarProps> = React.memo(
     // Keyboard shortcuts
     React.useEffect(() => {
       const handleKeyDown = (event: KeyboardEvent) => {
+        // Don't interfere with text input in form elements
+        const target = event.target as HTMLElement;
+        if (target && (target.tagName === 'TEXTAREA' || target.tagName === 'INPUT')) {
+          return;
+        }
+
         // Escape to close mobile sidebar
         if (event.key === 'Escape' && isMobile && isMobileOpen && onMobileToggle) {
           event.preventDefault();

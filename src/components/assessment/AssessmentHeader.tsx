@@ -80,6 +80,12 @@ const AssessmentHeader: React.FC<AssessmentHeaderProps> = React.memo(
 
     const handleKeyDown = React.useCallback(
       (event: KeyboardEvent) => {
+        // Don't interfere with text input in form elements
+        const target = event.target as HTMLElement;
+        if (target && (target.tagName === 'TEXTAREA' || target.tagName === 'INPUT')) {
+          return;
+        }
+
         // Alt + S to toggle sidebar
         if (event.altKey && event.key === 's' && onOpenSidebar) {
           event.preventDefault();

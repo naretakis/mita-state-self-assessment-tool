@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import Link from 'next/link';
 
 import { useStorageContext } from '../storage/StorageProvider';
 
-import type { AssessmentSummary, AssessmentStatus } from '../../types';
+import type { AssessmentStatus, AssessmentSummary } from '../../types';
 
 /**
  * Get status display information
@@ -46,10 +46,9 @@ function formatDate(dateString: string): string {
 interface AssessmentCardProps {
   assessment: AssessmentSummary;
   onDelete: (id: string) => void;
-  onExport: (id: string) => void;
 }
 
-function AssessmentCard({ assessment, onDelete, onExport }: AssessmentCardProps) {
+function AssessmentCard({ assessment, onDelete }: AssessmentCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const statusInfo = getStatusInfo(assessment.status);
@@ -64,7 +63,7 @@ function AssessmentCard({ assessment, onDelete, onExport }: AssessmentCardProps)
     }
   };
 
-  const handleExport = () => {
+  const _handleExport = () => {
     onExport(assessment.id);
   };
 
@@ -132,18 +131,19 @@ function AssessmentCard({ assessment, onDelete, onExport }: AssessmentCardProps)
               href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/assessment/${assessment.id}`}
               className="ds-c-button ds-c-button--primary ds-c-button--small"
             >
-              {assessment.status === 'completed' ? 'View Assessment' : 'Continue Assessment'}
+              {assessment.status === 'completed' ? 'Open Assessment' : 'Continue Assessment'}
             </Link>
           </div>
-          <div className="ds-l-col--auto ds-u-margin-right--2 ds-u-margin-bottom--1">
-            <button
-              type="button"
-              className="ds-c-button ds-c-button--transparent ds-c-button--small"
-              onClick={handleExport}
-            >
-              Export
-            </button>
-          </div>
+          {assessment.status === 'completed' && (
+            <div className="ds-l-col--auto ds-u-margin-right--2 ds-u-margin-bottom--1">
+              <Link
+                href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/assessment/${assessment.id}/results`}
+                className="ds-c-button ds-c-button--transparent ds-c-button--small"
+              >
+                View Results
+              </Link>
+            </div>
+          )}
           <div className="ds-l-col--auto ds-u-margin-bottom--1">
             <button
               type="button"
