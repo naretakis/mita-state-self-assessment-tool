@@ -234,7 +234,11 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
                           }
                         }}
                         onKeyDown={e => {
-                          if (e.key === 'Enter' || e.key === ' ') {
+                          // Only handle keyboard events if the target is the label itself, not child elements
+                          if (
+                            e.target === e.currentTarget &&
+                            (e.key === 'Enter' || e.key === ' ')
+                          ) {
                             e.preventDefault();
                             handleInputChange('maturityLevel', levelNumber);
                           }
