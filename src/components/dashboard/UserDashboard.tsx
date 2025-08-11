@@ -63,10 +63,6 @@ function AssessmentCard({ assessment, onDelete }: AssessmentCardProps) {
     }
   };
 
-  const _handleExport = () => {
-    onExport(assessment.id);
-  };
-
   return (
     <div className="ds-c-card ds-u-margin-bottom--3">
       <div className="ds-c-card__body">
@@ -125,8 +121,8 @@ function AssessmentCard({ assessment, onDelete }: AssessmentCardProps) {
         </div>
 
         {/* Action buttons */}
-        <div className="ds-l-row ds-u-flex-wrap--wrap">
-          <div className="ds-l-col--auto ds-u-margin-right--2 ds-u-margin-bottom--1">
+        <div className="ds-l-row ds-u-flex-wrap--wrap ds-u-margin-top--2">
+          <div className="ds-l-col--auto ds-u-margin-right--3 ds-u-margin-bottom--2">
             <Link
               href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/assessment/${assessment.id}`}
               className="ds-c-button ds-c-button--primary ds-c-button--small"
@@ -134,17 +130,15 @@ function AssessmentCard({ assessment, onDelete }: AssessmentCardProps) {
               {assessment.status === 'completed' ? 'Open Assessment' : 'Continue Assessment'}
             </Link>
           </div>
-          {assessment.status === 'completed' && (
-            <div className="ds-l-col--auto ds-u-margin-right--2 ds-u-margin-bottom--1">
-              <Link
-                href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/assessment/${assessment.id}/results`}
-                className="ds-c-button ds-c-button--transparent ds-c-button--small"
-              >
-                View Results
-              </Link>
-            </div>
-          )}
-          <div className="ds-l-col--auto ds-u-margin-bottom--1">
+          <div className="ds-l-col--auto ds-u-margin-right--3 ds-u-margin-bottom--2">
+            <Link
+              href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/assessment/${assessment.id}/results`}
+              className="ds-c-button ds-c-button--transparent ds-c-button--small"
+            >
+              View Results
+            </Link>
+          </div>
+          <div className="ds-l-col--auto ds-u-margin-bottom--2">
             <button
               type="button"
               className="ds-c-button ds-c-button--danger ds-c-button--small"
@@ -201,35 +195,13 @@ export function UserDashboard() {
     error,
     assessmentSummaries,
     deleteAssessment,
-    exportAssessment,
     refreshAssessmentList,
   } = useStorageContext();
-
-  const [_exportingId, setExportingId] = useState<string | null>(null);
 
   const handleDeleteAssessment = async (id: string) => {
     const success = await deleteAssessment(id);
     if (success) {
       await refreshAssessmentList();
-    }
-  };
-
-  const handleExportAssessment = async (id: string) => {
-    setExportingId(id);
-    try {
-      const blob = await exportAssessment(id);
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `mita-assessment-${id}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Error exporting assessment:', error);
-    } finally {
-      setExportingId(null);
     }
   };
 
@@ -344,7 +316,6 @@ export function UserDashboard() {
                         key={assessment.id}
                         assessment={assessment}
                         onDelete={handleDeleteAssessment}
-                        onExport={handleExportAssessment}
                       />
                     ))}
                 </div>
