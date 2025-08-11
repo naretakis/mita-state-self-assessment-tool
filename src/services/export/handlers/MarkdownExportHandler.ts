@@ -325,7 +325,10 @@ export class MarkdownExportHandler extends ExportHandler {
       if (!domainGroups.has(domainName)) {
         domainGroups.set(domainName, []);
       }
-      domainGroups.get(domainName)!.push(capability);
+      const domainCapabilities = domainGroups.get(domainName);
+      if (domainCapabilities) {
+        domainCapabilities.push(capability);
+      }
     }
 
     // Sort capabilities within each domain
@@ -350,9 +353,11 @@ export class MarkdownExportHandler extends ExportHandler {
         if (!domainStats.has(domain)) {
           domainStats.set(domain, { total: 0, count: 0 });
         }
-        const stats = domainStats.get(domain)!;
-        stats.total += score.overallScore;
-        stats.count += 1;
+        const stats = domainStats.get(domain);
+        if (stats) {
+          stats.total += score.overallScore;
+          stats.count += 1;
+        }
       }
     }
 

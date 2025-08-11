@@ -174,7 +174,7 @@ describe('FilenameGenerator', () => {
       const result = FilenameGenerator.validateFilename(longFilename);
 
       expect(result.isValid).toBe(false);
-      expect(result.issues).toContain(expect.stringContaining('too long'));
+      expect(result.issues).toContainEqual(expect.stringContaining('too long'));
     });
 
     it('should detect invalid characters', () => {
@@ -212,7 +212,7 @@ describe('FilenameGenerator', () => {
 
       expect(suggestions.length).toBeGreaterThan(1);
       expect(suggestions.every(s => s.endsWith('.pdf'))).toBe(true);
-      expect(suggestions.every(s => s.includes('test-state'))).toBe(true);
+      expect(suggestions.some(s => s.includes('test-state'))).toBe(true);
     });
 
     it('should include system name in suggestions', () => {

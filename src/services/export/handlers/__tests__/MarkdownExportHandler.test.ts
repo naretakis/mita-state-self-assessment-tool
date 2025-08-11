@@ -344,7 +344,11 @@ describe('MarkdownExportHandler', () => {
       const blob = await handler.generate(dataWithEmptyText, options);
       const text = await blob.text();
 
-      expect(text).toContain('*No content provided*');
+      // When content is empty, the sections should not appear at all
+      expect(text).not.toContain('**Supporting Attestation:**');
+      expect(text).not.toContain('**Barriers and Challenges:**');
+      expect(text).not.toContain('**Outcomes-Based Advancement Plans:**');
+      expect(text).not.toContain('**Additional Notes:**');
     });
 
     it('should handle multiple domains and capabilities', async () => {

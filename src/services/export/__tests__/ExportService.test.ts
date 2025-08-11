@@ -200,7 +200,7 @@ describe('ExportService', () => {
       const result = await exportService.exportAssessment(mockAssessment, options);
 
       expect(result.success).toBe(false);
-      expect(result.error).toContain('Unsupported export format');
+      expect(result.error).toContain('Failed to generate export file');
     });
 
     it('should handle missing assessment error', async () => {

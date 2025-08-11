@@ -5,6 +5,7 @@
 
 import { ExportHandler } from '../types';
 
+import type { Assessment } from '../../../types';
 import type { ExportData, ExportOptions } from '../types';
 
 export class JSONExportHandler extends ExportHandler {
@@ -68,7 +69,7 @@ export class JSONExportHandler extends ExportHandler {
   /**
    * Serialize assessment data with proper typing and null handling
    */
-  private serializeAssessment(assessment: any): any {
+  private serializeAssessment(assessment: Assessment): Record<string, unknown> {
     return {
       id: assessment.id || null,
       stateName: assessment.stateName || null,
@@ -83,7 +84,7 @@ export class JSONExportHandler extends ExportHandler {
         notes: assessment.metadata?.notes || null,
       },
       capabilities:
-        assessment.capabilities?.map((capability: any) => ({
+        assessment.capabilities?.map(capability => ({
           id: capability.id || null,
           capabilityDomainName: capability.capabilityDomainName || null,
           capabilityAreaName: capability.capabilityAreaName || null,

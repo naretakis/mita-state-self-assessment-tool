@@ -2,8 +2,9 @@
  * Tests for ExportDataCollector
  */
 
-import type { Assessment } from '../../../types';
 import { ExportDataCollector } from '../ExportDataCollector';
+
+import type { Assessment } from '../../../types';
 
 // Mock ContentService
 jest.mock('../../ContentService', () => {

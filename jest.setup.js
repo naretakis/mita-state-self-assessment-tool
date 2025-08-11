@@ -94,3 +94,63 @@ Object.defineProperty(window, 'matchMedia', {
 // Mock URL.createObjectURL and URL.revokeObjectURL for file operations
 global.URL.createObjectURL = jest.fn(() => 'mocked-url');
 global.URL.revokeObjectURL = jest.fn();
+
+// Mock Canvas for jsPDF
+global.HTMLCanvasElement.prototype.getContext = jest.fn(() => ({
+  fillRect: jest.fn(),
+  clearRect: jest.fn(),
+  getImageData: jest.fn(() => ({ data: new Array(4) })),
+  putImageData: jest.fn(),
+  createImageData: jest.fn(() => ({ data: new Array(4) })),
+  setTransform: jest.fn(),
+  drawImage: jest.fn(),
+  save: jest.fn(),
+  fillText: jest.fn(),
+  restore: jest.fn(),
+  beginPath: jest.fn(),
+  moveTo: jest.fn(),
+  lineTo: jest.fn(),
+  closePath: jest.fn(),
+  stroke: jest.fn(),
+  translate: jest.fn(),
+  scale: jest.fn(),
+  rotate: jest.fn(),
+  arc: jest.fn(),
+  fill: jest.fn(),
+  measureText: jest.fn(() => ({ width: 0 })),
+  transform: jest.fn(),
+  rect: jest.fn(),
+  clip: jest.fn(),
+}));
+
+// Mock Blob with text() method
+global.Blob = class MockBlob {
+  constructor(content, options) {
+    this.content = content;
+    this.options = options;
+  }
+
+  text() {
+    return Promise.resolve(this.content.join(''));
+  }
+
+  arrayBuffer() {
+    return Promise.resolve(new ArrayBuffer(0));
+  }
+
+  stream() {
+    return new ReadableStream();
+  }
+
+  slice() {
+    return new MockBlob(this.content, this.options);
+  }
+
+  get size() {
+    return this.content.join('').length;
+  }
+
+  get type() {
+    return this.options?.type || '';
+  }
+};

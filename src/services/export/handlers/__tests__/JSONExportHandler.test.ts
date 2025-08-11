@@ -402,13 +402,20 @@ describe('JSONExportHandler', () => {
     it('should handle generation errors', async () => {
       const options: ExportOptions = { format: 'json' };
 
-      // Create data that will cause JSON.stringify to fail
-      const circularData = { ...mockExportData };
-      (circularData as any).circular = circularData;
+      // Mock JSON.stringify to throw an error
+      const originalStringify = JSON.stringify;
+      JSON.stringify = jest.fn(() => {
+        throw new Error('Circular reference detected');
+      });
 
-      await expect(handler.generate(circularData, options)).rejects.toThrow(
-        'Failed to generate JSON export'
-      );
+      try {
+        await expect(handler.generate(mockExportData, options)).rejects.toThrow(
+          'Failed to generate JSON export'
+        );
+      } finally {
+        // Restore original JSON.stringify
+        JSON.stringify = originalStringify;
+      }
     });
   });
 });

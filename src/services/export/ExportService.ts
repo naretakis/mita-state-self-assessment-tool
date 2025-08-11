@@ -4,7 +4,9 @@
  */
 
 import type { Assessment } from '../../types';
+
 import { ExportDataCollector } from './ExportDataCollector';
+
 import type {
   ExportData,
   ExportError,
@@ -105,7 +107,10 @@ export class ExportService {
       this.reportProgress('generating', 70, `Generating ${options.format.toUpperCase()} file...`);
 
       // Generate export file
-      const handler = this.formatHandlers.get(options.format)!;
+      const handler = this.formatHandlers.get(options.format);
+      if (!handler) {
+        throw new Error(`Handler not found for format: ${options.format}`);
+      }
       const blob = await handler.generate(exportData, options);
 
       if (this.abortController.signal.aborted) {

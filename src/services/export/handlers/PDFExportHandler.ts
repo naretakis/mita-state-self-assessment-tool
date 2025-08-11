@@ -471,7 +471,10 @@ export class PDFExportHandler extends ExportHandler {
       if (!domainGroups.has(domainName)) {
         domainGroups.set(domainName, []);
       }
-      domainGroups.get(domainName)!.push(capability);
+      const domainCapabilities = domainGroups.get(domainName);
+      if (domainCapabilities) {
+        domainCapabilities.push(capability);
+      }
     }
 
     // Sort capabilities within each domain
