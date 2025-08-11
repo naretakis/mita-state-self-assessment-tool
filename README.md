@@ -91,7 +91,7 @@ For detailed project documentation, including architecture, workflows, and devel
 
 #### Enhanced Results Display
 - **Compact Layout**: Reduced vertical scrolling with optimized spacing and component sizing
-- **Theme-Aware Design**: Proper contrast and readability in both light and dark modes
+- **Consistent Design**: Proper contrast and readability with light mode styling
 - **Interactive Elements**: Expandable sections with improved button sizing and hover states
 - **Mobile Optimization**: Responsive design that works across all device sizes
 

@@ -56,61 +56,97 @@ export function CleanDetailedResults({ assessment, scores }: CleanDetailedResult
         return (
           <div
             key={capabilityId}
-            className="ds-u-border--1 ds-u-border-radius--sm ds-u-margin-bottom--1"
-            style={{ backgroundColor: 'transparent' }}
+            className="ds-u-margin-bottom--2"
+            style={{
+              border: isExpanded ? '2px solid #0071bc' : '1px solid #d6d7d9',
+              borderRadius: '4px',
+              transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+              boxShadow: isExpanded
+                ? '0 2px 8px rgba(0, 113, 188, 0.1)'
+                : '0 1px 3px rgba(0, 0, 0, 0.05)',
+              backgroundColor: '#ffffff',
+            }}
           >
             <button
               type="button"
-              className="ds-u-width--full ds-u-border--0 ds-u-text-align--left ds-u-cursor--pointer ds-u-padding--1 ds-u-bg-color--transparent"
+              className="ds-u-width--full ds-u-border--0 ds-u-text-align--left ds-u-cursor--pointer ds-u-padding--2"
               onClick={() => toggleSection(capabilityId)}
               aria-expanded={isExpanded}
               aria-controls={`details-${capabilityId}`}
               style={{
-                borderRadius: '4px 4px 0 0',
+                backgroundColor: 'transparent',
+                borderRadius: '4px',
                 transition: 'background-color 0.2s ease',
                 minHeight: '48px',
               }}
               onMouseEnter={e => {
-                e.currentTarget.style.backgroundColor = 'var(--color-gray-lightest, #f8f9fa)';
+                e.currentTarget.style.backgroundColor = '#f8f9fa';
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.backgroundColor = 'transparent';
               }}
             >
-              <div className="ds-u-display--flex ds-u-justify-content--between ds-u-align-items--center">
-                <div className="ds-u-flex--1">
-                  <div className="ds-text ds-u-margin-bottom--0 ds-u-color--base ds-u-font-weight--bold">
-                    {score.capabilityArea}
-                  </div>
-                  <div className="ds-text--small ds-u-margin-bottom--0 ds-u-color--muted">
-                    {score.domain}
-                  </div>
+              <div className="ds-u-display--flex ds-u-align-items--center">
+                {/* Expand/Collapse Icon */}
+                <div
+                  className="ds-u-display--flex ds-u-align-items--center ds-u-justify-content--center"
+                  style={{
+                    width: '20px',
+                    height: '20px',
+                    borderRadius: '50%',
+                    backgroundColor: isExpanded ? '#0071bc' : '#e6f1f8',
+                    color: isExpanded ? '#ffffff' : '#0071bc',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    transition: 'all 0.2s ease',
+                    flexShrink: 0,
+                    marginRight: '12px',
+                  }}
+                >
+                  {isExpanded ? '−' : '+'}
                 </div>
-                <div className="ds-u-display--flex ds-u-align-items--center ds-u-margin-left--2">
-                  <div className="ds-u-text-align--right ds-u-margin-right--1">
-                    <div className="ds-text--lead ds-u-color--primary ds-u-margin-bottom--0 ds-u-font-weight--bold">
-                      {score.overallScore.toFixed(2)}
-                    </div>
-                    <div className="ds-text--small ds-u-color--muted">out of 5.0</div>
-                  </div>
-                  <span
-                    className="ds-u-color--base ds-u-font-weight--bold ds-u-font-size--sm"
-                    style={{ fontSize: '12px', minWidth: '16px', textAlign: 'center' }}
-                  >
-                    {isExpanded ? '▼' : '▶'}
-                  </span>
-                </div>
+
+                {/* Content - All in one line */}
+                <span
+                  className="ds-u-font-weight--bold"
+                  style={{ color: '#212121', fontSize: '16px', marginRight: '12px' }}
+                >
+                  {score.capabilityArea}
+                </span>
+                <span
+                  className="ds-u-font-weight--bold"
+                  style={{
+                    color: '#0071bc',
+                    fontSize: '16px',
+                    marginLeft: 'auto',
+                  }}
+                >
+                  {score.overallScore.toFixed(1)} out of 5.0
+                </span>
               </div>
             </button>
 
             {isExpanded && (
-              <div id={`details-${capabilityId}`} className="ds-u-padding--2 ds-u-border-top--1">
+              <div
+                id={`details-${capabilityId}`}
+                className="ds-u-padding--2"
+                style={{
+                  borderTop: '1px solid #e6f1f8',
+                  backgroundColor: '#fafbfc',
+                }}
+              >
                 {/* Score Breakdown */}
                 <div className="ds-u-margin-bottom--2">
-                  <h4 className="ds-h5 ds-u-margin-bottom--1 ds-u-color--base">Score Breakdown</h4>
+                  <h4 className="ds-h5 ds-u-margin-bottom--1" style={{ color: '#212121' }}>
+                    Score Breakdown
+                  </h4>
                   <div
-                    className="ds-u-padding--1 ds-u-border-radius--sm ds-u-border--1"
-                    style={{ backgroundColor: 'transparent' }}
+                    className="ds-u-padding--2 ds-u-border-radius--sm"
+                    style={{
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #d6d7d9',
+                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
+                    }}
                   >
                     <div className="ds-u-display--flex ds-u-justify-content--between ds-u-margin-bottom--0">
                       <span className="ds-text--small ds-u-color--base">
@@ -141,7 +177,7 @@ export function CleanDetailedResults({ assessment, scores }: CleanDetailedResult
 
                 {/* ORBIT Dimension Scores */}
                 <div className="ds-u-margin-bottom--2">
-                  <h4 className="ds-h5 ds-u-margin-bottom--1 ds-u-color--base">
+                  <h4 className="ds-h5 ds-u-margin-bottom--1" style={{ color: '#212121' }}>
                     ORBIT Dimension Scores
                   </h4>
                   <div className="ds-l-row">
@@ -160,8 +196,13 @@ export function CleanDetailedResults({ assessment, scores }: CleanDetailedResult
                           className="ds-l-col--12 ds-l-md-col--6 ds-l-lg-col--4 ds-u-margin-bottom--1"
                         >
                           <div
-                            className="ds-u-padding--1 ds-u-border--1 ds-u-border-radius--sm"
-                            style={{ minHeight: '60px', backgroundColor: 'transparent' }}
+                            className="ds-u-padding--1 ds-u-border-radius--sm"
+                            style={{
+                              minHeight: '60px',
+                              backgroundColor: '#ffffff',
+                              border: '1px solid #d6d7d9',
+                              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
+                            }}
                           >
                             <h5 className="ds-text--small ds-u-margin-bottom--0 ds-u-font-weight--bold ds-u-color--base">
                               {dimensionLabels[dimension as keyof typeof dimensionLabels]}
@@ -194,7 +235,7 @@ export function CleanDetailedResults({ assessment, scores }: CleanDetailedResult
                 {/* Assessment Details */}
                 {capability && (
                   <div>
-                    <h4 className="ds-h5 ds-u-margin-bottom--1 ds-u-color--base">
+                    <h4 className="ds-h5 ds-u-margin-bottom--1" style={{ color: '#212121' }}>
                       Assessment Details
                     </h4>
                     {Object.entries(capability.dimensions).map(([dimension, dimData]) => {
@@ -220,8 +261,14 @@ export function CleanDetailedResults({ assessment, scores }: CleanDetailedResult
                           </h5>
 
                           <div
-                            className="ds-u-padding--1 ds-u-border-left--3 ds-u-border-color--primary-light ds-u-border-radius--sm"
-                            style={{ backgroundColor: 'transparent' }}
+                            className="ds-u-padding--2 ds-u-border-left--3 ds-u-border-radius--sm"
+                            style={{
+                              backgroundColor: '#ffffff',
+                              borderLeftColor: '#0071bc',
+                              border: '1px solid #d6d7d9',
+                              borderLeftWidth: '3px',
+                              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
+                            }}
                           >
                             {dimData.evidence && (
                               <div className="ds-u-margin-bottom--1">

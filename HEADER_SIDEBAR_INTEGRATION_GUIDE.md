@@ -124,7 +124,6 @@ The CSS provides:
 - Responsive breakpoints for desktop, tablet, and mobile
 - CSS custom properties for consistent theming
 - Accessibility features (high contrast, reduced motion)
-- Dark mode support
 - Touch-friendly controls with proper target sizes
 
 ## Accessibility Features

@@ -285,23 +285,7 @@ const announceProgressUpdate = (percentage: number, capabilityName?: string) => 
 }
 ```
 
-### Dark Mode
 
-```css
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --sidebar-bg: #2d3748;
-    --sidebar-border: #4a5568;
-    --sidebar-text: #e2e8f0;
-    --sidebar-text-muted: #a0aec0;
-  }
-  
-  .assessment-sidebar {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  }
-}
-```
 
 ### Font Size and Scaling
 
@@ -397,7 +381,7 @@ test('AssessmentSidebar has no accessibility violations', async () => {
 4. **Visual Design**
    - Meet color contrast requirements
    - Provide clear focus indicators
-   - Support user preferences (dark mode, reduced motion)
+   - Support user preferences (reduced motion)
 
 5. **Testing**
    - Run automated accessibility tests

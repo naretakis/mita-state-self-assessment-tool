@@ -204,26 +204,3 @@
     break-inside: avoid;
   }
 }
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .progress-tracker {
-    background: #2d3748;
-    color: #e2e8f0;
-  }
-
-  .maturity-level-card {
-    background: #2d3748;
-    color: #e2e8f0;
-    border-color: #4a5568;
-  }
-
-  .maturity-level-card:hover {
-    background: #4a5568;
-  }
-
-  .maturity-level-card.selected {
-    background: #2b6cb0;
-    border-color: #3182ce;
-  }
-}

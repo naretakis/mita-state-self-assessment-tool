@@ -183,7 +183,7 @@ Progress is calculated based on:
    - Align with CMS Design System patterns
    - Use consistent spacing and typography scales
    - Implement proper color tokens
-   - Add dark mode support preparation
+
 
 ## Documentation Requirements
 

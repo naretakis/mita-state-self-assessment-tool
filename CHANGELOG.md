@@ -18,7 +18,7 @@ This changelog documents the development process of the MITA State Self-Assessme
 ### Enhanced
 - **Assessment Results Display**: Significantly improved results page layout and user experience
   - **Compact Design**: Reduced vertical scrolling by 40-50% through optimized spacing and component sizing
-  - **Theme-Aware Contrast**: Fixed dark/light mode contrast issues with proper background and text color handling
+  - **Consistent Contrast**: Improved contrast and readability with proper background and text color handling
   - **Improved Button Sizing**: More appropriate button sizes with better hover states and accessibility
   - **Enhanced Visual Hierarchy**: Better use of typography, spacing, and color coding for improved readability
   - **Mobile Optimization**: Responsive design improvements for better mobile and tablet experience
@@ -34,10 +34,10 @@ This changelog documents the development process of the MITA State Self-Assessme
   - **Form Field Accessibility**: Ensured proper text input functionality in Supporting Description, Barriers and Challenges, Outcomes-Based Advancement Plans, and Additional Notes fields
   - **Event Bubbling**: Added proper target element checking to prevent global shortcuts from affecting form inputs
 
-- **Dark Mode Contrast Issues**: Comprehensive fixes for theme-aware display
+- **Contrast Issues**: Comprehensive fixes for consistent display
   - **Background Color Handling**: Removed forced white backgrounds that caused contrast problems
-  - **Text Color Consistency**: Added explicit color classes for proper contrast in both light and dark modes
-  - **Interactive Element Styling**: Improved hover states and button styling for theme compatibility
+  - **Text Color Consistency**: Added explicit color classes for proper contrast in light mode
+  - **Interactive Element Styling**: Improved hover states and button styling for consistent appearance
 
 ### Technical Improvements
 - **Export Service Architecture**: Comprehensive export system with modular handler design
@@ -191,7 +191,7 @@ This changelog documents the development process of the MITA State Self-Assessme
   - Implemented CSS custom properties for consistent design system integration
   - Added responsive breakpoints for desktop (>1024px), tablet (769-1024px), and mobile (≤768px)
   - Created smooth transitions and animations with reduced motion support
-  - Integrated dark mode and high contrast accessibility features
+  - Integrated high contrast accessibility features
   - Added touch-friendly controls with WCAG AA compliant touch target sizes (44px minimum)
   - Implemented scrollbar styling and overflow handling for long capability lists
 
