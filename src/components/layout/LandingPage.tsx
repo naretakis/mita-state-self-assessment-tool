@@ -33,7 +33,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
 
             {/* Navigation Actions */}
             <section
-              className="ds-u-text-align--center ds-u-margin-bottom--6"
+              className="ds-u-text-align--center ds-u-margin-bottom--6 landing-page-actions"
               aria-labelledby="actions-heading"
             >
               <h2 id="actions-heading" className="ds-u-visibility--screen-reader">
@@ -59,7 +59,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
                     About This Tool
                   </Link>
                   <p className="ds-text--small ds-u-margin-top--2 ds-u-margin-bottom--0">
-                    How the the SS-A tool works, and how we're building it open source
+                    How the SS-A tool works, and how we're building it open source
                   </p>
                 </div>
                 <div className="ds-l-col--12 ds-l-sm-col--6 ds-l-md-col--4 ds-u-margin-bottom--3">
@@ -69,9 +69,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
                     rel="noopener noreferrer"
                     className="ds-c-button ds-c-button--transparent ds-c-button--big ds-u-display--block"
                   >
-                    About MITA
+                    <span>About MITA</span>
                     <svg
-                      className="ds-u-margin-left--1"
                       width="16"
                       height="16"
                       viewBox="0 0 12 12"
@@ -79,7 +78,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
                       aria-hidden="true"
                     >
                       <path d="M10.5 1.5h-3v1h1.793L4.146 7.646l.708.708L10 3.207V5h1V1.5z" />
-                      <path d="M9 9H3V3h3V2H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6H9v3z" />
+                      <path d="M9 9H3V3h3V2H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1-1V6H9v3z" />
                     </svg>
                   </a>
                   <p className="ds-text--small ds-u-margin-top--2 ds-u-margin-bottom--0">
