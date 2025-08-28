@@ -5,8 +5,10 @@
 
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import type { ExportData, ExportOptions } from '../types';
+
 import { ExportHandler } from '../types';
+
+import type { ExportData, ExportOptions } from '../types';
 
 export class PDFExportHandler extends ExportHandler {
   async generate(data: ExportData, options: ExportOptions): Promise<Blob> {

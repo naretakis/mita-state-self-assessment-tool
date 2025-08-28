@@ -3,7 +3,6 @@
  * Central service for all export operations
  */
 
-import type { Assessment } from '../../types';
 
 import { ExportDataCollector } from './ExportDataCollector';
 
@@ -17,6 +16,7 @@ import type {
   ExportResult,
   FilenameOptions,
 } from './types';
+import type { Assessment } from '../../types';
 
 export class ExportService {
   private dataCollector: ExportDataCollector;

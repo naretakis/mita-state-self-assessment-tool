@@ -2,8 +2,9 @@
  * Tests for FilenameGenerator
  */
 
-import type { Assessment } from '../../../../types';
 import { FilenameGenerator } from '../FilenameGenerator';
+
+import type { Assessment } from '../../../../types';
 
 const mockAssessment: Assessment = {
   id: 'test-assessment-1',

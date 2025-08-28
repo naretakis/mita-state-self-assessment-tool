@@ -2,9 +2,10 @@
  * Tests for MarkdownExportHandler
  */
 
+import { MarkdownExportHandler } from '../MarkdownExportHandler';
+
 import type { Assessment } from '../../../../types';
 import type { ExportData, ExportOptions } from '../../types';
-import { MarkdownExportHandler } from '../MarkdownExportHandler';
 
 // Mock export data
 const mockExportData: ExportData = {

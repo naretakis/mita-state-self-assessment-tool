@@ -25,6 +25,7 @@ import { ScoringService, type EnhancedMaturityScore } from '@/services/ScoringSe
 const scoringService = new ScoringService();
 
 import { useStorageContext } from '../storage/StorageProvider';
+
 import { CleanDetailedResults } from './CleanDetailedResults';
 import { EnhancedExportSection } from './EnhancedExportSection';
 

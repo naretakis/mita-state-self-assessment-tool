@@ -6,8 +6,8 @@
 import ContentService from '../ContentService';
 import { ScoringService } from '../ScoringService';
 
-import type { Assessment, CapabilityDefinition } from '../../types';
 import type { ExportData, ExportError, ExportMetadata } from './types';
+import type { Assessment, CapabilityDefinition } from '../../types';
 
 export class ExportDataCollector {
   private contentService: ContentService;

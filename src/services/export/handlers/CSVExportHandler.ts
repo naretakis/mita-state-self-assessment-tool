@@ -3,8 +3,9 @@
  * Generates comprehensive CSV with all text fields and checkbox details
  */
 
-import type { ExportData, ExportOptions } from '../types';
 import { ExportHandler } from '../types';
+
+import type { ExportData, ExportOptions } from '../types';
 
 export class CSVExportHandler extends ExportHandler {
   async generate(data: ExportData, options: ExportOptions): Promise<Blob> {
