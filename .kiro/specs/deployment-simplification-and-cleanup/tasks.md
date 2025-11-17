@@ -1,6 +1,6 @@
 # Implementation Plan - Deployment Simplification and Cleanup
 
-- [ ] 1. Organize repository spec folder structure
+- [x] 1. Organize repository spec folder structure
   - Create `archived-done/` and `archived-on-hold/` folders in `.kiro/specs/`
   - Identify and move completed specs to `archived-done/`
   - Identify unstarted/on-hold specs and confirm with user which to archive
