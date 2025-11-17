@@ -95,22 +95,17 @@ export class ContentService {
 
       const capabilities: CapabilityDefinition[] = [];
 
-      // Get the base path by detecting it from the current location
+      // Get the base path from environment variable or use production default
       const getBasePath = () => {
         if (typeof window === 'undefined') {
           return '';
         }
 
+        // Use the configured base path from Next.js
         const pathname = window.location.pathname;
         // Check if we're on GitHub Pages with a base path
         if (pathname.includes('/mita-state-self-assessment-tool')) {
-          if (pathname.includes('/dev/')) {
-            return '/mita-state-self-assessment-tool/dev';
-          } else if (pathname.includes('/test/')) {
-            return '/mita-state-self-assessment-tool/test';
-          } else {
-            return '/mita-state-self-assessment-tool';
-          }
+          return '/mita-state-self-assessment-tool';
         }
         return '';
       };

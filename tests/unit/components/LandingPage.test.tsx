@@ -10,12 +10,7 @@ jest.mock('next/link', () => {
   };
 });
 
-// Mock BranchIndicator component
-jest.mock('../../../src/components/common/BranchIndicator', () => {
-  return function MockBranchIndicator() {
-    return <div data-testid="branch-indicator">Branch: main</div>;
-  };
-});
+// BranchIndicator component has been removed as part of single-branch deployment simplification
 
 describe('LandingPage', () => {
   it('can render a simple component', () => {

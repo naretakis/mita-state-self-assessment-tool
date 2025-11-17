@@ -8,7 +8,7 @@ This roadmap outlines the planned development priorities for the MITA State Self
 
 ## Current Status
 
-The application has achieved approximately 74% completion of core functionality, with a solid foundation in place for assessment workflows, data visualization, and multi-environment deployment. The next phase focuses on infrastructure simplification, UX/UI improvements, and content updates.
+The application has achieved approximately 76% completion of core functionality, with a solid foundation in place for assessment workflows, data visualization, and streamlined single-branch deployment. Phase 1 (Infrastructure Simplification) is complete. The next phase focuses on UX/UI improvements and content updates.
 
 ## Development Priorities
 
@@ -17,37 +17,51 @@ The application has achieved approximately 74% completion of core functionality,
 **Goal**: Remove deployment complexity and streamline the development workflow
 
 #### 1.1 Deployment Simplification
-- **Status**: Not Started
+- **Status**: ✅ Completed (November 17, 2025)
 - **Priority**: Critical
 - **Effort**: Medium
 
 **Objectives**:
-- Simplify GitHub Actions workflow to deploy only the `main` branch
-- Remove multi-branch deployment infrastructure (dev/test environments)
-- Streamline deployment configuration and reduce maintenance overhead
-- Improve deployment reliability and troubleshooting
+- ✅ Simplify GitHub Actions workflow to deploy only the `main` branch
+- ✅ Remove multi-branch deployment infrastructure (dev/test environments)
+- ✅ Streamline deployment configuration and reduce maintenance overhead
+- ✅ Improve deployment reliability and troubleshooting
 
 **Success Criteria**:
-- Single-branch deployment to GitHub Pages
-- Reduced deployment configuration complexity
-- Faster deployment times
-- Simplified troubleshooting process
+- ✅ Single-branch deployment to GitHub Pages
+- ✅ Reduced deployment configuration complexity
+- ✅ Faster deployment times
+- ✅ Simplified troubleshooting process
+
+**Completed Work**:
+- Created simplified GitHub Actions workflow for single-branch deployment
+- Removed all multi-branch deployment code and configurations
+- Updated Next.js configuration for production-only deployment
+- Removed BranchIndicator component
+- Updated all documentation (README, CONTRIBUTING, CHANGELOG, instructions)
+- Added troubleshooting section to README
 
 #### 1.2 Repository Organization
-- **Status**: Not Started
+- **Status**: ✅ Completed (November 17, 2025)
 - **Priority**: High
 - **Effort**: Low
 
 **Objectives**:
-- Reorganize `.kiro/specs/` folder to archive completed work
-- Create clear structure for active vs. archived specifications
-- Improve discoverability of current development documentation
-- Clean up outdated or redundant documentation
+- ✅ Reorganize `.kiro/specs/` folder to archive completed work
+- ✅ Create clear structure for active vs. archived specifications
+- ✅ Improve discoverability of current development documentation
+- ✅ Clean up outdated or redundant documentation
 
 **Success Criteria**:
-- Clean, organized spec folder structure
-- Clear separation of active and archived work
-- Updated documentation references
+- ✅ Clean, organized spec folder structure
+- ✅ Clear separation of active and archived work
+- ✅ Updated documentation references
+
+**Completed Work**:
+- Created `archived-done/` and `archived-on-hold/` folders
+- Moved completed specs to appropriate archive folders
+- Created README in archived-done folder documenting archive policy
+- Maintained all documentation and history during archival
 - Improved developer onboarding experience
 
 ### Phase 2: Content Updates (Weeks 3-4)

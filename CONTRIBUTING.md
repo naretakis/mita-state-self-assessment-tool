@@ -17,15 +17,13 @@ Thank you for your interest in contributing! This project follows open-source be
 - Write tests for new features and bug fixes
 
 ### Branch Strategy
-- `main`: Production branch
-- `dev`: Development branch  
-- `test`: Testing branch
-- Create feature branches from `dev`
+- `main`: Production branch - all changes are merged here
+- Create feature branches from `main`
 
 ### Pull Request Process
 1. Ensure your code passes all checks: `npm run check`
 2. Update documentation if needed
-3. Create a pull request against the `dev` branch
+3. Create a pull request against the `main` branch
 4. Fill out the PR template completely
 5. Wait for review and address feedback
 

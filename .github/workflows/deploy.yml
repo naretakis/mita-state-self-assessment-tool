@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main, dev, test]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,158 +24,29 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: '20'
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Get branch name
-        id: branch-name
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+      - name: Build application
+        run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /mita-state-self-assessment-tool
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-        
-      - name: Download existing site
-        id: download-artifact
-        uses: actions/download-artifact@v4
-        continue-on-error: true
-        with:
-          name: github-pages
-          path: existing-site
-          
-      - name: Extract and setup site structure
-        run: |
-          mkdir -p site
-          
-          # Extract existing site if available
-          if [ -f existing-site/artifact.tar ]; then
-            echo "Extracting existing site..."
-            cd site
-            tar -xf ../existing-site/artifact.tar
-            cd ..
-          else
-            echo "No artifact found, downloading from live site..."
-            # Always try to download main site files
-            curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/index.html -o site/index.html || echo "No main site found"
-            curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/debug.html -o site/debug.html || echo "No main debug found"
-            
-            # Download main assets recursively
-            wget -r -np -nH -P site/ --cut-dirs=1 -A "*.js,*.css,*.html" -R "dev/*,test/*" https://naretakis.github.io/mita-state-self-assessment-tool/ 2>/dev/null || echo "No main assets found"
-            
-            # Download existing dev site if not building dev
-            if [ "${{ steps.branch-name.outputs.BRANCH_NAME }}" != "dev" ]; then
-              curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/dev/index.html -o /tmp/dev-check.html && {
-                echo "Dev site exists, downloading..."
-                mkdir -p site/dev
-                wget -r -np -nH -P site/ --cut-dirs=1 -A "*.html,*.js,*.css,*.md" https://naretakis.github.io/mita-state-self-assessment-tool/dev/ 2>/dev/null || echo "Dev download failed"
-              } || echo "No dev site found"
-            fi
-            
-            # Download existing test site if not building test
-            if [ "${{ steps.branch-name.outputs.BRANCH_NAME }}" != "test" ]; then
-              curl -s -f https://naretakis.github.io/mita-state-self-assessment-tool/test/index.html -o /tmp/test-check.html && {
-                echo "Test site exists, downloading..."
-                mkdir -p site/test  
-                wget -r -np -nH -P site/ --cut-dirs=1 -A "*.html,*.js,*.css,*.md" https://naretakis.github.io/mita-state-self-assessment-tool/test/ 2>/dev/null || echo "Test download failed"
-              } || echo "No test site found"
-            fi
-          fi
-          
-          # Ensure directories exist
-          mkdir -p site/dev site/test
-          touch site/.nojekyll
-          
-          echo "=== EXISTING SITE STRUCTURE ==="
-          find site -type f | head -20
-
-      - name: Build current branch
-        run: |
-          BRANCH="${{ steps.branch-name.outputs.BRANCH_NAME }}"
-          echo "Building for branch: $BRANCH"
-          
-          if [ "$BRANCH" == "main" ]; then
-            export NEXT_PUBLIC_BASE_PATH="/mita-state-self-assessment-tool"
-            echo "Building main with base path: $NEXT_PUBLIC_BASE_PATH"
-            npm run build
-            echo "=== MAIN BUILD OUTPUT ==="
-            ls -la out/
-            # Copy main files, preserving dev/test subdirectories
-            find out -maxdepth 1 -type f -exec cp {} site/ \;
-            # Copy assets but preserve subdirectory assets
-            if [ -d "out/_next" ]; then 
-              rm -rf site/_next
-              cp -r out/_next site/
-            fi
-            if [ -d "out/content" ]; then 
-              rm -rf site/content
-              cp -r out/content site/
-            fi
-            
-          elif [ "$BRANCH" == "dev" ]; then
-            export NEXT_PUBLIC_BASE_PATH="/mita-state-self-assessment-tool/dev"
-            echo "Building dev with base path: $NEXT_PUBLIC_BASE_PATH"
-            npm run build
-            echo "=== DEV BUILD OUTPUT ==="
-            ls -la out/
-            find out -name "*.html" | head -5
-            # Clear and rebuild dev directory
-            rm -rf site/dev
-            mkdir -p site/dev
-            cp -r out/* site/dev/
-            echo "=== DEV SITE AFTER COPY ==="
-            ls -la site/dev/
-            find site/dev -name "*.html" | head -5
-            
-          elif [ "$BRANCH" == "test" ]; then
-            export NEXT_PUBLIC_BASE_PATH="/mita-state-self-assessment-tool/test"
-            echo "Building test with base path: $NEXT_PUBLIC_BASE_PATH"
-            npm run build
-            echo "=== TEST BUILD OUTPUT ==="
-            ls -la out/
-            find out -name "*.html" | head -5
-            # Clear and rebuild test directory
-            rm -rf site/test
-            mkdir -p site/test
-            cp -r out/* site/test/
-            echo "=== TEST SITE AFTER COPY ==="
-            ls -la site/test/
-            find site/test -name "*.html" | head -5
-          fi
-
-      - name: Ensure proper files for subdirectories
-        run: |
-          # Ensure .nojekyll and 404.html in subdirectories
-          if [ -d "site/dev" ] && [ "$(ls -A site/dev)" ]; then
-            touch site/dev/.nojekyll
-            cp public/404.html site/dev/404.html
-          fi
-          if [ -d "site/test" ] && [ "$(ls -A site/test)" ]; then
-            touch site/test/.nojekyll  
-            cp public/404.html site/test/404.html
-          fi
-          # Ensure root .nojekyll
-          touch site/.nojekyll
-          
-      - name: Debug final structure
-        run: |
-          echo "=== FINAL SITE STRUCTURE ==="
-          find site -type f | sort
-          echo "=== DIRECTORY TREE ==="
-          tree site || ls -laR site
-          echo "=== SUBDIRECTORY CHECK ==="
-          ls -la site/
-          echo "Dev exists: $([ -d site/dev ] && echo YES || echo NO)"
-          echo "Test exists: $([ -d site/test ] && echo YES || echo NO)"
-          echo "=== INDEX FILES ==="
-          find site -name "index.html" -exec echo "{}:" \; -exec head -1 {} \;
-          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./site
+          path: ./out
 
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

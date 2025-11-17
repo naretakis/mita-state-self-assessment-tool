@@ -95,17 +95,12 @@ For detailed project documentation, including architecture, workflows, and devel
 - **Interactive Elements**: Expandable sections with improved button sizing and hover states
 - **Mobile Optimization**: Responsive design that works across all device sizes
 
-## **Multi-branch deployment**: Supports three environments simultaneously:
-  - Production (`main` branch): [https://naretakis.github.io/mita-state-self-assessment-tool/](https://naretakis.github.io/mita-state-self-assessment-tool/)
-  - Development (`dev` branch): [https://naretakis.github.io/mita-state-self-assessment-tool/dev/](https://naretakis.github.io/mita-state-self-assessment-tool/dev/)
-  - Testing (`test` branch): [https://naretakis.github.io/mita-state-self-assessment-tool/test/](https://naretakis.github.io/mita-state-self-assessment-tool/test/)
-
 ## Contributing
 
 Contributions are welcome! This project follows an open-source approach to enable community contributions.
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution guidelines, including:
-- Development workflow and branch strategy
+- Development workflow
 - Code standards and quality requirements
 - Pull request process
 - Issue reporting guidelines
@@ -196,9 +191,7 @@ mita-state-self-assessment-tool/
 
 1. **Branch Management**:
    - `main`: Production branch
-   - `dev`: Development branch
-   - `test`: Testing branch
-   - Feature branches should be created from `dev`
+   - Feature branches should be created from `main`
 
 2. **Code Style**:
    - Follow the ESLint and Prettier configurations
@@ -213,69 +206,76 @@ mita-state-self-assessment-tool/
    - Note: E2E tests are currently placeholders and will require Playwright or Cypress setup for actual implementation
 
 4. **Pull Requests**:
-   - Create pull requests against the `dev` branch
+   - Create pull requests against the `main` branch
    - Include a description of changes and related issues
    - Ensure CI checks pass before merging
 
 ## Deployment
 
-The application uses a robust multi-branch deployment system to GitHub Pages with complete environment isolation:
+The application is automatically deployed to GitHub Pages when changes are pushed to the `main` branch.
 
-### Multi-Branch Deployment Architecture
+### Deployment URL
+https://naretakis.github.io/mita-state-self-assessment-tool
 
-The deployment system supports three completely isolated environments:
-- **Production** (`main` branch): [https://naretakis.github.io/mita-state-self-assessment-tool/](https://naretakis.github.io/mita-state-self-assessment-tool/)
-- **Development** (`dev` branch): [https://naretakis.github.io/mita-state-self-assessment-tool/dev/](https://naretakis.github.io/mita-state-self-assessment-tool/dev/)
-- **Testing** (`test` branch): [https://naretakis.github.io/mita-state-self-assessment-tool/test/](https://naretakis.github.io/mita-state-self-assessment-tool/test/)
+### Manual Deployment
+To trigger a manual deployment:
+1. Go to the Actions tab in GitHub
+2. Select "Deploy to GitHub Pages" workflow
+3. Click "Run workflow"
+4. Select the main branch
+5. Click "Run workflow"
 
-### GitHub Actions Workflow Features
+### Local Development
+```bash
+# Install dependencies
+npm install
 
-The `.github/workflows/deploy.yml` workflow provides:
+# Run development server
+npm run dev
 
-- **Automatic Deployment**: Triggers on pushes to `main`, `dev`, and `test` branches
-- **Environment Isolation**: Each branch deploys to its own subdirectory with proper base path configuration
-- **Content Preservation**: Intelligent preservation of existing deployments when building other branches
-- **Artifact Management**: Uses GitHub Actions artifacts with fallback to live site downloading for reliability
-- **Branch-Specific Configuration**: Each environment builds with correct base paths and asset prefixes
-- **Concurrent Deployment Protection**: Prevents deployment conflicts with proper concurrency controls
+# Build for production
+npm run build
+
+# Preview production build
+npm run start
+```
 
 ### Deployment Process
 
-1. **Content Preservation**: Downloads existing site content to preserve all environments
-2. **Branch Detection**: Automatically detects which branch is being deployed
-3. **Environment-Specific Build**: Builds with correct base path (`/mita-state-self-assessment-tool`, `/mita-state-self-assessment-tool/dev`, or `/mita-state-self-assessment-tool/test`)
-4. **Selective Deployment**: Only updates the target environment while preserving others
-5. **Asset Optimization**: Ensures proper routing and asset loading for each environment
+The application uses a streamlined single-branch deployment workflow:
+
+1. **Automatic Deployment**: Push to `main` branch triggers GitHub Actions workflow
+2. **Build Process**: Next.js builds static site with production configuration
+3. **GitHub Pages Deployment**: Built files are automatically deployed to GitHub Pages
+4. **Fast & Reliable**: Typical deployment completes in 3-5 minutes
 
 ### Setup Instructions
 
+For detailed setup instructions, see [GITHUB_PAGES_SETUP.md](GITHUB_PAGES_SETUP.md).
+
+**Quick Setup**:
+
 1. **Enable GitHub Pages**:
    - Go to repository Settings > Pages
-   - Set the source to "GitHub Actions"
+   - Source: GitHub Actions (not "Deploy from a branch")
+   - Enable HTTPS enforcement
 
-2. **Next.js Configuration**:
-   - `next.config.js` automatically configures base paths based on environment variables
-   - `_document.tsx` sets correct base href for each environment
-   - Static export configuration optimized for GitHub Pages
+2. **Configuration**:
+   - Base path is configured via `NEXT_PUBLIC_BASE_PATH` environment variable
+   - Default: `/mita-state-self-assessment-tool`
+   - Can be customized for forks/clones by updating the workflow file
 
-3. **Branch Management**:
-   - Push to `main` for production updates
-   - Push to `dev` for development environment updates  
-   - Push to `test` for testing environment updates
-   - Each push automatically deploys to its respective environment
+### Troubleshooting
 
-4. **Environment Access**:
-   - All environments remain accessible simultaneously
-   - No cross-environment interference or downtime during deployments
-   - Each environment functions independently with proper routing
+For comprehensive troubleshooting, see [GITHUB_PAGES_SETUP.md](GITHUB_PAGES_SETUP.md#troubleshooting).
 
-### Technical Implementation
+**Common Issues**:
 
-- **Base Path Handling**: Dynamic base path configuration based on deployment environment
-- **Asset Path Resolution**: Proper asset prefix configuration for subdirectory deployments
-- **Client-Side Routing**: Custom 404.html handling for SPA routing in subdirectories
-- **Fallback Mechanisms**: Robust fallback from artifact download to live site preservation
-- **Deployment Verification**: Comprehensive logging and debugging for deployment troubleshooting
+- **404 Errors**: Ensure GitHub Pages is enabled with "GitHub Actions" as source
+- **Asset Loading Issues**: Verify `NEXT_PUBLIC_BASE_PATH` matches your repository name
+- **Build Failures**: Check GitHub Actions logs for specific error messages
+- **Slow Deployments**: First deployment may take longer; subsequent deployments use caching
+- **Changes Not Appearing**: Hard refresh browser (Ctrl+Shift+R) or clear cache
 
 ## ContentService Structure
 

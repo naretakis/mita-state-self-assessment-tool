@@ -2,8 +2,6 @@ import React from 'react';
 
 import Link from 'next/link';
 
-import BranchIndicator from '../common/BranchIndicator';
-
 interface LandingPageProps {
   className?: string;
 }
@@ -16,7 +14,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
   return (
     <div className={`ds-base ${className}`}>
       <div className="ds-l-container ds-u-padding-y--4">
-        <BranchIndicator />
         <main role="main" className="ds-l-row ds-u-justify-content--center">
           <div className="ds-l-col--12 ds-l-md-col--10 ds-l-lg-col--8">
             {/* Header Section */}

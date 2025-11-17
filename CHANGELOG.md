@@ -3,6 +3,28 @@
 ## Overview
 This changelog documents the development process of the MITA State Self-Assessment Tool, a modern browser-based application for state Medicaid agencies to assess the maturity of their Medicaid systems using the MITA NextGen capability-based framework.
 
+## [Unreleased]
+
+### Changed
+- **Simplified Deployment Infrastructure**: Streamlined deployment to single-branch GitHub Pages workflow
+  - Removed multi-branch deployment system (dev/test environments)
+  - Updated GitHub Actions workflow to deploy only from main branch
+  - Simplified Next.js configuration for production-only deployment
+  - Removed BranchIndicator component (no longer needed with single environment)
+  - Updated all documentation to reflect simplified deployment process
+
+### Removed
+- **Multi-Branch Deployment Code**: Eliminated complex multi-environment infrastructure
+  - Removed dev and test branch deployment configurations
+  - Removed multi-environment build scripts and logic
+  - Removed environment-specific content preservation logic
+  - Cleaned up branch detection code in ContentService
+
+### Fixed
+- **Deployment Reliability**: Improved deployment consistency by aligning with GitHub Pages native model
+- **Build Performance**: Faster deployments by removing unnecessary complexity
+- **Maintenance Overhead**: Reduced complexity makes the system easier to maintain and fork
+
 ## [0.6.10] - 2025-08-07
 
 ### Added
@@ -391,7 +413,7 @@ This changelog documents the development process of the MITA State Self-Assessme
 - **Cross-Browser Compatibility**: Tested across modern browsers with storage fallbacks
 
 ### Known Issues and Next Steps
-- **Test Suite Improvements**: Some test failures need resolution (BranchIndicator and async handling issues)
+- **Test Suite Improvements**: Some test failures need resolution (async handling issues)
 - **Accessibility Validation**: Comprehensive accessibility testing needed
 - **Performance Optimization**: Large assessment performance validation required
 - **Error Recovery**: Enhanced error handling and recovery mechanisms needed

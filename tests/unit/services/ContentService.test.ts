@@ -26,7 +26,7 @@ describe('ContentService', () => {
   });
 
   describe('Base Path Detection', () => {
-    it('should detect dev branch base path correctly', async () => {
+    it('should detect production base path correctly', async () => {
       // Mock successful responses for all capability files
       mockFetch
         .mockResolvedValueOnce({
@@ -71,15 +71,15 @@ Test content`),
 
       await contentService.initialize();
 
-      // Verify that fetch was called with the correct dev branch base path
+      // Verify that fetch was called with the correct production base path
       expect(mockFetch).toHaveBeenCalledWith(
-        '/mita-state-self-assessment-tool/dev/content/provider-enrollment.md'
+        '/mita-state-self-assessment-tool/content/provider-enrollment.md'
       );
       expect(mockFetch).toHaveBeenCalledWith(
-        '/mita-state-self-assessment-tool/dev/content/provider-management.md'
+        '/mita-state-self-assessment-tool/content/provider-management.md'
       );
       expect(mockFetch).toHaveBeenCalledWith(
-        '/mita-state-self-assessment-tool/dev/content/provider-termination.md'
+        '/mita-state-self-assessment-tool/content/provider-termination.md'
       );
     });
 

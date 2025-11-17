@@ -3,36 +3,33 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'export',
   
-  // ESLint configuration
-  eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
-  },
+  // GitHub Pages configuration - use environment variable for portability
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
+  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || '',
   
-  // Optimize images - use Next.js Image Optimization
+  // Static export settings
+  trailingSlash: true,
   images: {
-    // We need unoptimized: true for static export
     unoptimized: true,
   },
   
-  // Base path configuration - use environment variable for multi-branch deployment
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
+  // Production optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
   
-  // Enable trailing slashes for GitHub Pages compatibility
-  trailingSlash: true,
+  // ESLint configuration
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   
-  // Add assetPrefix for GitHub Pages - use environment variable for multi-branch deployment
-  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || '',
-  
-  // Ignore TypeScript errors during build
+  // TypeScript configuration
   typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
     ignoreBuildErrors: true,
   },
+  
+  // Output directory for GitHub Pages
+  distDir: 'out',
 }
 
 module.exports = nextConfig
