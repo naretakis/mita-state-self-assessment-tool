@@ -5,6 +5,7 @@
 The project maintains documentation in three key areas:
 1. **README.md** - Project overview, setup instructions, and usage guide
 2. **CHANGELOG.md** - Version history, feature additions, and bug fixes
+3. **ROADMAP.md** - Project roadmap, what we're working on, what we're exploring
 3. **instructions/** - Comprehensive development documentation and context
 
 ## Documentation Update Requirements
@@ -12,6 +13,7 @@ The project maintains documentation in three key areas:
 ### When Implementing Features
 - Update README.md with new functionality descriptions
 - Add entry to CHANGELOG.md with feature details
+- Update ROADMAP.md with related changes
 - Update relevant instruction files if architecture or workflow changes
 - Include screenshots or examples for user-facing features
 

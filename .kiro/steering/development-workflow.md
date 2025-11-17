@@ -104,20 +104,6 @@ Local quality checks should mirror CI/CD pipeline requirements:
 
 This ensures that code passing local checks will also pass in the CI/CD pipeline, reducing build failures and deployment issues.
 
-## Documentation Maintenance
-
-### Documentation Update Triggers
-- **New Features**: Use "Document New Feature" hook to update README, CHANGELOG, and instructions
-- **Bug Fixes**: Use "Document Bug Fix" hook to record fixes and update affected documentation
-- **Releases**: Use "Prepare Release Docs" hook to finalize all documentation for release
-- **Regular Sync**: Use "Sync All Documentation" hook periodically to ensure consistency
-
-### Documentation Quality Checks
-- Run "Validate Documentation" hook before releases
-- Ensure all code examples in documentation are current
-- Verify internal and external links are working
-- Check that feature descriptions match actual implementation
-
 ## Tool Configuration Files
 
 Ensure these configuration files are properly set up:

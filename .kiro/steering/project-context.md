@@ -21,7 +21,7 @@ This is the MITA State Self-Assessment (SS-A) Tool, a browser-based application 
 ## Key Constraints
 - Client-side processing only
 - Browser compatibility (Chrome, Firefox, Safari, Edge)
-- Mobile responsiveness (tablet support required)
+- Mobile responsiveness (desktop, tablet, and phone support required)
 - No authentication/server-side storage for MLP
 
 ## Reference Documentation
