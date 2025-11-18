@@ -4,21 +4,6 @@ This folder contains feature specifications following the spec-driven developmen
 
 ## Folder Structure
 
-### Active Specifications
-
-These specs represent features currently in development or planned for near-term implementation:
-
-- **accessibility-and-performance** - WCAG 2.1 AA compliance and performance optimizations
-- **comprehensive-export-functionality** - Enhanced export capabilities (JSON, Markdown, PDF, CSV)
-- **content-management-system** - Content loading, parsing, and validation improvements
-- **data-visualization-and-reporting** - Chart enhancements and export improvements
-- **deployment-simplification-and-cleanup** - Simplified single-branch GitHub Pages deployment
-- **error-handling-and-resilience** - Comprehensive error handling and recovery mechanisms
-- **header-sidebar-review** - Assessment header and sidebar component improvements
-- **storage-and-data-management** - Enhanced storage with auto-save and data optimization
-- **ui-light-mode-simplification** - Removal of dark mode CSS for simplified styling
-- **user-dashboard-and-assessment-management** - Dashboard enhancements and assessment CRUD operations
-
 ### Archive Folders
 
 - **archived-done/** - Completed and deployed features (preserved for reference)

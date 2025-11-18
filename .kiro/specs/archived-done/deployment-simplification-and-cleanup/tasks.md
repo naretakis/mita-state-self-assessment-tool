@@ -53,14 +53,14 @@
   - Add troubleshooting guide for common configuration issues
   - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
 
-- [ ] 7. Test deployment workflow locally
+- [x] 7. Test deployment workflow locally
   - Run `npm run build` with production environment variables
   - Verify build output in `out/` directory
   - Check that all assets have correct base path prefixes
   - Test that build completes without errors
   - _Requirements: 1.2, 1.3, 6.1, 6.5_
 
-- [ ] 8. Configure GitHub Pages in repository settings
+- [x] 8. Configure GitHub Pages in repository settings
   - Navigate to repository Settings > Pages
   - Set source to "Deploy from a branch"
   - Select main branch as deployment source
@@ -68,7 +68,7 @@
   - Save configuration and verify settings
   - _Requirements: 4.1, 4.2, 4.3, 4.4_
 
-- [ ] 9. Deploy and verify the simplified workflow
+- [x] 9. Deploy and verify the simplified workflow
   - Commit all changes to a feature branch
   - Run quality checks (`npm run check`)
   - Create pull request with deployment simplification changes
@@ -77,25 +77,25 @@
   - Verify deployment completes successfully
   - _Requirements: 1.1, 1.3, 1.4, 6.3, 6.4_
 
-- [ ] 10. Verify deployed application
+- [x] 10. Verify deployed application
   - Visit deployed site at GitHub Pages URL
   - Test navigation between key pages
   - Verify assets (CSS, JS, images) load correctly
   - Check browser console for errors
   - _Requirements: 1.5, 4.3, 6.3_
 
-- [ ] 11. Update ROADMAP.md to reflect completion
+- [x] 11. Update ROADMAP.md to reflect completion
   - Mark Phase 1.1 (Deployment Simplification) as complete
   - Mark Phase 1.2 (Repository Organization) as complete
   - Update status and completion dates
   - _Requirements: 3.3, 5.5_
 
-- [ ] 12. Archive multi-branch deployment spec
+- [x] 12. Archive multi-branch deployment spec
   - Move `multi-branch-deployment-infrastructure` to `archived-done/`
   - Update any references to the archived spec
   - _Requirements: 5.3, 5.5_
 
-- [ ] 13. Final cleanup and documentation review
+- [x] 13. Final cleanup and documentation review
   - Review all documentation for consistency
   - Ensure all deployment references are up to date
   - Verify README and CHANGELOG are complete
