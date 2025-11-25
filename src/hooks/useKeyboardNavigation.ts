@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 interface KeyboardNavigationOptions {
   onEscape?: () => void;
@@ -9,7 +9,7 @@ interface KeyboardNavigationOptions {
 }
 
 export const useKeyboardNavigation = (options: KeyboardNavigationOptions = {}) => {
-  const containerRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const focusableElements = useRef<HTMLElement[]>([]);
 
   const getFocusableElements = useCallback(() => {

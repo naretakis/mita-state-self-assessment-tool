@@ -301,11 +301,11 @@ export class ExportErrorHandler {
   /**
    * Create retry function for recoverable errors
    */
-  static createRetryFunction(
-    originalFunction: () => Promise<any>,
+  static createRetryFunction<T>(
+    originalFunction: () => Promise<T>,
     maxRetries: number = 3,
     delayMs: number = 1000
-  ): () => Promise<any> {
+  ): () => Promise<T> {
     return async () => {
       let lastError: Error;
 

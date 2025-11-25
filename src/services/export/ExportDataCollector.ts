@@ -6,8 +6,9 @@
 import ContentService from '../ContentService';
 import { ScoringService } from '../ScoringService';
 
-import type { ExportData, ExportError, ExportMetadata } from './types';
 import type { Assessment, CapabilityDefinition } from '../../types';
+import type { EnhancedMaturityScore } from '../ScoringService';
+import type { ExportData, ExportError, ExportMetadata } from './types';
 
 export class ExportDataCollector {
   private contentService: ContentService;
@@ -24,9 +25,7 @@ export class ExportDataCollector {
   async collectExportData(assessment: Assessment): Promise<ExportData> {
     try {
       // Initialize content service if not already done
-      if (!this.contentService.isInitialized) {
-        await this.contentService.initialize();
-      }
+      await this.contentService.initialize();
 
       // Collect capability definitions
       const capabilities = await this.collectCapabilityDefinitions(assessment);
@@ -86,7 +85,10 @@ export class ExportDataCollector {
   /**
    * Generate export metadata
    */
-  private generateExportMetadata(assessment: Assessment, scores: any[]): ExportMetadata {
+  private generateExportMetadata(
+    assessment: Assessment,
+    scores: EnhancedMaturityScore[]
+  ): ExportMetadata {
     const now = new Date().toISOString();
 
     // Calculate completion percentage

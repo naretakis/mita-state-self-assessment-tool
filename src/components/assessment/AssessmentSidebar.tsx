@@ -2,7 +2,12 @@ import React from 'react';
 
 import { ScoringService } from '../../services/ScoringService';
 
-import type { Assessment, CapabilityDefinition, OrbitDimension } from '../../types';
+import type {
+  Assessment,
+  CapabilityDefinition,
+  DimensionAssessment,
+  OrbitDimension,
+} from '../../types';
 
 // Create a singleton instance
 const scoringService = new ScoringService();
@@ -34,9 +39,9 @@ interface AssessmentSidebarProps {
   /** Callback function when user navigates to a different step */
   onNavigateToStep: (stepIndex: number) => Promise<void>;
   /** Whether the sidebar is collapsed on desktop */
-  isCollapsed: boolean;
+  isCollapsed?: boolean;
   /** Callback to toggle sidebar collapse state */
-  onToggleCollapse: () => void;
+  onToggleCollapse?: () => void;
   /** Whether the mobile sidebar overlay is open */
   isMobileOpen?: boolean;
   /** Callback to toggle mobile sidebar visibility */
@@ -72,22 +77,39 @@ const calculateDimensionScore = (
   dimension: OrbitDimension
 ): number | null => {
   try {
-    // Check if dimension is completed (has a maturity level > 0)
-    if (!dimensionData || !dimensionData.maturityLevel || dimensionData.maturityLevel === 0) {
+    // Type guard to check if dimensionData is a DimensionAssessment
+    if (
+      !dimensionData ||
+      typeof dimensionData !== 'object' ||
+      !('maturityLevel' in dimensionData) ||
+      typeof dimensionData.maturityLevel !== 'number' ||
+      dimensionData.maturityLevel === 0
+    ) {
       return null;
     }
+
+    // Now TypeScript knows dimensionData has maturityLevel
+    const typedDimensionData = dimensionData as DimensionAssessment;
 
     // Get checkbox items for this dimension
     const checkboxItems = capabilityDefinition?.dimensions?.[dimension]?.checkboxItems || {};
 
     // Calculate enhanced score using the scoring service
-    const enhancedScore = scoringService.calculateDimensionScore(dimensionData, checkboxItems);
+    const enhancedScore = scoringService.calculateDimensionScore(typedDimensionData, checkboxItems);
 
     return enhancedScore.finalScore;
   } catch (error) {
     console.warn('Error calculating dimension score:', error);
     // Fallback to basic maturity level
-    return dimensionData?.maturityLevel || null;
+    if (
+      dimensionData &&
+      typeof dimensionData === 'object' &&
+      'maturityLevel' in dimensionData &&
+      typeof dimensionData.maturityLevel === 'number'
+    ) {
+      return dimensionData.maturityLevel;
+    }
+    return null;
   }
 };
 
@@ -114,8 +136,8 @@ const AssessmentSidebar: React.FC<AssessmentSidebarProps> = React.memo(
     steps,
     currentStepIndex,
     onNavigateToStep,
-    isCollapsed,
-    onToggleCollapse,
+    isCollapsed: _isCollapsed,
+    onToggleCollapse: _onToggleCollapse,
     isMobileOpen = false,
     onMobileToggle,
   }) => {
@@ -362,13 +384,11 @@ const AssessmentSidebar: React.FC<AssessmentSidebarProps> = React.memo(
         )}
 
         <aside
-          className={`assessment-sidebar ${isCollapsed ? 'assessment-sidebar--collapsed' : ''} ${
+          className={`assessment-sidebar ${
             isMobile && isMobileOpen ? 'assessment-sidebar--mobile-open' : ''
           }`}
           aria-label="Assessment navigation"
           aria-hidden={isMobile && !isMobileOpen}
-          onClick={isCollapsed && !isMobile ? onToggleCollapse : undefined}
-          style={{ cursor: isCollapsed && !isMobile ? 'pointer' : 'default' }}
         >
           {isMobile && (
             <button
@@ -382,171 +402,153 @@ const AssessmentSidebar: React.FC<AssessmentSidebarProps> = React.memo(
             </button>
           )}
 
-          {!isCollapsed && (
-            <nav className="assessment-sidebar__nav" aria-label="Assessment sections">
-              <ul className="assessment-sidebar__list">
-                {groupedSteps.map(group => {
-                  const progress = group.progress;
+          <nav className="assessment-sidebar__nav" aria-label="Assessment sections">
+            <ul className="assessment-sidebar__list">
+              {groupedSteps.map(group => {
+                const progress = group.progress;
 
-                  const isExpanded = expandedCapabilities.has(group.capability.id);
-                  const hasCurrentStep =
-                    steps[currentStepIndex]?.capabilityId === group.capability.id;
+                const isExpanded = expandedCapabilities.has(group.capability.id);
+                const hasCurrentStep =
+                  steps[currentStepIndex]?.capabilityId === group.capability.id;
 
-                  return (
-                    <li key={group.capability.id} className="assessment-sidebar__group">
-                      <button
-                        type="button"
-                        className={`assessment-sidebar__capability-header ${
-                          hasCurrentStep ? 'assessment-sidebar__capability-header--current' : ''
-                        }`}
-                        onClick={() => toggleCapability(group.capability.id)}
-                        aria-expanded={isExpanded}
-                        aria-controls={`capability-steps-${group.capability.id}`}
-                        aria-label={`${group.capability.capabilityAreaName} - ${progress}% complete - ${isExpanded ? 'Collapse' : 'Expand'} section`}
-                      >
-                        <span className="assessment-sidebar__expand-icon">
-                          {isExpanded ? '▼' : '▶'}
-                        </span>
-                        <div className="assessment-sidebar__capability-info">
-                          <h3 className="assessment-sidebar__capability-title">
-                            {group.capability.capabilityAreaName}
-                          </h3>
-                          <div className="assessment-sidebar__progress">
+                return (
+                  <li key={group.capability.id} className="assessment-sidebar__group">
+                    <button
+                      type="button"
+                      className={`assessment-sidebar__capability-header ${
+                        hasCurrentStep ? 'assessment-sidebar__capability-header--current' : ''
+                      }`}
+                      onClick={() => toggleCapability(group.capability.id)}
+                      aria-expanded={isExpanded}
+                      aria-controls={`capability-steps-${group.capability.id}`}
+                      aria-label={`${group.capability.capabilityAreaName} - ${progress}% complete - ${isExpanded ? 'Collapse' : 'Expand'} section`}
+                    >
+                      <span className="assessment-sidebar__expand-icon">
+                        {isExpanded ? '▼' : '▶'}
+                      </span>
+                      <div className="assessment-sidebar__capability-info">
+                        <h3 className="assessment-sidebar__capability-title">
+                          {group.capability.capabilityAreaName}
+                        </h3>
+                        <div className="assessment-sidebar__progress">
+                          <div
+                            className="assessment-sidebar__progress-bar"
+                            role="progressbar"
+                            aria-valuenow={progress}
+                            aria-valuemin={0}
+                            aria-valuemax={100}
+                            aria-label={`${progress}% complete`}
+                          >
                             <div
-                              className="assessment-sidebar__progress-bar"
-                              role="progressbar"
-                              aria-valuenow={progress}
-                              aria-valuemin={0}
-                              aria-valuemax={100}
-                              aria-label={`${progress}% complete`}
-                            >
-                              <div
-                                className="assessment-sidebar__progress-fill"
-                                style={{ width: `${progress}%` }}
-                              />
-                            </div>
-                            <span className="assessment-sidebar__progress-text">{progress}%</span>
+                              className="assessment-sidebar__progress-fill"
+                              style={{ width: `${progress}%` }}
+                            />
                           </div>
+                          <span className="assessment-sidebar__progress-text">{progress}%</span>
                         </div>
-                      </button>
+                      </div>
+                    </button>
 
-                      {isExpanded && (
-                        <ul
-                          className="assessment-sidebar__steps"
-                          id={`capability-steps-${group.capability.id}`}
-                          aria-label={`Steps for ${group.capability.capabilityAreaName}`}
-                        >
-                          {group.overviewStep >= 0 && (
-                            <li className="assessment-sidebar__step">
+                    {isExpanded && (
+                      <ul
+                        className="assessment-sidebar__steps"
+                        id={`capability-steps-${group.capability.id}`}
+                        aria-label={`Steps for ${group.capability.capabilityAreaName}`}
+                      >
+                        {group.overviewStep >= 0 && (
+                          <li className="assessment-sidebar__step">
+                            <button
+                              type="button"
+                              className={`assessment-sidebar__step-button assessment-sidebar__step-button--${getStepStatus(group.overviewStep)}`}
+                              onClick={() => handleStepNavigation(group.overviewStep)}
+                              aria-current={
+                                currentStepIndex === group.overviewStep ? 'step' : undefined
+                              }
+                              aria-label={`Overview - ${getStepStatus(group.overviewStep)} - Navigate to step ${group.overviewStep + 1}`}
+                            >
+                              <span className="assessment-sidebar__step-icon">
+                                {getStepStatus(group.overviewStep) === 'completed'
+                                  ? '✓'
+                                  : getStepStatus(group.overviewStep) === 'current'
+                                    ? '●'
+                                    : '○'}
+                              </span>
+                              <span className="assessment-sidebar__step-label">Overview</span>
+                            </button>
+                          </li>
+                        )}
+
+                        {group.dimensionSteps.map(({ dimension, stepIndex }) => {
+                          const stepStatus = getStepStatus(stepIndex);
+                          const assessmentCapability = assessment.capabilities.find(
+                            cap => cap.id === group.capability.id
+                          );
+                          const dimensionData = assessmentCapability?.dimensions?.[dimension];
+
+                          // Calculate score for completed dimensions and current dimension (real-time)
+                          const dimensionScore =
+                            stepStatus === 'completed' || stepStatus === 'current'
+                              ? calculateDimensionScore(dimensionData, group.capability, dimension)
+                              : null;
+
+                          return (
+                            <li key={dimension} className="assessment-sidebar__step">
                               <button
                                 type="button"
-                                className={`assessment-sidebar__step-button assessment-sidebar__step-button--${getStepStatus(group.overviewStep)}`}
-                                onClick={() => handleStepNavigation(group.overviewStep)}
-                                aria-current={
-                                  currentStepIndex === group.overviewStep ? 'step' : undefined
-                                }
-                                aria-label={`Overview - ${getStepStatus(group.overviewStep)} - Navigate to step ${group.overviewStep + 1}`}
+                                className={`assessment-sidebar__step-button assessment-sidebar__step-button--${stepStatus}`}
+                                onClick={() => handleStepNavigation(stepIndex)}
+                                aria-current={currentStepIndex === stepIndex ? 'step' : undefined}
+                                aria-label={`${DIMENSION_LABELS[dimension]} dimension - ${stepStatus}${dimensionScore ? ` - Score: ${dimensionScore.toFixed(2)}` : ''} - Navigate to step ${stepIndex + 1}`}
                               >
                                 <span className="assessment-sidebar__step-icon">
-                                  {getStepStatus(group.overviewStep) === 'completed'
+                                  {stepStatus === 'completed'
                                     ? '✓'
-                                    : getStepStatus(group.overviewStep) === 'current'
+                                    : stepStatus === 'current'
                                       ? '●'
                                       : '○'}
                                 </span>
-                                <span className="assessment-sidebar__step-label">Overview</span>
+                                <span className="assessment-sidebar__step-label">
+                                  {DIMENSION_LABELS[dimension]}
+                                </span>
+                                {dimensionScore !== null && (
+                                  <span
+                                    className={`assessment-sidebar__step-score ${
+                                      stepStatus === 'current'
+                                        ? 'assessment-sidebar__step-score--current'
+                                        : ''
+                                    }`}
+                                    aria-label={`${stepStatus === 'current' ? 'Current score: ' : 'Score: '}${dimensionScore.toFixed(2)} out of 5`}
+                                    title={`${stepStatus === 'current' ? 'Current score: ' : 'Score: '}${dimensionScore.toFixed(2)} out of 5`}
+                                  >
+                                    {dimensionScore.toFixed(2)}
+                                  </span>
+                                )}
                               </button>
                             </li>
-                          )}
+                          );
+                        })}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
 
-                          {group.dimensionSteps.map(({ dimension, stepIndex }) => {
-                            const stepStatus = getStepStatus(stepIndex);
-                            const assessmentCapability = assessment.capabilities.find(
-                              cap => cap.id === group.capability.id
-                            );
-                            const dimensionData = assessmentCapability?.dimensions?.[dimension];
-
-                            // Calculate score for completed dimensions and current dimension (real-time)
-                            const dimensionScore =
-                              stepStatus === 'completed' || stepStatus === 'current'
-                                ? calculateDimensionScore(
-                                    dimensionData,
-                                    group.capability,
-                                    dimension
-                                  )
-                                : null;
-
-                            return (
-                              <li key={dimension} className="assessment-sidebar__step">
-                                <button
-                                  type="button"
-                                  className={`assessment-sidebar__step-button assessment-sidebar__step-button--${stepStatus}`}
-                                  onClick={() => handleStepNavigation(stepIndex)}
-                                  aria-current={currentStepIndex === stepIndex ? 'step' : undefined}
-                                  aria-label={`${DIMENSION_LABELS[dimension]} dimension - ${stepStatus}${dimensionScore ? ` - Score: ${dimensionScore.toFixed(2)}` : ''} - Navigate to step ${stepIndex + 1}`}
-                                >
-                                  <span className="assessment-sidebar__step-icon">
-                                    {stepStatus === 'completed'
-                                      ? '✓'
-                                      : stepStatus === 'current'
-                                        ? '●'
-                                        : '○'}
-                                  </span>
-                                  <span className="assessment-sidebar__step-label">
-                                    {DIMENSION_LABELS[dimension]}
-                                  </span>
-                                  {dimensionScore !== null && (
-                                    <span
-                                      className={`assessment-sidebar__step-score ${
-                                        stepStatus === 'current'
-                                          ? 'assessment-sidebar__step-score--current'
-                                          : ''
-                                      }`}
-                                      aria-label={`${stepStatus === 'current' ? 'Current score: ' : 'Score: '}${dimensionScore.toFixed(2)} out of 5`}
-                                      title={`${stepStatus === 'current' ? 'Current score: ' : 'Score: '}${dimensionScore.toFixed(2)} out of 5`}
-                                    >
-                                      {dimensionScore.toFixed(2)}
-                                    </span>
-                                  )}
-                                </button>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-
-              <div className="assessment-sidebar__footer">
-                <button
-                  type="button"
-                  className="assessment-sidebar__results-btn"
-                  onClick={handleResultsClick}
-                  aria-label="View assessment results (Alt+R)"
-                  title="View assessment results (Alt+R)"
-                >
-                  <span className="assessment-sidebar__results-icon" aria-hidden="true">
-                    📊
-                  </span>
-                  View Results
-                </button>
-
-                {!isMobile && (
-                  <button
-                    type="button"
-                    className="assessment-sidebar__collapse-btn"
-                    onClick={onToggleCollapse}
-                    aria-label="Collapse sidebar"
-                    title="Collapse sidebar"
-                  >
-                    ← Collapse
-                  </button>
-                )}
-              </div>
-            </nav>
-          )}
+            <div className="assessment-sidebar__footer">
+              <button
+                type="button"
+                className="assessment-sidebar__results-btn"
+                onClick={handleResultsClick}
+                aria-label="View assessment results (Alt+R)"
+                title="View assessment results (Alt+R)"
+              >
+                <span className="assessment-sidebar__results-icon" aria-hidden="true">
+                  📊
+                </span>
+                View Results
+              </button>
+            </div>
+          </nav>
         </aside>
       </>
     );

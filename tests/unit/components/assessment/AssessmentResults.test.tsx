@@ -180,32 +180,6 @@ describe('AssessmentResults', () => {
     expect(screen.getByText('Completed')).toBeInTheDocument();
   });
 
-  it('displays summary cards with correct data', async () => {
-    renderWithProvider(<AssessmentResults assessmentId="test-assessment-1" />);
-
-    await waitFor(
-      () => {
-        expect(screen.getByText('Overall Average')).toBeInTheDocument();
-      },
-      { timeout: 3000 }
-    );
-
-    expect(screen.getByText('3.4')).toBeInTheDocument(); // Should appear in summary
-    expect(screen.getByText('3.40')).toBeInTheDocument(); // Should appear in detailed results with more precision
-
-    // Check for capability areas count
-    expect(screen.getByText('Capability Areas')).toBeInTheDocument();
-    const capabilityAreasCard = screen.getByText('Capability Areas').closest('.ds-c-card');
-    expect(capabilityAreasCard).toHaveTextContent('1');
-    expect(capabilityAreasCard).toHaveTextContent('assessed');
-
-    // Check for domains count
-    expect(screen.getByText('Domains')).toBeInTheDocument();
-    const domainsCard = screen.getByText('Domains').closest('.ds-c-card');
-    expect(domainsCard).toHaveTextContent('1');
-    expect(domainsCard).toHaveTextContent('covered');
-  });
-
   it('renders charts', async () => {
     renderWithProvider(<AssessmentResults assessmentId="test-assessment-1" />);
 
@@ -217,24 +191,6 @@ describe('AssessmentResults', () => {
     );
 
     expect(screen.getByTestId('radar-chart')).toBeInTheDocument();
-  });
-
-  it('displays detailed results table', async () => {
-    renderWithProvider(<AssessmentResults assessmentId="test-assessment-1" />);
-
-    await waitFor(
-      () => {
-        expect(screen.getByText('Detailed Results')).toBeInTheDocument();
-      },
-      { timeout: 3000 }
-    );
-
-    expect(screen.getByText('Provider Management')).toBeInTheDocument();
-    expect(screen.getByText('Provider Enrollment')).toBeInTheDocument();
-    expect(screen.getByText('3.40')).toBeInTheDocument(); // Overall score in detailed results
-
-    // The detailed dimension scores are now in an expandable section
-    // so they won't be visible until the section is expanded
   });
 
   it('provides export options', async () => {

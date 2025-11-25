@@ -3,6 +3,8 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
+import AppHeader from '../components/layout/AppHeader';
+
 /**
  * About MITA page - provides information about the MITA framework
  */
@@ -18,10 +20,14 @@ const AboutMITA: React.FC = () => {
       </Head>
 
       <div className="ds-base">
-        <div className="ds-l-container ds-u-padding-y--4">
+        <AppHeader />
+        <div
+          className="ds-l-container ds-u-padding-y--4"
+          style={{ marginTop: 'var(--app-header-height)' }}
+        >
           <main role="main" className="ds-l-row ds-u-justify-content--center">
             <div className="ds-l-col--12 ds-l-md-col--10 ds-l-lg-col--8">
-              <header className="ds-u-margin-bottom--6 ds-u-text-align--center">
+              <header className="ds-u-margin-bottom--6 ds-u-text-align--center ds-u-padding-top--4">
                 <h1 className="ds-display--1 ds-u-margin-bottom--3 ds-u-color--primary">
                   About MITA
                 </h1>

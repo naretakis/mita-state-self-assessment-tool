@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
 import { AssessmentResults } from '../../../components/assessment';
 import AssessmentHeader from '../../../components/assessment/AssessmentHeader';
 import AssessmentSidebar from '../../../components/assessment/AssessmentSidebar';
+import AppHeader from '../../../components/layout/AppHeader';
 import { ContentService } from '../../../services/ContentService';
 import enhancedStorageService from '../../../services/EnhancedStorageService';
 
@@ -85,9 +86,9 @@ export default function AssessmentResultsPage() {
     setSteps(newSteps);
   };
 
-  const navigateToStep = (stepIndex: number) => {
+  const navigateToStep = async (stepIndex: number) => {
     if (stepIndex >= 0 && stepIndex < steps.length) {
-      router.push(`/assessment/${id}`);
+      await router.push(`/assessment/${id}`);
     }
   };
 
@@ -121,6 +122,8 @@ export default function AssessmentResultsPage() {
 
   return (
     <div className="ds-base">
+      <AppHeader />
+
       <AssessmentHeader
         assessmentName={assessment.stateName}
         systemName={assessment.metadata?.systemName}

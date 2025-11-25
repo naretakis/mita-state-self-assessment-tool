@@ -20,8 +20,8 @@ export default [
       '.cache/**',
       'coverage/**',
       'src/utils/dynamicImport.ts',
-      'src/examples/parserExample.ts'
-    ]
+      'src/examples/parserExample.ts',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -68,7 +68,10 @@ export default [
       // 'react-hooks/exhaustive-deps': 'warn', // Temporarily disabled due to ESLint compatibility issue
 
       // TypeScript rules
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/ban-ts-comment': ['warn', { 'ts-ignore': 'allow-with-description' }],
@@ -79,7 +82,16 @@ export default [
       'import/order': [
         'warn',
         {
-          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'],
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
+            'object',
+            'type',
+          ],
           pathGroups: [
             {
               pattern: 'react',
@@ -107,8 +119,8 @@ export default [
       'no-debugger': 'warn',
       'prefer-const': 'error',
       'no-var': 'error',
-      'eqeqeq': ['error', 'always', { null: 'ignore' }],
-      'curly': ['error', 'all'],
+      eqeqeq: ['error', 'always', { null: 'ignore' }],
+      curly: ['error', 'all'],
 
       // Next.js specific rules
       '@next/next/no-duplicate-head': 'off',
@@ -155,5 +167,5 @@ export default [
       'no-undef': 'off',
       'no-useless-escape': 'off',
     },
-  }
+  },
 ];

@@ -5,11 +5,11 @@
 }
 
 .bannerContent {
-  max-width: 1200px;
+  max-width: var(--content-max-width);
   margin: 0 auto;
   display: flex;
   align-items: flex-start;
-  padding: 0 1rem;
+  gap: var(--spacing-2);
 }
 
 .bannerIcon {

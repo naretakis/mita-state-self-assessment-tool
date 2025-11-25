@@ -3,7 +3,6 @@
   /* Sidebar dimensions */
   --sidebar-width: 320px;
   --sidebar-collapsed-width: 60px;
-  --sidebar-header-height: 130px;
 
   /* Colors - Using design system tokens */
   --sidebar-bg: #f8f9fa;
@@ -38,9 +37,9 @@
 
 .assessment-sidebar {
   position: fixed;
-  top: var(--sidebar-header-height);
+  top: var(--combined-header-height);
   left: 0;
-  height: calc(100vh - var(--sidebar-header-height));
+  height: calc(100vh - var(--combined-header-height));
   width: var(--sidebar-width);
   background: var(--sidebar-bg);
   border-right: 1px solid var(--sidebar-border);
@@ -71,32 +70,7 @@
   background: var(--sidebar-text-muted);
 }
 
-.assessment-sidebar--collapsed {
-  width: var(--sidebar-collapsed-width);
-}
-
-.assessment-sidebar--collapsed .assessment-sidebar__nav {
-  display: none;
-}
-
-.assessment-sidebar--collapsed::after {
-  content: '→';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.25rem;
-  color: var(--sidebar-text-muted);
-  cursor: pointer;
-  padding: var(--sidebar-gap);
-  border-radius: 4px;
-  transition: all var(--sidebar-hover-transition);
-}
-
-.assessment-sidebar--collapsed:hover::after {
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--sidebar-text);
-}
+/* Collapsed state removed for desktop - only used on mobile */
 
 .assessment-sidebar__header {
   padding: var(--sidebar-padding);
@@ -139,39 +113,7 @@
   transform: scale(0.95);
 }
 
-.assessment-sidebar__collapse-btn {
-  width: 100%;
-  padding: var(--sidebar-gap);
-  margin-top: var(--sidebar-gap);
-  border: 1px solid var(--sidebar-border);
-  background: var(--sidebar-bg);
-  border-radius: var(--sidebar-border-radius);
-  cursor: pointer;
-  font-size: var(--sidebar-font-size-sm);
-  color: var(--sidebar-text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
-  transition: all var(--sidebar-hover-transition);
-  min-height: var(--touch-target-min);
-}
-
-.assessment-sidebar__collapse-btn:hover {
-  background: #e9ecef;
-  color: var(--sidebar-text);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.assessment-sidebar__collapse-btn:focus {
-  outline: 2px solid var(--sidebar-current-border);
-  outline-offset: 2px;
-}
-
-.assessment-sidebar__collapse-btn:active {
-  transform: translateY(0);
-}
+/* Collapse button removed - sidebar always expanded on desktop */
 
 .assessment-sidebar__title {
   margin: 0;
@@ -499,18 +441,30 @@
   }
 }
 
-/* Main content adjustment */
+/* Assessment page wrapper */
+.assessment-page {
+  position: relative;
+  min-height: 100vh;
+  padding-top: var(--combined-header-height);
+}
+
+/* Main content area - handles sidebar margin */
 .assessment-main-content {
-  transition: margin-left 0.3s ease;
-  padding-top: 0; /* Remove top padding since header is sticky */
+  transition: margin-left var(--sidebar-transition);
+  min-height: calc(100vh - var(--combined-header-height));
 }
 
 .assessment-main-content--sidebar-expanded {
-  margin-left: 320px;
+  margin-left: var(--sidebar-width);
 }
 
-.assessment-main-content--sidebar-collapsed {
-  margin-left: 60px;
+/* Sidebar always expanded on desktop - no collapsed state */
+
+/* Inner content wrapper - handles padding */
+.assessment-content-inner {
+  padding: var(--spacing-4) var(--spacing-3);
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 /* ========================================
@@ -555,13 +509,12 @@
     transform: translateX(0);
   }
 
-  .assessment-sidebar--collapsed {
-    width: var(--sidebar-width); /* Full width on mobile when open */
+  .assessment-main-content--sidebar-expanded {
+    margin-left: 0;
   }
 
-  .assessment-main-content--sidebar-expanded,
-  .assessment-main-content--sidebar-collapsed {
-    margin-left: 0;
+  .assessment-content-inner {
+    padding: var(--spacing-3) var(--spacing-2);
   }
 
   .assessment-sidebar__capability-header {
@@ -643,7 +596,6 @@
   .assessment-sidebar__step-button,
   .assessment-sidebar__capability-header,
   .assessment-sidebar__close-btn,
-  .assessment-sidebar__collapse-btn,
   .assessment-sidebar__results-btn,
   .assessment-sidebar__step-icon,
   .assessment-sidebar__expand-icon,
@@ -657,7 +609,6 @@
   .assessment-sidebar__step-button:hover,
   .assessment-sidebar__capability-header:hover,
   .assessment-sidebar__close-btn:hover,
-  .assessment-sidebar__collapse-btn:hover,
   .assessment-sidebar__results-btn:hover {
     transform: none !important;
   }

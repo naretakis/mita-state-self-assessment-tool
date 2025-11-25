@@ -1,4 +1,4 @@
-import React, { act } from 'react';
+import React from 'react';
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
@@ -102,7 +102,9 @@ describe('StorageErrorHandler', () => {
       isLocalStorageAvailable: true,
       isIndexedDBAvailable: true,
       localStorageUsage: 1024,
-      indexedDBUsage: 2048,
+      localStorageLimit: 5242880,
+      indexedDBAvailable: true,
+      preferredStorage: 'localStorage',
     });
 
     // Mock useEffect to avoid async issues
@@ -124,7 +126,9 @@ describe('StorageErrorHandler', () => {
       isLocalStorageAvailable: true,
       isIndexedDBAvailable: false,
       localStorageUsage: 1024,
-      indexedDBUsage: 0,
+      localStorageLimit: 5242880,
+      indexedDBAvailable: false,
+      preferredStorage: 'localStorage',
     });
 
     // Try rendering without the helper function first

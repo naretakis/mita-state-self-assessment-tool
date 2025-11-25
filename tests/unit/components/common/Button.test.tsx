@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import Button from '@/components/common/Button';
 
@@ -36,15 +34,18 @@ describe('Button Component', () => {
   test('renders with different variants', () => {
     const { rerender } = render(<Button label="Primary Button" variant="primary" />);
     let button = screen.getByTestId('button');
-    expect(button).toHaveClass('bg-blue-600');
+    expect(button).toHaveClass('ds-c-button');
+    expect(button).toHaveClass('ds-c-button--primary');
 
     rerender(<Button label="Secondary Button" variant="secondary" />);
     button = screen.getByTestId('button');
-    expect(button).toHaveClass('bg-gray-600');
+    expect(button).toHaveClass('ds-c-button');
+    expect(button).toHaveClass('ds-c-button--transparent');
 
     rerender(<Button label="Outline Button" variant="outline" />);
     button = screen.getByTestId('button');
-    expect(button).toHaveClass('border-gray-300');
+    expect(button).toHaveClass('ds-c-button');
+    expect(button).toHaveClass('ds-c-button--transparent');
   });
 
   test('applies custom className', () => {

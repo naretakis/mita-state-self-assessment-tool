@@ -1,0 +1,113 @@
+/**
+ * Design Tokens CSS
+ * 
+ * CSS custom properties for consistent theming
+ * Based on CMS Design System with MITA-specific values
+ */
+
+:root {
+  /* Spacing Scale (8px base unit) */
+  --spacing-0: 0;
+  --spacing-1: 8px;
+  --spacing-2: 16px;
+  --spacing-3: 24px;
+  --spacing-4: 32px;
+  --spacing-5: 40px;
+  --spacing-6: 48px;
+  --spacing-7: 56px;
+  --spacing-8: 64px;
+
+  /* Breakpoints */
+  --breakpoint-sm: 544px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+
+  /* Touch Targets */
+  --touch-target-min: 44px;
+  --touch-target-comfortable: 48px;
+
+  /* Typography */
+  --font-size-base: 16px;
+  --line-height-base: 1.5;
+  --font-family: 'Source Sans Pro', 'Helvetica Neue', 'Helvetica', 'Roboto', 'Arial', sans-serif;
+
+  /* Colors - CMS Design System (WCAG AA Compliant) */
+  --color-primary: #0071bc; /* Contrast ratio 4.54:1 on white */
+  --color-primary-darker: #205493; /* Contrast ratio 7.48:1 on white */
+  --color-primary-darkest: #112e51; /* Contrast ratio 13.04:1 on white */
+  --color-secondary: #112e51; /* Contrast ratio 13.04:1 on white */
+  --color-success: #2e8540; /* Contrast ratio 4.56:1 on white */
+  --color-warning: #fdb81e; /* Use with caution - 2.42:1, needs dark text */
+  --color-error: #d83933; /* Contrast ratio 4.52:1 on white */
+  --color-text: #212121; /* Contrast ratio 16.10:1 on white */
+  --color-text-muted: #5c5c5c; /* Contrast ratio 7.00:1 on white */
+  --color-background: #f9f9f9;
+  --color-background-light: #ffffff;
+  --color-border: #dcdee0;
+  --color-border-dark: #d6d7d9;
+
+  /* Focus Indicator */
+  --focus-color: #ffd700;
+  --focus-width: 3px;
+  --focus-offset: 2px;
+
+  /* Contrast Ratios (for reference) */
+  --contrast-normal-text: 4.5;
+  --contrast-large-text: 3;
+  --contrast-ui-components: 3;
+
+  /* Layout Heights */
+  /* AppHeader: title (1.5rem * 1.3 line-height ≈ 31px) + padding-y-3 (24px top + 24px bottom) = ~79px, rounded to 80px */
+  --app-header-height: 80px; /* AppHeader height (title + padding) */
+  --assessment-header-height: 80px; /* AssessmentHeader height - compact layout with spacing-2 padding (16px top + 16px bottom) */
+  --combined-header-height: calc(
+    var(--app-header-height) + var(--assessment-header-height)
+  ); /* Total header height for assessment pages */
+
+  /* Z-index Scale */
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-fixed: 1030;
+  --z-index-modal-backdrop: 1040;
+  --z-index-modal: 1050;
+  --z-index-popover: 1060;
+  --z-index-tooltip: 1070;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-base: 0.3s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
+
+  /* Border Radius */
+  --border-radius-sm: 3px;
+  --border-radius-md: 4px;
+  --border-radius-lg: 8px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  /* Content Width */
+  --content-max-width: 1224px;
+  --content-max-width-narrow: 800px;
+  --content-max-width-text: 66ch;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0.01ms;
+    --transition-base: 0.01ms;
+    --transition-slow: 0.01ms;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --focus-width: 4px;
+    --border-width: 2px;
+  }
+}

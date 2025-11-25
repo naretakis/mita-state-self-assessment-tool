@@ -7,9 +7,9 @@ import styles from './PrototypeBanner.module.css';
  */
 const PrototypeBanner: React.FC = () => {
   return (
-    <div className={`${styles.banner} ds-u-padding--2`}>
+    <div className={`${styles.banner} ds-u-padding-y--2 ds-u-padding-x--2`}>
       <div className={styles.bannerContent}>
-        <div className={`${styles.bannerIcon} ds-u-margin-right--2`}>⚠️</div>
+        <div className={styles.bannerIcon}>⚠️</div>
         <div className={styles.bannerText}>
           <strong>Minimum Lovable Prototype:</strong> This tool is under active development using{' '}
           <a

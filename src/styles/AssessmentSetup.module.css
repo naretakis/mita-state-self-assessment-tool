@@ -129,6 +129,14 @@
   margin-right: 0;
   position: relative;
   z-index: 1;
+  /* Add padding to accommodate focus outline without layout shift */
+  padding: 5px;
+  margin: -5px;
+}
+
+.areaCheckbox:focus {
+  outline: 3px solid #ffd700;
+  outline-offset: 2px;
 }
 
 .areaContent {

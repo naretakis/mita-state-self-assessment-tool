@@ -59,7 +59,7 @@ export class PerformanceOptimizer {
   /**
    * Estimate memory usage for export data
    */
-  static estimateMemoryUsage(data: any): number {
+  static estimateMemoryUsage(data: unknown): number {
     try {
       // Rough estimation based on JSON string length
       const jsonString = JSON.stringify(data);
@@ -260,7 +260,9 @@ export class PerformanceOptimizer {
   private static getAvailableMemory(): number {
     // Use performance.memory if available (Chrome)
     if ('memory' in performance) {
-      const memory = (performance as any).memory;
+      const memory = (
+        performance as { memory: { jsHeapSizeLimit: number; usedJSHeapSize: number } }
+      ).memory;
       return memory.jsHeapSizeLimit - memory.usedJSHeapSize;
     }
 
@@ -270,7 +272,7 @@ export class PerformanceOptimizer {
 
   private static getUsedMemory(): number {
     if ('memory' in performance) {
-      const memory = (performance as any).memory;
+      const memory = (performance as { memory: { usedJSHeapSize: number } }).memory;
       return memory.usedJSHeapSize;
     }
 
@@ -284,8 +286,8 @@ export class PerformanceOptimizer {
 
   private static async requestGarbageCollection(): Promise<void> {
     // Force garbage collection if available (development only)
-    if ('gc' in window && typeof (window as any).gc === 'function') {
-      (window as any).gc();
+    if ('gc' in window && typeof (window as { gc?: () => void }).gc === 'function') {
+      (window as { gc: () => void }).gc();
     }
 
     // Yield to allow cleanup
@@ -296,20 +298,22 @@ export class PerformanceOptimizer {
     return new Promise(resolve => setTimeout(resolve, 0));
   }
 
-  private static estimateObjectSize(obj: any): number {
+  private static estimateObjectSize(obj: unknown): number {
     let size = 0;
 
     try {
       const stack = [obj];
-      const visited = new WeakSet();
+      const visited = new WeakSet<WeakKey>();
 
       while (stack.length > 0) {
         const current = stack.pop();
 
-        if (visited.has(current)) {
+        if (current && typeof current === 'object' && visited.has(current as WeakKey)) {
           continue;
         }
-        visited.add(current);
+        if (current && typeof current === 'object') {
+          visited.add(current as WeakKey);
+        }
 
         if (typeof current === 'string') {
           size += current.length * 2; // Unicode

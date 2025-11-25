@@ -258,7 +258,7 @@ export function UserDashboard() {
       <div className="ds-l-row ds-u-justify-content--center">
         <div className="ds-l-col--12 ds-l-lg-col--10">
           {/* Header */}
-          <header className="ds-u-margin-bottom--4">
+          <header className="ds-u-margin-bottom--4 ds-u-padding-top--4">
             <h1 className="ds-display--1 ds-u-margin-bottom--2">Assessment Dashboard</h1>
             <p className="ds-text--lead">
               Manage your MITA assessments and track your progress across capability areas.

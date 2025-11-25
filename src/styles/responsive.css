@@ -96,9 +96,47 @@
 
 /* Touch-friendly buttons */
 .ds-c-button {
-  min-height: 44px;
-  min-width: 44px;
-  padding: 12px 16px;
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  padding: var(--spacing-2) var(--spacing-3);
+  /* Add touch feedback */
+  -webkit-tap-highlight-color: rgba(0, 113, 188, 0.2);
+  touch-action: manipulation;
+}
+
+.ds-c-button:active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+/* Touch-friendly links */
+a {
+  -webkit-tap-highlight-color: rgba(0, 113, 188, 0.2);
+  touch-action: manipulation;
+}
+
+/* Touch-friendly form inputs */
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: rgba(0, 113, 188, 0.2);
+  touch-action: manipulation;
+}
+
+/* Ensure adequate spacing between touch targets */
+.ds-c-button + .ds-c-button,
+a + a,
+button + button {
+  margin-left: var(--min-element-spacing);
+}
+
+@media (max-width: 767px) {
+  /* Stack buttons vertically on mobile for easier touch */
+  .ds-c-button + .ds-c-button,
+  button + button {
+    margin-left: 0;
+    margin-top: var(--min-element-spacing);
+  }
 }
 
 /* Mobile button improvements */
@@ -178,18 +216,44 @@
   }
 }
 
-/* Responsive text areas */
-.ds-c-field {
+/* Responsive text areas and form fields */
+.ds-c-field,
+input,
+select,
+textarea {
   font-size: 16px; /* Prevents zoom on iOS */
+  min-height: var(--touch-target-min);
+}
+
+select {
+  /* Touch-friendly dropdown */
+  padding-right: var(--spacing-4);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23212121' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-2) center;
+  background-size: 12px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 @media (max-width: 767px) {
-  .ds-c-field {
+  .ds-c-field,
+  input,
+  select,
+  textarea {
     font-size: 16px;
+    padding: var(--spacing-2);
   }
 
-  textarea.ds-c-field {
+  textarea.ds-c-field,
+  textarea {
     min-height: 120px;
+  }
+
+  /* Larger touch targets on mobile */
+  select {
+    min-height: var(--touch-target-comfortable);
   }
 }
 
@@ -226,12 +290,38 @@
   }
 }
 
-/* Focus indicators */
-.ds-c-button:focus,
-.ds-c-field:focus,
-.ds-c-choice:focus {
-  outline: 3px solid #ffd700;
-  outline-offset: 2px;
+/* Focus indicators - Enhanced for keyboard navigation */
+.ds-c-button:focus-visible,
+.ds-c-field:focus-visible,
+.ds-c-choice:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+}
+
+/* Remove focus outline for mouse users, keep for keyboard users */
+.ds-c-button:focus:not(:focus-visible),
+.ds-c-field:focus:not(:focus-visible),
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Ensure logical tab order */
+[tabindex='-1']:focus {
+  outline: none;
+}
+
+/* Skip link visible on focus */
+.skip-link:focus,
+.ds-c-skip-nav:focus {
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
 }
 
 /* High contrast mode support */
@@ -271,4 +361,60 @@
     background: transparent;
     break-inside: avoid;
   }
+}
+
+/* Color Contrast Compliance */
+/* Ensure warning colors have sufficient contrast */
+.ds-c-alert--warn,
+.ds-u-color--warning {
+  color: #212121; /* Dark text on warning background for contrast */
+}
+
+/* Ensure all text on colored backgrounds has sufficient contrast */
+.ds-c-button--primary,
+.ds-c-button--success,
+.ds-c-button--danger {
+  color: #ffffff; /* White text on dark backgrounds */
+}
+
+/* Status indicators should have non-color indicators */
+.status-indicator::before,
+[data-status]::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: var(--spacing-1);
+}
+
+.status-success::before,
+[data-status='success']::before {
+  background-color: var(--color-success);
+}
+
+.status-warning::before,
+[data-status='warning']::before {
+  background-color: var(--color-warning);
+}
+
+.status-error::before,
+[data-status='error']::before {
+  background-color: var(--color-error);
+}
+
+/* Add text labels for status in addition to color */
+.status-success::after {
+  content: ' (Success)';
+  font-size: 0.875rem;
+}
+
+.status-warning::after {
+  content: ' (Warning)';
+  font-size: 0.875rem;
+}
+
+.status-error::after {
+  content: ' (Error)';
+  font-size: 0.875rem;
 }

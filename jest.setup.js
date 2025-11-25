@@ -1,6 +1,12 @@
 // Import Jest DOM extensions
 import '@testing-library/jest-dom';
 
+// Import jest-axe for accessibility testing
+import { toHaveNoViolations } from 'jest-axe';
+
+// Extend Jest matchers with jest-axe
+expect.extend(toHaveNoViolations);
+
 // Setup DOM environment for React 18
 import { TextDecoder, TextEncoder } from 'util';
 

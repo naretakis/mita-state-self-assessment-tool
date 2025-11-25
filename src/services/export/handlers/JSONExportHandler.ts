@@ -5,7 +5,13 @@
 
 import { ExportHandler } from '../types';
 
-import type { Assessment } from '../../../types';
+import type {
+  Assessment,
+  CapabilityDefinition,
+  DimensionAssessment,
+  DimensionDefinition,
+} from '../../../types';
+import type { EnhancedDimensionScore, EnhancedMaturityScore } from '../../ScoringService';
 import type { ExportData, ExportOptions } from '../types';
 
 export class JSONExportHandler extends ExportHandler {
@@ -103,7 +109,7 @@ export class JSONExportHandler extends ExportHandler {
   /**
    * Serialize dimension data with complete checkbox states
    */
-  private serializeDimension(dimension: any): any {
+  private serializeDimension(dimension: DimensionAssessment | undefined): Record<string, unknown> {
     if (!dimension) {
       return {
         maturityLevel: 0,
@@ -132,7 +138,7 @@ export class JSONExportHandler extends ExportHandler {
   /**
    * Serialize enhanced scores with all calculation details
    */
-  private serializeScores(scores: any[]): any[] {
+  private serializeScores(scores: EnhancedMaturityScore[]): Record<string, unknown>[] {
     return scores.map(score => ({
       capabilityArea: score.capabilityArea || null,
       domain: score.domain || null,
@@ -152,7 +158,9 @@ export class JSONExportHandler extends ExportHandler {
   /**
    * Serialize dimension score with checkbox completion details
    */
-  private serializeDimensionScore(dimensionScore: any): any {
+  private serializeDimensionScore(
+    dimensionScore: EnhancedDimensionScore | undefined
+  ): Record<string, unknown> {
     if (!dimensionScore) {
       return {
         maturityLevel: 0,
@@ -181,7 +189,9 @@ export class JSONExportHandler extends ExportHandler {
   /**
    * Serialize capability definitions for reference
    */
-  private serializeCapabilityDefinitions(definitions: any[]): any[] {
+  private serializeCapabilityDefinitions(
+    definitions: CapabilityDefinition[]
+  ): Record<string, unknown>[] {
     return definitions.map(definition => ({
       id: definition.id || null,
       capabilityDomainName: definition.capabilityDomainName || null,
@@ -205,7 +215,9 @@ export class JSONExportHandler extends ExportHandler {
   /**
    * Serialize dimension definition with checkbox items
    */
-  private serializeDimensionDefinition(dimensionDef: any): any {
+  private serializeDimensionDefinition(
+    dimensionDef: DimensionDefinition | undefined
+  ): Record<string, unknown> {
     if (!dimensionDef) {
       return {
         description: '',
@@ -244,7 +256,7 @@ export class JSONExportHandler extends ExportHandler {
   /**
    * Calculate overall average score
    */
-  private calculateOverallAverage(scores: any[]): number {
+  private calculateOverallAverage(scores: EnhancedMaturityScore[]): number {
     if (!scores || scores.length === 0) {
       return 0;
     }

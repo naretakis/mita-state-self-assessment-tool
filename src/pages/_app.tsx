@@ -1,19 +1,17 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
 import { CMSProvider, ErrorBoundary } from '../components';
-import PrototypeBanner from '../components/common/PrototypeBanner';
 import { StorageProvider } from '../components/storage/StorageProvider';
 
 import type { AppProps } from 'next/app';
 
-import '../styles/globals.css';
 import '../styles/assessment-sidebar.css';
+import '../styles/globals.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const isAssessmentPage = router.pathname.startsWith('/assessment/');
 
   // Handle GitHub Pages SPA routing redirects
   useEffect(() => {
@@ -57,7 +55,6 @@ export default function App({ Component, pageProps }: AppProps) {
     <ErrorBoundary>
       <CMSProvider>
         <StorageProvider>
-          {!isAssessmentPage && <PrototypeBanner />}
           <Component {...pageProps} />
         </StorageProvider>
       </CMSProvider>

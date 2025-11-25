@@ -5,6 +5,8 @@
 
 import { ExportHandler } from '../types';
 
+import type { CapabilityDefinition } from '../../../types';
+import type { EnhancedMaturityScore } from '../../ScoringService';
 import type { ExportData, ExportOptions } from '../types';
 
 export class MarkdownExportHandler extends ExportHandler {
@@ -189,7 +191,7 @@ export class MarkdownExportHandler extends ExportHandler {
     const lines = ['## Detailed Assessment Results', ''];
 
     // Group capabilities by domain
-    const domainGroups = this.groupCapabilitiesByDomain(data.scores, data.assessment.capabilities);
+    const domainGroups = this.groupCapabilitiesByDomain(data.scores, data.capabilities);
 
     for (const [domainName, capabilities] of domainGroups) {
       lines.push(`### ${domainName}`, '');
@@ -211,7 +213,7 @@ export class MarkdownExportHandler extends ExportHandler {
           `- **Overall Score:** ${score.overallScore.toFixed(2)} out of 5.0`,
           `- **Base Maturity Level:** ${score.baseScore.toFixed(1)}`,
           `- **Checkbox Bonus:** +${score.partialCredit.toFixed(2)}`,
-          `- **Status:** ${this.formatStatus(capability.status)}`,
+          `- **Status:** ${this.formatStatus(assessmentData.status)}`,
           ''
         );
 
@@ -317,8 +319,11 @@ export class MarkdownExportHandler extends ExportHandler {
   /**
    * Group capabilities by domain
    */
-  private groupCapabilitiesByDomain(scores: any[], capabilities: any[]): Map<string, any[]> {
-    const domainGroups = new Map<string, any[]>();
+  private groupCapabilitiesByDomain(
+    scores: EnhancedMaturityScore[],
+    capabilities: CapabilityDefinition[]
+  ): Map<string, CapabilityDefinition[]> {
+    const domainGroups = new Map<string, CapabilityDefinition[]>();
 
     for (const capability of capabilities) {
       const domainName = capability.capabilityDomainName;
@@ -343,7 +348,7 @@ export class MarkdownExportHandler extends ExportHandler {
    * Calculate domain summary statistics
    */
   private calculateDomainSummary(
-    scores: any[]
+    scores: EnhancedMaturityScore[]
   ): Array<{ name: string; average: number; count: number }> {
     const domainStats = new Map<string, { total: number; count: number }>();
 
@@ -373,7 +378,7 @@ export class MarkdownExportHandler extends ExportHandler {
   /**
    * Calculate overall average score
    */
-  private calculateOverallAverage(scores: any[]): number {
+  private calculateOverallAverage(scores: EnhancedMaturityScore[]): number {
     if (!scores || scores.length === 0) {
       return 0;
     }

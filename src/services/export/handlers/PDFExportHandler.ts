@@ -8,7 +8,12 @@ import autoTable from 'jspdf-autotable';
 
 import { ExportHandler } from '../types';
 
+import type { CapabilityDefinition } from '../../../types';
+import type { EnhancedMaturityScore } from '../../ScoringService';
 import type { ExportData, ExportOptions } from '../types';
+
+// Type for jsPDF with autoTable plugin
+type PDFWithAutoTable = jsPDF & { lastAutoTable: { finalY: number } };
 
 export class PDFExportHandler extends ExportHandler {
   async generate(data: ExportData, options: ExportOptions): Promise<Blob> {
@@ -188,7 +193,7 @@ export class PDFExportHandler extends ExportHandler {
       margin: { left: 25 },
     });
 
-    currentY = (doc as any).lastAutoTable.finalY + 15;
+    currentY = (doc as PDFWithAutoTable).lastAutoTable.finalY + 15;
     return currentY;
   }
 
@@ -266,7 +271,7 @@ export class PDFExportHandler extends ExportHandler {
       },
     });
 
-    currentY = (doc as any).lastAutoTable.finalY + 15;
+    currentY = (doc as PDFWithAutoTable).lastAutoTable.finalY + 15;
     return currentY;
   }
 
@@ -286,7 +291,7 @@ export class PDFExportHandler extends ExportHandler {
     currentY += 15;
 
     // Group capabilities by domain
-    const domainGroups = this.groupCapabilitiesByDomain(data.scores, data.assessment.capabilities);
+    const domainGroups = this.groupCapabilitiesByDomain(data.scores, data.capabilities);
 
     for (const [domainName, capabilities] of domainGroups) {
       // Check if we need a new page for domain
@@ -465,8 +470,11 @@ export class PDFExportHandler extends ExportHandler {
   /**
    * Group capabilities by domain
    */
-  private groupCapabilitiesByDomain(scores: any[], capabilities: any[]): Map<string, any[]> {
-    const domainGroups = new Map<string, any[]>();
+  private groupCapabilitiesByDomain(
+    scores: EnhancedMaturityScore[],
+    capabilities: CapabilityDefinition[]
+  ): Map<string, CapabilityDefinition[]> {
+    const domainGroups = new Map<string, CapabilityDefinition[]>();
 
     for (const capability of capabilities) {
       const domainName = capability.capabilityDomainName;
@@ -490,7 +498,7 @@ export class PDFExportHandler extends ExportHandler {
   /**
    * Calculate overall average score
    */
-  private calculateOverallAverage(scores: any[]): number {
+  private calculateOverallAverage(scores: EnhancedMaturityScore[]): number {
     if (!scores || scores.length === 0) {
       return 0;
     }

@@ -1,8 +1,7 @@
 import React from 'react';
 
-import Head from 'next/head';
-
 import { UserDashboard } from '../components/dashboard/UserDashboard';
+import Layout from '../components/layout/Layout';
 import { StorageProvider } from '../components/storage/StorageProvider';
 
 /**
@@ -10,22 +9,11 @@ import { StorageProvider } from '../components/storage/StorageProvider';
  */
 const Dashboard: React.FC = () => {
   return (
-    <>
-      <Head>
-        <title>Dashboard - MITA State Self-Assessment Tool</title>
-        <meta name="description" content="Manage your MITA assessments" />
-      </Head>
-
-      <div className="ds-base">
-        <div className="ds-u-padding-y--4">
-          <main role="main">
-            <StorageProvider>
-              <UserDashboard />
-            </StorageProvider>
-          </main>
-        </div>
-      </div>
-    </>
+    <Layout title="Dashboard - MITA State Self-Assessment Tool" maxWidth="xl">
+      <StorageProvider>
+        <UserDashboard />
+      </StorageProvider>
+    </Layout>
   );
 };
 

@@ -5,6 +5,8 @@
 
 import { ExportHandler } from '../types';
 
+import type { DimensionAssessment } from '../../../types';
+import type { EnhancedMaturityScore } from '../../ScoringService';
 import type { ExportData, ExportOptions } from '../types';
 
 export class CSVExportHandler extends ExportHandler {
@@ -175,12 +177,23 @@ export class CSVExportHandler extends ExportHandler {
    */
   private generateDataRow(
     data: ExportData,
-    score: any,
-    assessmentData: any,
+    score: EnhancedMaturityScore,
+    assessmentData: {
+      id: string;
+      capabilityDomainName: string;
+      capabilityAreaName: string;
+      status: string;
+      dimensions: Record<string, unknown>;
+    },
     dimension: string,
     dimensionLabel: string,
-    dimScore: any,
-    dimData: any,
+    dimScore: {
+      maturityLevel: number;
+      finalScore: number;
+      partialCredit: number;
+      checkboxCompletion: { completed: number; total: number; percentage: number };
+    },
+    dimData: DimensionAssessment,
     options: ExportOptions
   ): string[] {
     const row = [
@@ -289,7 +302,7 @@ export class CSVExportHandler extends ExportHandler {
   /**
    * Calculate overall average score
    */
-  private calculateOverallAverage(scores: any[]): number {
+  private calculateOverallAverage(scores: EnhancedMaturityScore[]): number {
     if (!scores || scores.length === 0) {
       return 0;
     }

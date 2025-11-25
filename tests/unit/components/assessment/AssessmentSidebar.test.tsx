@@ -8,34 +8,119 @@ import type { Assessment, CapabilityDefinition, OrbitDimension } from '../../../
 const mockAssessment: Assessment = {
   id: 'test-assessment',
   stateName: 'Test State',
-  systemName: 'Test System',
   createdAt: '2025-01-01T00:00:00Z',
   updatedAt: '2025-01-01T12:00:00Z',
   status: 'in-progress',
+  metadata: {
+    assessmentVersion: '1.0',
+    systemName: 'Test System',
+  },
   capabilities: [
     {
       id: 'cap-1',
-      name: 'Test Capability 1',
+      capabilityDomainName: 'Test Domain 1',
+      capabilityAreaName: 'Test Capability 1',
+      status: 'in-progress' as const,
       dimensions: {
-        outcome: { maturityLevel: 2, evidence: 'Test evidence' },
-        role: { maturityLevel: 0, evidence: '' },
-        businessProcess: { maturityLevel: 1, evidence: 'Some evidence' },
-        information: { maturityLevel: 0, evidence: '' },
-        technology: { maturityLevel: 3, evidence: 'Tech evidence' },
+        outcome: {
+          maturityLevel: 2,
+          evidence: 'Test evidence',
+          barriers: '',
+          plans: '',
+          notes: '',
+          lastUpdated: new Date().toISOString(),
+        },
+        role: {
+          maturityLevel: 0,
+          evidence: '',
+          barriers: '',
+          plans: '',
+          notes: '',
+          lastUpdated: new Date().toISOString(),
+        },
+        businessProcess: {
+          maturityLevel: 1,
+          evidence: 'Some evidence',
+          barriers: '',
+          plans: '',
+          notes: '',
+          lastUpdated: new Date().toISOString(),
+        },
+        information: {
+          maturityLevel: 0,
+          evidence: '',
+          barriers: '',
+          plans: '',
+          notes: '',
+          lastUpdated: new Date().toISOString(),
+        },
+        technology: {
+          maturityLevel: 3,
+          evidence: 'Tech evidence',
+          barriers: '',
+          plans: '',
+          notes: '',
+          lastUpdated: new Date().toISOString(),
+        },
       },
     },
     {
       id: 'cap-2',
-      name: 'Test Capability 2',
+      capabilityDomainName: 'Test Domain 2',
+      capabilityAreaName: 'Test Capability 2',
+      status: 'not-started' as const,
       dimensions: {
-        outcome: { maturityLevel: 0, evidence: '' },
-        role: { maturityLevel: 0, evidence: '' },
-        businessProcess: { maturityLevel: 0, evidence: '' },
-        information: { maturityLevel: 0, evidence: '' },
-        technology: { maturityLevel: 0, evidence: '' },
+        outcome: {
+          maturityLevel: 0,
+          evidence: '',
+          barriers: '',
+          plans: '',
+          notes: '',
+          lastUpdated: new Date().toISOString(),
+        },
+        role: {
+          maturityLevel: 0,
+          evidence: '',
+          barriers: '',
+          plans: '',
+          notes: '',
+          lastUpdated: new Date().toISOString(),
+        },
+        businessProcess: {
+          maturityLevel: 0,
+          evidence: '',
+          barriers: '',
+          plans: '',
+          notes: '',
+          lastUpdated: new Date().toISOString(),
+        },
+        information: {
+          maturityLevel: 0,
+          evidence: '',
+          barriers: '',
+          plans: '',
+          notes: '',
+          lastUpdated: new Date().toISOString(),
+        },
+        technology: {
+          maturityLevel: 0,
+          evidence: '',
+          barriers: '',
+          plans: '',
+          notes: '',
+          lastUpdated: new Date().toISOString(),
+        },
       },
     },
   ],
+};
+
+const mockMaturityLevels = {
+  level1: 'Level 1 description',
+  level2: 'Level 2 description',
+  level3: 'Level 3 description',
+  level4: 'Level 4 description',
+  level5: 'Level 5 description',
 };
 
 const mockCapabilities: CapabilityDefinition[] = [
@@ -43,44 +128,76 @@ const mockCapabilities: CapabilityDefinition[] = [
     id: 'cap-1',
     capabilityAreaName: 'Test Capability 1',
     capabilityDomainName: 'Test Domain 1',
-    capabilityAreaDescription: 'Description 1',
-    capabilityDomainDescription: 'Domain Description 1',
+    capabilityVersion: '1.0',
+    capabilityAreaCreated: '2025-01-01',
+    capabilityAreaLastUpdated: '2025-01-01',
+    description: 'Test capability description',
+    domainDescription: 'Domain Description 1',
+    areaDescription: 'Description 1',
     dimensions: {
-      outcome: { name: 'Outcome', description: 'Outcome description', maturityLevels: [] },
-      role: { name: 'Role', description: 'Role description', maturityLevels: [] },
+      outcome: {
+        description: 'Outcome description',
+        maturityAssessment: [],
+        maturityLevels: mockMaturityLevels,
+      },
+      role: {
+        description: 'Role description',
+        maturityAssessment: [],
+        maturityLevels: mockMaturityLevels,
+      },
       businessProcess: {
-        name: 'Business Process',
         description: 'Business Process description',
-        maturityLevels: [],
+        maturityAssessment: [],
+        maturityLevels: mockMaturityLevels,
       },
       information: {
-        name: 'Information',
         description: 'Information description',
-        maturityLevels: [],
+        maturityAssessment: [],
+        maturityLevels: mockMaturityLevels,
       },
-      technology: { name: 'Technology', description: 'Technology description', maturityLevels: [] },
+      technology: {
+        description: 'Technology description',
+        maturityAssessment: [],
+        maturityLevels: mockMaturityLevels,
+      },
     },
   },
   {
     id: 'cap-2',
     capabilityAreaName: 'Test Capability 2',
     capabilityDomainName: 'Test Domain 2',
-    capabilityAreaDescription: 'Description 2',
-    capabilityDomainDescription: 'Domain Description 2',
+    capabilityVersion: '1.0',
+    capabilityAreaCreated: '2025-01-01',
+    capabilityAreaLastUpdated: '2025-01-01',
+    description: 'Test capability 2 description',
+    domainDescription: 'Domain Description 2',
+    areaDescription: 'Description 2',
     dimensions: {
-      outcome: { name: 'Outcome', description: 'Outcome description', maturityLevels: [] },
-      role: { name: 'Role', description: 'Role description', maturityLevels: [] },
+      outcome: {
+        description: 'Outcome description',
+        maturityAssessment: [],
+        maturityLevels: mockMaturityLevels,
+      },
+      role: {
+        description: 'Role description',
+        maturityAssessment: [],
+        maturityLevels: mockMaturityLevels,
+      },
       businessProcess: {
-        name: 'Business Process',
         description: 'Business Process description',
-        maturityLevels: [],
+        maturityAssessment: [],
+        maturityLevels: mockMaturityLevels,
       },
       information: {
-        name: 'Information',
         description: 'Information description',
-        maturityLevels: [],
+        maturityAssessment: [],
+        maturityLevels: mockMaturityLevels,
       },
-      technology: { name: 'Technology', description: 'Technology description', maturityLevels: [] },
+      technology: {
+        description: 'Technology description',
+        maturityAssessment: [],
+        maturityLevels: mockMaturityLevels,
+      },
     },
   },
 ];
@@ -149,13 +266,6 @@ describe('AssessmentSidebar', () => {
 
       const resultsButton = screen.getByText('View Results');
       expect(resultsButton).toBeInTheDocument();
-    });
-
-    it('renders in collapsed state', () => {
-      render(<AssessmentSidebar {...defaultProps} isCollapsed={true} />);
-
-      const sidebar = screen.getByLabelText(/assessment navigation/i);
-      expect(sidebar).toHaveClass('assessment-sidebar--collapsed');
     });
   });
 
@@ -276,26 +386,6 @@ describe('AssessmentSidebar', () => {
       fireEvent.click(closeButton);
 
       expect(onMobileToggle).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('Collapse Functionality', () => {
-    it('calls onToggleCollapse when collapse button is clicked', () => {
-      const onToggleCollapse = jest.fn();
-      render(<AssessmentSidebar {...defaultProps} onToggleCollapse={onToggleCollapse} />);
-
-      const collapseButton = screen.getByLabelText(/collapse sidebar/i);
-      fireEvent.click(collapseButton);
-
-      expect(onToggleCollapse).toHaveBeenCalledTimes(1);
-    });
-
-    it('hides navigation when collapsed', () => {
-      render(<AssessmentSidebar {...defaultProps} isCollapsed={true} />);
-
-      // Navigation should be hidden when collapsed
-      expect(screen.queryByText('Test Capability 1')).not.toBeInTheDocument();
-      expect(screen.queryByText('View Results')).not.toBeInTheDocument();
     });
   });
 

@@ -29,7 +29,7 @@ import { useStorageContext } from '../storage/StorageProvider';
 import { CleanDetailedResults } from './CleanDetailedResults';
 import { EnhancedExportSection } from './EnhancedExportSection';
 
-import type { Assessment } from '../../types';
+import type { Assessment, CapabilityDefinition } from '../../types';
 
 // Register Chart.js components
 ChartJS.register(
@@ -57,8 +57,14 @@ type MaturityScore = EnhancedMaturityScore;
  */
 function calculateMaturityScores(assessment: Assessment, definitions: unknown[]): MaturityScore[] {
   try {
+    // Type guard and cast to CapabilityDefinition[]
+    const capabilityDefinitions = definitions.filter(
+      (def): def is CapabilityDefinition =>
+        typeof def === 'object' && def !== null && 'id' in def && 'capabilityDomainName' in def
+    );
+
     // Use the enhanced scoring service
-    return scoringService.calculateOverallScore(assessment, definitions);
+    return scoringService.calculateOverallScore(assessment, capabilityDefinitions);
   } catch (error) {
     console.error('Error calculating enhanced scores, falling back to basic scoring:', error);
 
@@ -388,16 +394,19 @@ export function AssessmentResults({ assessmentId }: AssessmentResultsProps) {
 
           {/* Navigation */}
           <div className="ds-u-margin-bottom--4 ds-u-padding-top--4 ds-u-border-top--1">
-            <div className="ds-l-row">
-              <div className="ds-l-col--auto ds-u-margin-right--2">
-                <Link href="/dashboard" className="ds-c-button ds-c-button--primary">
+            <div className="ds-l-row ds-u-gap--2">
+              <div className="ds-l-col--12 ds-l-sm-col--auto">
+                <Link
+                  href="/dashboard"
+                  className="ds-c-button ds-c-button--primary ds-u-width--full ds-u-width--auto\@sm"
+                >
                   Return to Dashboard
                 </Link>
               </div>
-              <div className="ds-l-col--auto">
+              <div className="ds-l-col--12 ds-l-sm-col--auto">
                 <Link
                   href={`/assessment/${assessmentId}`}
-                  className="ds-c-button ds-c-button--transparent"
+                  className="ds-c-button ds-c-button--transparent ds-u-width--full ds-u-width--auto\@sm"
                 >
                   View Assessment Details
                 </Link>

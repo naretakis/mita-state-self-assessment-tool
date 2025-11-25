@@ -22,14 +22,6 @@ describe('AssessmentHeader', () => {
   });
 
   describe('Basic Rendering', () => {
-    it('renders with minimal required props', () => {
-      render(<AssessmentHeader assessmentName="Test Assessment" />);
-
-      expect(screen.getByText('Test Assessment')).toBeInTheDocument();
-      expect(screen.getByRole('banner')).toBeInTheDocument();
-      expect(screen.getByText(/Minimum Lovable Prototype/)).toBeInTheDocument();
-    });
-
     it('renders with all props provided', () => {
       const props = {
         assessmentName: 'MITA Assessment',
@@ -69,16 +61,6 @@ describe('AssessmentHeader', () => {
   });
 
   describe('Navigation Controls', () => {
-    it('renders dashboard button and handles click', () => {
-      render(<AssessmentHeader assessmentName="Test Assessment" />);
-
-      const dashboardButton = screen.getByRole('button', { name: /return to dashboard/i });
-      expect(dashboardButton).toBeInTheDocument();
-
-      fireEvent.click(dashboardButton);
-      expect(mockPush).toHaveBeenCalledWith('/dashboard');
-    });
-
     it('renders sidebar toggle when showSidebarToggle is true', () => {
       const onOpenSidebar = jest.fn();
       render(
@@ -242,42 +224,7 @@ describe('AssessmentHeader', () => {
     });
   });
 
-  describe('Development Banner', () => {
-    it('renders development banner with correct links', () => {
-      render(<AssessmentHeader assessmentName="Test Assessment" />);
-
-      expect(screen.getByText(/Minimum Lovable Prototype/)).toBeInTheDocument();
-
-      const agileLink = screen.getByRole('link', { name: /18F's agile approach/i });
-      expect(agileLink).toHaveAttribute('href', 'https://guides.18f.gov/agile/18f-agile-approach/');
-      expect(agileLink).toHaveAttribute('target', '_blank');
-      expect(agileLink).toHaveAttribute('rel', 'noopener noreferrer');
-
-      const repoLink = screen.getByRole('link', { name: /explore our repo/i });
-      expect(repoLink).toHaveAttribute(
-        'href',
-        'https://github.com/naretakis/mita-state-self-assessment-tool'
-      );
-      expect(repoLink).toHaveAttribute('target', '_blank');
-
-      const feedbackLink = screen.getByRole('link', { name: /share feedback/i });
-      expect(feedbackLink).toHaveAttribute(
-        'href',
-        'https://github.com/naretakis/mita-state-self-assessment-tool/issues'
-      );
-      expect(feedbackLink).toHaveAttribute('target', '_blank');
-    });
-  });
-
   describe('Accessibility', () => {
-    it('has proper ARIA labels for interactive elements', () => {
-      const onOpenSidebar = jest.fn();
-      render(<AssessmentHeader assessmentName="Test Assessment" onOpenSidebar={onOpenSidebar} />);
-
-      expect(screen.getByRole('button', { name: /return to dashboard/i })).toBeInTheDocument();
-      expect(screen.getByLabelText(/toggle assessment navigation/i)).toBeInTheDocument();
-    });
-
     it('has proper heading structure', () => {
       render(<AssessmentHeader assessmentName="Test Assessment" currentStep="Current Step" />);
 
@@ -293,14 +240,6 @@ describe('AssessmentHeader', () => {
   });
 
   describe('Responsive Behavior', () => {
-    it('renders mobile-specific elements', () => {
-      render(<AssessmentHeader assessmentName="Test Assessment" />);
-
-      // Dashboard text should be hidden on mobile (via CSS)
-      const dashboardText = screen.getByText('Dashboard');
-      expect(dashboardText).toHaveClass('assessment-header__dashboard-text');
-    });
-
     it('handles window resize events', async () => {
       render(<AssessmentHeader assessmentName="Test Assessment" />);
 

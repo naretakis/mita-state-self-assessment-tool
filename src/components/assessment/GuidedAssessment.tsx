@@ -7,6 +7,7 @@ import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 import { ContentService } from '../../services/ContentService';
 import enhancedStorageService from '../../services/EnhancedStorageService';
+import AppHeader from '../layout/AppHeader';
 
 import AssessmentErrorBoundary from './AssessmentErrorBoundary';
 import AssessmentHeader from './AssessmentHeader';
@@ -50,7 +51,6 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const errorHandler = useErrorHandler();
 
@@ -354,13 +354,16 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
         // Export will be handled by the error boundary
       }}
     >
-      <div className="ds-base" ref={containerRef} tabIndex={-1}>
+      <div className="ds-base assessment-page" ref={containerRef} tabIndex={-1}>
         <LiveRegions />
 
         {/* Skip link for keyboard users */}
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
+
+        {/* Main App Header for consistent navigation */}
+        <AppHeader />
 
         <AssessmentHeader
           assessmentName={assessment.stateName}
@@ -380,83 +383,79 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
           steps={steps}
           currentStepIndex={currentStepIndex}
           onNavigateToStep={navigateToStep}
-          isCollapsed={sidebarCollapsed}
-          onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+          isCollapsed={false}
+          onToggleCollapse={() => {}}
           isMobileOpen={mobileSidebarOpen}
           onMobileToggle={() => setMobileSidebarOpen(!mobileSidebarOpen)}
         />
 
-        <div
-          className={`ds-l-container ds-u-padding-y--2 assessment-main-content ${
-            sidebarCollapsed
-              ? 'assessment-main-content--sidebar-collapsed'
-              : 'assessment-main-content--sidebar-expanded'
-          }`}
-        >
-          {/* Show storage error handler if there's a storage error */}
-          {errorHandler.isStorageError && errorHandler.error && (
-            <StorageErrorHandler
-              error={errorHandler.error.originalError}
-              assessment={assessment || undefined}
-              onRetry={() => errorHandler.retry(saveAssessment)}
-              onContinueOffline={() => {
-                errorHandler.clearError();
-                setError(null);
-              }}
-              className="ds-u-margin-bottom--3"
-            />
-          )}
-
-          {/* Show general error message if not a storage error */}
-          {error && !errorHandler.isStorageError && (
-            <div className="ds-c-alert ds-c-alert--error ds-u-margin-bottom--3" role="alert">
-              <div className="ds-c-alert__body">
-                <p className="ds-c-alert__text">{error}</p>
-              </div>
-            </div>
-          )}
-
-          <main role="main" id="main-content" className="ds-u-margin-top--2" tabIndex={-1}>
-            {currentStep.type === 'overview' && currentCapability && currentDefinition && (
-              <AssessmentErrorBoundary
-                assessmentId={assessmentId}
-                onRetry={() => setCurrentStepIndex(currentStepIndex)} // Retry current step
-              >
-                <CapabilityOverview
-                  capability={currentCapability}
-                  definition={currentDefinition}
-                  onNext={handleNext}
-                  onPrevious={currentStepIndex > 0 ? handlePrevious : undefined}
-                />
-              </AssessmentErrorBoundary>
+        <div className="assessment-main-content assessment-main-content--sidebar-expanded">
+          <div className="assessment-content-inner">
+            {/* Show storage error handler if there's a storage error */}
+            {errorHandler.isStorageError && errorHandler.error && (
+              <StorageErrorHandler
+                error={errorHandler.error.originalError}
+                assessment={assessment || undefined}
+                onRetry={() => errorHandler.retry(saveAssessment)}
+                onContinueOffline={() => {
+                  errorHandler.clearError();
+                  setError(null);
+                }}
+                className="ds-u-margin-bottom--3"
+              />
             )}
 
-            {currentStep.type === 'dimension' &&
-              currentCapability &&
-              currentDefinition &&
-              currentStep.dimension && (
+            {/* Show general error message if not a storage error */}
+            {error && !errorHandler.isStorageError && (
+              <div className="ds-c-alert ds-c-alert--error ds-u-margin-bottom--3" role="alert">
+                <div className="ds-c-alert__body">
+                  <p className="ds-c-alert__text">{error}</p>
+                </div>
+              </div>
+            )}
+
+            <main role="main" id="main-content" tabIndex={-1}>
+              {currentStep.type === 'overview' && currentCapability && currentDefinition && (
                 <AssessmentErrorBoundary
                   assessmentId={assessmentId}
                   onRetry={() => setCurrentStepIndex(currentStepIndex)} // Retry current step
                 >
-                  <DimensionAssessment
+                  <CapabilityOverview
                     capability={currentCapability}
                     definition={currentDefinition}
-                    dimension={currentStep.dimension}
-                    onUpdate={data =>
-                      updateDimension(
-                        currentCapability.id,
-                        currentStep.dimension as OrbitDimension,
-                        data
-                      )
-                    }
                     onNext={handleNext}
-                    onPrevious={handlePrevious}
-                    onSave={saveAssessment}
+                    onPrevious={currentStepIndex > 0 ? handlePrevious : undefined}
                   />
                 </AssessmentErrorBoundary>
               )}
-          </main>
+
+              {currentStep.type === 'dimension' &&
+                currentCapability &&
+                currentDefinition &&
+                currentStep.dimension && (
+                  <AssessmentErrorBoundary
+                    assessmentId={assessmentId}
+                    onRetry={() => setCurrentStepIndex(currentStepIndex)} // Retry current step
+                  >
+                    <DimensionAssessment
+                      capability={currentCapability}
+                      definition={currentDefinition}
+                      dimension={currentStep.dimension}
+                      onUpdate={data =>
+                        updateDimension(
+                          currentCapability.id,
+                          currentStep.dimension as OrbitDimension,
+                          data
+                        )
+                      }
+                      onNext={handleNext}
+                      onPrevious={handlePrevious}
+                      onSave={saveAssessment}
+                    />
+                  </AssessmentErrorBoundary>
+                )}
+            </main>
+          </div>
         </div>
       </div>
     </AssessmentErrorBoundary>
