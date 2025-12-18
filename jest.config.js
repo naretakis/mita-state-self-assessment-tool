@@ -12,7 +12,9 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
-    '@cmsgov/design-system/dist/css/index.css': 'identity-obj-proxy'
+    '@cmsgov/design-system/dist/css/index.css': 'identity-obj-proxy',
+    '^jspdf$': '<rootDir>/tests/mocks/jspdf.js',
+    '^jspdf-autotable$': '<rootDir>/tests/mocks/jspdf-autotable.js'
   },
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }]
