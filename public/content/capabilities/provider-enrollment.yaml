@@ -1,0 +1,79 @@
+# MITA 4.0 Capability Definition - Provider Enrollment
+# Simplified format: metadata and descriptions only
+# Maturity criteria now come from standard ORBIT model
+
+id: provider-enrollment
+version: "2.0"
+
+domain:
+  id: provider
+  name: Provider
+  description: >
+    The Provider capability domain encompasses three related areas: Provider Enrollment, 
+    Provider Management, and Provider Termination.
+
+area:
+  id: provider-enrollment
+  name: Provider Enrollment
+  description: >
+    Provider Enrollment encompasses the processes and systems used to register healthcare 
+    providers in the Medicaid program, including application processing, screening, 
+    verification, and enrollment decisions. This capability area aligns with CMS-Required 
+    outcomes PM1 (Application), PM2-3 (Screening), PM4 (Revalidation), PM6 (Reactivation), 
+    PM8-13 (Site Visits, Background Checks, External Systems Checks, Risk Level Assignment, 
+    Application Fees, Moratoria).
+
+# CMS outcomes alignment
+cmsOutcomes:
+  - id: PM1
+    name: Application
+    description: Provider application processing
+  - id: PM2
+    name: Screening (Initial)
+    description: Initial provider screening
+  - id: PM3
+    name: Screening (Ongoing)
+    description: Ongoing provider screening
+  - id: PM4
+    name: Revalidation
+    description: Provider revalidation process
+  - id: PM6
+    name: Reactivation
+    description: Provider reactivation process
+  - id: PM8
+    name: Site Visits
+    description: Provider site visit requirements
+  - id: PM9
+    name: Background Checks
+    description: Provider background check requirements
+  - id: PM10
+    name: External Systems Checks
+    description: External database verification (LEIE, EPLS, NPPES, DMF)
+  - id: PM11
+    name: Risk Level Assignment
+    description: Provider risk categorization
+  - id: PM12
+    name: Application Fees
+    description: Provider application fee management
+  - id: PM13
+    name: Moratoria
+    description: Enrollment moratoria management
+
+# Key federal requirements
+federalRequirements:
+  - Screening against LEIE (List of Excluded Individuals/Entities)
+  - Screening against EPLS/SAM (Excluded Parties List System)
+  - Verification through NPPES (National Plan and Provider Enumeration System)
+  - Death Master File screening
+  - Five-year revalidation cycle
+  - Risk-based screening protocols
+
+# Related capability areas
+relatedCapabilities:
+  - provider-management
+  - provider-termination
+
+metadata:
+  createdAt: "2025-06-01"
+  updatedAt: "2026-01-13"
+  orbitModelVersion: "4.0"

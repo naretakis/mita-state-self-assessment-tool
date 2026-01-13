@@ -10,3 +10,11 @@ export {
   useTechnologySubDomains,
 } from './useOrbitModel';
 export type { DimensionSummaryItem, UseOrbitModelReturn } from './useOrbitModel';
+
+// Capability hooks (ORBIT-compatible)
+export {
+  useCapabilities,
+  useCapability,
+  useCapabilityDomain,
+  useCapabilitySelection,
+} from './useCapabilities';

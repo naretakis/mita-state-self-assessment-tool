@@ -1,0 +1,37 @@
+# MITA 4.0 Capability Reference Model Index
+# Lists all capability domains and areas available for assessment
+
+version: "4.0"
+description: >
+  The MITA 4.0 Capability Reference Model defines the capabilities that State Medicaid 
+  Agencies (SMAs) possess or seek to develop. Each capability is assessed using the 
+  standardized ORBIT maturity criteria.
+
+domains:
+  - id: provider
+    name: Provider
+    description: >
+      The Provider capability domain encompasses provider enrollment, management, 
+      and termination processes.
+    areas:
+      - id: provider-enrollment
+        name: Provider Enrollment
+        file: provider-enrollment.yaml
+      - id: provider-management
+        name: Provider Management
+        file: provider-management.yaml
+      - id: provider-termination
+        name: Provider Termination
+        file: provider-termination.yaml
+
+# Future domains to be added:
+# - member (Member Management)
+# - claims (Claims Processing)
+# - eligibility (Eligibility Determination)
+# - care-management (Care Management)
+# - financial (Financial Management)
+# - operations (Operations Support)
+
+metadata:
+  lastUpdated: "2026-01-13"
+  orbitModelVersion: "4.0"

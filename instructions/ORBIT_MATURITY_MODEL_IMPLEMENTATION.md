@@ -135,13 +135,23 @@ The Technology dimension is the most complex, with **7 sub-domains**, each conta
   - [x] 1.2.1 Create OrbitMaturityModel types - `src/types/orbit.ts`
   - [x] 1.2.2 Create Technology sub-domain types - included in orbit.ts
   - [x] 1.2.3 Update Assessment types to reference standard criteria - exported from index.ts
-- [ ] **1.3** Simplify capability content files
-  - [ ] 1.3.1 Remove maturity-level specific content from capability files
-  - [ ] 1.3.2 Keep only domain/area metadata and descriptions
+- [x] **1.3** Simplify capability content files
+  - [x] 1.3.1 Remove maturity-level specific content from capability files
+  - [x] 1.3.2 Keep only domain/area metadata and descriptions
+  - Created new simplified YAML format in `public/content/capabilities/`:
+    - `index.yaml` - capability reference model index
+    - `provider-enrollment.yaml` - simplified capability definition
+    - `provider-management.yaml` - simplified capability definition
+    - `provider-termination.yaml` - simplified capability definition
 
 ### Phase 2: Services & Data Loading
-- [ ] **2.1** Create OrbitMaturityService to load and manage ORBIT criteria
-- [ ] **2.2** Update ContentService to work with simplified capability files
+- [x] **2.1** Create OrbitMaturityService to load and manage ORBIT criteria (completed with Phase 1.2)
+- [x] **2.2** Create CapabilityService for simplified capability files
+  - Created `src/services/CapabilityService.ts` - loads YAML capability files
+  - Created `src/hooks/useCapabilities.ts` - React hooks for capability access
+  - Created `src/services/index.ts` - central service exports
+  - Updated `src/hooks/index.ts` - exports new capability hooks
+  - Legacy ContentService preserved for backward compatibility
 - [ ] **2.3** Update ScoringService for new assessment structure
 
 ### Phase 3: UI Components
@@ -244,7 +254,13 @@ public/content/
 | | - src/types/index.ts | ✅ | Exports ORBIT types |
 | | - src/services/OrbitMaturityService.ts | ✅ | YAML loader service |
 | | Phase 2.1 - OrbitMaturityService | ✅ Complete | Included with 1.2 |
-| | Phase 1.3 - Simplify capability files | 🔜 Next | |
+| | Phase 1.3 - Simplify capability files | ✅ Complete | New YAML format |
+| 2026-01-13 | Phase 2.2 - CapabilityService | ✅ Complete | |
+| | - src/services/CapabilityService.ts | ✅ | YAML capability loader |
+| | - src/hooks/useCapabilities.ts | ✅ | React hooks for capabilities |
+| | - src/services/index.ts | ✅ | Central service exports |
+| | - src/hooks/index.ts | ✅ | Updated with new exports |
+| | Phase 2.3 - ScoringService update | 🔜 Next | |
 
 ---
 
