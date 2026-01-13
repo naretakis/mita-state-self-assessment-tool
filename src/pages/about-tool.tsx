@@ -6,16 +6,16 @@ import Link from 'next/link';
 import AppHeader from '../components/layout/AppHeader';
 
 /**
- * About Tool page - provides information about the tool development and contribution
+ * About Tool page - provides information about the MITA 4.0 Maturity Model and tool development
  */
 const AboutTool: React.FC = () => {
   return (
     <>
       <Head>
-        <title>Tool Guide & Development - MITA State Self-Assessment Tool</title>
+        <title>About the Tool - MITA State Self-Assessment Tool</title>
         <meta
           name="description"
-          content="Learn how this tool works, our open source development approach, and how to contribute"
+          content="Learn about the MITA 4.0 Maturity Model, how this tool works, and how to contribute"
         />
       </Head>
 
@@ -29,20 +29,160 @@ const AboutTool: React.FC = () => {
             <div className="ds-l-col--12 ds-l-md-col--10 ds-l-lg-col--8">
               <header className="ds-u-margin-bottom--6 ds-u-text-align--center ds-u-padding-top--4">
                 <h1 className="ds-display--1 ds-u-margin-bottom--3 ds-u-color--primary">
-                  Tool Guide & Development
+                  About the Tool
                 </h1>
                 <p className="ds-text--lead ds-u-measure--wide">
-                  How this tool works, our open source approach, and ways to contribute
+                  Understanding the MITA 4.0 Maturity Model and how this tool supports State
+                  Medicaid Agency self-assessments
                 </p>
               </header>
+
+              <section className="ds-u-margin-bottom--6">
+                <h2 className="ds-h2 ds-u-margin-bottom--3">MITA 4.0 Maturity Model Purpose</h2>
+                <p className="ds-u-margin-bottom--3">
+                  The MITA Maturity Model provides State Medicaid Agencies (SMAs) with a framework
+                  to systematically assess, benchmark, and improve processes, capabilities,
+                  architecture, and performance. The model offers SMAs a clear path to assess
+                  maturity, target specific areas for improvement, and achieve greater efficiency
+                  and effectiveness in delivery of Medicaid Program services.
+                </p>
+
+                <h3 className="ds-h3 ds-u-margin-bottom--2">Maturity Model Goals</h3>
+                <ul className="ds-c-list ds-u-margin-bottom--4">
+                  <li>
+                    <strong>Align with Strategic Objectives:</strong> Help ensure state capabilities
+                    directly support SMA goals
+                  </li>
+                  <li>
+                    <strong>Drive Standardization & Efficiency:</strong> Standardize and streamline
+                    processes across a SMA
+                  </li>
+                  <li>
+                    <strong>Enable Effective Transformation:</strong> Enable transformative and
+                    higher-quality outcomes with greater effectiveness
+                  </li>
+                  <li>
+                    <strong>Optimize Resource Use:</strong> Maximize impact while minimizing waste
+                  </li>
+                  <li>
+                    <strong>Strengthen Risk Management:</strong> Increase the capability to identify
+                    and mitigate risks
+                  </li>
+                  <li>
+                    <strong>Enable Measurable Progress:</strong> Provide measures to track
+                    improvement over time
+                  </li>
+                </ul>
+              </section>
+
+              <section className="ds-u-margin-bottom--6">
+                <h2 className="ds-h2 ds-u-margin-bottom--3">The ORBIT Framework</h2>
+                <p className="ds-u-margin-bottom--3">
+                  MITA 4.0 assesses the maturity of a capability based on how well the SMA performs
+                  that capability using the ORBIT framework:
+                </p>
+                <div className="ds-l-row ds-u-margin-bottom--4">
+                  <div className="ds-l-col--12">
+                    <div className="ds-c-card ds-u-padding--3">
+                      <ul className="ds-c-list ds-u-margin-bottom--0">
+                        <li>
+                          <strong>Outcomes:</strong> The definition of the desired outcomes that
+                          require the capability to be achieved
+                        </li>
+                        <li>
+                          <strong>Roles:</strong> The individual roles responsible for providing the
+                          capability
+                        </li>
+                        <li>
+                          <strong>Business Processes:</strong> The business processes performed to
+                          deliver the capability
+                        </li>
+                        <li>
+                          <strong>Information:</strong> The information and data management
+                          capabilities needed to deliver the capability
+                        </li>
+                        <li>
+                          <strong>Technology:</strong> The technology used to automate the
+                          capability
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="ds-u-margin-bottom--6">
+                <h2 className="ds-h2 ds-u-margin-bottom--3">Maturity Levels</h2>
+                <p className="ds-u-margin-bottom--3">
+                  The MITA 4.0 Maturity Model uses five levels to describe an organization's
+                  maturity progression:
+                </p>
+                <div className="ds-l-row">
+                  <div className="ds-l-col--12 ds-u-margin-bottom--3">
+                    <div className="ds-c-card ds-u-padding--3">
+                      <h3 className="ds-h4 ds-u-margin-bottom--2">Level 1: Initial</h3>
+                      <p className="ds-u-margin-bottom--0">
+                        SMA seeks to adopt enterprise-wide planning and architectural frameworks to
+                        improve program delivery. Current processes are unstructured, reactive, and
+                        inconsistent.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="ds-l-col--12 ds-u-margin-bottom--3">
+                    <div className="ds-c-card ds-u-padding--3">
+                      <h3 className="ds-h4 ds-u-margin-bottom--2">Level 2: Developing</h3>
+                      <p className="ds-u-margin-bottom--0">
+                        SMA complies with federal regulations and guidance and has begun adopting
+                        MES industry-recognized planning and architectural frameworks. Although
+                        basic processes and systems exist, they are not fully standardized or
+                        documented.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="ds-l-col--12 ds-u-margin-bottom--3">
+                    <div className="ds-c-card ds-u-padding--3">
+                      <h3 className="ds-h4 ds-u-margin-bottom--2">Level 3: Defined</h3>
+                      <p className="ds-u-margin-bottom--0">
+                        SMA complies with federal regulations and guidance and has fully implemented
+                        MES industry-recognized planning and architectural frameworks. Processes,
+                        systems, and strategies are standardized, well-documented, and aligned
+                        across the organization.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="ds-l-col--12 ds-u-margin-bottom--3">
+                    <div className="ds-c-card ds-u-padding--3">
+                      <h3 className="ds-h4 ds-u-margin-bottom--2">Level 4: Managed</h3>
+                      <p className="ds-u-margin-bottom--0">
+                        SMA maintains compliance, follows industry-recognized planning and
+                        architectural frameworks, and monitors MES performance to meet goals. The
+                        organization is a thought-leader in the MES ecosystem and actively
+                        collaborates and shares approaches with other SMAs.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="ds-l-col--12 ds-u-margin-bottom--3">
+                    <div className="ds-c-card ds-u-padding--3">
+                      <h3 className="ds-h4 ds-u-margin-bottom--2">Level 5: Optimized</h3>
+                      <p className="ds-u-margin-bottom--0">
+                        The SMA employs advanced, data-driven strategies to manage MES planning and
+                        architecture to align predictive decision-making with the SMA's long-term
+                        goals. The SMA's institutionalized innovation supports adaptability,
+                        scalability, and continuous improvement.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
 
               <section className="ds-u-margin-bottom--6">
                 <h2 className="ds-h2 ds-u-margin-bottom--3">What is This Tool?</h2>
                 <p className="ds-u-margin-bottom--3">
                   The MITA State Self-Assessment Tool is a modern, browser-based application that
-                  helps state Medicaid agencies assess the maturity of their systems using the MITA
-                  NextGen capability-based framework. Unlike traditional assessment tools, this
-                  application works entirely in your browser with no server required.
+                  helps State Medicaid Agencies assess the maturity of their systems using the MITA
+                  4.0 capability-based framework. This tool supports the production of a Maturity
+                  Profile that conforms to CMS requirements for a standardized view of assessment
+                  results.
                 </p>
 
                 <h3 className="ds-h3 ds-u-margin-bottom--2">Key Capabilities</h3>
@@ -52,68 +192,19 @@ const AboutTool: React.FC = () => {
                     storage
                   </li>
                   <li>
-                    <strong>MITA NextGen Integration:</strong> Full integration with the
-                    capability-based ORBIT framework
+                    <strong>MITA 4.0 Integration:</strong> Full integration with the ORBIT framework
+                    and maturity criteria
                   </li>
                   <li>
-                    <strong>Guided Assessment:</strong> Step-by-step workflow with decision tree
-                    navigation
+                    <strong>Guided Assessment:</strong> Step-by-step workflow through each ORBIT
+                    dimension
                   </li>
                   <li>
-                    <strong>Comprehensive Reporting:</strong> PDF and CSV exports with interactive
-                    visualizations
+                    <strong>Standardized Output:</strong> Generate Maturity Profiles conforming to
+                    CMS requirements
                   </li>
                   <li>
                     <strong>Privacy-First:</strong> Your data never leaves your browser
-                  </li>
-                </ul>
-              </section>
-
-              <section className="ds-u-margin-bottom--6">
-                <h2 className="ds-h2 ds-u-margin-bottom--3">Our Development Approach</h2>
-                <p className="ds-u-margin-bottom--3">
-                  This tool is being developed using a modern, open-source approach that prioritizes
-                  accessibility, usability, and community collaboration.
-                </p>
-
-                <div className="ds-l-row ds-u-margin-bottom--4">
-                  <div className="ds-l-col--12 ds-l-md-col--6 ds-u-margin-bottom--3">
-                    <div className="ds-c-card ds-u-padding--3">
-                      <h3 className="ds-h4 ds-u-margin-bottom--2">Modern Technology Stack</h3>
-                      <ul className="ds-c-list ds-u-margin-bottom--0">
-                        <li>Next.js with TypeScript</li>
-                        <li>CMS Design System</li>
-                        <li>Browser storage (localStorage/IndexedDB)</li>
-                        <li>GitHub Pages deployment</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="ds-l-col--12 ds-l-md-col--6 ds-u-margin-bottom--3">
-                    <div className="ds-c-card ds-u-padding--3">
-                      <h3 className="ds-h4 ds-u-margin-bottom--2">Development Principles</h3>
-                      <ul className="ds-c-list ds-u-margin-bottom--0">
-                        <li>Accessibility-first design</li>
-                        <li>No server dependencies</li>
-                        <li>Incremental implementation</li>
-                        <li>Community-driven development</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <h3 className="ds-h3 ds-u-margin-bottom--2">Multi-Environment Deployment</h3>
-                <p className="ds-u-margin-bottom--3">
-                  We maintain three parallel environments to support continuous development:
-                </p>
-                <ul className="ds-c-list ds-u-margin-bottom--4">
-                  <li>
-                    <strong>Production:</strong> Stable releases for end users
-                  </li>
-                  <li>
-                    <strong>Development:</strong> Latest features and improvements
-                  </li>
-                  <li>
-                    <strong>Testing:</strong> Experimental features and testing
                   </li>
                 </ul>
               </section>
@@ -164,44 +255,24 @@ const AboutTool: React.FC = () => {
                     </div>
                   </div>
                 </div>
-
-                <h3 className="ds-h3 ds-u-margin-bottom--2">Ways to Contribute</h3>
-                <div className="ds-l-row">
-                  <div className="ds-l-col--12 ds-l-md-col--6 ds-u-margin-bottom--3">
-                    <h4 className="ds-h5 ds-u-margin-bottom--1">For Developers</h4>
-                    <ul className="ds-c-list">
-                      <li>Submit bug fixes and feature improvements</li>
-                      <li>Enhance accessibility and usability</li>
-                      <li>Improve documentation</li>
-                      <li>Add test coverage</li>
-                    </ul>
-                  </div>
-                  <div className="ds-l-col--12 ds-l-md-col--6 ds-u-margin-bottom--3">
-                    <h4 className="ds-h5 ds-u-margin-bottom--1">For Users</h4>
-                    <ul className="ds-c-list">
-                      <li>Report bugs and usability issues</li>
-                      <li>Suggest feature improvements</li>
-                      <li>Share feedback from pilot testing</li>
-                      <li>Contribute to user documentation</li>
-                    </ul>
-                  </div>
-                </div>
               </section>
 
               <section className="ds-u-margin-bottom--6">
                 <h2 className="ds-h2 ds-u-margin-bottom--3">Project Status</h2>
                 <p className="ds-u-margin-bottom--3">
-                  We're currently working toward a Minimum Lovable Product (MLP) with core
-                  functionality targeted for September 2025. The tool already includes guided
-                  assessment workflows, comprehensive reporting, and multi-environment deployment.
+                  This tool is being developed as a proof-of-concept SS-A Tool to support the MITA
+                  4.0 pilot. The tool produces a Maturity Profile that conforms to the CMS
+                  spreadsheet template and can generate a .csv file for uploading to the MES Hub
+                  (MESH).
                 </p>
 
                 <div className="ds-c-alert ds-c-alert--warn ds-c-alert--lightweight">
                   <div className="ds-c-alert__body">
                     <h3 className="ds-c-alert__heading">Development Status</h3>
                     <p className="ds-c-alert__text">
-                      This tool is actively under development. While core functionality is working,
-                      we're continuously adding features and improvements based on user feedback.
+                      This tool is actively under development to support the MITA 4.0 pilot. While
+                      core functionality is working, we're continuously adding features and
+                      improvements based on user feedback.
                     </p>
                   </div>
                 </div>
@@ -212,7 +283,7 @@ const AboutTool: React.FC = () => {
                   Ready to Try It?
                 </h2>
                 <p className="ds-u-margin-bottom--4 ds-u-measure--wide">
-                  Start your MITA assessment or explore the tool's capabilities.
+                  Start your MITA 4.0 assessment or explore the tool's capabilities.
                 </p>
                 <div className="ds-l-row ds-u-justify-content--center">
                   <div className="ds-l-col--12 ds-l-sm-col--6 ds-l-md-col--4 ds-u-margin-bottom--2">

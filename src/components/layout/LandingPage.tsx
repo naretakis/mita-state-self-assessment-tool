@@ -28,9 +28,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
                 MITA State Self-Assessment Tool
               </h1>
               <p className="ds-text--lead ds-u-margin-bottom--4 ds-u-measure--wide">
-                Assess the maturity of your Medicaid systems using the MITA NextGen capability-based
-                framework. This browser-based tool helps state agencies evaluate their systems
-                across key capability areas and generate actionable reports.
+                Assess the maturity of your Medicaid Enterprise Systems using the MITA 4.0
+                capability-based framework. This browser-based tool helps State Medicaid Agencies
+                systematically evaluate their systems and identify opportunities for improvement.
               </p>
             </header>
 
@@ -62,7 +62,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
                     About This Tool
                   </Link>
                   <p className="ds-text--small ds-u-margin-top--2 ds-u-margin-bottom--0">
-                    How the SS-A tool works, and how we're building it open source
+                    Learn about the MITA 4.0 Maturity Model and how this tool works
                   </p>
                 </div>
                 <div className="ds-l-col--12 ds-l-sm-col--6 ds-l-md-col--4 ds-u-margin-bottom--3">
@@ -85,30 +85,139 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
                     </svg>
                   </a>
                   <p className="ds-text--small ds-u-margin-top--2 ds-u-margin-bottom--0">
-                    Learn about the MITA NextGen framework
+                    Learn about the MITA 4.0 framework
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* Additional Information */}
-            <section className="ds-u-margin-bottom--6" aria-labelledby="info-heading">
-              <h2 id="info-heading" className="ds-u-visibility--screen-reader">
-                Additional Information
+            {/* MITA 4.0 Overview */}
+            <section className="ds-u-margin-bottom--6" aria-labelledby="overview-heading">
+              <h2
+                id="overview-heading"
+                className="ds-h2 ds-u-text-align--center ds-u-margin-bottom--4"
+              >
+                What is MITA 4.0?
               </h2>
-              <div className="ds-c-alert ds-c-alert--lightweight">
-                <div className="ds-c-alert__body">
-                  <h3 className="ds-c-alert__heading">Browser-Based Tool</h3>
-                  <p className="ds-c-alert__text">
-                    This tool works entirely in your browser with no server required. Your
-                    assessment data is stored locally and never transmitted to external servers.
-                    <strong>
-                      {' '}
-                      Note: Clearing your browser history or data will remove your saved
-                      assessments.
-                    </strong>
-                  </p>
+              <p className="ds-u-margin-bottom--3">
+                The Medicaid Information Technology Architecture (MITA) 4.0 Maturity Model provides
+                State Medicaid Agencies (SMAs) with a framework to systematically assess, benchmark,
+                and improve their Medicaid Enterprise Systems. It offers SMAs a clear path to assess
+                maturity, target specific areas for improvement, and achieve greater efficiency and
+                effectiveness in delivery of Medicaid Program services.
+              </p>
+            </section>
+
+            {/* Capability Reference Model */}
+            <section className="ds-u-margin-bottom--6" aria-labelledby="capability-heading">
+              <h2
+                id="capability-heading"
+                className="ds-h2 ds-u-text-align--center ds-u-margin-bottom--4"
+              >
+                Capability Reference Model
+              </h2>
+              <p className="ds-u-margin-bottom--3">
+                A <strong>capability</strong> is an ability that a SMA possesses or seeks to develop
+                to achieve its goals and meet its desired outcomes. It represents what the SMA can
+                do—without explaining how, why, or where the SMA uses the capability.
+              </p>
+              <p className="ds-u-margin-bottom--3">
+                The MITA 4.0 Capability Reference Model organizes capabilities into two levels:
+              </p>
+              <div className="ds-l-row ds-u-margin-bottom--4">
+                <div className="ds-l-col--12 ds-l-md-col--6 ds-u-margin-bottom--3">
+                  <div className="ds-c-card ds-u-padding--3" style={{ height: '100%' }}>
+                    <h3 className="ds-h4 ds-u-margin-bottom--2">Capability Domains</h3>
+                    <p className="ds-u-margin-bottom--0">
+                      The highest-level groupings that organize related capabilities. Examples
+                      include Provider, Member, Care Management, and Operations.
+                    </p>
+                  </div>
                 </div>
+                <div className="ds-l-col--12 ds-l-md-col--6 ds-u-margin-bottom--3">
+                  <div className="ds-c-card ds-u-padding--3" style={{ height: '100%' }}>
+                    <h3 className="ds-h4 ds-u-margin-bottom--2">Capability Areas</h3>
+                    <p className="ds-u-margin-bottom--0">
+                      More specific capabilities within each domain. For example, the Provider
+                      domain includes Provider Enrollment, Provider Screening, and Provider
+                      Information Management.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* ORBIT Framework */}
+            <section className="ds-u-margin-bottom--6" aria-labelledby="orbit-heading">
+              <h2
+                id="orbit-heading"
+                className="ds-h2 ds-u-text-align--center ds-u-margin-bottom--4"
+              >
+                The ORBIT Framework
+              </h2>
+              <p className="ds-u-margin-bottom--3">
+                Each capability is assessed based on five dimensions using the ORBIT framework. This
+                assessment determines how well the SMA performs that capability:
+              </p>
+              <div className="ds-c-card ds-u-padding--3 ds-u-margin-bottom--4">
+                <ul className="ds-c-list ds-u-margin-bottom--0">
+                  <li>
+                    <strong>O - Outcomes:</strong> The desired results that require the capability
+                    to be achieved
+                  </li>
+                  <li>
+                    <strong>R - Roles:</strong> The individual roles responsible for providing the
+                    capability
+                  </li>
+                  <li>
+                    <strong>B - Business Processes:</strong> The business processes performed to
+                    deliver the capability
+                  </li>
+                  <li>
+                    <strong>I - Information:</strong> The information and data management
+                    capabilities needed
+                  </li>
+                  <li>
+                    <strong>T - Technology:</strong> The technology used to automate the capability
+                  </li>
+                </ul>
+              </div>
+            </section>
+
+            {/* Maturity Levels */}
+            <section className="ds-u-margin-bottom--6" aria-labelledby="maturity-heading">
+              <h2
+                id="maturity-heading"
+                className="ds-h2 ds-u-text-align--center ds-u-margin-bottom--4"
+              >
+                Five Maturity Levels
+              </h2>
+              <p className="ds-u-margin-bottom--3">
+                For each ORBIT dimension, the SMA rates their maturity on a five-level scale:
+              </p>
+              <div className="ds-c-card ds-u-padding--3">
+                <ul className="ds-c-list ds-u-margin-bottom--0">
+                  <li>
+                    <strong>Level 1 - Initial:</strong> Unstructured, reactive, and inconsistent
+                    processes
+                  </li>
+                  <li>
+                    <strong>Level 2 - Developing:</strong> Basic processes exist but are not fully
+                    standardized
+                  </li>
+                  <li>
+                    <strong>Level 3 - Defined:</strong> Standardized, well-documented, and aligned
+                    processes
+                  </li>
+                  <li>
+                    <strong>Level 4 - Managed:</strong> Fully operational with performance
+                    monitoring for improvement
+                  </li>
+                  <li>
+                    <strong>Level 5 - Optimized:</strong> Advanced, data-driven strategies with
+                    continuous improvement
+                  </li>
+                </ul>
               </div>
             </section>
 
@@ -125,17 +234,17 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
                   <div className="ds-c-card ds-u-padding--3">
                     <h3 className="ds-h4 ds-u-margin-bottom--2">Capability-Based Assessment</h3>
                     <p className="ds-u-margin-bottom--0">
-                      Evaluate your systems using the MITA NextGen framework across Outcome, Role,
-                      Business Process, Information, and Technology dimensions.
+                      Evaluate your systems using the MITA 4.0 Capability Reference Model across
+                      Capability Domains and Capability Areas with the ORBIT framework.
                     </p>
                   </div>
                 </div>
                 <div className="ds-l-col--12 ds-l-md-col--6 ds-u-margin-bottom--3">
                   <div className="ds-c-card ds-u-padding--3">
-                    <h3 className="ds-h4 ds-u-margin-bottom--2">Local Data Storage</h3>
+                    <h3 className="ds-h4 ds-u-margin-bottom--2">Standardized Maturity Profile</h3>
                     <p className="ds-u-margin-bottom--0">
-                      Your assessment data is stored locally in your browser, ensuring privacy while
-                      allowing you to save and resume your work.
+                      Generate a Maturity Profile that conforms to CMS requirements for a
+                      standardized view of your assessment results.
                     </p>
                   </div>
                 </div>
@@ -143,8 +252,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
                   <div className="ds-c-card ds-u-padding--3">
                     <h3 className="ds-h4 ds-u-margin-bottom--2">Guided Workflow</h3>
                     <p className="ds-u-margin-bottom--0">
-                      Step-by-step assessment process with decision tree navigation and contextual
-                      guidance throughout your evaluation.
+                      Step-by-step assessment process with maturity criteria guidance and contextual
+                      help throughout your evaluation.
                     </p>
                   </div>
                 </div>
@@ -152,8 +261,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ className = '' }) => {
                   <div className="ds-c-card ds-u-padding--3">
                     <h3 className="ds-h4 ds-u-margin-bottom--2">Actionable Reports</h3>
                     <p className="ds-u-margin-bottom--0">
-                      Generate comprehensive PDF and CSV reports with maturity visualizations and
-                      improvement recommendations.
+                      Generate comprehensive PDF and CSV reports with maturity visualizations to
+                      support APD planning and MES initiatives.
                     </p>
                   </div>
                 </div>
