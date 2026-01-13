@@ -7,6 +7,10 @@
 // ORBIT Maturity Model service
 export { OrbitMaturityService, default as orbitMaturityService } from './OrbitMaturityService';
 
+// ORBIT Scoring service
+export { OrbitScoringService, default as orbitScoringService } from './OrbitScoringService';
+export type { AssessmentScoreSummary, ScoringOptions } from './OrbitScoringService';
+
 // Capability service (ORBIT-compatible)
 export { CapabilityService, default as capabilityService } from './CapabilityService';
 

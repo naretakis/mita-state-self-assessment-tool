@@ -152,7 +152,12 @@ The Technology dimension is the most complex, with **7 sub-domains**, each conta
   - Created `src/services/index.ts` - central service exports
   - Updated `src/hooks/index.ts` - exports new capability hooks
   - Legacy ContentService preserved for backward compatibility
-- [ ] **2.3** Update ScoringService for new assessment structure
+- [x] **2.3** Create OrbitScoringService for new assessment structure
+  - Created `src/services/OrbitScoringService.ts` - ORBIT-based scoring
+  - Calculates scores per aspect, dimension, sub-domain, and capability
+  - Supports optional dimensions (Outcomes, Roles)
+  - Provides assessment summary statistics
+  - Legacy ScoringService preserved for backward compatibility
 
 ### Phase 3: UI Components
 - [ ] **3.1** Create ORBIT dimension assessment components
@@ -260,7 +265,10 @@ public/content/
 | | - src/hooks/useCapabilities.ts | ✅ | React hooks for capabilities |
 | | - src/services/index.ts | ✅ | Central service exports |
 | | - src/hooks/index.ts | ✅ | Updated with new exports |
-| | Phase 2.3 - ScoringService update | 🔜 Next | |
+| | Phase 2.3 - OrbitScoringService | ✅ Complete | |
+| | - src/services/OrbitScoringService.ts | ✅ | ORBIT-based scoring |
+| | - src/services/index.ts | ✅ | Updated exports |
+| | Phase 3 - UI Components | 🔜 Next | |
 
 ---
 
