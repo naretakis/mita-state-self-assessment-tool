@@ -13,3 +13,6 @@ export { default as OrbitTechnologyAssessment } from './OrbitTechnologyAssessmen
 export { default as OrbitAssessmentSidebar } from './OrbitAssessmentSidebar';
 export { default as OrbitCapabilityOverview } from './OrbitCapabilityOverview';
 export { default as OrbitGuidedAssessment } from './OrbitGuidedAssessment';
+
+// Results and reporting
+export { default as OrbitAssessmentResults } from './OrbitAssessmentResults';

@@ -165,8 +165,12 @@ The Technology dimension is the most complex, with **7 sub-domains**, each conta
   - [x] 3.1.2 OrbitDimensionAssessment - standard dimension (O, R, B, I) assessment
   - [x] 3.1.3 OrbitTechnologyAssessment - Technology sub-domain navigation
   - Created `src/components/assessment/orbit/` folder with components
-- [ ] **3.2** Update assessment workflow to use standard ORBIT criteria
-- [ ] **3.3** Update reporting/visualization for new structure
+- [x] **3.2** Update assessment workflow to use standard ORBIT criteria
+  - [x] 3.2.1 OrbitGuidedAssessment - main workflow with step navigation, auto-save
+  - [x] 3.2.2 OrbitAssessmentSidebar - navigation sidebar with completion indicators
+  - [x] 3.2.3 OrbitCapabilityOverview - capability introduction with ORBIT preview
+- [x] **3.3** Update reporting/visualization for new structure
+  - [x] 3.3.1 OrbitAssessmentResults - results page with ORBIT scoring and charts
 
 ### Phase 4: Migration & Testing
 - [ ] **4.1** Create migration utility for existing assessments (if needed)
@@ -276,7 +280,12 @@ public/content/
 | | - OrbitDimensionAssessment.tsx | ✅ | Standard dimension UI |
 | | - OrbitTechnologyAssessment.tsx | ✅ | Technology sub-domains |
 | | - orbit/index.ts | ✅ | Component exports |
-| | Phase 3.2 - Assessment workflow | 🔜 Next | |
+| | Phase 3.2 - Assessment workflow | ✅ Complete | |
+| | - OrbitGuidedAssessment.tsx | ✅ | Main workflow component |
+| | - OrbitAssessmentSidebar.tsx | ✅ | Navigation sidebar |
+| | - OrbitCapabilityOverview.tsx | ✅ | Capability overview |
+| | Phase 3.3 - Reporting/visualization | ✅ Complete | |
+| | - OrbitAssessmentResults.tsx | ✅ | Results page with charts |
 
 ---
 
