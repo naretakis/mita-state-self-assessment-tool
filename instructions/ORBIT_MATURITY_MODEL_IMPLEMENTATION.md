@@ -160,9 +160,11 @@ The Technology dimension is the most complex, with **7 sub-domains**, each conta
   - Legacy ScoringService preserved for backward compatibility
 
 ### Phase 3: UI Components
-- [ ] **3.1** Create ORBIT dimension assessment components
-  - [ ] 3.1.1 Standard question/evidence display component
-  - [ ] 3.1.2 Technology sub-domain navigation
+- [x] **3.1** Create ORBIT dimension assessment components
+  - [x] 3.1.1 OrbitAspectAssessment - question/evidence display for single aspect
+  - [x] 3.1.2 OrbitDimensionAssessment - standard dimension (O, R, B, I) assessment
+  - [x] 3.1.3 OrbitTechnologyAssessment - Technology sub-domain navigation
+  - Created `src/components/assessment/orbit/` folder with components
 - [ ] **3.2** Update assessment workflow to use standard ORBIT criteria
 - [ ] **3.3** Update reporting/visualization for new structure
 
@@ -269,6 +271,12 @@ public/content/
 | | - src/services/OrbitScoringService.ts | ✅ | ORBIT-based scoring |
 | | - src/services/index.ts | ✅ | Updated exports |
 | | Phase 3 - UI Components | 🔜 Next | |
+| 2026-01-13 | Phase 3.1 - ORBIT UI Components | ✅ Complete | |
+| | - OrbitAspectAssessment.tsx | ✅ | Single aspect assessment |
+| | - OrbitDimensionAssessment.tsx | ✅ | Standard dimension UI |
+| | - OrbitTechnologyAssessment.tsx | ✅ | Technology sub-domains |
+| | - orbit/index.ts | ✅ | Component exports |
+| | Phase 3.2 - Assessment workflow | 🔜 Next | |
 
 ---
 
