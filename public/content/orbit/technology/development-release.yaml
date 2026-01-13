@@ -1,0 +1,252 @@
+# MITA 4.0 ORBIT Maturity Model - Technology: Development and Release
+# Source: MGB Review_MITA 4.0 Maturity Model.docx, Table 12
+
+id: development-release
+name: Development and Release
+parentDomain: technology
+description: >
+  Development and Release maturity criteria assess code and configuration management, 
+  testing and release practices, and security/compliance integration.
+
+overallLevels:
+  level1:
+    name: Initial
+    description: >
+      Development and release processes are manual, inconsistent, and reactive. Code changes are 
+      not version controlled, testing is ad hoc, and security is addressed after deployment. 
+      No formal governance or automation.
+  level2:
+    name: Developing
+    description: >
+      Basic tools and practices are introduced, such as version control and environment separation. 
+      Some testing and security practices are piloted, but processes remain siloed and inconsistently 
+      applied. Releases are still largely manual.
+  level3:
+    name: Defined
+    description: >
+      Development and release processes are standardized and documented. Automated testing and IaC 
+      are introduced. Security and compliance checks are integrated into the development lifecycle. 
+      Releases follow defined gates.
+  level4:
+    name: Managed
+    description: >
+      Standard practices and approaches (e.g., CI/CD pipelines) are used to automate builds, tests, 
+      and deployments. Code and infrastructure changes are peer reviewed and traceable. Security 
+      gates and rollback mechanisms are embedded. Release metrics are tracked and used for improvement.
+  level5:
+    name: Optimized
+    description: >
+      Development and release are continuous, adaptive, and policy driven. AI/ML supports test 
+      optimization, anomaly detection, and predictive compliance. The entire pipeline is monitored 
+      in real time, enabling rapid, secure, and resilient delivery of changes.
+
+aspects:
+  - id: code-configuration-management
+    name: Code and Configuration Management
+    description: Assessment of version control, IaC, and configuration management practices.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Code and infrastructure settings are managed manually. No version control. 
+          Environments are inconsistently configured.
+        questions:
+          - text: Is code managed manually without version control?
+            type: yes-no
+          - text: Are infrastructure settings inconsistently applied?
+            type: yes-no
+        evidence:
+          - Shared drive code folders
+          - Manual configuration logs
+      level2:
+        name: Developing
+        description: >
+          Basic version control (e.g., Git) is introduced. Teams begin using scripts for 
+          repeatable configurations. Infrastructure settings are partially documented.
+        questions:
+          - text: Is version control used by some teams?
+            type: yes-no
+          - text: Are scripts used for repeatable configurations?
+            type: yes-no
+        evidence:
+          - Git repo screenshots
+          - Provisioning scripts
+      level3:
+        name: Defined
+        description: >
+          Version control is standardized across teams. IaC is adopted for provisioning. 
+          Code and configuration changes are peer reviewed and traceable.
+        questions:
+          - text: Is version control standardized across teams?
+            type: yes-no
+          - text: Is IaC adopted?
+            type: yes-no
+        evidence:
+          - IaC templates
+          - Peer review logs
+      level4:
+        name: Managed
+        description: >
+          IaC is integrated into CI/CD pipelines. Code and infrastructure changes are governed 
+          by policy and auditable. Repositories are version controlled and monitored.
+        questions:
+          - text: Is IaC integrated into CI/CD pipelines?
+            type: yes-no
+          - text: Are code/configuration changes governed and auditable?
+            type: yes-no
+        evidence:
+          - CI/CD pipeline configurations
+          - Change audit logs
+      level5:
+        name: Optimized
+        description: >
+          Code and infrastructure are fully automated and policy driven. AI/ML supports anomaly 
+          detection and predictive configuration. Compliance is enforced continuously.
+        questions:
+          - text: Are code and infrastructure fully automated and policy-driven?
+            type: yes-no
+          - text: Is AI/ML used for anomaly detection?
+            type: yes-no
+        evidence:
+          - AI-based configuration monitoring
+          - Policy enforcement dashboards
+
+  - id: testing-release
+    name: Testing and Release
+    description: Assessment of testing automation, release processes, and deployment practices.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Testing is manual and inconsistent. Releases are infrequent and error prone. 
+          No formal environments or release process.
+        questions:
+          - text: Is testing manual and inconsistent?
+            type: yes-no
+          - text: Are releases infrequent and error prone?
+            type: yes-no
+        evidence:
+          - Manual test scripts
+          - Release failure reports
+      level2:
+        name: Developing
+        description: >
+          Basic test automation is introduced. Dev/Test/Prod environments are established. 
+          Releases follow informal checklists.
+        questions:
+          - text: Is basic test automation introduced?
+            type: yes-no
+          - text: Are Dev/Test/Prod environments established?
+            type: yes-no
+        evidence:
+          - Test automation logs
+          - Environment setup documents
+      level3:
+        name: Defined
+        description: >
+          Automated testing is integrated into CI/CD pipelines. Release gates and rollback 
+          procedures are defined. Releases are traceable and documented.
+        questions:
+          - text: Are automated tests integrated into CI/CD?
+            type: yes-no
+          - text: Are release gates and rollback procedures defined?
+            type: yes-no
+        evidence:
+          - CI/CD pipeline configurations
+          - Rollback playbooks
+      level4:
+        name: Managed
+        description: >
+          CI/CD pipelines are standardized and monitored. Releases are automated, peer reviewed, 
+          and include rollback and canary deployments. Metrics (e.g., deployment frequency and 
+          failure rate) are tracked.
+        questions:
+          - text: Are releases automated and peer reviewed?
+            type: yes-no
+          - text: Are metrics like deployment frequency tracked?
+            type: yes-no
+        evidence:
+          - Deployment dashboards
+          - Release audit logs
+      level5:
+        name: Optimized
+        description: >
+          Releases are continuous and adaptive. AI/ML optimizes test coverage and prioritization. 
+          Pipelines are self-healing and policy driven. Release health is monitored in real time.
+        questions:
+          - text: Are releases continuous and adaptive?
+            type: yes-no
+          - text: Is AI/ML used for test optimization and risk detection?
+            type: yes-no
+        evidence:
+          - Predictive release analytics
+          - Self-healing pipeline logs
+
+  - id: security-compliance
+    name: Security and Compliance
+    description: Assessment of DevSecOps practices and compliance integration.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Security is addressed post-deployment. No secure coding practices or compliance checks.
+        questions:
+          - text: Is security addressed post-deployment?
+            type: yes-no
+          - text: Are secure coding practices absent?
+            type: yes-no
+        evidence:
+          - Post-release vulnerability reports
+          - Lack of security checklists
+      level2:
+        name: Developing
+        description: >
+          Security policies are drafted. Static code analysis tools are piloted. 
+          Manual compliance reviews occur before release.
+        questions:
+          - text: Are security policies drafted?
+            type: yes-no
+          - text: Are analysis tools piloted?
+            type: yes-no
+        evidence:
+          - SAST tool outputs
+          - Draft security policies
+      level3:
+        name: Defined
+        description: >
+          Secure coding standards are enforced. Security scans (SAST/DAST) are integrated into 
+          pipelines. Compliance checklists are standardized.
+        questions:
+          - text: Are secure coding standards enforced?
+            type: yes-no
+          - text: Are security scans integrated into pipelines?
+            type: yes-no
+        evidence:
+          - SAST/DAST logs
+          - Compliance checklists
+      level4:
+        name: Managed
+        description: >
+          DevSecOps practices are adopted. Security gates block non-compliant code. 
+          Compliance evidence is automatically collected and stored.
+        questions:
+          - text: Are DevSecOps practices adopted?
+            type: yes-no
+          - text: Is compliance evidence automatically collected?
+            type: yes-no
+        evidence:
+          - Security gate configurations
+          - Compliance audit logs
+      level5:
+        name: Optimized
+        description: >
+          Continuous compliance is achieved. AI/ML detects security anomalies and enforces policy. 
+          Compliance dashboards provide real-time visibility across the enterprise.
+        questions:
+          - text: Is continuous compliance achieved?
+            type: yes-no
+          - text: Is AI/ML used for anomaly detection and enforcement?
+            type: yes-no
+        evidence:
+          - Real-time compliance dashboards
+          - AI-driven security alerts

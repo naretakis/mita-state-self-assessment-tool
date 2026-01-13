@@ -1,0 +1,245 @@
+# MITA 4.0 ORBIT Maturity Model - Outcomes (O)
+# Source: MGB Review_MITA 4.0 Maturity Model.docx, Table 1
+# NOTE: This dimension is OPTIONAL for adoption and use by states
+
+id: outcomes
+name: Outcomes
+description: >
+  The Outcomes maturity criteria are optional for adoption and use by the states. 
+  These criteria provide guidance and examples of the qualities and practices currently 
+  employed in an outcomes-oriented organization.
+required: false
+
+aspects:
+  - id: culture-mindset
+    name: Culture & Mindset
+    description: >
+      Organizational norms, expectations, and behaviors related to outcome development.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          No culture or expectation of outcomes for projects (at any phase of the project).
+        questions: []
+        evidence: []
+      level2:
+        name: Developing
+        description: >
+          Recognition begins to take hold of the importance of outcomes during planning.
+        questions: []
+        evidence: []
+      level3:
+        name: Defined
+        description: >
+          Leadership sets expectations; outcome development during planning becomes a norm.
+        questions: []
+        evidence: []
+      level4:
+        name: Managed
+        description: >
+          Outcome development is formalized and institutionally expected.
+        questions: []
+        evidence: []
+      level5:
+        name: Optimized
+        description: >
+          Outcome thinking is fully embedded at all levels of organization—without direction 
+          by or requirement from leadership.
+        questions: []
+        evidence: []
+
+  - id: capability
+    name: Capability
+    description: >
+      The internal capacity to develop, oversee, and apply outcomes without reliance on vendors.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          No internal capabilities to identify or draft outcomes.
+        questions: []
+        evidence: []
+      level2:
+        name: Developing
+        description: >
+          Organization understands at a high-level what elements are needed to identify and 
+          draft outcomes, but vendor leads development of outcomes.
+        questions: []
+        evidence: []
+      level3:
+        name: Defined
+        description: >
+          Sufficient experience in identifying and drafting outcomes internally; organization 
+          may lead or closely oversee vendors to draft outcomes.
+        questions: []
+        evidence: []
+      level4:
+        name: Managed
+        description: >
+          Full in-house capability to independently produce outcomes.
+        questions: []
+        evidence: []
+      level5:
+        name: Optimized
+        description: >
+          Deep in-house expertise with fully self-sufficient teams across the organization. 
+          Organization may also support sister organizations and agencies in developing outcomes.
+        questions: []
+        evidence: []
+
+  - id: quality-consistency
+    name: Quality & Consistency
+    description: >
+      The clarity, structure, and strategic alignment of outcome statements.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Outcomes are ambiguous, inconsistent, and disconnected from goals. 
+          No consistent approach or methodology to developing outcomes.
+        questions: []
+        evidence: []
+      level2:
+        name: Developing
+        description: >
+          Outcomes may be aligned with priorities but are not "smart" or actionable. 
+          Defined approach or methodology to developing outcomes.
+        questions: []
+        evidence: []
+      level3:
+        name: Defined
+        description: >
+          Outcomes capture the capability sought and benefit derived from a given project, 
+          but the quality of the outcome statements vary. Well-established and consistently 
+          applied approach to developing outcomes.
+        questions: []
+        evidence: []
+      level4:
+        name: Managed
+        description: >
+          Outcomes are clear, actionable, reusable, and strategically aligned. 
+          Well-established and consistently applied approach to developing outcomes.
+        questions: []
+        evidence: []
+      level5:
+        name: Optimized
+        description: >
+          Outcome statements are of consistently high quality, recognizable, and standardized.
+        questions: []
+        evidence: []
+
+  - id: alignment-goals-priorities
+    name: Alignment to Goals & Priorities
+    description: >
+      The extent to which outcomes are traceable to broader goals, priorities, and mission.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Outcomes are not aligned to goals or priorities.
+        questions: []
+        evidence: []
+      level2:
+        name: Developing
+        description: >
+          Emerging awareness of need to align outcomes with goals and priorities but gaps remain.
+        questions: []
+        evidence: []
+      level3:
+        name: Defined
+        description: >
+          Outcomes are intentionally aligned to strategic goals and priorities.
+        questions: []
+        evidence: []
+      level4:
+        name: Managed
+        description: >
+          Systematic alignment of outcomes to goals and priorities. Outcomes inform broader strategies.
+        questions: []
+        evidence: []
+      level5:
+        name: Optimized
+        description: >
+          Outcomes reflect and reinforce strategic direction seamlessly.
+        questions: []
+        evidence: []
+
+  - id: use-of-metrics
+    name: Use of Metrics
+    description: >
+      How outcomes are tracked, and metrics are used to measure progress and guide improvement.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          No recognition of the need to measure progress toward achieving outcomes or 
+          commitment to continuous improvement.
+        questions: []
+        evidence: []
+      level2:
+        name: Developing
+        description: >
+          Interest in measuring progress toward achieving outcomes. 
+          Metrics are not well-aligned with outcomes.
+        questions: []
+        evidence: []
+      level3:
+        name: Defined
+        description: >
+          Metrics are generally appropriate and regularly referenced to determine progress 
+          in achieving outcomes. Some engagement in continuous improvement cycles.
+        questions: []
+        evidence: []
+      level4:
+        name: Managed
+        description: >
+          Metrics are well-developed. Staff regularly use metrics to evaluate performance 
+          and engage in well-established continuous improvement cycles.
+        questions: []
+        evidence: []
+      level5:
+        name: Optimized
+        description: >
+          Performance monitoring is deeply embedded in organization's culture. 
+          Metrics and outcomes support continuous improvement, learning, and decision-making.
+        questions: []
+        evidence: []
+
+  - id: reusability-integration
+    name: Reusability & Integration
+    description: >
+      Whether outcomes are reused across project documents, APDs, systems, and reporting.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          No reuse. Outcomes are informal or nonexistent.
+        questions: []
+        evidence: []
+      level2:
+        name: Developing
+        description: >
+          Reuse is isolated to APDs; no reuse across other project, planning, or 
+          leadership documents.
+        questions: []
+        evidence: []
+      level3:
+        name: Defined
+        description: >
+          Reuse is focused on APDs and some project-related documents. 
+          Inconsistent reuse across leadership documents, and external communications.
+        questions: []
+        evidence: []
+      level4:
+        name: Managed
+        description: >
+          Reuse is consistent and intentional across APDs, project documents, and 
+          leadership and external communications.
+        questions: []
+        evidence: []
+      level5:
+        name: Optimized
+        description: >
+          Seamless reuse across systems and communications, which improves coherence and efficiency.
+        questions: []
+        evidence: []

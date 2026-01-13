@@ -1,0 +1,186 @@
+# MITA 4.0 ORBIT Maturity Model - Technology: Operations and Monitoring
+# Source: MGB Review_MITA 4.0 Maturity Model.docx, Table 11
+
+id: operations-monitoring
+name: Operations and Monitoring
+parentDomain: technology
+description: >
+  Operations and Monitoring maturity criteria assess system monitoring, alerting, 
+  and operational practices.
+
+overallLevels:
+  level1:
+    name: Initial
+    description: >
+      System monitoring implemented on a system-by-system basis. Monitoring identifies problems 
+      after they happen. Tools for operations are in place, but manual processes are still 
+      required to operate system.
+  level2:
+    name: Developing
+    description: >
+      Guidelines for system monitoring are in place. Some commercial or open-source tools for 
+      monitoring. Standard processes are in place for operations. System updates and patching.
+  level3:
+    name: Defined
+    description: >
+      Most systems use the same tools for monitoring and alerts. Some automation is in place to 
+      respond to problems. Dashboards present information on system problems. System operations 
+      processes use automation and are developing alignment with standards such as ITIL.
+  level4:
+    name: Managed
+    description: >
+      Monitoring and alerting are automated and integrated across systems. Proactive monitoring 
+      is implemented for both platforms and applications. Automation is used to respond to problems. 
+      Dashboards present information about the system across multiple modules. Systems operations 
+      processes are extensively automated and aligned with system management standards such as ITIL.
+  level5:
+    name: Optimized
+    description: >
+      Monitoring is controlled through configuration. Wide use of proactive monitoring and automated 
+      problem prevention and response. Dashboards present information about the current system health 
+      and expectations for future activities operation across the MES.
+
+aspects:
+  - id: system-monitoring
+    name: System Monitoring
+    description: Assessment of monitoring tools, alerting, and visibility practices.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Monitoring is implemented independently per system. Alerts are reactive and manually 
+          reviewed. No enterprise-wide visibility.
+        questions:
+          - text: Is monitoring siloed and reactive?
+            type: yes-no
+          - text: Is there centralized visibility?
+            type: yes-no
+        evidence:
+          - System-specific logs
+          - Manual alerting procedures
+      level2:
+        name: Developing
+        description: >
+          Guidelines for monitoring are defined. Some systems use commercial or open-source tools. 
+          Alerts are partially automated.
+        questions:
+          - text: Are monitoring standards defined?
+            type: yes-no
+          - text: Are commercial/open-source tools used on some systems?
+            type: yes-no
+        evidence:
+          - Monitoring policy drafts
+          - Tool deployment screenshots
+      level3:
+        name: Defined
+        description: >
+          A common set of tools is used across most systems. Dashboards present system health. 
+          Alerts are integrated and monitored centrally.
+        questions:
+          - text: Are common tools used across most systems?
+            type: yes-no
+          - text: Are alerts integrated and monitored centrally?
+            type: yes-no
+        evidence:
+          - Unified dashboards
+          - Alert correlation rules
+      level4:
+        name: Managed
+        description: >
+          Monitoring is automated and integrated across platforms and applications. Proactive 
+          alerting and root cause analysis are in place. Dashboards provide real-time visibility 
+          across modules.
+        questions:
+          - text: Is monitoring automated and proactive?
+            type: yes-no
+          - text: Are dashboards used for real-time visibility?
+            type: yes-no
+        evidence:
+          - Real-time monitoring dashboards
+          - Root cause analysis logs
+      level5:
+        name: Optimized
+        description: >
+          Monitoring is configuration driven and policy based. AI/ML supports predictive alerts 
+          and automated remediation. Dashboards forecast system health and future risks across 
+          the enterprise.
+        questions:
+          - text: Is monitoring configuration-driven and predictive?
+            type: yes-no
+          - text: Is AI/ML used for alerting and remediation?
+            type: yes-no
+        evidence:
+          - Predictive analytics dashboards
+          - Automated remediation logs
+
+  - id: system-operations
+    name: System Operations
+    description: Assessment of operational processes, automation, and maintenance practices.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Operations are manual and system specific. Batch jobs and file transfers are managed 
+          independently. Updates are delayed and cause downtime.
+        questions:
+          - text: Are operations manual and system specific?
+            type: yes-no
+          - text: Are updates delayed or disruptive?
+            type: yes-no
+        evidence:
+          - Manual job logs
+          - Update failure reports
+      level2:
+        name: Developing
+        description: >
+          Routine tasks (e.g., file transfers and job scheduling) are partially automated. 
+          Standard procedures exist for updates, but execution is manual.
+        questions:
+          - text: Are routine tasks partially automated?
+            type: yes-no
+          - text: Are update procedures standardized but manual?
+            type: yes-no
+        evidence:
+          - File transfer scripts
+          - Patching SOPs
+      level3:
+        name: Defined
+        description: >
+          Many operations are automated. Patching is scheduled and tested. Updates follow 
+          defined procedures and avoid unplanned downtime.
+        questions:
+          - text: Are many operations automated?
+            type: yes-no
+          - text: Are updates scheduled and tested?
+            type: yes-no
+        evidence:
+          - Automation scripts
+          - Patching schedules
+          - Downtime logs
+      level4:
+        name: Managed
+        description: >
+          Operations are extensively automated and aligned with ITSM standards (e.g., ITIL). 
+          Updates are implemented without downtime.
+        questions:
+          - text: Are operations aligned with ITSM standards?
+            type: yes-no
+          - text: Are updates implemented without downtime?
+            type: yes-no
+        evidence:
+          - ITIL-aligned process documents
+          - Zero-downtime deployment logs
+      level5:
+        name: Optimized
+        description: >
+          Operations are fully automated and policy driven. Updates are continuous and risk 
+          managed. AI/ML supports anomaly detection and self-healing. Operations exceed 
+          ITSM benchmarks.
+        questions:
+          - text: Are operations fully automated and policy-driven?
+            type: yes-no
+          - text: Is AI/ML used for anomaly detection and self-healing?
+            type: yes-no
+        evidence:
+          - AI-driven ops dashboards
+          - Automated patching and rollback logs

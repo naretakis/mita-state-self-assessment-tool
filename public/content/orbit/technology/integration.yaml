@@ -1,0 +1,288 @@
+# MITA 4.0 ORBIT Maturity Model - Technology: Integration
+# Source: MGB Review_MITA 4.0 Maturity Model.docx, Table 7
+
+id: integration
+name: Integration
+parentDomain: technology
+description: >
+  Integration maturity criteria assess API and interface management, system messaging, 
+  and external partner integration capabilities.
+
+overallLevels:
+  level1:
+    name: Initial
+    description: >
+      The interfaces are single purpose with minimal use of data standards and no documentation. 
+      There is little to no oversight. System messages are not exchanged or consolidated. 
+      Partner integrations are lacking consistency.
+  level2:
+    name: Developing
+    description: >
+      Interface patterns and data standards are developed for reuse. New and updated interfaces 
+      are subject to oversight and require documentation. Systems exchange some messages, but 
+      exchanges lack standards. Partner integration patterns are under development.
+  level3:
+    name: Defined
+    description: >
+      New interface designs are based on reuse and data standards. Governance and documentation 
+      standards are in place. Patterns for exchanging messages between systems are in place. 
+      External partner integration follows standard processes and design.
+  level4:
+    name: Managed
+    description: >
+      Software frameworks are widely used and there is extensive interface reuse. Data standards 
+      are applied to interfaces and interface specifications are published. Messages for critical 
+      information are exchanged across systems using standard patterns and tools. Eliminating 
+      variation of partner integration and automating endpoint management.
+  level5:
+    name: Optimized
+    description: >
+      Single use interfaces are eliminated. Interfaces follow patterns and implement data standards. 
+      Specifications are published using API management tools. Systems exchange messages using tools 
+      that trigger alerts when needed and track problems through to resolution. Partner integration 
+      is standardized, and endpoints are continually monitored.
+
+aspects:
+  - id: api-interface-management
+    name: API and Interface Management
+    description: Assessment of API design, governance, and lifecycle management.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Interfaces are point-to-point, single purpose, and inconsistently designed. 
+          Data standards are rarely applied. No governance or documentation exists.
+        questions:
+          - text: Are interfaces primarily point-to-point and single purpose?
+            type: yes-no
+          - text: Is interface documentation available?
+            type: yes-no
+        evidence:
+          - Interface inventory (if any)
+          - Screenshots of point-to-point connections
+      level2:
+        name: Developing
+        description: >
+          Interface patterns and data standards are defined. Some reuse is piloted. 
+          Documentation and oversight are introduced for new interfaces.
+        questions:
+          - text: Are interface patterns defined?
+            type: yes-no
+          - text: Are new interfaces subject to review or documentation?
+            type: yes-no
+        evidence:
+          - Draft interface patterns
+          - Sample API specifications using emerging standards
+          - Governance meeting notes
+      level3:
+        name: Defined
+        description: >
+          New interfaces follow defined patterns and apply data standards (e.g., FHIR and X12). 
+          Governance and documentation standards are enforced.
+        questions:
+          - text: Are APIs designed using standardized patterns?
+            type: yes-no
+          - text: Are APIs versioned and documented?
+            type: yes-no
+          - text: Is interface governance enforced?
+            type: yes-no
+        evidence:
+          - API design templates
+          - Interface governance policy
+          - Versioned API documentation
+      level4:
+        name: Managed
+        description: >
+          Interfaces are widely reused. API specifications are published using API management tools. 
+          Governance drives standardization and lifecycle management.
+        questions:
+          - text: Are APIs published and discoverable via a management platform?
+            type: yes-no
+          - text: Is interface reuse tracked and governed?
+            type: yes-no
+          - text: Are APIs monitored for usage and performance?
+            type: yes-no
+        evidence:
+          - API management platform screenshots
+          - Usage analytics reports
+          - Interface lifecycle documentation
+      level5:
+        name: Optimized
+        description: >
+          All interfaces follow standardized patterns and data standards. API specifications are 
+          discoverable and versioned. Interface behavior is monitored and dynamically adjusted 
+          based on usage and policy.
+        questions:
+          - text: Are all interfaces standardized and reusable?
+            type: yes-no
+          - text: Are APIs dynamically adjusted based on usage or policy?
+            type: yes-no
+          - text: Is interface behavior monitored and optimized in real time?
+            type: yes-no
+        evidence:
+          - Dynamic API gateway configuration
+          - Real-time interface health dashboards
+          - Policy-driven API orchestration logs
+
+  - id: system-messaging
+    name: System Messaging
+    description: Assessment of inter-system messaging and alerting capabilities.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          No messaging between systems. Data is exchanged manually or via batch files.
+        questions:
+          - text: Is there any real-time messaging between systems?
+            type: yes-no
+          - text: Are alerts triggered manually?
+            type: yes-no
+        evidence:
+          - Messaging pilot documentation
+          - Batch file transfer logs
+          - Manual alerting procedures
+      level2:
+        name: Developing
+        description: >
+          Some messaging is introduced using non-standard formats. Alerts are manually triggered.
+        questions:
+          - text: Are messaging patterns defined?
+            type: yes-no
+          - text: Are some messages exchanged between systems?
+            type: yes-no
+          - text: Are alerts traceable?
+            type: yes-no
+        evidence:
+          - Messaging pilot documentation
+          - Sample message formats
+          - Alert logs
+      level3:
+        name: Defined
+        description: >
+          Messaging patterns are standardized. Messages trigger alerts and are logged. 
+          Messaging is used for key business events.
+        questions:
+          - text: Are messages exchanged using standard formats?
+            type: yes-no
+          - text: Do messages trigger automated alerts?
+            type: yes-no
+        evidence:
+          - Messaging architecture diagrams
+          - Message schemas (e.g., HL7 and FHIR)
+          - Alert correlation rules
+      level4:
+        name: Managed
+        description: >
+          Messaging is used for real-time, critical information exchange. Alerts are traceable 
+          and integrated with monitoring tools.
+        questions:
+          - text: Are critical messages exchanged in real time?
+            type: yes-no
+          - text: Are alerts integrated with monitoring tools?
+            type: yes-no
+          - text: Are messaging SLAs tracked?
+            type: yes-no
+          - text: Are messaging patterns reused across systems?
+            type: yes-no
+        evidence:
+          - Real-time alert dashboards
+          - Messaging middleware configuration
+          - SLA monitoring reports
+      level5:
+        name: Optimized
+        description: >
+          Messaging is event-driven and proactive. Messages trigger automated workflows and 
+          predictive alerts. Messaging patterns are reused across the enterprise.
+        questions:
+          - text: Are messages used to proactively address issues?
+            type: yes-no
+          - text: Are alerts predictive and self-resolving?
+            type: yes-no
+          - text: Is messaging fully event-driven?
+            type: yes-no
+        evidence:
+          - Real-time alert dashboards
+          - Event-driven architecture documentation
+          - Predictive alerting dashboards
+          - Automated remediation logs
+
+  - id: external-partner-integration
+    name: External Partner Integration
+    description: Assessment of partner integration standards and endpoint management.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Partner integrations are ad hoc. No standards or endpoint management practices exist.
+        questions:
+          - text: Are partner integrations standardized?
+            type: yes-no
+          - text: Are integration endpoints managed centrally?
+            type: yes-no
+        evidence:
+          - Ad hoc partner connection logs
+          - Lack of endpoint registry
+          - Manual onboarding procedures
+      level2:
+        name: Developing
+        description: >
+          Integration patterns and endpoint management processes are defined. 
+          Some partners follow emerging standards.
+        questions:
+          - text: Are integration patterns defined for partners?
+            type: yes-no
+          - text: Are endpoint management processes emerging?
+            type: yes-no
+        evidence:
+          - Draft partner integration patterns
+          - Endpoint inventory spreadsheet
+          - Sample onboarding checklist
+      level3:
+        name: Defined
+        description: >
+          New integrations follow standard patterns. Endpoints are registered and managed. 
+          Security and data-sharing agreements are documented.
+        questions:
+          - text: Are new partner integrations following standard patterns?
+            type: yes-no
+          - text: Are endpoints registered and governed?
+            type: yes-no
+          - text: Are partner agreements documented?
+            type: yes-no
+        evidence:
+          - Partner integration playbook
+          - Endpoint registration forms
+          - Security and data-sharing agreements
+      level4:
+        name: Managed
+        description: >
+          Most partner integrations use standardized patterns. Endpoint management is automated. 
+          Integration health is monitored.
+        questions:
+          - text: Are most partner integrations standardized and monitored?
+            type: yes-no
+          - text: Is endpoint management automated?
+            type: yes-no
+          - text: Are integration SLAs enforced?
+            type: yes-no
+        evidence:
+          - Automated endpoint management tool
+          - Partner integration dashboards
+          - SLA compliance reports
+      level5:
+        name: Optimized
+        description: >
+          Partner integrations are consolidated and governed through shared services. 
+          Endpoint management is integrated with ITSM. Real-time monitoring and automated 
+          remediation are in place.
+        questions:
+          - text: Are partner integrations consolidated and reusable?
+            type: yes-no
+          - text: Is endpoint management integrated with ITSM?
+            type: yes-no
+          - text: Are partner connections monitored in real time?
+            type: yes-no
+        evidence:
+          - Shared services integration catalog
+          - Real-time partner health dashboards
+          - ITSM integration logs

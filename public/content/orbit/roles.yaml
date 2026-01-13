@@ -1,0 +1,252 @@
+# MITA 4.0 ORBIT Maturity Model - Roles (R)
+# Source: MGB Review_MITA 4.0 Maturity Model.docx, Table 2
+# NOTE: This dimension is OPTIONAL for adoption and use by states
+
+id: roles
+name: Roles
+description: >
+  The Roles maturity criteria are optional for the states. These criteria are examples 
+  of the current qualities and practices that a SMA and its leaders possess or should 
+  consider adopting.
+required: false
+
+aspects:
+  - id: technology-resources
+    name: Technology Resources
+    description: >
+      Assessment of technical resource identification, capabilities, and sharing.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Partial list of technical resources exists; capabilities are not fully understood 
+          across the SMA.
+        questions: []
+        evidence: []
+      level2:
+        name: Developing
+        description: >
+          SMA maintains a comprehensive list of all technical resources and their capabilities.
+        questions: []
+        evidence: []
+      level3:
+        name: Defined
+        description: >
+          SMA maps technical resources directly to business processes.
+        questions: []
+        evidence: []
+      level4:
+        name: Managed
+        description: >
+          Technical resources are actively shared and optimized across business units for 
+          seamless execution.
+        questions: []
+        evidence: []
+      level5:
+        name: Optimized
+        description: >
+          Technical resources are accessible to agencies, states, and federal partners and 
+          support continuous improvement through data-driven insights and collaborative efforts; 
+          drives technical reforms across the broader health and human services network.
+        questions: []
+        evidence: []
+
+  - id: organizational-goals-alignment
+    name: Organizational Goals Alignment
+    description: >
+      Assessment of alignment between business units and enterprise-wide Medicaid goals.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Business units operate in silos without clear understanding of enterprise-wide 
+          Medicaid goals.
+        questions: []
+        evidence: []
+      level2:
+        name: Developing
+        description: >
+          Organizational goals are defined but not fully communicated across all levels.
+        questions: []
+        evidence: []
+      level3:
+        name: Defined
+        description: >
+          Business units align their roles and processes to support broader Medicaid goals.
+        questions: []
+        evidence: []
+      level4:
+        name: Managed
+        description: >
+          All roles (internal and external) collaborate to drive enterprise-wide Medicaid 
+          program goals, with regular reassessments for alignment.
+        questions: []
+        evidence: []
+      level5:
+        name: Optimized
+        description: >
+          SMA leadership collaborates at the national level to set adaptable, data-driven 
+          goals and performance outcomes for the Medicaid program; focus is on improving 
+          healthcare and social services delivery and beneficiary well-being nationwide.
+        questions: []
+        evidence: []
+
+  - id: governance-standardization
+    name: Governance & Standardization
+    description: >
+      Assessment of governance structures, role clarity, and process standardization.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Limited or no formal governance to guide roles or standardize processes.
+        questions: []
+        evidence: []
+      level2:
+        name: Developing
+        description: >
+          Some governance exists, but role clarity and process standardization are inconsistent.
+        questions: []
+        evidence: []
+      level3:
+        name: Defined
+        description: >
+          Formal governance structures support role clarity, with standard operating 
+          procedures (SOP).
+        questions: []
+        evidence: []
+      level4:
+        name: Managed
+        description: >
+          Enterprise governance bodies actively coordinate roles, processes, and data for 
+          continuous improvement and standardization.
+        questions: []
+        evidence: []
+      level5:
+        name: Optimized
+        description: >
+          SMA leads data-driven solutions at a national level and collaborates with other 
+          SMAs to develop shared business and technical standards that are disseminated 
+          nationally to strengthen overall Medicaid service delivery.
+        questions: []
+        evidence: []
+
+  - id: communication
+    name: Communication (Internal / External)
+    description: >
+      Assessment of communication practices between leadership, business, technical units, 
+      and external partners.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Minimal communication between leadership, business, and technical units.
+        questions: []
+        evidence: []
+      level2:
+        name: Developing
+        description: >
+          Defined communication channels exist but are not used consistently.
+        questions: []
+        evidence: []
+      level3:
+        name: Defined
+        description: >
+          Regular cross-unit communication occurs, including with external partners like 
+          MCOs and vendors.
+        questions: []
+        evidence: []
+      level4:
+        name: Managed
+        description: >
+          Transparent, enterprise-wide communication ensures all roles understand priorities, 
+          responsibilities, and impacts.
+        questions: []
+        evidence: []
+      level5:
+        name: Optimized
+        description: >
+          Integrates communication across all business areas to align long-term Medicaid goals 
+          and performance outcomes. Fosters cooperation with other SMAs, CMS, and external 
+          partners nationally. The Agency is recognized for its leadership in sharing solutions, 
+          provider enrollment process needs, and best practices.
+        questions: []
+        evidence: []
+
+  - id: culture-leadership
+    name: Culture & Leadership
+    description: >
+      Assessment of leadership visibility, workload management, and organizational culture.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Leadership lacks visibility into workloads and resource capacity; roles are reactive.
+        questions: []
+        evidence: []
+      level2:
+        name: Developing
+        description: >
+          Leadership begins assessing role capacity but lacks full enterprise insight.
+        questions: []
+        evidence: []
+      level3:
+        name: Defined
+        description: >
+          Leadership proactively manages workloads and roles based on enterprise needs 
+          and priorities.
+        questions: []
+        evidence: []
+      level4:
+        name: Managed
+        description: >
+          Leadership fosters a culture of collaboration and continuous learning across 
+          internal and external roles.
+        questions: []
+        evidence: []
+      level5:
+        name: Optimized
+        description: >
+          Leadership supports internal change agents to align culture, strategy, and 
+          resources with long-term Medicaid goals.
+        questions: []
+        evidence: []
+
+  - id: resourcing-capacity
+    name: Resourcing Capacity (Staffing, Training, Recruitment)
+    description: >
+      Assessment of staffing, training, recruitment, and capacity management practices.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          SMA struggles to identify gaps in role capacity; staffing is reactive.
+        questions: []
+        evidence: []
+      level2:
+        name: Developing
+        description: >
+          Some processes exist for role capacity management (staffing, training, recruitment).
+        questions: []
+        evidence: []
+      level3:
+        name: Defined
+        description: >
+          SMA systematically identifies, recruits, and trains staff.
+        questions: []
+        evidence: []
+      level4:
+        name: Managed
+        description: >
+          SMA maintains a dynamic capacity model to forecast and meet enterprise role needs, 
+          including succession planning and continuous role development.
+        questions: []
+        evidence: []
+      level5:
+        name: Optimized
+        description: >
+          SMA uses comprehensive planning and advanced analytics to align roles and skills 
+          with program objectives, enabling rapid response to required changes while 
+          maintaining high service delivery standards.
+        questions: []
+        evidence: []

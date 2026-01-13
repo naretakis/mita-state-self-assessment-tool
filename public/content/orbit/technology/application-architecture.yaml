@@ -1,0 +1,254 @@
+# MITA 4.0 ORBIT Maturity Model - Technology: Application Architecture
+# Source: MGB Review_MITA 4.0 Maturity Model.docx, Table 9
+
+id: application-architecture
+name: Application Architecture
+parentDomain: technology
+description: >
+  Application Architecture maturity criteria assess modular architecture, user interfaces, 
+  and session/state management capabilities.
+
+overallLevels:
+  level1:
+    name: Initial
+    description: >
+      Medicaid systems are monolithic and tightly coupled, with limited ability to scale, replace, 
+      or integrate components. User interfaces are inconsistent and inaccessible, and session 
+      management is unreliable or nonexistent. There is no architectural governance or reuse.
+  level2:
+    name: Developing
+    description: >
+      Some modules or services are isolated and piloted, but integration and reuse are limited. 
+      User interfaces begin to adopt responsive design and accessibility guidelines. Session 
+      handling is basic and inconsistent across systems. Architecture decisions are ad hoc.
+  level3:
+    name: Defined
+    description: >
+      Systems are modularized with standardized APIs and service contracts. UI components are 
+      consistent and accessible, and session state is maintained across modules. Architecture 
+      is documented and aligned with CMS interoperability standards.
+  level4:
+    name: Managed
+    description: >
+      Modular architecture is governed and reused across the enterprise. Interfaces are mobile-first, 
+      role-based, and tested for accessibility. Session and state are centrally managed and secure. 
+      Architecture supports scalability, monitoring, and DevOps integration.
+  level5:
+    name: Optimized
+    description: >
+      The architecture is fully composable, adaptive, and event driven. Interfaces are personalized 
+      and continuously improved using analytics. Session and state management is intelligent, 
+      context-aware, and resilient across devices and channels. Architecture enables rapid innovation 
+      and seamless integration with external systems.
+
+aspects:
+  - id: modular-architecture
+    name: Modular Architecture
+    description: Assessment of system modularity, service boundaries, and architectural governance.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Applications are monolithic and tightly coupled. Changes require full redeployment. 
+          No service boundaries or reuse.
+        questions:
+          - text: Are applications monolithic and tightly coupled?
+            type: yes-no
+          - text: Is modularity absent?
+            type: yes-no
+        evidence:
+          - Legacy system diagrams
+          - Full redeployment logs
+      level2:
+        name: Developing
+        description: >
+          Some components are isolated or piloted as services. Modularization is informal. 
+          No formal service contracts or governance.
+        questions:
+          - text: Are some components isolated or piloted as services?
+            type: yes-no
+          - text: Are service boundaries informal?
+            type: yes-no
+        evidence:
+          - Pilot service documentation
+          - Partial modularization notes
+      level3:
+        name: Defined
+        description: >
+          Core systems are decomposed into modules with standardized APIs and service contracts. 
+          Modules can be deployed independently.
+        questions:
+          - text: Are modules deployed independently with standardized APIs?
+            type: yes-no
+          - text: Are service contracts defined?
+            type: yes-no
+        evidence:
+          - API specifications
+          - Service contract templates
+          - Modular architecture diagrams
+      level4:
+        name: Managed
+        description: >
+          Modular architecture is governed by patterns and standards. Shared services are reused 
+          across modules. Modules are independently scalable and monitored.
+        questions:
+          - text: Are modular patterns governed and reused?
+            type: yes-no
+          - text: Are modules independently scalable and monitored?
+            type: yes-no
+        evidence:
+          - Architecture governance policy
+          - Monitoring dashboards
+      level5:
+        name: Optimized
+        description: >
+          Architecture is fully composable and event driven. Modules are dynamically orchestrated 
+          and integrate seamlessly with external systems. Architecture supports rapid innovation 
+          and plug-and-play capabilities.
+        questions:
+          - text: Is the architecture fully composable and event driven?
+            type: yes-no
+          - text: Are services dynamically orchestrated?
+            type: yes-no
+        evidence:
+          - Event-driven architecture diagrams
+          - Orchestration engine logs
+
+  - id: user-interfaces
+    name: User Interfaces
+    description: Assessment of UI design, accessibility, and user experience practices.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Interfaces are static and form based. Design is inconsistent. No accessibility compliance.
+        questions:
+          - text: Are interfaces static and inconsistent?
+            type: yes-no
+          - text: Is accessibility unsupported?
+            type: yes-no
+        evidence:
+          - Screenshots of legacy UIs
+          - Lack of WCAG documentation
+      level2:
+        name: Developing
+        description: >
+          Some interfaces are redesigned for responsiveness. Accessibility guidelines are drafted. 
+          Basic usability testing is conducted.
+        questions:
+          - text: Are some interfaces responsive or redesigned?
+            type: yes-no
+          - text: Are accessibility guidelines drafted?
+            type: yes-no
+        evidence:
+          - Draft UI standards
+          - Usability test results
+      level3:
+        name: Defined
+        description: >
+          Standardized UI components are used. Interfaces comply with WCAG 2.1 AA. 
+          User feedback loops are established.
+        questions:
+          - text: Are standardized UI components used?
+            type: yes-no
+          - text: Is WCAG 2.1 AA compliance achieved?
+            type: yes-no
+        evidence:
+          - UI component library
+          - Accessibility audit reports
+      level4:
+        name: Managed
+        description: >
+          Design systems are reused across teams. Interfaces are mobile first and role based. 
+          Accessibility is tested automatically.
+        questions:
+          - text: Are design systems reused across teams?
+            type: yes-no
+          - text: Are interfaces mobile first and role based?
+            type: yes-no
+        evidence:
+          - Design system documentation
+          - Automated accessibility test logs
+      level5:
+        name: Optimized
+        description: >
+          Interfaces are adaptive and personalized. AI/ML supports UX optimization. 
+          Continuous improvement is driven by analytics and user behavior.
+        questions:
+          - text: Are interfaces adaptive and personalized?
+            type: yes-no
+          - text: Is UX continuously optimized using analytics?
+            type: yes-no
+        evidence:
+          - UX analytics dashboards
+          - AI-driven personalization logs
+
+  - id: session-state-management
+    name: Session and State Management
+    description: Assessment of session persistence, state management, and cross-device continuity.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          No session persistence. Users lose progress on timeout. No support for multi-tab or 
+          multi-device continuity.
+        questions:
+          - text: Is session persistence absent?
+            type: yes-no
+          - text: Do users lose progress on timeout?
+            type: yes-no
+        evidence:
+          - Session timeout logs
+          - Lack of session recovery features
+      level2:
+        name: Developing
+        description: >
+          Basic session timeout and login persistence. Draft saving is available in some modules. 
+          Session handling is inconsistent.
+        questions:
+          - text: Is basic session handling implemented?
+            type: yes-no
+          - text: Are drafts saved in some modules?
+            type: yes-no
+        evidence:
+          - Draft-saving feature screenshots
+          - Session timeout settings
+      level3:
+        name: Defined
+        description: >
+          Session state is maintained across modules. Drafts are recoverable. 
+          Session expiration is policy driven.
+        questions:
+          - text: Is session state maintained across modules?
+            type: yes-no
+          - text: Are expiration policies defined?
+            type: yes-no
+        evidence:
+          - Session management policy
+          - Cross-module session logs
+      level4:
+        name: Managed
+        description: >
+          Centralized session and state management are implemented. Multi-device continuity is 
+          supported. Session data is encrypted and monitored.
+        questions:
+          - text: Is session/state management centralized?
+            type: yes-no
+          - text: Is multi-device continuity supported?
+            type: yes-no
+        evidence:
+          - Session encryption logs
+          - Centralized session service documentation
+      level5:
+        name: Optimized
+        description: >
+          Session state is preserved across devices and sessions. Context-aware restoration is 
+          enabled. Session behavior adapts to user patterns and risk signals.
+        questions:
+          - text: Is session behavior context-aware and adaptive?
+            type: yes-no
+          - text: Is session state preserved across devices and sessions?
+            type: yes-no
+        evidence:
+          - AI-driven session management logs
+          - Cross-device continuity test results

@@ -1,0 +1,255 @@
+# MITA 4.0 ORBIT Maturity Model - Technology: Platform Services
+# Source: MGB Review_MITA 4.0 Maturity Model.docx, Table 8
+
+id: platform-services
+name: Platform Services
+parentDomain: technology
+description: >
+  Platform Services maturity criteria assess application hosting, business rules and workflow 
+  management, and common platform functions.
+
+overallLevels:
+  level1:
+    name: Initial
+    description: >
+      Applications are hosted in environments lacking platform standards or strategy. Hosting uses 
+      dedicated servers or virtual machines with limited scaling capability. There is very little 
+      automation of platform services. Commonly used services such as document management workflow, 
+      rules management, and address validation, are deployed independently when they are needed.
+  level2:
+    name: Developing
+    description: >
+      Applications are hosted in environments using standards for platform capabilities. Hosting 
+      primarily uses virtual servers. The platform supports use of APIs and integration with COTS 
+      tools and SaaS services. Business rules and workflow capabilities are restricted to limited 
+      business functions. Common services are used for a single module within a single vendor or 
+      state environment.
+  level3:
+    name: Defined
+    description: >
+      Platforms include PaaS services such as databases, application containers, API security, and 
+      network integration. The platform uses SaaS and leveraged COTS tools for business capabilities 
+      such as workflow, rules-based processing, and document management. Common services are leveraged 
+      across modules but within the domain of a single vendor or state environment.
+  level4:
+    name: Managed
+    description: >
+      PaaS services are the primary hosting platform. The platforms are designed and implemented using 
+      standards to limit complexity and to support automation. Commonly used business and technical 
+      capabilities are implemented using SaaS and COTS tools. Some tools are available across vendor 
+      and state hosting environments using APIs.
+  level5:
+    name: Optimized
+    description: >
+      Platforms are based almost exclusively on PaaS services. Platform standards include integration 
+      with operations management. APIs are used to manage hosting including automated scaling. Most 
+      services used across modules and environments are available from a common source although modules 
+      may use their own capabilities.
+
+aspects:
+  - id: application-hosting
+    name: Application Hosting
+    description: Assessment of application hosting infrastructure and practices.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Applications are hosted on dedicated physical or virtual servers. No platform standards. 
+          Limited scalability and automation.
+        questions:
+          - text: Are applications hosted on dedicated servers?
+            type: yes-no
+          - text: Is there a platform strategy?
+            type: yes-no
+        evidence:
+          - Server inventory
+          - Unmanaged hosting screenshots
+      level2:
+        name: Developing
+        description: >
+          Hosting environments use virtual servers with some standardization. SaaS and COTS tools 
+          are piloted. APIs are used for limited integration.
+        questions:
+          - text: Are virtual servers used consistently?
+            type: yes-no
+          - text: Are SaaS tools piloted?
+            type: yes-no
+        evidence:
+          - Virtual server deployment plan
+          - SaaS pilot documentation
+      level3:
+        name: Defined
+        description: >
+          Hosting platforms include PaaS services (e.g., databases, containers, and identity). 
+          SaaS and COTS tools are integrated for business capabilities.
+        questions:
+          - text: Are PaaS services used for hosting?
+            type: yes-no
+          - text: Are APIs integrated with hosting platforms?
+            type: yes-no
+        evidence:
+          - PaaS architecture diagrams
+          - Container usage logs
+      level4:
+        name: Managed
+        description: >
+          PaaS or SaaS is the primary hosting model. Platforms are designed using standards to 
+          support automation, scalability, and cross-vendor integration.
+        questions:
+          - text: Are platforms designed for automation and reuse?
+            type: yes-no
+          - text: Is cross-vendor integration supported?
+            type: yes-no
+        evidence:
+          - Platform standards
+          - Cross-vendor integration documentation
+      level5:
+        name: Optimized
+        description: >
+          Hosting is cloud native and policy driven. APIs manage deployment, scaling, and monitoring. 
+          Platforms are integrated with operations and support multi-tenant, cross-state reuse.
+        questions:
+          - text: Are platforms cloud native and policy driven?
+            type: yes-no
+          - text: Are services reused across states/vendors?
+            type: yes-no
+        evidence:
+          - API-driven deployment scripts
+          - Multi-tenant hosting logs
+
+  - id: business-rules-workflow
+    name: Business Rules and Workflow
+    description: Assessment of business rules management and workflow automation.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Business rules and workflows are hardcoded within applications. No reuse or externalization.
+        questions:
+          - text: Are rules/workflows hard coded?
+            type: yes-no
+          - text: Is there any reuse?
+            type: yes-no
+        evidence:
+          - Application code with embedded rules
+          - Lack of external tools
+      level2:
+        name: Developing
+        description: >
+          Rules and workflows are coded but follow emerging standards. Some COTS tools for 
+          specific functions.
+        questions:
+          - text: Are rules coded but follow standards?
+            type: yes-no
+          - text: Are COTS tools used for specific functions?
+            type: yes-no
+        evidence:
+          - COTS tool pilot reports
+          - Rule documentation
+      level3:
+        name: Defined
+        description: >
+          COTS or SaaS tools are used to manage rules and workflows. Reuse is limited to specific 
+          modules or vendors.
+        questions:
+          - text: Are rules/workflows externalized?
+            type: yes-no
+          - text: Are they reused across modules?
+            type: yes-no
+        evidence:
+          - SaaS rule engine screenshots
+          - Workflow configuration files
+      level4:
+        name: Managed
+        description: >
+          Rules and workflows are externalized and reused across modules. Tools support versioning, 
+          testing, and governance.
+        questions:
+          - text: Are rules versioned and governed?
+            type: yes-no
+          - text: Are they reused across vendors?
+            type: yes-no
+        evidence:
+          - Rule governance policy
+          - Versioning logs
+      level5:
+        name: Optimized
+        description: >
+          Rules and workflows are dynamically orchestrated across systems. Business users can 
+          configure logic. AI/ML supports optimization and exception handling.
+        questions:
+          - text: Can business users configure rules?
+            type: yes-no
+          - text: Are rules dynamically orchestrated?
+            type: yes-no
+        evidence:
+          - AI-optimized rule engine logs
+          - Business user configuration UI
+
+  - id: common-platform-functions
+    name: Common Platform Functions
+    description: Assessment of shared services and platform function reuse.
+    levels:
+      level1:
+        name: Initial
+        description: >
+          Common services are developed independently within each module. No reuse or standardization.
+        questions:
+          - text: Are services developed independently by module?
+            type: yes-no
+          - text: Is there any reuse?
+            type: yes-no
+        evidence:
+          - Module-specific services (e.g., file upload)
+          - No shared catalog
+      level2:
+        name: Developing
+        description: >
+          Some services (e.g., document upload and address validation) are reused within a single 
+          module or vendor environment.
+        questions:
+          - text: Are services reused within a module or vendor?
+            type: yes-no
+          - text: Is reuse documented?
+            type: yes-no
+        evidence:
+          - Internal service registry
+          - Single-module reuse examples
+      level3:
+        name: Defined
+        description: >
+          Shared services are available across multiple modules. APIs and documentation support reuse.
+        questions:
+          - text: Are services reused across multiple modules?
+            type: yes-no
+          - text: Are APIs documented and discoverable?
+            type: yes-no
+        evidence:
+          - API documentation for shared services
+          - Usage logs
+      level4:
+        name: Managed
+        description: >
+          Common services are standardized, governed, and integrated with platform operations. 
+          Usage is monitored and optimized.
+        questions:
+          - text: Are services standardized and monitored?
+            type: yes-no
+          - text: Is usage tracked across modules?
+            type: yes-no
+        evidence:
+          - Service governance policy
+          - Monitoring dashboards
+      level5:
+        name: Optimized
+        description: >
+          Services are composable, discoverable, and reused across states and vendors. 
+          Service catalogs and self-service provisioning are available.
+        questions:
+          - text: Are services composable and reused across states/vendors?
+            type: yes-no
+          - text: Is provisioning self-service?
+            type: yes-no
+        evidence:
+          - Service catalog
+          - Self-service provisioning portal
