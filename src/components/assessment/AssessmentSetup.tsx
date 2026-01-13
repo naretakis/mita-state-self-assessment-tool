@@ -1,29 +1,55 @@
 import React, { useEffect, useState } from 'react';
 
+import * as yaml from 'js-yaml';
 import { useRouter } from 'next/router';
 
 import { useErrorHandler } from '../../hooks/useErrorHandler';
-import { ContentService } from '../../services/ContentService';
 import enhancedStorageService from '../../services/EnhancedStorageService';
 import styles from '../../styles/AssessmentSetup.module.css';
 
 import AssessmentErrorBoundary from './AssessmentErrorBoundary';
 import StorageErrorHandler from './StorageErrorHandler';
 
-import type { Assessment, CapabilityDefinition } from '../../types';
+import type { Assessment } from '../../types';
 
 interface AssessmentSetupProps {
   onAssessmentCreated?: (assessmentId: string) => void;
 }
 
-interface DomainSelection {
+interface CapabilityArea {
+  id: string;
   name: string;
+  file?: string;
+}
+
+interface CapabilityDomain {
+  id: string;
+  name: string;
+  description: string;
+  areas: CapabilityArea[];
+}
+
+interface CapabilitiesIndex {
+  version: string;
+  description: string;
+  domains: CapabilityDomain[];
+  metadata: {
+    lastUpdated: string;
+    orbitModelVersion: string;
+  };
+}
+
+interface DomainSelection {
+  id: string;
+  name: string;
+  description: string;
   selected: boolean;
-  areas: CapabilityDefinition[];
+  areas: CapabilityArea[];
 }
 
 interface CapabilitySelection {
   id: string;
+  domainId: string;
   domainName: string;
   areaName: string;
   selected: boolean;
@@ -33,7 +59,6 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
   const router = useRouter();
   const [stateName, setStateName] = useState('');
   const [systemName, setSystemName] = useState('');
-  const [capabilities, setCapabilities] = useState<CapabilityDefinition[]>([]);
   const [domains, setDomains] = useState<DomainSelection[]>([]);
   const [selections, setSelections] = useState<CapabilitySelection[]>([]);
   const [loading, setLoading] = useState(true);
@@ -47,48 +72,51 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
     loadCapabilities();
   }, []);
 
+  const getBasePath = () => {
+    if (typeof window === 'undefined') {
+      return '';
+    }
+    const pathname = window.location.pathname;
+    if (pathname.includes('/mita-state-self-assessment-tool')) {
+      return '/mita-state-self-assessment-tool';
+    }
+    return '';
+  };
+
   const loadCapabilities = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      const contentService = new ContentService('/content');
-      await contentService.initialize();
-      const loadedCapabilities = contentService.getAllCapabilities();
+      const basePath = getBasePath();
+      const response = await fetch(`${basePath}/content/capabilities/index.yaml`);
 
-      setCapabilities(loadedCapabilities);
+      if (!response.ok) {
+        throw new Error(`Failed to load capabilities index: ${response.status}`);
+      }
 
-      const groupedCapabilities = loadedCapabilities.reduce(
-        (groups, capability) => {
-          const domain = capability.capabilityDomainName;
-          if (!groups[domain]) {
-            groups[domain] = [];
-          }
-          groups[domain].push(capability);
-          return groups;
-        },
-        {} as Record<string, CapabilityDefinition[]>
-      );
+      const yamlContent = await response.text();
+      const capabilitiesIndex = yaml.load(yamlContent) as CapabilitiesIndex;
 
-      const initialDomains: DomainSelection[] = [
-        ...Object.entries(groupedCapabilities).map(([name, areas]) => ({
-          name,
-          selected: false,
-          areas,
-        })),
-        { name: 'Claims Processing', selected: false, areas: [] },
-        { name: 'Financial Management', selected: false, areas: [] },
-        { name: 'Eligibility and Enrollment', selected: false, areas: [] },
-      ];
+      const initialDomains: DomainSelection[] = capabilitiesIndex.domains.map(domain => ({
+        id: domain.id,
+        name: domain.name,
+        description: domain.description,
+        selected: false,
+        areas: domain.areas,
+      }));
 
       setDomains(initialDomains);
 
-      const initialSelections: CapabilitySelection[] = loadedCapabilities.map(cap => ({
-        id: cap.id,
-        domainName: cap.capabilityDomainName,
-        areaName: cap.capabilityAreaName,
-        selected: false,
-      }));
+      const initialSelections: CapabilitySelection[] = capabilitiesIndex.domains.flatMap(domain =>
+        domain.areas.map(area => ({
+          id: area.id,
+          domainId: domain.id,
+          domainName: domain.name,
+          areaName: area.name,
+          selected: false,
+        }))
+      );
 
       setSelections(initialSelections);
     } catch (err) {
@@ -111,10 +139,10 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
     }
   };
 
-  const handleSelectAll = (domainName: string, selected: boolean) => {
+  const handleSelectAll = (domainId: string, selected: boolean) => {
     setSelections(prev =>
       prev.map(selection =>
-        selection.domainName === domainName ? { ...selection, selected } : selection
+        selection.domainId === domainId ? { ...selection, selected } : selection
       )
     );
 
@@ -156,16 +184,11 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
 
       // Create ORBIT format assessment (MITA 4.0)
       const orbitCapabilities = selectedCapabilities.map(selection => {
-        const capability = capabilities.find(cap => cap.id === selection.id);
-        if (!capability) {
-          throw new Error(`Capability not found: ${selection.id}`);
-        }
-
         return {
-          id: `${capability.id}-orbit`,
-          capabilityId: capability.id,
-          capabilityDomainName: capability.capabilityDomainName,
-          capabilityAreaName: capability.capabilityAreaName,
+          id: `${selection.id}-orbit`,
+          capabilityId: selection.id,
+          capabilityDomainName: selection.domainName,
+          capabilityAreaName: selection.areaName,
           status: 'not-started' as const,
           orbit: {
             business: {
@@ -236,25 +259,25 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
     }
   };
 
-  const getSelectionCount = (domainName?: string) => {
-    if (domainName) {
-      return selections.filter(s => s.domainName === domainName && s.selected).length;
+  const getSelectionCount = (domainId?: string) => {
+    if (domainId) {
+      return selections.filter(s => s.domainId === domainId && s.selected).length;
     }
     return selections.filter(s => s.selected).length;
   };
 
-  const isDomainFullySelected = (domainName: string) => {
-    const domainSelections = selections.filter(s => s.domainName === domainName);
+  const isDomainFullySelected = (domainId: string) => {
+    const domainSelections = selections.filter(s => s.domainId === domainId);
     return domainSelections.length > 0 && domainSelections.every(s => s.selected);
   };
 
-  const toggleDomainExpansion = (domainName: string) => {
+  const toggleDomainExpansion = (domainId: string) => {
     setExpandedDomains(prev => {
       const newSet = new Set(prev);
-      if (newSet.has(domainName)) {
-        newSet.delete(domainName);
+      if (newSet.has(domainId)) {
+        newSet.delete(domainId);
       } else {
-        newSet.add(domainName);
+        newSet.add(domainId);
       }
       return newSet;
     });
@@ -393,25 +416,25 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
 
                   <div className={styles.capabilityDomains}>
                     {domains.map(domain => (
-                      <div key={domain.name} className="ds-u-margin-bottom--4">
+                      <div key={domain.id} className="ds-u-margin-bottom--4">
                         <div
                           className={`ds-c-card ${styles.domainCard} ${
                             domain.areas.length === 0 ? styles.domainCardDisabled : ''
-                          } ${getSelectionCount(domain.name) > 0 ? styles.domainCardSelected : ''}`}
+                          } ${getSelectionCount(domain.id) > 0 ? styles.domainCardSelected : ''}`}
                         >
                           <div className={styles.domainHeader}>
                             <button
                               type="button"
                               className={styles.domainToggle}
-                              onClick={() => toggleDomainExpansion(domain.name)}
-                              aria-expanded={expandedDomains.has(domain.name)}
+                              onClick={() => toggleDomainExpansion(domain.id)}
+                              aria-expanded={expandedDomains.has(domain.id)}
                             >
                               <div className={styles.domainTitle}>
                                 <h3 className="ds-h4 ds-u-margin--0 ds-u-color--primary">
                                   <span className={styles.expandIcon}>
-                                    {expandedDomains.has(domain.name) ? '▼' : '▶'}
+                                    {expandedDomains.has(domain.id) ? '▼' : '▶'}
                                   </span>
-                                  {domain.name} Domain
+                                  {domain.name}
                                 </h3>
                                 <div className="ds-u-margin-top--1">
                                   {domain.areas.length > 0 ? (
@@ -420,11 +443,11 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
                                         {domain.areas.length} capability area
                                         {domain.areas.length !== 1 ? 's' : ''}
                                       </span>
-                                      {getSelectionCount(domain.name) > 0 && (
+                                      {getSelectionCount(domain.id) > 0 && (
                                         <span
                                           className={`ds-text--small ds-u-margin-left--2 ${styles.selectionCount}`}
                                         >
-                                          • {getSelectionCount(domain.name)} selected
+                                          • {getSelectionCount(domain.id)} selected
                                         </span>
                                       )}
                                     </>
@@ -437,39 +460,29 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
                               </div>
                             </button>
                             <div className={styles.domainActions}>
-                              {domain.areas.length > 0 && expandedDomains.has(domain.name) && (
+                              {domain.areas.length > 0 && expandedDomains.has(domain.id) && (
                                 <button
                                   type="button"
                                   className="ds-c-button ds-c-button--transparent ds-c-button--small"
                                   onClick={() =>
-                                    handleSelectAll(
-                                      domain.name,
-                                      !isDomainFullySelected(domain.name)
-                                    )
+                                    handleSelectAll(domain.id, !isDomainFullySelected(domain.id))
                                   }
                                 >
-                                  {isDomainFullySelected(domain.name)
-                                    ? 'Deselect All'
-                                    : 'Select All'}
+                                  {isDomainFullySelected(domain.id) ? 'Deselect All' : 'Select All'}
                                 </button>
-                              )}
-                              {domain.areas.length === 0 && (
-                                <span className={`${styles.availabilityBadge} ds-text--small`}>
-                                  Coming Soon
-                                </span>
                               )}
                             </div>
                           </div>
 
-                          {domain.areas.length > 0 && expandedDomains.has(domain.name) && (
+                          {domain.areas.length > 0 && expandedDomains.has(domain.id) && (
                             <div className="ds-u-margin-top--3 ds-u-padding-top--3 ds-u-border-top--1">
                               <div className={styles.areasGrid}>
-                                {domain.areas.map(capability => {
-                                  const selection = selections.find(s => s.id === capability.id);
+                                {domain.areas.map(area => {
+                                  const selection = selections.find(s => s.id === area.id);
                                   return (
-                                    <div key={capability.id} className={styles.areaOption}>
+                                    <div key={area.id} className={styles.areaOption}>
                                       <label
-                                        htmlFor={`capability-${capability.id}`}
+                                        htmlFor={`capability-${area.id}`}
                                         className={`${styles.areaCard} ${
                                           selection?.selected ? styles.areaCardSelected : ''
                                         }`}
@@ -477,25 +490,17 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
                                         <div className={styles.areaCardHeader}>
                                           <input
                                             type="checkbox"
-                                            id={`capability-${capability.id}`}
+                                            id={`capability-${area.id}`}
                                             name="capabilities"
-                                            value={capability.id}
+                                            value={area.id}
                                             className={styles.areaCheckbox}
                                             checked={selection?.selected || false}
                                             onChange={e =>
-                                              handleSelectionChange(capability.id, e.target.checked)
+                                              handleSelectionChange(area.id, e.target.checked)
                                             }
                                           />
                                           <div className={styles.areaContent}>
-                                            <h4 className={styles.areaTitle}>
-                                              {capability.capabilityAreaName}
-                                            </h4>
-                                            {capability.description && (
-                                              <p className={styles.areaDescription}>
-                                                {capability.description.substring(0, 100)}
-                                                {capability.description.length > 100 ? '...' : ''}
-                                              </p>
-                                            )}
+                                            <h4 className={styles.areaTitle}>{area.name}</h4>
                                           </div>
                                         </div>
                                       </label>
@@ -503,15 +508,6 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
                                   );
                                 })}
                               </div>
-                            </div>
-                          )}
-
-                          {domain.areas.length === 0 && expandedDomains.has(domain.name) && (
-                            <div className="ds-u-margin-top--3 ds-u-padding-top--3 ds-u-border-top--1">
-                              <p className="ds-u-color--muted ds-u-font-size--sm ds-u-margin--0 ds-u-text-align--center">
-                                Capability areas for this domain will be available in future
-                                releases.
-                              </p>
                             </div>
                           )}
                         </div>

@@ -8,29 +8,187 @@ description: >
   standardized ORBIT maturity criteria.
 
 domains:
-  - id: provider
-    name: Provider
+  # Provider Management Domain
+  - id: provider-management
+    name: Provider Management
     description: >
-      The Provider capability domain encompasses provider enrollment, management, 
-      and termination processes.
+      The Provider Management capability domain encompasses provider enrollment, screening, 
+      monitoring, and support processes.
     areas:
       - id: provider-enrollment
         name: Provider Enrollment
         file: provider-enrollment.yaml
-      - id: provider-management
-        name: Provider Management
-        file: provider-management.yaml
-      - id: provider-termination
-        name: Provider Termination
-        file: provider-termination.yaml
+      - id: provider-screening
+        name: Provider Screening
+      - id: provider-monitoring
+        name: Provider Monitoring
+      - id: provider-support
+        name: Provider Support Management
 
-# Future domains to be added:
-# - member (Member Management)
-# - claims (Claims Processing)
-# - eligibility (Eligibility Determination)
-# - care-management (Care Management)
-# - financial (Financial Management)
-# - operations (Operations Support)
+  # Care and Service Coordination Domain
+  - id: care-service-coordination
+    name: Care and Service Coordination
+    description: >
+      The Care and Service Coordination domain covers waiver management, long-term care, 
+      visit verification, case management, and prior authorization processes.
+    areas:
+      - id: waiver-management
+        name: Waiver Management
+      - id: long-term-care-support
+        name: Long-Term Care Support Management
+      - id: visit-verification
+        name: Visit Verification Monitoring
+      - id: case-management
+        name: Case Management
+      - id: prior-authorization
+        name: Prior Authorization
+
+  # Financial Management Domain
+  - id: financial-management
+    name: Financial Management
+    description: >
+      The Financial Management domain encompasses accounts receivable, accounts payable, 
+      fiscal/budget management, fund management, third party liability, and financial 
+      information management.
+    areas:
+      - id: accounts-receivable
+        name: Accounts Receivable
+      - id: accounts-payable
+        name: Accounts Payable
+      - id: fiscal-budget-management
+        name: Fiscal/Budget Management
+      - id: fund-management
+        name: Fund Management
+      - id: third-party-liability
+        name: Third Party Liability
+      - id: financial-information-management
+        name: Financial Information Management
+
+  # Claims and Encounter Management Domain
+  - id: claims-encounter-management
+    name: Claims and Encounter Management
+    description: >
+      The Claims and Encounter Management domain covers claims submission, adjudication, 
+      encounter processing, adjustments, and lifecycle management.
+    areas:
+      - id: claims-encounter-submission
+        name: Claims and Encounter Submission Management
+      - id: claims-adjudication
+        name: Claims Adjudication
+      - id: encounter-processing
+        name: Encounter Processing
+      - id: claims-encounters-adjustments
+        name: Claims and Encounters Adjustments
+      - id: claims-encounters-lifecycle
+        name: Claims and Encounters Lifecycle Management
+
+  # Pharmacy Management Domain
+  - id: pharmacy-management
+    name: Pharmacy Management
+    description: >
+      The Pharmacy Management domain covers pharmacy benefit administration and 
+      drug monitoring oversight.
+    areas:
+      - id: pharmacy-benefit-administration
+        name: Pharmacy Benefit Administration
+      - id: drug-monitoring-oversight
+        name: Drug Monitoring Oversight
+
+  # Business Relationship Management Domain
+  - id: business-relationship-management
+    name: Business Relationship Management
+    description: >
+      The Business Relationship Management domain covers managing and monitoring 
+      business relationships throughout their lifecycle.
+    areas:
+      - id: manage-business-relationship-lifecycle
+        name: Manage Business Relationship Lifecycle
+      - id: monitor-business-relationship
+        name: Monitor Business Relationship
+
+  # Contract Management Domain
+  - id: contract-management
+    name: Contract Management
+    description: >
+      The Contract Management domain encompasses contract lifecycle management, 
+      contractor management, contract information management, and grievance/appeal processes.
+    areas:
+      - id: contract-lifecycle-management
+        name: Contract Lifecycle Management
+      - id: contractor-management
+        name: Contractor Management
+      - id: contract-information-management
+        name: Contract Information Management
+      - id: contractor-grievance-appeal
+        name: Contractor Grievance and Appeal
+
+  # Member Management Domain
+  - id: member-management
+    name: Member Management
+    description: >
+      The Member Management domain covers member eligibility, enrollment, and 
+      support management processes.
+    areas:
+      - id: member-eligibility-management
+        name: Member Eligibility Management
+      - id: member-enrollment-management
+        name: Member Enrollment Management
+      - id: member-support-management
+        name: Member Support Management
+
+  # Compliance Management Domain
+  - id: compliance-management
+    name: Compliance Management
+    description: >
+      The Compliance Management domain covers program monitoring and 
+      performance evaluation processes.
+    areas:
+      - id: program-monitoring-management
+        name: Program Monitoring Management
+      - id: program-performance-evaluation
+        name: Program Performance Evaluation
+
+  # Plan and Policy Management Domain
+  - id: plan-policy-management
+    name: Plan and Policy Management
+    description: >
+      The Plan and Policy Management domain covers health plan and 
+      health benefits administration.
+    areas:
+      - id: health-plan-administration
+        name: Health Plan Administration
+      - id: health-benefits-administration
+        name: Health Benefits Administration
+
+  # Strategy and Planning Management Domain
+  - id: strategy-planning-management
+    name: Strategy and Planning Management
+    description: >
+      The Strategy and Planning Management domain covers strategic planning, 
+      agency roadmap development, and state plan administration.
+    areas:
+      - id: maintain-strategic-plan
+        name: Maintain Strategic Plan
+      - id: develop-agency-roadmap
+        name: Develop Agency Roadmap
+      - id: state-plan-administration
+        name: State Plan Administration
+
+  # Communication Management Domain
+  - id: communication-management
+    name: Communication Management
+    description: >
+      The Communication Management domain covers communication development, 
+      dissemination, intake, and public affairs.
+    areas:
+      - id: communication-development
+        name: Communication Development
+      - id: communication-dissemination
+        name: Communication Dissemination
+      - id: communication-intake
+        name: Communication Intake
+      - id: public-affairs
+        name: Public Affairs
 
 metadata:
   lastUpdated: "2026-01-13"
