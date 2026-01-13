@@ -1,5 +1,14 @@
 // Core data models based on data_models.md
 
+// =============================================================================
+// MITA 4.0 ORBIT Maturity Model Types (New)
+// =============================================================================
+export * from './orbit';
+
+// =============================================================================
+// Legacy Types (for backward compatibility during migration)
+// =============================================================================
+
 export interface Assessment {
   id: string;
   stateName: string;

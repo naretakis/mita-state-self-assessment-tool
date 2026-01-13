@@ -131,10 +131,10 @@ The Technology dimension is the most complex, with **7 sub-domains**, each conta
     - `public/content/orbit/technology/security-identity.yaml`
     - `public/content/orbit/technology/operations-monitoring.yaml`
     - `public/content/orbit/technology/development-release.yaml`
-- [ ] **1.2** Update TypeScript types for new ORBIT model
-  - [ ] 1.2.1 Create OrbitMaturityModel types
-  - [ ] 1.2.2 Create Technology sub-domain types
-  - [ ] 1.2.3 Update Assessment types to reference standard criteria
+- [x] **1.2** Update TypeScript types for new ORBIT model
+  - [x] 1.2.1 Create OrbitMaturityModel types - `src/types/orbit.ts`
+  - [x] 1.2.2 Create Technology sub-domain types - included in orbit.ts
+  - [x] 1.2.3 Update Assessment types to reference standard criteria - exported from index.ts
 - [ ] **1.3** Simplify capability content files
   - [ ] 1.3.1 Remove maturity-level specific content from capability files
   - [ ] 1.3.2 Keep only domain/area metadata and descriptions
@@ -239,7 +239,12 @@ public/content/
 | | - technology/security-identity.yaml | ✅ | 4 aspects with Q&E |
 | | - technology/operations-monitoring.yaml | ✅ | 2 aspects with Q&E |
 | | - technology/development-release.yaml | ✅ | 3 aspects with Q&E |
-| | Phase 1.2 - TypeScript types | 🔜 Next | |
+| 2026-01-13 | Phase 1.2 - TypeScript types | ✅ Complete | |
+| | - src/types/orbit.ts | ✅ | All ORBIT types defined |
+| | - src/types/index.ts | ✅ | Exports ORBIT types |
+| | - src/services/OrbitMaturityService.ts | ✅ | YAML loader service |
+| | Phase 2.1 - OrbitMaturityService | ✅ Complete | Included with 1.2 |
+| | Phase 1.3 - Simplify capability files | 🔜 Next | |
 
 ---
 
