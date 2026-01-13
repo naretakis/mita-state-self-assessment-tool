@@ -1,187 +1,92 @@
 /**
  * OrbitCapabilityOverview Component
  *
- * Displays overview information for a capability before starting
- * the ORBIT dimension assessments.
+ * Displays a generic overview page before starting ORBIT dimension assessments.
+ * Content is universal across all capabilities since ORBIT maturity criteria
+ * are standardized.
+ *
+ * Includes:
+ * - Brief MITA 4.0 overview
+ * - Getting Started Tips
+ * - Materials You May Need
+ * - Maturity Level definitions
  */
 
 import React from 'react';
 
-import type { CapabilityMetadata, OrbitCapabilityAssessment } from '../../../types/orbit';
-
 interface OrbitCapabilityOverviewProps {
-  capability: OrbitCapabilityAssessment;
-  capabilityMeta: CapabilityMetadata;
   onNext: () => void;
   onPrevious?: () => void;
 }
 
 const OrbitCapabilityOverview: React.FC<OrbitCapabilityOverviewProps> = ({
-  capability,
-  capabilityMeta,
   onNext,
   onPrevious,
 }) => {
   return (
     <div className="orbit-capability-overview">
+      {/* Header */}
       <header style={{ marginBottom: '2rem' }}>
-        <div
-          style={{
-            fontSize: '0.875rem',
-            color: '#5c5c5c',
-            marginBottom: '0.5rem',
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-          }}
-        >
-          {capabilityMeta.domainName}
-        </div>
         <h1 style={{ margin: '0 0 1rem', fontSize: '2rem', fontWeight: 600 }}>
-          {capabilityMeta.areaName}
+          MITA 4.0 Maturity Assessment
         </h1>
         <p style={{ margin: 0, fontSize: '1.125rem', color: '#5c5c5c', lineHeight: 1.6 }}>
-          {capabilityMeta.description}
+          Welcome to the MITA 4.0 State Self-Assessment Tool. This assessment uses the standardized
+          ORBIT framework to evaluate your organization&apos;s maturity across multiple dimensions.
         </p>
       </header>
 
-      {/* ORBIT Assessment Overview */}
+      {/* MITA 4.0 Overview */}
       <section style={{ marginBottom: '2rem' }}>
         <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem' }}>
-          ORBIT Assessment Overview
+          About the Assessment
         </h2>
-        <p style={{ marginBottom: '1rem', color: '#5c5c5c' }}>
-          You will assess this capability across five ORBIT dimensions. Each dimension evaluates
-          different aspects of your organization&apos;s maturity.
+        <p style={{ marginBottom: '1rem', color: '#333', lineHeight: 1.6 }}>
+          The MITA Maturity Model provides State Medicaid Agencies with a framework to
+          systematically assess, benchmark, and improve processes, capabilities, architecture, and
+          performance. It offers a clear path to assess maturity, target specific areas for
+          improvement, and achieve greater efficiency and effectiveness in delivery of Medicaid
+          Program services.
         </p>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '1rem',
-            marginBottom: '1.5rem',
-          }}
-        >
-          {/* Outcomes */}
-          <div
-            style={{
-              padding: '1rem',
-              border: '1px solid #d6d7d9',
-              borderRadius: '4px',
-              backgroundColor: '#f8f8f8',
-            }}
-          >
-            <h3 style={{ margin: '0 0 0.5rem', fontSize: '1rem', fontWeight: 600 }}>
-              O - Outcomes
-              <span
-                style={{
-                  fontSize: '0.75rem',
-                  color: '#5c5c5c',
-                  fontWeight: 400,
-                  marginLeft: '0.5rem',
-                }}
-              >
-                (Optional)
-              </span>
-            </h3>
-            <p style={{ margin: 0, fontSize: '0.875rem', color: '#5c5c5c' }}>
-              Organizational culture, capability, quality, and alignment to goals.
-            </p>
-          </div>
-
-          {/* Roles */}
-          <div
-            style={{
-              padding: '1rem',
-              border: '1px solid #d6d7d9',
-              borderRadius: '4px',
-              backgroundColor: '#f8f8f8',
-            }}
-          >
-            <h3 style={{ margin: '0 0 0.5rem', fontSize: '1rem', fontWeight: 600 }}>
-              R - Roles
-              <span
-                style={{
-                  fontSize: '0.75rem',
-                  color: '#5c5c5c',
-                  fontWeight: 400,
-                  marginLeft: '0.5rem',
-                }}
-              >
-                (Optional)
-              </span>
-            </h3>
-            <p style={{ margin: 0, fontSize: '0.875rem', color: '#5c5c5c' }}>
-              Technology resources, governance, communication, and staffing capacity.
-            </p>
-          </div>
-
-          {/* Business Architecture */}
-          <div
-            style={{
-              padding: '1rem',
-              border: '1px solid #0071bc',
-              borderRadius: '4px',
-              backgroundColor: '#e6f3ff',
-            }}
-          >
-            <h3 style={{ margin: '0 0 0.5rem', fontSize: '1rem', fontWeight: 600 }}>
-              B - Business Architecture
-            </h3>
-            <p style={{ margin: 0, fontSize: '0.875rem', color: '#5c5c5c' }}>
-              Business processes, models, strategic planning, and policy management.
-            </p>
-          </div>
-
-          {/* Information & Data */}
-          <div
-            style={{
-              padding: '1rem',
-              border: '1px solid #0071bc',
-              borderRadius: '4px',
-              backgroundColor: '#e6f3ff',
-            }}
-          >
-            <h3 style={{ margin: '0 0 0.5rem', fontSize: '1rem', fontWeight: 600 }}>
-              I - Information & Data
-            </h3>
-            <p style={{ margin: 0, fontSize: '0.875rem', color: '#5c5c5c' }}>
-              Data governance, quality, integration, security, and analytics.
-            </p>
-          </div>
-
-          {/* Technology */}
-          <div
-            style={{
-              padding: '1rem',
-              border: '1px solid #0071bc',
-              borderRadius: '4px',
-              backgroundColor: '#e6f3ff',
-            }}
-          >
-            <h3 style={{ margin: '0 0 0.5rem', fontSize: '1rem', fontWeight: 600 }}>
-              T - Technology
-            </h3>
-            <p style={{ margin: 0, fontSize: '0.875rem', color: '#5c5c5c' }}>
-              Infrastructure, integration, platform services, security, and operations.
-            </p>
-          </div>
-        </div>
-
-        <div
-          style={{
-            padding: '1rem',
-            backgroundColor: '#fff3cd',
-            border: '1px solid #ffc107',
-            borderRadius: '4px',
-          }}
-        >
-          <p style={{ margin: 0, fontSize: '0.875rem' }}>
-            <strong>Note:</strong> Outcomes and Roles dimensions are optional. Business
-            Architecture, Information & Data, and Technology are required for a complete assessment.
-          </p>
-        </div>
+        <p style={{ marginBottom: '0', color: '#333', lineHeight: 1.6 }}>
+          You will assess each capability using the <strong>ORBIT framework</strong>: Outcomes,
+          Roles, Business Architecture, Information & Data, and Technology. Each dimension is
+          evaluated on a 1-5 maturity scale with standardized criteria.
+        </p>
       </section>
+
+      {/* Getting Started Tips */}
+      <div
+        className="ds-c-alert ds-c-alert--lightweight"
+        style={{ marginBottom: '1.5rem' }}
+        role="region"
+        aria-label="Getting started tips"
+      >
+        <div className="ds-c-alert__body">
+          <h3 className="ds-c-alert__heading">Getting Started Tips</h3>
+          <ul className="ds-c-list" style={{ marginBottom: '1.5rem' }}>
+            <li>
+              Attest with an honest assessment - select the maturity level that best aligns with
+              your knowledge
+            </li>
+            <li>Provide written details that support your maturity level selections</li>
+            <li>Document barriers and challenges you face</li>
+            <li>Include advancement plans for areas needing improvement</li>
+            <li>Your responses are automatically saved as you proceed through the tool</li>
+          </ul>
+
+          <h4 className="ds-c-alert__heading">Materials You May Need</h4>
+          <ul className="ds-c-list" style={{ marginBottom: 0 }}>
+            <li>Subject matter experts who know the business areas</li>
+            <li>Standard operating procedures</li>
+            <li>Policy and technical manuals</li>
+            <li>SLA documentation</li>
+            <li>Links (URLs) to internal and external resources</li>
+            <li>Workflow and system diagrams</li>
+            <li>Prior MITA State Self-Assessments</li>
+          </ul>
+        </div>
+      </div>
 
       {/* Maturity Levels */}
       <section style={{ marginBottom: '2rem' }}>
@@ -189,120 +94,99 @@ const OrbitCapabilityOverview: React.FC<OrbitCapabilityOverviewProps> = ({
           Maturity Levels
         </h2>
         <p style={{ marginBottom: '1rem', color: '#5c5c5c' }}>
-          Each aspect within a dimension is assessed on a 1-5 maturity scale:
+          Each aspect is assessed on a 1-5 maturity scale:
         </p>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <div
+          style={{
+            border: '1px solid #d6d7d9',
+            borderRadius: '4px',
+            overflow: 'hidden',
+          }}
+        >
           {[
             {
               level: 1,
               name: 'Initial',
-              color: '#f44336',
-              description: 'Unstructured, reactive processes',
+              description:
+                'Processes are unstructured, reactive, and inconsistent. Current state seeks to adopt enterprise-wide planning and architectural frameworks.',
             },
             {
               level: 2,
               name: 'Developing',
-              color: '#ff9800',
-              description: 'Basic processes, beginning to standardize',
+              description:
+                'Basic processes and systems exist but are not fully standardized or documented. Beginning to adopt industry-recognized frameworks.',
             },
             {
               level: 3,
               name: 'Defined',
-              color: '#ffeb3b',
-              description: 'Standardized, documented processes',
+              description:
+                'Processes, systems, and strategies are standardized, well-documented, and aligned across the organization.',
             },
             {
               level: 4,
               name: 'Managed',
-              color: '#8bc34a',
-              description: 'Fully operational, metrics-driven',
+              description:
+                'Processes are fully operational, consistent, and well executed. Organization actively monitors and analyzes metrics for improvements.',
             },
             {
               level: 5,
               name: 'Optimized',
-              color: '#4caf50',
-              description: 'Advanced, data-driven innovation',
+              description:
+                'Advanced, data-driven strategies drive enterprise optimization. Institutionalized innovation supports adaptability and continuous improvement.',
             },
-          ].map(({ level, name, color, description }) => (
+          ].map(({ level, name, description }, index) => (
             <div
               key={level}
               style={{
                 display: 'flex',
-                alignItems: 'center',
+                alignItems: 'flex-start',
                 gap: '1rem',
-                padding: '0.5rem',
+                padding: '1rem',
+                borderBottom: index < 4 ? '1px solid #d6d7d9' : 'none',
+                backgroundColor: index % 2 === 0 ? '#fff' : '#f8f8f8',
               }}
             >
               <span
                 style={{
-                  width: '2rem',
+                  minWidth: '2rem',
                   height: '2rem',
                   borderRadius: '50%',
-                  backgroundColor: color,
-                  color: level >= 3 ? '#000' : '#fff',
+                  backgroundColor: '#0071bc',
+                  color: '#fff',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontWeight: 600,
                   fontSize: '0.875rem',
+                  flexShrink: 0,
                 }}
               >
                 {level}
               </span>
               <div>
-                <strong>{name}</strong>
-                <span style={{ color: '#5c5c5c', marginLeft: '0.5rem' }}>- {description}</span>
+                <strong style={{ fontSize: '1rem' }}>
+                  Level {level}: {name}
+                </strong>
+                <p style={{ margin: '0.25rem 0 0', fontSize: '0.875rem', color: '#5c5c5c' }}>
+                  {description}
+                </p>
               </div>
             </div>
           ))}
         </div>
-      </section>
 
-      {/* Current Status */}
-      <section style={{ marginBottom: '2rem' }}>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem' }}>
-          Assessment Status
-        </h2>
-        <div
+        <p
           style={{
-            padding: '1rem',
-            border: '1px solid #d6d7d9',
-            borderRadius: '4px',
-            backgroundColor: '#fff',
+            marginTop: '1rem',
+            fontSize: '0.875rem',
+            color: '#5c5c5c',
+            fontStyle: 'italic',
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-            <span>Status:</span>
-            <span
-              style={{
-                padding: '0.125rem 0.5rem',
-                borderRadius: '4px',
-                backgroundColor:
-                  capability.status === 'completed'
-                    ? '#4caf50'
-                    : capability.status === 'in-progress'
-                      ? '#ff9800'
-                      : '#e0e0e0',
-                color: capability.status === 'not-started' ? '#5c5c5c' : '#fff',
-                fontSize: '0.75rem',
-                fontWeight: 600,
-              }}
-            >
-              {capability.status === 'completed'
-                ? 'Completed'
-                : capability.status === 'in-progress'
-                  ? 'In Progress'
-                  : 'Not Started'}
-            </span>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>Last Updated:</span>
-            <span style={{ color: '#5c5c5c' }}>
-              {new Date(capability.updatedAt).toLocaleDateString()}
-            </span>
-          </div>
-        </div>
+          You may also select &quot;Not Applicable&quot; if a maturity criterion does not apply to
+          your business operations.
+        </p>
       </section>
 
       {/* Navigation */}
@@ -313,6 +197,7 @@ const OrbitCapabilityOverview: React.FC<OrbitCapabilityOverviewProps> = ({
           paddingTop: '1rem',
           borderTop: '1px solid #d6d7d9',
         }}
+        aria-label="Assessment navigation"
       >
         {onPrevious ? (
           <button

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { AssessmentResults } from '../../../components/assessment';
 import AssessmentHeader from '../../../components/assessment/AssessmentHeader';
 import AssessmentSidebar from '../../../components/assessment/AssessmentSidebar';
+import { OrbitAssessmentResults } from '../../../components/assessment/orbit';
 import AppHeader from '../../../components/layout/AppHeader';
 import { ContentService } from '../../../services/ContentService';
 import enhancedStorageService from '../../../services/EnhancedStorageService';
@@ -27,11 +28,13 @@ const ORBIT_DIMENSIONS: OrbitDimension[] = [
 
 /**
  * Assessment Results Page with Sidebar
+ * Detects assessment format and renders appropriate results component
  */
 export default function AssessmentResultsPage() {
   const router = useRouter();
   const { id } = router.query;
   const [assessment, setAssessment] = useState<Assessment | null>(null);
+  const [isOrbitAssessment, setIsOrbitAssessment] = useState<boolean>(false);
   const [capabilities, setCapabilities] = useState<CapabilityDefinition[]>([]);
   const [steps, setSteps] = useState<AssessmentStep[]>([]);
   const [loading, setLoading] = useState(true);
@@ -45,10 +48,10 @@ export default function AssessmentResultsPage() {
   }, [id]);
 
   useEffect(() => {
-    if (assessment) {
+    if (assessment && !isOrbitAssessment) {
       generateSteps();
     }
-  }, [assessment]);
+  }, [assessment, isOrbitAssessment]);
 
   const loadAssessmentData = async (assessmentId: string) => {
     try {
@@ -58,12 +61,25 @@ export default function AssessmentResultsPage() {
         return;
       }
 
+      // Check if it's an ORBIT assessment
+      if ('capabilities' in loadedAssessment && Array.isArray(loadedAssessment.capabilities)) {
+        const firstCap = loadedAssessment.capabilities[0];
+        if (firstCap && 'orbit' in firstCap) {
+          setIsOrbitAssessment(true);
+          setAssessment(loadedAssessment);
+          setLoading(false);
+          return;
+        }
+      }
+
+      // Legacy assessment - load capabilities for sidebar
       const contentService = new ContentService('/content');
       await contentService.initialize();
       const loadedCapabilities = contentService.getAllCapabilities();
 
       setAssessment(loadedAssessment);
       setCapabilities(loadedCapabilities);
+      setIsOrbitAssessment(false);
     } catch (err) {
       console.error('Failed to load assessment:', err);
     } finally {
@@ -120,6 +136,12 @@ export default function AssessmentResultsPage() {
     );
   }
 
+  // Render ORBIT results for new format assessments
+  if (isOrbitAssessment) {
+    return <OrbitAssessmentResults assessmentId={id} />;
+  }
+
+  // Render legacy results with sidebar
   return (
     <div className="ds-base">
       <AppHeader />

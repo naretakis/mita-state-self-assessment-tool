@@ -89,6 +89,54 @@ const OrbitAssessmentSidebar: React.FC<OrbitAssessmentSidebarProps> = ({
     [onNavigateToStep, isMobile, onMobileToggle]
   );
 
+  // Calculate dimension scores for a capability
+  const getDimensionScore = useCallback(
+    (capabilityId: string, dimensionId: OrbitDimensionId): number | null => {
+      const capability = assessment.capabilities.find(c => c.capabilityId === capabilityId);
+      if (!capability?.orbit) {
+        return null;
+      }
+
+      if (dimensionId === 'technology') {
+        const tech = capability.orbit.technology;
+        if (!tech?.subDomains) {
+          return null;
+        }
+
+        const allLevels: number[] = [];
+        Object.values(tech.subDomains).forEach(sd => {
+          Object.values(sd.aspects || {}).forEach(aspect => {
+            if (aspect.currentLevel > 0) {
+              allLevels.push(aspect.currentLevel);
+            }
+          });
+        });
+
+        if (allLevels.length === 0) {
+          return null;
+        }
+        const avg = allLevels.reduce((sum, l) => sum + l, 0) / allLevels.length;
+        return Math.round(avg * 100) / 100;
+      } else {
+        const dim = capability.orbit[dimensionId];
+        if (!dim?.aspects) {
+          return null;
+        }
+
+        const levels = Object.values(dim.aspects)
+          .filter(a => a.currentLevel > 0)
+          .map(a => a.currentLevel);
+
+        if (levels.length === 0) {
+          return null;
+        }
+        const avg = levels.reduce((sum, l) => sum + l, 0) / levels.length;
+        return Math.round(avg * 100) / 100;
+      }
+    },
+    [assessment.capabilities]
+  );
+
   // Group steps by capability
   const groupedSteps = useMemo(() => {
     const groups: Array<{
@@ -309,6 +357,7 @@ const OrbitAssessmentSidebar: React.FC<OrbitAssessmentSidebarProps> = ({
                         .map(({ dimensionId, stepIndex }) => {
                           const status = getStepStatus(stepIndex);
                           const isOptional = dimensionId === 'outcomes' || dimensionId === 'roles';
+                          const score = getDimensionScore(group.capabilityId, dimensionId);
 
                           return (
                             <li key={dimensionId} className="assessment-sidebar__step">
@@ -317,24 +366,55 @@ const OrbitAssessmentSidebar: React.FC<OrbitAssessmentSidebarProps> = ({
                                 className={`assessment-sidebar__step-button assessment-sidebar__step-button--${status}`}
                                 onClick={() => handleStepNavigation(stepIndex)}
                                 aria-current={currentStepIndex === stepIndex ? 'step' : undefined}
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  alignItems: 'center',
+                                  width: '100%',
+                                }}
                               >
-                                <span className="assessment-sidebar__step-icon">
-                                  {status === 'completed' ? '✓' : status === 'current' ? '●' : '○'}
+                                <span
+                                  style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                                >
+                                  <span className="assessment-sidebar__step-icon">
+                                    {status === 'completed'
+                                      ? '✓'
+                                      : status === 'current'
+                                        ? '●'
+                                        : '○'}
+                                  </span>
+                                  <span className="assessment-sidebar__step-label">
+                                    {DIMENSION_LABELS[dimensionId]}
+                                    {isOptional && (
+                                      <span
+                                        style={{
+                                          fontSize: '0.625rem',
+                                          color: '#5c5c5c',
+                                          marginLeft: '0.25rem',
+                                        }}
+                                      >
+                                        (optional)
+                                      </span>
+                                    )}
+                                  </span>
                                 </span>
-                                <span className="assessment-sidebar__step-label">
-                                  {DIMENSION_LABELS[dimensionId]}
-                                  {isOptional && (
-                                    <span
-                                      style={{
-                                        fontSize: '0.625rem',
-                                        color: '#5c5c5c',
-                                        marginLeft: '0.25rem',
-                                      }}
-                                    >
-                                      (optional)
-                                    </span>
-                                  )}
-                                </span>
+                                {score !== null && (
+                                  <span
+                                    style={{
+                                      fontSize: '0.75rem',
+                                      fontWeight: 600,
+                                      padding: '0.125rem 0.5rem',
+                                      borderRadius: '10px',
+                                      backgroundColor:
+                                        status === 'completed' ? '#d4edda' : '#e9ecef',
+                                      color: status === 'completed' ? '#155724' : '#495057',
+                                      minWidth: '2.5rem',
+                                      textAlign: 'center',
+                                    }}
+                                  >
+                                    {score.toFixed(2)}
+                                  </span>
+                                )}
                               </button>
                             </li>
                           );

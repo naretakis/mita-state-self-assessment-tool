@@ -442,24 +442,66 @@ export class EnhancedStorageService implements StorageManager {
       const metaString = localStorage.getItem(this.localStorageMetaKey);
       const metadata: Record<string, AssessmentSummary> = metaString ? JSON.parse(metaString) : {};
 
-      // Calculate completion percentage
-      const totalDimensions = assessment.capabilities.length * 5; // 5 dimensions per capability
-      let completedDimensions = 0;
+      // Cast capabilities to handle both ORBIT and legacy formats
+      const capabilities = assessment.capabilities as unknown as Array<Record<string, unknown>>;
 
-      assessment.capabilities.forEach(capability => {
-        Object.values(capability.dimensions).forEach(dimension => {
-          if (dimension.maturityLevel > 0) {
-            completedDimensions++;
+      // Calculate completion percentage based on assessment format
+      let completionPercentage = 0;
+      const isOrbitFormat =
+        assessment.metadata?.assessmentVersion === '4.0' ||
+        capabilities.some(cap => 'orbit' in cap);
+
+      if (isOrbitFormat) {
+        // ORBIT format: check orbit dimensions (B, I, T are required)
+        const totalRequired = capabilities.length * 3; // B, I, T per capability
+        let completedRequired = 0;
+
+        capabilities.forEach(capability => {
+          const orbit = capability.orbit as Record<string, unknown> | undefined;
+          if (orbit) {
+            const business = orbit.business as { overallLevel?: number } | undefined;
+            const information = orbit.information as { overallLevel?: number } | undefined;
+            const technology = orbit.technology as { overallLevel?: number } | undefined;
+
+            if (business?.overallLevel && business.overallLevel > 0) {
+              completedRequired++;
+            }
+            if (information?.overallLevel && information.overallLevel > 0) {
+              completedRequired++;
+            }
+            if (technology?.overallLevel && technology.overallLevel > 0) {
+              completedRequired++;
+            }
           }
         });
-      });
 
-      const completionPercentage =
-        totalDimensions > 0 ? Math.round((completedDimensions / totalDimensions) * 100) : 0;
+        completionPercentage =
+          totalRequired > 0 ? Math.round((completedRequired / totalRequired) * 100) : 0;
+      } else {
+        // Legacy format: check dimensions
+        const totalDimensions = capabilities.length * 5;
+        let completedDimensions = 0;
+
+        capabilities.forEach(capability => {
+          const dimensions = capability.dimensions as
+            | Record<string, { maturityLevel?: number }>
+            | undefined;
+          if (dimensions) {
+            Object.values(dimensions).forEach(dimension => {
+              if (dimension?.maturityLevel && dimension.maturityLevel > 0) {
+                completedDimensions++;
+              }
+            });
+          }
+        });
+
+        completionPercentage =
+          totalDimensions > 0 ? Math.round((completedDimensions / totalDimensions) * 100) : 0;
+      }
 
       // Extract capability information
-      const domains = [...new Set(assessment.capabilities.map(c => c.capabilityDomainName))];
-      const areas = assessment.capabilities.map(c => c.capabilityAreaName);
+      const domains = [...new Set(capabilities.map(c => c.capabilityDomainName as string))];
+      const areas = capabilities.map(c => c.capabilityAreaName as string);
       const systemName = assessment.metadata?.systemName;
 
       // Update metadata
@@ -507,24 +549,66 @@ export class EnhancedStorageService implements StorageManager {
       // Save the assessment
       await db.put('assessments', assessment);
 
-      // Calculate completion percentage
-      const totalDimensions = assessment.capabilities.length * 5; // 5 dimensions per capability
-      let completedDimensions = 0;
+      // Cast capabilities to handle both ORBIT and legacy formats
+      const capabilities = assessment.capabilities as unknown as Array<Record<string, unknown>>;
 
-      assessment.capabilities.forEach(capability => {
-        Object.values(capability.dimensions).forEach(dimension => {
-          if (dimension.maturityLevel > 0) {
-            completedDimensions++;
+      // Calculate completion percentage based on assessment format
+      let completionPercentage = 0;
+      const isOrbitFormat =
+        assessment.metadata?.assessmentVersion === '4.0' ||
+        capabilities.some(cap => 'orbit' in cap);
+
+      if (isOrbitFormat) {
+        // ORBIT format: check orbit dimensions (B, I, T are required)
+        const totalRequired = capabilities.length * 3;
+        let completedRequired = 0;
+
+        capabilities.forEach(capability => {
+          const orbit = capability.orbit as Record<string, unknown> | undefined;
+          if (orbit) {
+            const business = orbit.business as { overallLevel?: number } | undefined;
+            const information = orbit.information as { overallLevel?: number } | undefined;
+            const technology = orbit.technology as { overallLevel?: number } | undefined;
+
+            if (business?.overallLevel && business.overallLevel > 0) {
+              completedRequired++;
+            }
+            if (information?.overallLevel && information.overallLevel > 0) {
+              completedRequired++;
+            }
+            if (technology?.overallLevel && technology.overallLevel > 0) {
+              completedRequired++;
+            }
           }
         });
-      });
 
-      const completionPercentage =
-        totalDimensions > 0 ? Math.round((completedDimensions / totalDimensions) * 100) : 0;
+        completionPercentage =
+          totalRequired > 0 ? Math.round((completedRequired / totalRequired) * 100) : 0;
+      } else {
+        // Legacy format: check dimensions
+        const totalDimensions = capabilities.length * 5;
+        let completedDimensions = 0;
+
+        capabilities.forEach(capability => {
+          const dimensions = capability.dimensions as
+            | Record<string, { maturityLevel?: number }>
+            | undefined;
+          if (dimensions) {
+            Object.values(dimensions).forEach(dimension => {
+              if (dimension?.maturityLevel && dimension.maturityLevel > 0) {
+                completedDimensions++;
+              }
+            });
+          }
+        });
+
+        completionPercentage =
+          totalDimensions > 0 ? Math.round((completedDimensions / totalDimensions) * 100) : 0;
+      }
 
       // Extract capability information
-      const domains = [...new Set(assessment.capabilities.map(c => c.capabilityDomainName))];
-      const areas = assessment.capabilities.map(c => c.capabilityAreaName);
+      const domains = [...new Set(capabilities.map(c => c.capabilityDomainName as string))];
+      const areas = capabilities.map(c => c.capabilityAreaName as string);
       const systemName = assessment.metadata?.systemName;
 
       // Save the summary

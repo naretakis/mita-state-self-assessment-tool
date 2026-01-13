@@ -16,6 +16,7 @@ import { useOrbitModel } from '../../../hooks/useOrbitModel';
 import enhancedStorageService from '../../../services/EnhancedStorageService';
 import AppHeader from '../../layout/AppHeader';
 import AssessmentErrorBoundary from '../AssessmentErrorBoundary';
+import AssessmentHeader from '../AssessmentHeader';
 import StorageErrorHandler from '../StorageErrorHandler';
 
 import OrbitAssessmentSidebar from './OrbitAssessmentSidebar';
@@ -68,7 +69,7 @@ const OrbitGuidedAssessment: React.FC<OrbitGuidedAssessmentProps> = ({ assessmen
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
-  const { capabilities, loading: capabilitiesLoading } = useCapabilities();
+  const { capabilities: _capabilities, loading: capabilitiesLoading } = useCapabilities();
   const { model: orbitModel, loading: orbitLoading } = useOrbitModel();
   const errorHandler = useErrorHandler();
   const { announceStepChange, announceError, announceSuccess, LiveRegions } = useAnnouncements();
@@ -327,7 +328,21 @@ const OrbitGuidedAssessment: React.FC<OrbitGuidedAssessmentProps> = ({ assessmen
   const currentCapability = assessment?.capabilities.find(
     c => c.capabilityId === currentStep?.capabilityId
   );
-  const currentCapabilityMeta = capabilities.find(c => c.id === currentStep?.capabilityId);
+
+  // Get current step name for header display
+  const getCurrentStepName = (): string => {
+    if (!currentStep || !currentCapability) {
+      return 'MITA 4.0 ORBIT Assessment';
+    }
+
+    if (currentStep.type === 'overview') {
+      return `${currentCapability.capabilityAreaName} - Overview`;
+    } else if (currentStep.dimensionId) {
+      return `${currentCapability.capabilityAreaName} - ${DIMENSION_LABELS[currentStep.dimensionId]}`;
+    }
+
+    return currentCapability.capabilityAreaName;
+  };
 
   // Calculate completion percentage
   const completionPercentage = useMemo(() => {
@@ -422,52 +437,17 @@ const OrbitGuidedAssessment: React.FC<OrbitGuidedAssessmentProps> = ({ assessmen
 
         <AppHeader />
 
-        {/* Assessment Header */}
-        <header
-          className="assessment-header"
-          style={{
-            backgroundColor: '#fff',
-            borderBottom: '1px solid #d6d7d9',
-            padding: '1rem',
-          }}
-        >
-          <div className="ds-l-container">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <h1 style={{ margin: 0, fontSize: '1.25rem' }}>{assessment.stateName}</h1>
-                <p style={{ margin: '0.25rem 0 0', fontSize: '0.875rem', color: '#5c5c5c' }}>
-                  MITA 4.0 ORBIT Assessment
-                  {assessment.metadata?.systemName && ` - ${assessment.metadata.systemName}`}
-                </p>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: '0.875rem', color: '#5c5c5c' }}>
-                    Step {currentStepIndex + 1} of {steps.length}
-                  </div>
-                  <div style={{ fontSize: '0.75rem', color: '#5c5c5c' }}>
-                    {completionPercentage}% complete
-                  </div>
-                </div>
-                {saving && <span style={{ fontSize: '0.75rem', color: '#0071bc' }}>Saving...</span>}
-                {lastSaved && !saving && (
-                  <span style={{ fontSize: '0.75rem', color: '#5c5c5c' }}>
-                    Saved {lastSaved.toLocaleTimeString()}
-                  </span>
-                )}
-                <button
-                  type="button"
-                  className="ds-c-button ds-c-button--ghost ds-c-button--small"
-                  onClick={() => setMobileSidebarOpen(true)}
-                  aria-label="Open navigation"
-                  style={{ display: 'none' }} // Show on mobile via CSS
-                >
-                  ☰
-                </button>
-              </div>
-            </div>
-          </div>
-        </header>
+        <AssessmentHeader
+          assessmentName={assessment.stateName}
+          systemName={assessment.metadata?.systemName}
+          currentStep={getCurrentStepName()}
+          onOpenSidebar={() => setMobileSidebarOpen(true)}
+          saving={saving}
+          lastSaved={lastSaved}
+          completionPercentage={completionPercentage}
+          currentStepIndex={currentStepIndex}
+          totalSteps={steps.length}
+        />
 
         {/* Sidebar */}
         <OrbitAssessmentSidebar
@@ -494,10 +474,8 @@ const OrbitGuidedAssessment: React.FC<OrbitGuidedAssessmentProps> = ({ assessmen
 
             <main role="main" id="main-content" tabIndex={-1}>
               {/* Overview Step */}
-              {currentStep?.type === 'overview' && currentCapability && currentCapabilityMeta && (
+              {currentStep?.type === 'overview' && (
                 <OrbitCapabilityOverview
-                  capability={currentCapability}
-                  capabilityMeta={currentCapabilityMeta}
                   onNext={handleNext}
                   onPrevious={currentStepIndex > 0 ? handlePrevious : undefined}
                 />

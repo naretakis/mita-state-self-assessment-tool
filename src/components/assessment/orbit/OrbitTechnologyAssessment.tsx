@@ -36,7 +36,6 @@ const OrbitTechnologyAssessment: React.FC<OrbitTechnologyAssessmentProps> = ({
   const [activeSubDomain, setActiveSubDomain] = useState<TechnologySubDomainId>(
     dimension.subDomains[0]?.id || 'infrastructure'
   );
-  const [expandedAspects, setExpandedAspects] = useState<Set<string>>(new Set());
 
   // Initialize or get current response
   const currentResponse = useMemo((): TechnologyDimensionResponse => {
@@ -70,19 +69,6 @@ const OrbitTechnologyAssessment: React.FC<OrbitTechnologyAssessmentProps> = ({
   const activeSubDomainResponse = useMemo((): TechnologySubDomainResponse | undefined => {
     return currentResponse.subDomains[activeSubDomain];
   }, [currentResponse.subDomains, activeSubDomain]);
-
-  // Toggle aspect expansion
-  const toggleAspect = useCallback((aspectId: string) => {
-    setExpandedAspects(prev => {
-      const next = new Set(prev);
-      if (next.has(aspectId)) {
-        next.delete(aspectId);
-      } else {
-        next.add(aspectId);
-      }
-      return next;
-    });
-  }, []);
 
   // Handle aspect update
   const handleAspectUpdate = useCallback(
@@ -232,10 +218,10 @@ const OrbitTechnologyAssessment: React.FC<OrbitTechnologyAssessmentProps> = ({
         style={{
           display: 'flex',
           flexWrap: 'wrap',
-          gap: '0.25rem',
+          gap: '0.5rem',
           marginBottom: '1.5rem',
           borderBottom: '2px solid #d6d7d9',
-          paddingBottom: '0.25rem',
+          paddingBottom: '0.75rem',
         }}
       >
         {dimension.subDomains.map(sd => {
@@ -251,20 +237,20 @@ const OrbitTechnologyAssessment: React.FC<OrbitTechnologyAssessmentProps> = ({
               aria-controls={`tabpanel-${sd.id}`}
               onClick={() => {
                 setActiveSubDomain(sd.id);
-                setExpandedAspects(new Set());
               }}
               style={{
-                padding: '0.5rem 1rem',
-                border: 'none',
-                borderBottom: isActive ? '3px solid #0071bc' : '3px solid transparent',
-                backgroundColor: isActive ? '#e6f3ff' : 'transparent',
+                padding: '0.5rem 0.75rem',
+                border: isActive ? '2px solid #0071bc' : '1px solid #aeb0b5',
+                borderRadius: '4px',
+                backgroundColor: isActive ? '#0071bc' : '#fff',
                 cursor: 'pointer',
                 fontSize: '0.875rem',
-                fontWeight: isActive ? 600 : 400,
+                fontWeight: 600,
+                color: isActive ? '#fff' : '#212121',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.5rem',
-                marginBottom: '-2px',
+                whiteSpace: 'nowrap',
               }}
             >
               <span>{sd.name}</span>
@@ -273,8 +259,13 @@ const OrbitTechnologyAssessment: React.FC<OrbitTechnologyAssessmentProps> = ({
                   fontSize: '0.75rem',
                   padding: '0.125rem 0.375rem',
                   borderRadius: '10px',
-                  backgroundColor: isComplete ? '#4caf50' : '#e0e0e0',
-                  color: isComplete ? '#fff' : '#5c5c5c',
+                  backgroundColor: isActive
+                    ? 'rgba(255,255,255,0.25)'
+                    : isComplete
+                      ? '#4caf50'
+                      : '#e0e0e0',
+                  color: isActive ? '#fff' : isComplete ? '#fff' : '#212121',
+                  fontWeight: 600,
                 }}
               >
                 {stats.completed}/{stats.total}
@@ -308,8 +299,6 @@ const OrbitTechnologyAssessment: React.FC<OrbitTechnologyAssessmentProps> = ({
                 aspect={aspect}
                 response={activeSubDomainResponse?.aspects[aspect.id]}
                 onUpdate={aspectResponse => handleAspectUpdate(aspect.id, aspectResponse)}
-                expanded={expandedAspects.has(aspect.id)}
-                onToggleExpand={() => toggleAspect(aspect.id)}
               />
             ))}
           </div>

@@ -6,7 +6,7 @@
  * with their aspects.
  */
 
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import OrbitAspectAssessment from './OrbitAspectAssessment';
 
@@ -34,8 +34,6 @@ const OrbitDimensionAssessment: React.FC<OrbitDimensionAssessmentProps> = ({
   onNext,
   onPrevious,
 }) => {
-  const [expandedAspects, setExpandedAspects] = useState<Set<string>>(new Set());
-
   // Initialize or get current response
   const currentResponse = useMemo((): StandardDimensionResponse => {
     if (response) {
@@ -49,29 +47,6 @@ const OrbitDimensionAssessment: React.FC<OrbitDimensionAssessmentProps> = ({
       lastUpdated: new Date().toISOString(),
     };
   }, [response, dimensionId]);
-
-  // Toggle aspect expansion
-  const toggleAspect = useCallback((aspectId: string) => {
-    setExpandedAspects(prev => {
-      const next = new Set(prev);
-      if (next.has(aspectId)) {
-        next.delete(aspectId);
-      } else {
-        next.add(aspectId);
-      }
-      return next;
-    });
-  }, []);
-
-  // Expand all aspects
-  const expandAll = useCallback(() => {
-    setExpandedAspects(new Set(dimension.aspects.map(a => a.id)));
-  }, [dimension.aspects]);
-
-  // Collapse all aspects
-  const collapseAll = useCallback(() => {
-    setExpandedAspects(new Set());
-  }, []);
 
   // Handle aspect update
   const handleAspectUpdate = useCallback(
@@ -173,38 +148,6 @@ const OrbitDimensionAssessment: React.FC<OrbitDimensionAssessmentProps> = ({
             />
           </div>
         </div>
-
-        {/* Expand/Collapse Controls */}
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <button
-            type="button"
-            onClick={expandAll}
-            style={{
-              padding: '0.25rem 0.75rem',
-              border: '1px solid #d6d7d9',
-              borderRadius: '4px',
-              backgroundColor: '#fff',
-              cursor: 'pointer',
-              fontSize: '0.875rem',
-            }}
-          >
-            Expand All
-          </button>
-          <button
-            type="button"
-            onClick={collapseAll}
-            style={{
-              padding: '0.25rem 0.75rem',
-              border: '1px solid #d6d7d9',
-              borderRadius: '4px',
-              backgroundColor: '#fff',
-              cursor: 'pointer',
-              fontSize: '0.875rem',
-            }}
-          >
-            Collapse All
-          </button>
-        </div>
       </header>
 
       {/* Aspects */}
@@ -215,8 +158,6 @@ const OrbitDimensionAssessment: React.FC<OrbitDimensionAssessmentProps> = ({
             aspect={aspect}
             response={currentResponse.aspects[aspect.id]}
             onUpdate={aspectResponse => handleAspectUpdate(aspect.id, aspectResponse)}
-            expanded={expandedAspects.has(aspect.id)}
-            onToggleExpand={() => toggleAspect(aspect.id)}
           />
         ))}
       </div>

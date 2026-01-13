@@ -10,7 +10,7 @@ import styles from '../../styles/AssessmentSetup.module.css';
 import AssessmentErrorBoundary from './AssessmentErrorBoundary';
 import StorageErrorHandler from './StorageErrorHandler';
 
-import type { Assessment, CapabilityAreaAssessment, CapabilityDefinition } from '../../types';
+import type { Assessment, CapabilityDefinition } from '../../types';
 
 interface AssessmentSetupProps {
   onAssessmentCreated?: (assessmentId: string) => void;
@@ -154,84 +154,63 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
       const assessmentId = `assessment_${Date.now()}`;
       const now = new Date().toISOString();
 
-      const capabilityAssessments: CapabilityAreaAssessment[] = selectedCapabilities.map(
-        selection => {
-          const capability = capabilities.find(cap => cap.id === selection.id);
-          if (!capability) {
-            throw new Error(`Capability not found: ${selection.id}`);
-          }
-
-          return {
-            id: capability.id,
-            capabilityDomainName: capability.capabilityDomainName,
-            capabilityAreaName: capability.capabilityAreaName,
-            status: 'not-started' as const,
-            dimensions: {
-              outcome: {
-                maturityLevel: 0,
-                evidence: '',
-                barriers: '',
-                plans: '',
-                notes: '',
-                lastUpdated: now,
-                checkboxes: {},
-              },
-              role: {
-                maturityLevel: 0,
-                evidence: '',
-                barriers: '',
-                plans: '',
-                notes: '',
-                lastUpdated: now,
-                checkboxes: {},
-              },
-              businessProcess: {
-                maturityLevel: 0,
-                evidence: '',
-                barriers: '',
-                plans: '',
-                notes: '',
-                lastUpdated: now,
-                checkboxes: {},
-              },
-              information: {
-                maturityLevel: 0,
-                evidence: '',
-                barriers: '',
-                plans: '',
-                notes: '',
-                lastUpdated: now,
-                checkboxes: {},
-              },
-              technology: {
-                maturityLevel: 0,
-                evidence: '',
-                barriers: '',
-                plans: '',
-                notes: '',
-                lastUpdated: now,
-                checkboxes: {},
-              },
-            },
-          };
+      // Create ORBIT format assessment (MITA 4.0)
+      const orbitCapabilities = selectedCapabilities.map(selection => {
+        const capability = capabilities.find(cap => cap.id === selection.id);
+        if (!capability) {
+          throw new Error(`Capability not found: ${selection.id}`);
         }
-      );
 
-      const assessment: Assessment = {
+        return {
+          id: `${capability.id}-orbit`,
+          capabilityId: capability.id,
+          capabilityDomainName: capability.capabilityDomainName,
+          capabilityAreaName: capability.capabilityAreaName,
+          status: 'not-started' as const,
+          orbit: {
+            business: {
+              dimensionId: 'business' as const,
+              aspects: {},
+              overallLevel: 0,
+              notes: '',
+              lastUpdated: now,
+            },
+            information: {
+              dimensionId: 'information' as const,
+              aspects: {},
+              overallLevel: 0,
+              notes: '',
+              lastUpdated: now,
+            },
+            technology: {
+              subDomains: {},
+              overallLevel: 0,
+              notes: '',
+              lastUpdated: now,
+            },
+          },
+          createdAt: now,
+          updatedAt: now,
+        };
+      });
+
+      const orbitAssessment = {
         id: assessmentId,
         stateName: stateName.trim(),
         createdAt: now,
         updatedAt: now,
-        status: 'not-started',
-        capabilities: capabilityAssessments,
+        status: 'not-started' as const,
+        capabilities: orbitCapabilities,
         metadata: {
-          assessmentVersion: '1.0',
+          assessmentVersion: '4.0',
+          orbitModelVersion: '4.0',
           systemName: systemName.trim() || undefined,
-          notes: '',
         },
       };
 
-      const success = await enhancedStorageService.saveAssessment(assessment);
+      const success = await enhancedStorageService.saveAssessment(
+        orbitAssessment as unknown as Assessment
+      );
 
       if (!success) {
         throw new Error('Failed to save assessment: Storage operation returned false');
