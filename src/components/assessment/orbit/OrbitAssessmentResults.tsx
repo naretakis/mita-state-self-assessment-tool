@@ -577,12 +577,8 @@ const OrbitAssessmentResults: React.FC<OrbitAssessmentResultsProps> = ({ assessm
               })}
             </div>
 
-            {/* Export Section - reuse existing component with type assertion */}
-            <EnhancedExportSection
-              assessment={
-                assessment as unknown as Parameters<typeof EnhancedExportSection>[0]['assessment']
-              }
-            />
+            {/* Export Section - reuse existing component */}
+            <EnhancedExportSection assessment={assessment} />
 
             {/* Navigation */}
             <div className="ds-u-margin-bottom--4 ds-u-padding-top--4 ds-u-border-top--1">

@@ -1,10 +1,13 @@
 /**
  * Export Service
  * Central service for all export operations
+ * Supports both legacy and ORBIT assessment formats
  */
 
 import { ExportDataCollector } from './ExportDataCollector';
 
+import type { Assessment } from '../../types';
+import type { OrbitAssessment } from '../../types/orbit';
 import type {
   ExportData,
   ExportError,
@@ -15,7 +18,6 @@ import type {
   ExportResult,
   FilenameOptions,
 } from './types';
-import type { Assessment } from '../../types';
 
 export class ExportService {
   private dataCollector: ExportDataCollector;
@@ -59,9 +61,10 @@ export class ExportService {
 
   /**
    * Export an assessment
+   * Supports both legacy and ORBIT assessment formats
    */
   async exportAssessment(
-    assessment: Assessment,
+    assessment: Assessment | OrbitAssessment,
     options: ExportOptions,
     progressCallback?: (progress: ExportProgress) => void
   ): Promise<ExportResult> {
@@ -159,7 +162,10 @@ export class ExportService {
   /**
    * Generate filename for export
    */
-  async generateFilename(assessment: Assessment, options: ExportOptions): Promise<string> {
+  async generateFilename(
+    assessment: Assessment | OrbitAssessment,
+    options: ExportOptions
+  ): Promise<string> {
     const filenameOptions: FilenameOptions = {
       assessmentName: `mita-assessment-${assessment.id}`,
       systemName: assessment.metadata?.systemName,
@@ -220,7 +226,7 @@ export class ExportService {
   /**
    * Collect export data
    */
-  private async collectExportData(assessment: Assessment): Promise<ExportData> {
+  private async collectExportData(assessment: Assessment | OrbitAssessment): Promise<ExportData> {
     return await this.dataCollector.collectExportData(assessment);
   }
 

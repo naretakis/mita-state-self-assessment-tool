@@ -1,14 +1,38 @@
 /**
  * Export Data Collector
  * Aggregates all assessment data from multiple sources for export
+ * Supports both legacy and ORBIT assessment formats
  */
 
 import ContentService from '../ContentService';
 import { ScoringService } from '../ScoringService';
 
-import type { Assessment, CapabilityDefinition } from '../../types';
+import type { Assessment, CapabilityAreaAssessment, CapabilityDefinition } from '../../types';
+import type { OrbitAssessment, OrbitCapabilityAssessment } from '../../types/orbit';
 import type { EnhancedMaturityScore } from '../ScoringService';
 import type { ExportData, ExportError, ExportMetadata } from './types';
+
+/**
+ * Type guard to check if an assessment is in ORBIT format
+ */
+function isOrbitAssessment(
+  assessment: Assessment | OrbitAssessment
+): assessment is OrbitAssessment {
+  if (!assessment.capabilities || assessment.capabilities.length === 0) {
+    return false;
+  }
+  const firstCap = assessment.capabilities[0];
+  return 'orbit' in firstCap;
+}
+
+/**
+ * Type guard to check if a capability is in ORBIT format
+ */
+function isOrbitCapability(
+  capability: CapabilityAreaAssessment | OrbitCapabilityAssessment
+): capability is OrbitCapabilityAssessment {
+  return 'orbit' in capability;
+}
 
 export class ExportDataCollector {
   private contentService: ContentService;
@@ -21,8 +45,9 @@ export class ExportDataCollector {
 
   /**
    * Collect complete export data for an assessment
+   * Supports both legacy and ORBIT assessment formats
    */
-  async collectExportData(assessment: Assessment): Promise<ExportData> {
+  async collectExportData(assessment: Assessment | OrbitAssessment): Promise<ExportData> {
     try {
       // Initialize content service if not already done
       await this.contentService.initialize();
@@ -30,14 +55,17 @@ export class ExportDataCollector {
       // Collect capability definitions
       const capabilities = await this.collectCapabilityDefinitions(assessment);
 
-      // Calculate enhanced scores
-      const scores = this.scoringService.calculateOverallScore(assessment, capabilities);
+      // Calculate enhanced scores (only for legacy format, ORBIT uses OrbitScoringService)
+      let scores: EnhancedMaturityScore[] = [];
+      if (!isOrbitAssessment(assessment)) {
+        scores = this.scoringService.calculateOverallScore(assessment, capabilities);
+      }
 
       // Generate export metadata
       const metadata = this.generateExportMetadata(assessment, scores);
 
       return {
-        assessment,
+        assessment: assessment as Assessment, // Type assertion for export data structure
         scores,
         metadata,
         capabilities,
@@ -54,9 +82,10 @@ export class ExportDataCollector {
 
   /**
    * Collect capability definitions for the assessment
+   * Supports both legacy and ORBIT assessment formats
    */
   private async collectCapabilityDefinitions(
-    assessment: Assessment
+    assessment: Assessment | OrbitAssessment
   ): Promise<CapabilityDefinition[]> {
     try {
       const definitions: CapabilityDefinition[] = [];
@@ -64,14 +93,20 @@ export class ExportDataCollector {
       // Get definitions for each capability in the assessment
       for (const capability of assessment.capabilities) {
         try {
-          const definition = await this.contentService.getCapability(capability.id);
+          // Handle both ORBIT and legacy capability ID formats
+          const capabilityId = isOrbitCapability(capability)
+            ? capability.capabilityId
+            : capability.id;
+
+          const definition = await this.contentService.getCapability(capabilityId);
           if (definition) {
             definitions.push(definition);
           } else {
-            console.warn(`Definition not found for capability ${capability.id}`);
+            console.warn(`Definition not found for capability ${capabilityId}`);
           }
         } catch (error) {
-          console.warn(`Failed to load definition for capability ${capability.id}:`, error);
+          const capId = isOrbitCapability(capability) ? capability.capabilityId : capability.id;
+          console.warn(`Failed to load definition for capability ${capId}:`, error);
         }
       }
 
@@ -84,17 +119,45 @@ export class ExportDataCollector {
 
   /**
    * Generate export metadata
+   * Supports both legacy and ORBIT assessment formats
    */
   private generateExportMetadata(
-    assessment: Assessment,
+    assessment: Assessment | OrbitAssessment,
     scores: EnhancedMaturityScore[]
   ): ExportMetadata {
     const now = new Date().toISOString();
 
-    // Calculate completion percentage
-    const completedCapabilities = scores.filter(score => score.overallScore > 0).length;
-    const completionPercentage =
-      scores.length > 0 ? Math.round((completedCapabilities / scores.length) * 100) : 0;
+    // Calculate completion percentage based on format
+    let completionPercentage = 0;
+
+    if (isOrbitAssessment(assessment)) {
+      // ORBIT format: check required dimensions (B, I, T)
+      const totalRequired = assessment.capabilities.length * 3;
+      let completedRequired = 0;
+
+      for (const capability of assessment.capabilities) {
+        const orbit = capability.orbit;
+        if (orbit) {
+          if (orbit.business?.overallLevel && orbit.business.overallLevel > 0) {
+            completedRequired++;
+          }
+          if (orbit.information?.overallLevel && orbit.information.overallLevel > 0) {
+            completedRequired++;
+          }
+          if (orbit.technology?.overallLevel && orbit.technology.overallLevel > 0) {
+            completedRequired++;
+          }
+        }
+      }
+
+      completionPercentage =
+        totalRequired > 0 ? Math.round((completedRequired / totalRequired) * 100) : 0;
+    } else {
+      // Legacy format: use scores
+      const completedCapabilities = scores.filter(score => score.overallScore > 0).length;
+      completionPercentage =
+        scores.length > 0 ? Math.round((completedCapabilities / scores.length) * 100) : 0;
+    }
 
     return {
       exportedAt: now,
@@ -108,8 +171,9 @@ export class ExportDataCollector {
 
   /**
    * Validate assessment data completeness
+   * Supports both legacy and ORBIT assessment formats
    */
-  async validateAssessmentData(assessment: Assessment): Promise<{
+  async validateAssessmentData(assessment: Assessment | OrbitAssessment): Promise<{
     isValid: boolean;
     warnings: string[];
     errors: string[];
@@ -142,33 +206,75 @@ export class ExportDataCollector {
         return { isValid: false, warnings, errors };
       }
 
-      // Check each capability
-      for (const capability of assessment.capabilities) {
-        if (!capability.id) {
-          warnings.push(`Capability missing ID: ${capability.capabilityAreaName}`);
-        }
+      // Determine assessment format and validate accordingly
+      if (isOrbitAssessment(assessment)) {
+        // Validate ORBIT format assessment
+        for (const capability of assessment.capabilities) {
+          if (!capability.capabilityId) {
+            warnings.push(`Capability missing ID: ${capability.capabilityAreaName}`);
+          }
 
-        if (!capability.capabilityAreaName) {
-          warnings.push(`Capability missing area name: ${capability.id}`);
-        }
+          if (!capability.capabilityAreaName) {
+            warnings.push(`Capability missing area name: ${capability.capabilityId}`);
+          }
 
-        if (!capability.capabilityDomainName) {
-          warnings.push(`Capability missing domain name: ${capability.id}`);
-        }
+          if (!capability.capabilityDomainName) {
+            warnings.push(`Capability missing domain name: ${capability.capabilityId}`);
+          }
 
-        // Check dimensions
-        const dimensions = ['outcome', 'role', 'businessProcess', 'information', 'technology'];
-        for (const dimension of dimensions) {
-          const dimData = capability.dimensions[dimension as keyof typeof capability.dimensions];
-          if (!dimData) {
-            warnings.push(
-              `Missing ${dimension} dimension data for ${capability.capabilityAreaName}`
-            );
+          // Check ORBIT dimensions
+          const orbit = capability.orbit;
+          if (!orbit) {
+            warnings.push(`Missing ORBIT data for ${capability.capabilityAreaName}`);
           } else {
-            if (dimData.maturityLevel === 0) {
+            // Check required dimensions (business, information, technology)
+            if (!orbit.business || orbit.business.overallLevel === 0) {
               warnings.push(
-                `No maturity level selected for ${dimension} in ${capability.capabilityAreaName}`
+                `No maturity level selected for Business Architecture in ${capability.capabilityAreaName}`
               );
+            }
+            if (!orbit.information || orbit.information.overallLevel === 0) {
+              warnings.push(
+                `No maturity level selected for Information & Data in ${capability.capabilityAreaName}`
+              );
+            }
+            if (!orbit.technology || orbit.technology.overallLevel === 0) {
+              warnings.push(
+                `No maturity level selected for Technology in ${capability.capabilityAreaName}`
+              );
+            }
+          }
+        }
+      } else {
+        // Validate legacy format assessment
+        for (const capability of assessment.capabilities) {
+          if (!capability.id) {
+            warnings.push(`Capability missing ID: ${capability.capabilityAreaName}`);
+          }
+
+          if (!capability.capabilityAreaName) {
+            warnings.push(`Capability missing area name: ${capability.id}`);
+          }
+
+          if (!capability.capabilityDomainName) {
+            warnings.push(`Capability missing domain name: ${capability.id}`);
+          }
+
+          // Check dimensions
+          const dimensions = ['outcome', 'role', 'businessProcess', 'information', 'technology'];
+          for (const dimension of dimensions) {
+            const dimData =
+              capability.dimensions?.[dimension as keyof typeof capability.dimensions];
+            if (!dimData) {
+              warnings.push(
+                `Missing ${dimension} dimension data for ${capability.capabilityAreaName}`
+              );
+            } else {
+              if (dimData.maturityLevel === 0) {
+                warnings.push(
+                  `No maturity level selected for ${dimension} in ${capability.capabilityAreaName}`
+                );
+              }
             }
           }
         }
@@ -184,8 +290,9 @@ export class ExportDataCollector {
 
   /**
    * Get export data summary for progress tracking
+   * Supports both legacy and ORBIT assessment formats
    */
-  getExportDataSummary(assessment: Assessment): {
+  getExportDataSummary(assessment: Assessment | OrbitAssessment): {
     totalCapabilities: number;
     completedCapabilities: number;
     totalDimensions: number;
@@ -200,20 +307,59 @@ export class ExportDataCollector {
     let completedDimensions = 0;
 
     if (assessment.capabilities) {
-      for (const capability of assessment.capabilities) {
-        let capabilityCompleted = false;
-        const dimensions = ['outcome', 'role', 'businessProcess', 'information', 'technology'];
+      if (isOrbitAssessment(assessment)) {
+        // ORBIT format
+        for (const capability of assessment.capabilities) {
+          let capabilityCompleted = false;
+          const orbit = capability.orbit;
 
-        for (const dimension of dimensions) {
-          const dimData = capability.dimensions[dimension as keyof typeof capability.dimensions];
-          if (dimData && dimData.maturityLevel > 0) {
-            completedDimensions++;
-            capabilityCompleted = true;
+          if (orbit) {
+            // Check optional dimensions
+            if (orbit.outcomes?.overallLevel && orbit.outcomes.overallLevel > 0) {
+              completedDimensions++;
+              capabilityCompleted = true;
+            }
+            if (orbit.roles?.overallLevel && orbit.roles.overallLevel > 0) {
+              completedDimensions++;
+              capabilityCompleted = true;
+            }
+            // Check required dimensions
+            if (orbit.business?.overallLevel && orbit.business.overallLevel > 0) {
+              completedDimensions++;
+              capabilityCompleted = true;
+            }
+            if (orbit.information?.overallLevel && orbit.information.overallLevel > 0) {
+              completedDimensions++;
+              capabilityCompleted = true;
+            }
+            if (orbit.technology?.overallLevel && orbit.technology.overallLevel > 0) {
+              completedDimensions++;
+              capabilityCompleted = true;
+            }
+          }
+
+          if (capabilityCompleted) {
+            completedCapabilities++;
           }
         }
+      } else {
+        // Legacy format
+        for (const capability of assessment.capabilities) {
+          let capabilityCompleted = false;
+          const dimensions = ['outcome', 'role', 'businessProcess', 'information', 'technology'];
 
-        if (capabilityCompleted) {
-          completedCapabilities++;
+          for (const dimension of dimensions) {
+            const dimData =
+              capability.dimensions?.[dimension as keyof typeof capability.dimensions];
+            if (dimData && dimData.maturityLevel > 0) {
+              completedDimensions++;
+              capabilityCompleted = true;
+            }
+          }
+
+          if (capabilityCompleted) {
+            completedCapabilities++;
+          }
         }
       }
     }

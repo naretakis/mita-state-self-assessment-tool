@@ -1,6 +1,7 @@
 /**
  * Simple Export Section Component
  * Direct export buttons with icons for each format
+ * Supports both legacy and ORBIT assessment formats
  */
 
 import { useState } from 'react';
@@ -13,9 +14,10 @@ import { PDFExportHandler } from '../../services/export/handlers/PDFExportHandle
 
 import type { ExportOptions } from '../../services/export/types';
 import type { Assessment } from '../../types';
+import type { OrbitAssessment } from '../../types/orbit';
 
 interface EnhancedExportSectionProps {
-  assessment: Assessment;
+  assessment: Assessment | OrbitAssessment;
 }
 
 export function EnhancedExportSection({ assessment }: EnhancedExportSectionProps) {
