@@ -174,8 +174,7 @@ const OrbitAspectAssessment: React.FC<OrbitAspectAssessmentProps> = ({
         border: '1px solid #d6d7d9',
         borderRadius: '4px',
         padding: '1.5rem',
-        margin: '0 0 1.5rem',
-        backgroundColor: '#fff',
+        backgroundColor: '#fafafa',
       }}
     >
       {/* Aspect Header */}
@@ -195,420 +194,386 @@ const OrbitAspectAssessment: React.FC<OrbitAspectAssessmentProps> = ({
         style={{
           fontSize: '0.875rem',
           color: '#5c5c5c',
-          marginBottom: '1.5rem',
+          marginBottom: '1rem',
           lineHeight: '1.5',
         }}
       >
         {aspect.description}
       </p>
 
-      {/* Maturity Level Selection fieldset - matches legacy pattern */}
-      <fieldset
-        className="ds-c-fieldset"
-        style={{
-          border: '1px solid #d6d7d9',
-          borderRadius: '4px',
-          padding: '1.5rem',
-          margin: '0',
-          backgroundColor: '#fff',
-        }}
-      >
-        <legend
-          className="ds-c-label"
-          style={{
-            fontSize: '1rem',
-            fontWeight: 600,
-            padding: '0 0.5rem',
-            backgroundColor: '#fff',
-          }}
-        >
-          Maturity Level Selection{' '}
-          <span className="ds-u-color--error" aria-label="required">
-            *
-          </span>
-        </legend>
+      {/* Level Cards */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        {[1, 2, 3, 4, 5].map(level => {
+          const levelKey = `level${level}` as LevelKey;
+          const levelDef = aspect.levels[levelKey];
+          const isSelected = selectedLevel === level;
+          const levelResponse = getLevelResponse(level as 1 | 2 | 3 | 4 | 5);
+          const hasQuestions = levelDef.questions.length > 0;
+          const hasEvidence = levelDef.evidence.length > 0;
 
-        <div
-          className="ds-c-field__hint"
-          style={{ marginBottom: '1rem', fontSize: '0.875rem', color: '#5c5c5c' }}
-        >
-          Select the maturity level that best describes your current state for this dimension.
-        </div>
-
-        {/* Level Cards */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          {[1, 2, 3, 4, 5].map(level => {
-            const levelKey = `level${level}` as LevelKey;
-            const levelDef = aspect.levels[levelKey];
-            const isSelected = selectedLevel === level;
-            const levelResponse = getLevelResponse(level as 1 | 2 | 3 | 4 | 5);
-            const hasQuestions = levelDef.questions.length > 0;
-            const hasEvidence = levelDef.evidence.length > 0;
-
-            return (
-              <div
-                key={level}
+          return (
+            <div
+              key={level}
+              style={{
+                border: `2px solid ${isSelected ? '#00a91c' : '#d6d7d9'}`,
+                borderRadius: '4px',
+                backgroundColor: isSelected ? '#f8fff9' : '#fff',
+                transition: 'all 0.2s ease',
+                boxShadow: isSelected ? '0 2px 8px rgba(0, 169, 28, 0.15)' : 'none',
+              }}
+            >
+              {/* Level Header - Always visible, clickable to select */}
+              <button
+                type="button"
+                onClick={() => handleLevelSelect(level as MaturityLevelWithNA)}
                 style={{
-                  border: `2px solid ${isSelected ? '#00a91c' : '#d6d7d9'}`,
-                  borderRadius: '4px',
-                  backgroundColor: isSelected ? '#f8fff9' : '#fff',
-                  transition: 'all 0.2s ease',
-                  boxShadow: isSelected ? '0 2px 8px rgba(0, 169, 28, 0.15)' : 'none',
+                  width: '100%',
+                  padding: '1rem',
+                  display: 'block',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  textAlign: 'left',
                 }}
+                aria-expanded={isSelected}
+                aria-controls={`level-content-${aspect.id}-${level}`}
               >
-                {/* Level Header - Always visible, clickable to select */}
-                <button
-                  type="button"
-                  onClick={() => handleLevelSelect(level as MaturityLevelWithNA)}
+                <div
                   style={{
-                    width: '100%',
-                    padding: '1rem',
-                    display: 'block',
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
-                    textAlign: 'left',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                    gap: '0.5rem',
                   }}
-                  aria-expanded={isSelected}
-                  aria-controls={`level-content-${aspect.id}-${level}`}
                 >
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      justifyContent: 'space-between',
-                      gap: '0.5rem',
-                    }}
-                  >
-                    <div style={{ flex: 1 }}>
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.5rem',
-                          marginBottom: '0.5rem',
-                        }}
-                      >
-                        <strong style={{ fontSize: '1rem', color: '#212121' }}>
-                          Level {level}: {LEVEL_NAMES[level]}
-                        </strong>
-                        {isSelected && (
-                          <span style={{ color: '#00a91c', fontSize: '1.25rem' }}>✓</span>
-                        )}
-                      </div>
-                      <p
-                        style={{
-                          fontSize: '0.875rem',
-                          color: '#5c5c5c',
-                          lineHeight: '1.4',
-                          margin: 0,
-                        }}
-                      >
-                        {levelDef.description}
-                      </p>
-                    </div>
-                  </div>
-                </button>
-
-                {/* Expanded Content - Only shown when selected */}
-                {isSelected && (
-                  <div
-                    id={`level-content-${aspect.id}-${level}`}
-                    style={{
-                      padding: '0 1rem 1rem 1rem',
-                      borderTop: '1px solid #e6e6e6',
-                      marginTop: '0',
-                    }}
-                  >
-                    {/* Questions/Checkboxes */}
-                    {hasQuestions && (
-                      <div style={{ marginTop: '1rem' }}>
-                        {levelDef.questions.map((question, idx) => {
-                          const isChecked =
-                            (levelResponse?.questions[idx]?.answer as boolean) || false;
-                          return (
-                            <label
-                              key={idx}
-                              style={{
-                                display: 'flex',
-                                alignItems: 'flex-start',
-                                gap: '0.5rem',
-                                marginBottom: '0.5rem',
-                                fontSize: '0.875rem',
-                                cursor: 'pointer',
-                              }}
-                            >
-                              <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={e =>
-                                  handleQuestionAnswer(
-                                    level as 1 | 2 | 3 | 4 | 5,
-                                    idx,
-                                    e.target.checked
-                                  )
-                                }
-                                style={{
-                                  marginTop: '0.125rem',
-                                  flexShrink: 0,
-                                  minWidth: '16px',
-                                  width: '16px',
-                                  height: '16px',
-                                }}
-                              />
-                              <span
-                                style={{
-                                  lineHeight: '1.4',
-                                  flex: '1',
-                                  wordBreak: 'break-word',
-                                  color: '#212121',
-                                }}
-                              >
-                                {question.text}
-                              </span>
-                            </label>
-                          );
-                        })}
-                      </div>
-                    )}
-
-                    {/* Evidence Checkboxes */}
-                    {hasEvidence && (
-                      <div style={{ marginTop: '1rem' }}>
-                        <h6
-                          style={{
-                            fontSize: '0.875rem',
-                            fontWeight: 600,
-                            marginBottom: '0.5rem',
-                            color: '#212121',
-                          }}
-                        >
-                          Evidence (check if available)
-                        </h6>
-                        {levelDef.evidence.map((evidence, idx) => {
-                          const isChecked = levelResponse?.evidence[idx]?.provided || false;
-                          return (
-                            <label
-                              key={idx}
-                              style={{
-                                display: 'flex',
-                                alignItems: 'flex-start',
-                                gap: '0.5rem',
-                                marginBottom: '0.5rem',
-                                fontSize: '0.875rem',
-                                cursor: 'pointer',
-                              }}
-                            >
-                              <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={e =>
-                                  handleEvidenceToggle(
-                                    level as 1 | 2 | 3 | 4 | 5,
-                                    idx,
-                                    e.target.checked
-                                  )
-                                }
-                                style={{
-                                  marginTop: '0.125rem',
-                                  flexShrink: 0,
-                                  minWidth: '16px',
-                                  width: '16px',
-                                  height: '16px',
-                                }}
-                              />
-                              <span
-                                style={{
-                                  lineHeight: '1.4',
-                                  flex: '1',
-                                  wordBreak: 'break-word',
-                                  color: '#212121',
-                                }}
-                              >
-                                {evidence}
-                              </span>
-                            </label>
-                          );
-                        })}
-                      </div>
-                    )}
-
-                    {/* Notes Fields Section */}
+                  <div style={{ flex: 1 }}>
                     <div
                       style={{
-                        marginTop: hasQuestions || hasEvidence ? '1.5rem' : '1rem',
-                        paddingTop: hasQuestions || hasEvidence ? '1rem' : '0',
-                        borderTop: hasQuestions || hasEvidence ? '1px solid #e6e6e6' : 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        marginBottom: '0.5rem',
                       }}
                     >
-                      <h4
+                      <strong style={{ fontSize: '1rem', color: '#212121' }}>
+                        Level {level}: {LEVEL_NAMES[level]}
+                      </strong>
+                      {isSelected && (
+                        <span style={{ color: '#00a91c', fontSize: '1.25rem' }}>✓</span>
+                      )}
+                    </div>
+                    <p
+                      style={{
+                        fontSize: '0.875rem',
+                        color: '#5c5c5c',
+                        lineHeight: '1.4',
+                        margin: 0,
+                      }}
+                    >
+                      {levelDef.description}
+                    </p>
+                  </div>
+                </div>
+              </button>
+
+              {/* Expanded Content - Only shown when selected */}
+              {isSelected && (
+                <div
+                  id={`level-content-${aspect.id}-${level}`}
+                  style={{
+                    padding: '0 1rem 1rem 1rem',
+                    borderTop: '1px solid #e6e6e6',
+                    marginTop: '0',
+                  }}
+                >
+                  {/* Questions/Checkboxes */}
+                  {hasQuestions && (
+                    <div style={{ marginTop: '1rem' }}>
+                      {levelDef.questions.map((question, idx) => {
+                        const isChecked =
+                          (levelResponse?.questions[idx]?.answer as boolean) || false;
+                        return (
+                          <label
+                            key={idx}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'flex-start',
+                              gap: '0.5rem',
+                              marginBottom: '0.5rem',
+                              fontSize: '0.875rem',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={isChecked}
+                              onChange={e =>
+                                handleQuestionAnswer(
+                                  level as 1 | 2 | 3 | 4 | 5,
+                                  idx,
+                                  e.target.checked
+                                )
+                              }
+                              style={{
+                                marginTop: '0.125rem',
+                                flexShrink: 0,
+                                minWidth: '16px',
+                                width: '16px',
+                                height: '16px',
+                              }}
+                            />
+                            <span
+                              style={{
+                                lineHeight: '1.4',
+                                flex: '1',
+                                wordBreak: 'break-word',
+                                color: '#212121',
+                              }}
+                            >
+                              {question.text}
+                            </span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* Evidence Checkboxes */}
+                  {hasEvidence && (
+                    <div style={{ marginTop: '1rem' }}>
+                      <h6
                         style={{
-                          fontSize: '1rem',
-                          fontWeight: '600',
-                          marginBottom: '1rem',
+                          fontSize: '0.875rem',
+                          fontWeight: 600,
+                          marginBottom: '0.5rem',
                           color: '#212121',
                         }}
                       >
-                        Assessment Details
-                      </h4>
+                        Evidence (check if available)
+                      </h6>
+                      {levelDef.evidence.map((evidence, idx) => {
+                        const isChecked = levelResponse?.evidence[idx]?.provided || false;
+                        return (
+                          <label
+                            key={idx}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'flex-start',
+                              gap: '0.5rem',
+                              marginBottom: '0.5rem',
+                              fontSize: '0.875rem',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={isChecked}
+                              onChange={e =>
+                                handleEvidenceToggle(
+                                  level as 1 | 2 | 3 | 4 | 5,
+                                  idx,
+                                  e.target.checked
+                                )
+                              }
+                              style={{
+                                marginTop: '0.125rem',
+                                flexShrink: 0,
+                                minWidth: '16px',
+                                width: '16px',
+                                height: '16px',
+                              }}
+                            />
+                            <span
+                              style={{
+                                lineHeight: '1.4',
+                                flex: '1',
+                                wordBreak: 'break-word',
+                                color: '#212121',
+                              }}
+                            >
+                              {evidence}
+                            </span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  )}
 
-                      {/* Supporting Description */}
-                      <div style={{ marginBottom: '1rem' }}>
-                        <label
-                          htmlFor={`notes-${aspect.id}-${level}`}
-                          style={{
-                            display: 'block',
-                            fontSize: '0.875rem',
-                            fontWeight: '600',
-                            marginBottom: '0.25rem',
-                            color: '#212121',
-                          }}
-                        >
-                          Supporting Description
-                        </label>
-                        <div
-                          style={{
-                            fontSize: '0.75rem',
-                            color: '#5c5c5c',
-                            marginBottom: '0.5rem',
-                          }}
-                        >
-                          Provide specific examples or documentation that supports your maturity
-                          level selection.
-                        </div>
-                        <textarea
-                          id={`notes-${aspect.id}-${level}`}
-                          className="ds-c-field"
-                          rows={3}
-                          value={currentResponse.notes}
-                          onChange={e => handleFieldUpdate('notes', e.target.value)}
-                          placeholder="Describe the evidence that supports your selected maturity level..."
-                          style={{ fontSize: '0.875rem', width: '100%' }}
-                        />
-                      </div>
+                  {/* Notes Fields Section */}
+                  <div
+                    style={{
+                      marginTop: hasQuestions || hasEvidence ? '1.5rem' : '1rem',
+                      paddingTop: hasQuestions || hasEvidence ? '1rem' : '0',
+                      borderTop: hasQuestions || hasEvidence ? '1px solid #e6e6e6' : 'none',
+                    }}
+                  >
+                    <h4
+                      style={{
+                        fontSize: '1rem',
+                        fontWeight: '600',
+                        marginBottom: '1rem',
+                        color: '#212121',
+                      }}
+                    >
+                      Assessment Details
+                    </h4>
 
-                      {/* Barriers and Challenges */}
-                      <div style={{ marginBottom: '1rem' }}>
-                        <label
-                          htmlFor={`barriers-${aspect.id}-${level}`}
-                          style={{
-                            display: 'block',
-                            fontSize: '0.875rem',
-                            fontWeight: '600',
-                            marginBottom: '0.25rem',
-                            color: '#212121',
-                          }}
-                        >
-                          Barriers and Challenges
-                        </label>
-                        <div
-                          style={{
-                            fontSize: '0.75rem',
-                            color: '#5c5c5c',
-                            marginBottom: '0.5rem',
-                          }}
-                        >
-                          Describe any barriers or challenges that prevent higher maturity levels.
-                        </div>
-                        <textarea
-                          id={`barriers-${aspect.id}-${level}`}
-                          className="ds-c-field"
-                          rows={3}
-                          value={currentResponse.barriers}
-                          onChange={e => handleFieldUpdate('barriers', e.target.value)}
-                          placeholder="Describe barriers or challenges you face..."
-                          style={{ fontSize: '0.875rem', width: '100%' }}
-                        />
+                    {/* Supporting Description */}
+                    <div style={{ marginBottom: '1rem' }}>
+                      <label
+                        htmlFor={`notes-${aspect.id}-${level}`}
+                        style={{
+                          display: 'block',
+                          fontSize: '0.875rem',
+                          fontWeight: '600',
+                          marginBottom: '0.25rem',
+                          color: '#212121',
+                        }}
+                      >
+                        Supporting Description
+                      </label>
+                      <div
+                        style={{
+                          fontSize: '0.75rem',
+                          color: '#5c5c5c',
+                          marginBottom: '0.5rem',
+                        }}
+                      >
+                        Provide specific examples or documentation that supports your maturity level
+                        selection.
                       </div>
+                      <textarea
+                        id={`notes-${aspect.id}-${level}`}
+                        className="ds-c-field"
+                        rows={3}
+                        value={currentResponse.notes}
+                        onChange={e => handleFieldUpdate('notes', e.target.value)}
+                        placeholder="Describe the evidence that supports your selected maturity level..."
+                        style={{ fontSize: '0.875rem', width: '100%' }}
+                      />
+                    </div>
 
-                      {/* Advancement Plans */}
-                      <div style={{ marginBottom: '0' }}>
-                        <label
-                          htmlFor={`plans-${aspect.id}-${level}`}
-                          style={{
-                            display: 'block',
-                            fontSize: '0.875rem',
-                            fontWeight: '600',
-                            marginBottom: '0.25rem',
-                            color: '#212121',
-                          }}
-                        >
-                          Advancement Plans
-                        </label>
-                        <div
-                          style={{
-                            fontSize: '0.75rem',
-                            color: '#5c5c5c',
-                            marginBottom: '0.5rem',
-                          }}
-                        >
-                          Describe your plans for advancing to higher maturity levels.
-                        </div>
-                        <textarea
-                          id={`plans-${aspect.id}-${level}`}
-                          className="ds-c-field"
-                          rows={3}
-                          value={currentResponse.plans}
-                          onChange={e => handleFieldUpdate('plans', e.target.value)}
-                          placeholder="Describe your plans for improvement..."
-                          style={{ fontSize: '0.875rem', width: '100%' }}
-                        />
+                    {/* Barriers and Challenges */}
+                    <div style={{ marginBottom: '1rem' }}>
+                      <label
+                        htmlFor={`barriers-${aspect.id}-${level}`}
+                        style={{
+                          display: 'block',
+                          fontSize: '0.875rem',
+                          fontWeight: '600',
+                          marginBottom: '0.25rem',
+                          color: '#212121',
+                        }}
+                      >
+                        Barriers and Challenges
+                      </label>
+                      <div
+                        style={{
+                          fontSize: '0.75rem',
+                          color: '#5c5c5c',
+                          marginBottom: '0.5rem',
+                        }}
+                      >
+                        Describe any barriers or challenges that prevent higher maturity levels.
                       </div>
+                      <textarea
+                        id={`barriers-${aspect.id}-${level}`}
+                        className="ds-c-field"
+                        rows={3}
+                        value={currentResponse.barriers}
+                        onChange={e => handleFieldUpdate('barriers', e.target.value)}
+                        placeholder="Describe barriers or challenges you face..."
+                        style={{ fontSize: '0.875rem', width: '100%' }}
+                      />
+                    </div>
+
+                    {/* Advancement Plans */}
+                    <div style={{ marginBottom: '0' }}>
+                      <label
+                        htmlFor={`plans-${aspect.id}-${level}`}
+                        style={{
+                          display: 'block',
+                          fontSize: '0.875rem',
+                          fontWeight: '600',
+                          marginBottom: '0.25rem',
+                          color: '#212121',
+                        }}
+                      >
+                        Advancement Plans
+                      </label>
+                      <div
+                        style={{
+                          fontSize: '0.75rem',
+                          color: '#5c5c5c',
+                          marginBottom: '0.5rem',
+                        }}
+                      >
+                        Describe your plans for advancing to higher maturity levels.
+                      </div>
+                      <textarea
+                        id={`plans-${aspect.id}-${level}`}
+                        className="ds-c-field"
+                        rows={3}
+                        value={currentResponse.plans}
+                        onChange={e => handleFieldUpdate('plans', e.target.value)}
+                        placeholder="Describe your plans for improvement..."
+                        style={{ fontSize: '0.875rem', width: '100%' }}
+                      />
                     </div>
                   </div>
-                )}
-              </div>
-            );
-          })}
+                </div>
+              )}
+            </div>
+          );
+        })}
 
-          {/* N/A Option */}
-          <div
+        {/* N/A Option */}
+        <div
+          style={{
+            border: `2px solid ${selectedLevel === -1 ? '#71767a' : '#d6d7d9'}`,
+            borderRadius: '4px',
+            backgroundColor: selectedLevel === -1 ? '#f5f5f5' : '#fff',
+            transition: 'all 0.2s ease',
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => handleLevelSelect(-1)}
             style={{
-              border: `2px solid ${selectedLevel === -1 ? '#71767a' : '#d6d7d9'}`,
-              borderRadius: '4px',
-              backgroundColor: selectedLevel === -1 ? '#f5f5f5' : '#fff',
-              transition: 'all 0.2s ease',
+              width: '100%',
+              padding: '1rem',
+              display: 'block',
+              backgroundColor: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              textAlign: 'left',
             }}
           >
-            <button
-              type="button"
-              onClick={() => handleLevelSelect(-1)}
+            <div
               style={{
-                width: '100%',
-                padding: '1rem',
-                display: 'block',
-                backgroundColor: 'transparent',
-                border: 'none',
-                cursor: 'pointer',
-                textAlign: 'left',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
               }}
             >
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                }}
-              >
-                <strong style={{ fontSize: '1rem', color: '#212121' }}>Not Applicable</strong>
-                {selectedLevel === -1 && (
-                  <span style={{ color: '#71767a', fontSize: '1.25rem' }}>✓</span>
-                )}
-              </div>
-              <p
-                style={{
-                  fontSize: '0.875rem',
-                  color: '#5c5c5c',
-                  lineHeight: '1.4',
-                  margin: '0.5rem 0 0',
-                }}
-              >
-                This aspect does not apply to your organization or system.
-              </p>
-            </button>
-          </div>
+              <strong style={{ fontSize: '1rem', color: '#212121' }}>Not Applicable</strong>
+              {selectedLevel === -1 && (
+                <span style={{ color: '#71767a', fontSize: '1.25rem' }}>✓</span>
+              )}
+            </div>
+            <p
+              style={{
+                fontSize: '0.875rem',
+                color: '#5c5c5c',
+                lineHeight: '1.4',
+                margin: '0.5rem 0 0',
+              }}
+            >
+              This aspect does not apply to your organization or system.
+            </p>
+          </button>
         </div>
-      </fieldset>
+      </div>
     </div>
   );
 };

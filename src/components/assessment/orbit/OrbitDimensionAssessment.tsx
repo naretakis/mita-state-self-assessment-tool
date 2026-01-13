@@ -150,17 +150,51 @@ const OrbitDimensionAssessment: React.FC<OrbitDimensionAssessmentProps> = ({
         </div>
       </header>
 
-      {/* Aspects */}
-      <div style={{ marginBottom: '2rem' }}>
-        {dimension.aspects.map(aspect => (
-          <OrbitAspectAssessment
-            key={aspect.id}
-            aspect={aspect}
-            response={currentResponse.aspects[aspect.id]}
-            onUpdate={aspectResponse => handleAspectUpdate(aspect.id, aspectResponse)}
-          />
-        ))}
-      </div>
+      {/* Maturity Level Selection - wraps all aspects */}
+      <fieldset
+        className="ds-c-fieldset"
+        style={{
+          border: '1px solid #d6d7d9',
+          borderRadius: '4px',
+          padding: '1.5rem',
+          margin: '0 0 2rem',
+          backgroundColor: '#fff',
+        }}
+      >
+        <legend
+          className="ds-c-label"
+          style={{
+            fontSize: '1rem',
+            fontWeight: 600,
+            padding: '0 0.5rem',
+            backgroundColor: '#fff',
+          }}
+        >
+          Maturity Level Selection{' '}
+          <span className="ds-u-color--error" aria-label="required">
+            *
+          </span>
+        </legend>
+
+        <div
+          className="ds-c-field__hint"
+          style={{ marginBottom: '1.5rem', fontSize: '0.875rem', color: '#5c5c5c' }}
+        >
+          Select the maturity level that best describes your current state for this dimension.
+        </div>
+
+        {/* Aspects */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          {dimension.aspects.map(aspect => (
+            <OrbitAspectAssessment
+              key={aspect.id}
+              aspect={aspect}
+              response={currentResponse.aspects[aspect.id]}
+              onUpdate={aspectResponse => handleAspectUpdate(aspect.id, aspectResponse)}
+            />
+          ))}
+        </div>
+      </fieldset>
 
       {/* Dimension Notes */}
       <div style={{ marginBottom: '2rem' }}>

@@ -7,10 +7,14 @@ import { useErrorHandler } from '../../hooks/useErrorHandler';
 import enhancedStorageService from '../../services/EnhancedStorageService';
 import styles from '../../styles/AssessmentSetup.module.css';
 
+import type {
+  OrbitAssessment,
+  OrbitAssessmentResponse,
+  TechnologySubDomainId,
+} from '../../types/orbit';
+
 import AssessmentErrorBoundary from './AssessmentErrorBoundary';
 import StorageErrorHandler from './StorageErrorHandler';
-
-import type { Assessment } from '../../types';
 
 interface AssessmentSetupProps {
   onAssessmentCreated?: (assessmentId: string) => void;
@@ -182,62 +186,89 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
       const assessmentId = `assessment_${Date.now()}`;
       const now = new Date().toISOString();
 
-      // Create ORBIT format assessment (MITA 4.0)
-      const orbitCapabilities = selectedCapabilities.map(selection => {
-        return {
-          id: `${selection.id}-orbit`,
-          capabilityId: selection.id,
-          capabilityDomainName: selection.domainName,
-          capabilityAreaName: selection.areaName,
-          status: 'not-started' as const,
-          orbit: {
-            outcomes: {
-              dimensionId: 'outcomes' as const,
-              aspects: {},
-              overallLevel: 0,
-              notes: '',
-              lastUpdated: now,
-            },
-            roles: {
-              dimensionId: 'roles' as const,
-              aspects: {},
-              overallLevel: 0,
-              notes: '',
-              lastUpdated: now,
-            },
-            business: {
-              dimensionId: 'business' as const,
-              aspects: {},
-              overallLevel: 0,
-              notes: '',
-              lastUpdated: now,
-            },
-            information: {
-              dimensionId: 'information' as const,
-              aspects: {},
-              overallLevel: 0,
-              notes: '',
-              lastUpdated: now,
-            },
-            technology: {
-              subDomains: {},
-              overallLevel: 0,
-              notes: '',
-              lastUpdated: now,
-            },
-          },
-          createdAt: now,
-          updatedAt: now,
-        };
-      });
+      // Create empty ORBIT response structure for each capability
+      const createEmptyOrbitResponse = (): OrbitAssessmentResponse => {
+        const technologySubDomainIds: TechnologySubDomainId[] = [
+          'infrastructure',
+          'integration',
+          'platform-services',
+          'application-architecture',
+          'security-identity',
+          'operations-monitoring',
+          'development-release',
+        ];
 
-      const orbitAssessment = {
+        const technologySubDomains = technologySubDomainIds.reduce(
+          (acc, id) => {
+            acc[id] = {
+              subDomainId: id,
+              aspects: {},
+              overallLevel: 0,
+              notes: '',
+              lastUpdated: now,
+            };
+            return acc;
+          },
+          {} as OrbitAssessmentResponse['technology']['subDomains']
+        );
+
+        return {
+          outcomes: {
+            dimensionId: 'outcomes',
+            aspects: {},
+            overallLevel: 0,
+            notes: '',
+            lastUpdated: now,
+          },
+          roles: {
+            dimensionId: 'roles',
+            aspects: {},
+            overallLevel: 0,
+            notes: '',
+            lastUpdated: now,
+          },
+          business: {
+            dimensionId: 'business',
+            aspects: {},
+            overallLevel: 0,
+            notes: '',
+            lastUpdated: now,
+          },
+          information: {
+            dimensionId: 'information',
+            aspects: {},
+            overallLevel: 0,
+            notes: '',
+            lastUpdated: now,
+          },
+          technology: {
+            subDomains: technologySubDomains,
+            overallLevel: 0,
+            notes: '',
+            lastUpdated: now,
+          },
+        };
+      };
+
+      // Create assessment capabilities with ORBIT structure
+      const assessmentCapabilities = selectedCapabilities.map(selection => ({
+        id: `${selection.id}-orbit`,
+        capabilityId: selection.id,
+        capabilityDomainName: selection.domainName,
+        capabilityAreaName: selection.areaName,
+        status: 'not-started' as const,
+        orbit: createEmptyOrbitResponse(),
+        createdAt: now,
+        updatedAt: now,
+      }));
+
+      const assessment: OrbitAssessment = {
         id: assessmentId,
         stateName: stateName.trim(),
         createdAt: now,
         updatedAt: now,
-        status: 'not-started' as const,
-        capabilities: orbitCapabilities,
+        status: 'not-started',
+        capabilities: assessmentCapabilities,
         metadata: {
           assessmentVersion: '4.0',
           orbitModelVersion: '4.0',
@@ -246,7 +277,7 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
       };
 
       const success = await enhancedStorageService.saveAssessment(
-        orbitAssessment as unknown as Assessment
+        assessment as unknown as Parameters<typeof enhancedStorageService.saveAssessment>[0]
       );
 
       if (!success) {

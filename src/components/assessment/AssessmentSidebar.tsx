@@ -4,6 +4,7 @@ import { ScoringService } from '../../services/ScoringService';
 
 import type {
   Assessment,
+  CapabilityAreaAssessment,
   CapabilityDefinition,
   DimensionAssessment,
   OrbitDimension,
@@ -11,6 +12,70 @@ import type {
 
 // Create a singleton instance
 const scoringService = new ScoringService();
+
+/**
+ * Find a capability definition that matches an assessment capability
+ * Handles ID mismatches between index.yaml IDs and markdown-generated IDs
+ * Creates a fallback definition if no file exists
+ */
+const findMatchingDefinition = (
+  capabilities: CapabilityDefinition[],
+  capabilityId: string,
+  assessmentCapabilities?: CapabilityAreaAssessment[]
+): CapabilityDefinition | undefined => {
+  // First try exact ID match
+  let definition = capabilities.find(cap => cap.id === capabilityId);
+  if (definition) {
+    return definition;
+  }
+
+  // Try matching by capability area name
+  const assessmentCapability = assessmentCapabilities?.find(cap => cap.id === capabilityId);
+  if (assessmentCapability) {
+    definition = capabilities.find(
+      cap =>
+        cap.capabilityAreaName.toLowerCase().replace(/\s+/g, '-') ===
+          assessmentCapability.capabilityAreaName.toLowerCase().replace(/\s+/g, '-') ||
+        cap.id.endsWith(capabilityId)
+    );
+  }
+
+  // If still no definition found, create a fallback from assessment data
+  if (!definition && assessmentCapability) {
+    const defaultDimension = {
+      description: '',
+      maturityAssessment: [],
+      maturityLevels: {
+        level1: 'Level 1 - Ad Hoc',
+        level2: 'Level 2 - Compliant',
+        level3: 'Level 3 - Efficient',
+        level4: 'Level 4 - Optimized',
+        level5: 'Level 5 - Pioneering',
+      },
+    };
+
+    definition = {
+      id: assessmentCapability.id,
+      capabilityDomainName: assessmentCapability.capabilityDomainName,
+      capabilityAreaName: assessmentCapability.capabilityAreaName,
+      capabilityVersion: '1.0',
+      capabilityAreaCreated: new Date().toISOString().split('T')[0],
+      capabilityAreaLastUpdated: new Date().toISOString().split('T')[0],
+      description: `Assessment for ${assessmentCapability.capabilityAreaName}`,
+      domainDescription: `${assessmentCapability.capabilityDomainName} domain`,
+      areaDescription: `${assessmentCapability.capabilityAreaName} capability area`,
+      dimensions: {
+        outcome: { ...defaultDimension },
+        role: { ...defaultDimension },
+        businessProcess: { ...defaultDimension },
+        information: { ...defaultDimension },
+        technology: { ...defaultDimension },
+      },
+    };
+  }
+
+  return definition;
+};
 
 /**
  * Represents a single step in the assessment workflow
@@ -325,12 +390,20 @@ const AssessmentSidebar: React.FC<AssessmentSidebarProps> = React.memo(
       }> = [];
 
       steps.forEach((step, index) => {
-        const capability = capabilities.find(cap => cap.id === step.capabilityId);
+        const capability = findMatchingDefinition(
+          capabilities,
+          step.capabilityId,
+          assessment.capabilities
+        );
         if (!capability) {
           return;
         }
 
-        let group = groups.find(g => g.capability.id === step.capabilityId);
+        let group = groups.find(
+          g =>
+            g.capability.id === capability.id ||
+            g.capability.capabilityAreaName === capability.capabilityAreaName
+        );
         if (!group) {
           // Calculate progress once when creating the group
           const assessmentCapability = assessment.capabilities.find(

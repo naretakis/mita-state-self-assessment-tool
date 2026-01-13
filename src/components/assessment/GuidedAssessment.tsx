@@ -261,7 +261,63 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
     if (!step) {
       return null;
     }
-    return capabilities.find(cap => cap.id === step.capabilityId) || null;
+
+    // Get the assessment capability first - we'll need it for fallback
+    const assessmentCapability = assessment?.capabilities.find(cap => cap.id === step.capabilityId);
+
+    // First try exact ID match
+    let definition = capabilities.find(cap => cap.id === step.capabilityId);
+    if (definition) {
+      return definition;
+    }
+
+    // If no exact match, try matching by capability area name
+    // This handles the case where assessment uses IDs like "provider-enrollment"
+    // but definitions have IDs like "provider-provider-enrollment"
+    if (assessmentCapability) {
+      definition = capabilities.find(
+        cap =>
+          cap.capabilityAreaName.toLowerCase().replace(/\s+/g, '-') ===
+            assessmentCapability.capabilityAreaName.toLowerCase().replace(/\s+/g, '-') ||
+          cap.id.endsWith(step.capabilityId)
+      );
+    }
+
+    // If still no definition found, create a fallback from assessment data
+    if (!definition && assessmentCapability) {
+      const defaultDimension = {
+        description: '',
+        maturityAssessment: [],
+        maturityLevels: {
+          level1: 'Level 1 - Ad Hoc',
+          level2: 'Level 2 - Compliant',
+          level3: 'Level 3 - Efficient',
+          level4: 'Level 4 - Optimized',
+          level5: 'Level 5 - Pioneering',
+        },
+      };
+
+      definition = {
+        id: assessmentCapability.id,
+        capabilityDomainName: assessmentCapability.capabilityDomainName,
+        capabilityAreaName: assessmentCapability.capabilityAreaName,
+        capabilityVersion: '1.0',
+        capabilityAreaCreated: new Date().toISOString().split('T')[0],
+        capabilityAreaLastUpdated: new Date().toISOString().split('T')[0],
+        description: `Assessment for ${assessmentCapability.capabilityAreaName}`,
+        domainDescription: `${assessmentCapability.capabilityDomainName} domain`,
+        areaDescription: `${assessmentCapability.capabilityAreaName} capability area`,
+        dimensions: {
+          outcome: { ...defaultDimension },
+          role: { ...defaultDimension },
+          businessProcess: { ...defaultDimension },
+          information: { ...defaultDimension },
+          technology: { ...defaultDimension },
+        },
+      };
+    }
+
+    return definition || null;
   };
 
   const getCompletionPercentage = (): number => {

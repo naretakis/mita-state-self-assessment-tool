@@ -91,9 +91,18 @@ class OrbitMaturityService {
   private loadPromise: Promise<OrbitMaturityModel> | null = null;
 
   /**
-   * Base path for ORBIT content files
+   * Get base path for GitHub Pages deployment
    */
-  private readonly basePath = '/content/orbit';
+  private getBasePath(): string {
+    if (typeof window === 'undefined') {
+      return '';
+    }
+    const pathname = window.location.pathname;
+    if (pathname.includes('/mita-state-self-assessment-tool')) {
+      return '/mita-state-self-assessment-tool';
+    }
+    return '';
+  }
 
   /**
    * Load the complete ORBIT maturity model
@@ -147,7 +156,8 @@ class OrbitMaturityService {
    * Load a standard (non-Technology) dimension
    */
   private async loadDimension(filename: string): Promise<OrbitDimensionDefinition> {
-    const url = `${this.basePath}/${filename}.yaml`;
+    const basePath = this.getBasePath();
+    const url = `${basePath}/content/orbit/${filename}.yaml`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -165,7 +175,8 @@ class OrbitMaturityService {
    */
   private async loadTechnologyDimension(): Promise<TechnologyDimension> {
     // First load the index
-    const indexUrl = `${this.basePath}/technology/index.yaml`;
+    const basePath = this.getBasePath();
+    const indexUrl = `${basePath}/content/orbit/technology/index.yaml`;
     const indexResponse = await fetch(indexUrl);
 
     if (!indexResponse.ok) {
@@ -196,7 +207,8 @@ class OrbitMaturityService {
    * Load a Technology sub-domain
    */
   private async loadTechnologySubDomain(filename: string): Promise<TechnologySubDomain> {
-    const url = `${this.basePath}/technology/${filename}`;
+    const basePath = this.getBasePath();
+    const url = `${basePath}/content/orbit/technology/${filename}`;
     const response = await fetch(url);
 
     if (!response.ok) {
