@@ -191,6 +191,20 @@ const AssessmentSetup: React.FC<AssessmentSetupProps> = ({ onAssessmentCreated }
           capabilityAreaName: selection.areaName,
           status: 'not-started' as const,
           orbit: {
+            outcomes: {
+              dimensionId: 'outcomes' as const,
+              aspects: {},
+              overallLevel: 0,
+              notes: '',
+              lastUpdated: now,
+            },
+            roles: {
+              dimensionId: 'roles' as const,
+              aspects: {},
+              overallLevel: 0,
+              notes: '',
+              lastUpdated: now,
+            },
             business: {
               dimensionId: 'business' as const,
               aspects: {},
