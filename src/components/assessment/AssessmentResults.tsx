@@ -18,7 +18,7 @@ import {
 import Link from 'next/link';
 import { Bar, Radar } from 'react-chartjs-2';
 
-import ContentService from '@/services/ContentService';
+import capabilityService from '@/services/CapabilityService';
 import { ScoringService, type EnhancedMaturityScore } from '@/services/ScoringService';
 
 // Create a singleton instance
@@ -150,9 +150,16 @@ export function AssessmentResults({ assessmentId }: AssessmentResultsProps) {
           loadAssessment(assessmentId),
           (async () => {
             try {
-              const contentService = new ContentService('/content');
-              await contentService.initialize();
-              return contentService.getAllCapabilities();
+              const capabilities = await capabilityService.getAllCapabilities();
+              // Convert CapabilityMetadata to CapabilityDefinition format for scoring
+              return capabilities.map(cap => ({
+                id: cap.id,
+                version: cap.version,
+                capabilityDomainName: cap.domainName,
+                capabilityAreaName: cap.areaName,
+                description: cap.description,
+                dimensions: {} as CapabilityDefinition['dimensions'],
+              }));
             } catch (err) {
               console.warn('Failed to load capability definitions, using fallback scoring:', err);
               return [];

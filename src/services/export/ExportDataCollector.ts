@@ -4,7 +4,7 @@
  * Supports both legacy and ORBIT assessment formats
  */
 
-import ContentService from '../ContentService';
+import capabilityService from '../CapabilityService';
 import { ScoringService } from '../ScoringService';
 
 import type { Assessment, CapabilityAreaAssessment, CapabilityDefinition } from '../../types';
@@ -35,11 +35,9 @@ function isOrbitCapability(
 }
 
 export class ExportDataCollector {
-  private contentService: ContentService;
   private scoringService: ScoringService;
 
   constructor() {
-    this.contentService = new ContentService('/content');
     this.scoringService = new ScoringService();
   }
 
@@ -49,9 +47,6 @@ export class ExportDataCollector {
    */
   async collectExportData(assessment: Assessment | OrbitAssessment): Promise<ExportData> {
     try {
-      // Initialize content service if not already done
-      await this.contentService.initialize();
-
       // Collect capability definitions
       const capabilities = await this.collectCapabilityDefinitions(assessment);
 
@@ -90,6 +85,19 @@ export class ExportDataCollector {
     try {
       const definitions: CapabilityDefinition[] = [];
 
+      // Default dimension for ORBIT model (standardized across all capabilities)
+      const defaultDimension = {
+        description: '',
+        maturityAssessment: [] as string[],
+        maturityLevels: {
+          level1: 'Level 1 - Initial',
+          level2: 'Level 2 - Developing',
+          level3: 'Level 3 - Defined',
+          level4: 'Level 4 - Managed',
+          level5: 'Level 5 - Optimized',
+        },
+      };
+
       // Get definitions for each capability in the assessment
       for (const capability of assessment.capabilities) {
         try {
@@ -98,8 +106,27 @@ export class ExportDataCollector {
             ? capability.capabilityId
             : capability.id;
 
-          const definition = await this.contentService.getCapability(capabilityId);
-          if (definition) {
+          const capabilityMeta = await capabilityService.getCapability(capabilityId);
+          if (capabilityMeta) {
+            // Convert CapabilityMetadata to CapabilityDefinition for export compatibility
+            const definition: CapabilityDefinition = {
+              id: capabilityMeta.id,
+              capabilityDomainName: capabilityMeta.domainName,
+              capabilityAreaName: capabilityMeta.areaName,
+              capabilityVersion: capabilityMeta.version,
+              capabilityAreaCreated: capabilityMeta.createdAt,
+              capabilityAreaLastUpdated: capabilityMeta.updatedAt,
+              description: capabilityMeta.description,
+              domainDescription: capabilityMeta.domainDescription,
+              areaDescription: capabilityMeta.areaDescription,
+              dimensions: {
+                outcome: { ...defaultDimension },
+                role: { ...defaultDimension },
+                businessProcess: { ...defaultDimension },
+                information: { ...defaultDimension },
+                technology: { ...defaultDimension },
+              },
+            };
             definitions.push(definition);
           } else {
             console.warn(`Definition not found for capability ${capabilityId}`);

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useAnnouncements } from '../../hooks/useAnnouncements';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
-import { ContentService } from '../../services/ContentService';
+import capabilityService from '../../services/CapabilityService';
 import enhancedStorageService from '../../services/EnhancedStorageService';
 import AppHeader from '../layout/AppHeader';
 
@@ -40,6 +40,21 @@ const ORBIT_DIMENSIONS: OrbitDimension[] = [
   'information',
   'technology',
 ];
+
+/**
+ * Create a default dimension definition for ORBIT model
+ */
+const createDefaultDimension = () => ({
+  description: '',
+  maturityAssessment: [],
+  maturityLevels: {
+    level1: 'Level 1 - Initial',
+    level2: 'Level 2 - Developing',
+    level3: 'Level 3 - Defined',
+    level4: 'Level 4 - Managed',
+    level5: 'Level 5 - Optimized',
+  },
+});
 
 const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => {
   const router = useRouter();
@@ -96,9 +111,27 @@ const GuidedAssessment: React.FC<GuidedAssessmentProps> = ({ assessmentId }) => 
         throw new Error('Assessment not found');
       }
 
-      const contentService = new ContentService('/content');
-      await contentService.initialize();
-      const loadedCapabilities = contentService.getAllCapabilities();
+      // Load capabilities from CapabilityService and convert to CapabilityDefinition format
+      const capabilityMetadata = await capabilityService.getAllCapabilities();
+      const loadedCapabilities: CapabilityDefinition[] = capabilityMetadata.map(cap => ({
+        id: cap.id,
+        version: cap.version,
+        capabilityDomainName: cap.domainName,
+        capabilityAreaName: cap.areaName,
+        capabilityVersion: cap.version,
+        capabilityAreaCreated: cap.createdAt,
+        capabilityAreaLastUpdated: cap.updatedAt,
+        description: cap.description,
+        domainDescription: cap.domainDescription,
+        areaDescription: cap.areaDescription,
+        dimensions: {
+          outcome: createDefaultDimension(),
+          role: createDefaultDimension(),
+          businessProcess: createDefaultDimension(),
+          information: createDefaultDimension(),
+          technology: createDefaultDimension(),
+        },
+      }));
 
       setAssessment(loadedAssessment);
       setCapabilities(loadedCapabilities);

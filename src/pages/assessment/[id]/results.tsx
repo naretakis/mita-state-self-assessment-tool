@@ -7,7 +7,7 @@ import AssessmentHeader from '../../../components/assessment/AssessmentHeader';
 import AssessmentSidebar from '../../../components/assessment/AssessmentSidebar';
 import { OrbitAssessmentResults } from '../../../components/assessment/orbit';
 import AppHeader from '../../../components/layout/AppHeader';
-import { ContentService } from '../../../services/ContentService';
+import capabilityService from '../../../services/CapabilityService';
 import enhancedStorageService from '../../../services/EnhancedStorageService';
 
 import type { Assessment, CapabilityDefinition, OrbitDimension } from '../../../types';
@@ -73,9 +73,20 @@ export default function AssessmentResultsPage() {
       }
 
       // Legacy assessment - load capabilities for sidebar
-      const contentService = new ContentService('/content');
-      await contentService.initialize();
-      const loadedCapabilities = contentService.getAllCapabilities();
+      const capabilityMetadata = await capabilityService.getAllCapabilities();
+      const loadedCapabilities: CapabilityDefinition[] = capabilityMetadata.map(cap => ({
+        id: cap.id,
+        version: cap.version,
+        capabilityDomainName: cap.domainName,
+        capabilityAreaName: cap.areaName,
+        capabilityVersion: cap.version,
+        capabilityAreaCreated: cap.createdAt,
+        capabilityAreaLastUpdated: cap.updatedAt,
+        description: cap.description,
+        domainDescription: cap.domainDescription,
+        areaDescription: cap.areaDescription,
+        dimensions: {} as CapabilityDefinition['dimensions'],
+      }));
 
       setAssessment(loadedAssessment);
       setCapabilities(loadedCapabilities);

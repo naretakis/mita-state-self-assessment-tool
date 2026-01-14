@@ -1,11 +1,11 @@
 /**
  * CapabilityService
  *
- * Service for loading and managing capability definitions from YAML files.
- * This is the ORBIT-compatible replacement for ContentService.
+ * Service for loading and managing capability definitions from the index YAML.
+ * Under the ORBIT model, all capabilities use standardized maturity criteria
+ * from OrbitMaturityService - no per-capability files are needed.
  *
- * Capabilities now contain only metadata and descriptions - maturity criteria
- * come from the standardized ORBIT model via OrbitMaturityService.
+ * Capabilities contain only metadata and descriptions from the index.
  */
 
 import yaml from 'js-yaml';
@@ -26,38 +26,10 @@ interface RawCapabilityIndex {
     areas: Array<{
       id: string;
       name: string;
-      file?: string; // Optional - not all areas have dedicated files yet
     }>;
   }>;
   metadata: {
     lastUpdated: string;
-    orbitModelVersion: string;
-  };
-}
-
-interface RawCapabilityDefinition {
-  id: string;
-  version: string;
-  domain: {
-    id: string;
-    name: string;
-    description: string;
-  };
-  area: {
-    id: string;
-    name: string;
-    description: string;
-  };
-  cmsOutcomes?: Array<{
-    id: string;
-    name: string;
-    description: string;
-  }>;
-  federalRequirements?: string[];
-  relatedCapabilities?: string[];
-  metadata: {
-    createdAt: string;
-    updatedAt: string;
     orbitModelVersion: string;
   };
 }
@@ -89,7 +61,7 @@ class CapabilityService {
   }
 
   /**
-   * Initialize the service by loading all capability definitions
+   * Initialize the service by loading the capability index
    */
   async initialize(): Promise<void> {
     if (this.initialized) {
@@ -128,8 +100,8 @@ class CapabilityService {
       const text = await response.text();
       const rawIndex = yaml.load(text) as RawCapabilityIndex;
 
-      // Load all capability files
-      await this.loadCapabilitiesFromIndex(rawIndex, basePath);
+      // Build capabilities from index
+      this.buildCapabilitiesFromIndex(rawIndex);
     } catch (error) {
       console.error('Failed to load capabilities from YAML:', error);
       // Fall back to empty state - UI should handle gracefully
@@ -139,12 +111,9 @@ class CapabilityService {
   }
 
   /**
-   * Load all capabilities referenced in the index
+   * Build all capabilities from the index (no file loading needed)
    */
-  private async loadCapabilitiesFromIndex(
-    index: RawCapabilityIndex,
-    basePath: string
-  ): Promise<void> {
+  private buildCapabilitiesFromIndex(index: RawCapabilityIndex): void {
     this.domains = [];
     this.capabilities.clear();
 
@@ -156,26 +125,9 @@ class CapabilityService {
         areas: [],
       };
 
-      // Load each capability area
-      for (const areaRef of rawDomain.areas) {
-        let capability: CapabilityMetadata | null = null;
-
-        // If the area has a dedicated file, load it
-        if (areaRef.file) {
-          try {
-            capability = await this.loadCapabilityFile(
-              `${basePath}/content/capabilities/${areaRef.file}`
-            );
-          } catch (error) {
-            console.warn(`Failed to load capability file for ${areaRef.id}:`, error);
-          }
-        }
-
-        // If no file or file failed to load, create metadata from index
-        if (!capability) {
-          capability = this.createCapabilityFromIndex(rawDomain, areaRef, index.metadata);
-        }
-
+      // Create capability metadata from index for each area
+      for (const area of rawDomain.areas) {
+        const capability = this.createCapabilityFromIndex(rawDomain, area, index.metadata);
         domain.areas.push(capability);
         this.capabilities.set(capability.id, capability);
       }
@@ -185,7 +137,7 @@ class CapabilityService {
   }
 
   /**
-   * Create capability metadata from index data when no dedicated file exists
+   * Create capability metadata from index data
    */
   private createCapabilityFromIndex(
     domain: RawCapabilityIndex['domains'][0],
@@ -198,52 +150,12 @@ class CapabilityService {
       domainName: domain.name,
       areaId: area.id,
       areaName: area.name,
-      version: '4.0',
+      version: metadata.orbitModelVersion,
       description: `${area.name} capability area within the ${domain.name} domain.`,
       domainDescription: domain.description,
       areaDescription: `${area.name} capability area within the ${domain.name} domain.`,
       createdAt: metadata.lastUpdated,
       updatedAt: metadata.lastUpdated,
-    };
-  }
-
-  /**
-   * Load a single capability YAML file
-   */
-  private async loadCapabilityFile(url: string): Promise<CapabilityMetadata | null> {
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        console.warn(`Failed to fetch ${url}: ${response.status}`);
-        return null;
-      }
-
-      const text = await response.text();
-      const raw = yaml.load(text) as RawCapabilityDefinition;
-
-      return this.transformCapability(raw);
-    } catch (error) {
-      console.error(`Error loading capability from ${url}:`, error);
-      return null;
-    }
-  }
-
-  /**
-   * Transform raw YAML data to CapabilityMetadata
-   */
-  private transformCapability(raw: RawCapabilityDefinition): CapabilityMetadata {
-    return {
-      id: raw.id,
-      domainId: raw.domain.id,
-      domainName: raw.domain.name,
-      areaId: raw.area.id,
-      areaName: raw.area.name,
-      version: raw.version,
-      description: raw.area.description,
-      domainDescription: raw.domain.description,
-      areaDescription: raw.area.description,
-      createdAt: raw.metadata.createdAt,
-      updatedAt: raw.metadata.updatedAt,
     };
   }
 

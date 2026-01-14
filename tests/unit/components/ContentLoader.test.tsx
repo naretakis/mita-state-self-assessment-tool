@@ -1,171 +1,28 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { ContentLoader } from '../../../src/components/content/ContentLoader';
-import ContentService from '../../../src/services/ContentService';
 
-// Mock the ContentService
-jest.mock('../../../src/services/ContentService', () => {
-  return jest.fn().mockImplementation(() => ({
-    initialize: jest.fn().mockResolvedValue(undefined),
-    getAllCapabilities: jest.fn().mockReturnValue([
+import { ContentLoader } from '../../../src/components/content/ContentLoader';
+
+// Mock the CapabilityService
+jest.mock('../../../src/services/CapabilityService', () => ({
+  __esModule: true,
+  default: {
+    getAllCapabilities: jest.fn().mockResolvedValue([
       {
         id: 'test-capability',
-        name: 'Test Capability',
+        domainId: 'test-domain',
         domainName: 'Test Domain',
-        domainDescription: 'Test Domain Description',
-        moduleName: 'Test Module',
-        version: '1.0',
-        lastUpdated: '2025-06-01',
+        areaId: 'test-capability',
+        areaName: 'Test Capability',
+        version: '4.0',
         description: 'Test description',
-        dimensions: {
-          outcome: {
-            description: 'Outcome description',
-            assessmentQuestions: ['Question 1', 'Question 2'],
-            maturityLevels: {
-              level1: 'Level 1 description',
-              level2: 'Level 2 description',
-              level3: 'Level 3 description',
-              level4: 'Level 4 description',
-              level5: 'Level 5 description',
-            },
-          },
-          role: {
-            description: 'Role description',
-            assessmentQuestions: ['Question 1', 'Question 2'],
-            maturityLevels: {
-              level1: 'Level 1 description',
-              level2: 'Level 2 description',
-              level3: 'Level 3 description',
-              level4: 'Level 4 description',
-              level5: 'Level 5 description',
-            },
-          },
-          businessProcess: {
-            description: 'Business Process description',
-            assessmentQuestions: ['Question 1', 'Question 2'],
-            maturityLevels: {
-              level1: 'Level 1 description',
-              level2: 'Level 2 description',
-              level3: 'Level 3 description',
-              level4: 'Level 4 description',
-              level5: 'Level 5 description',
-            },
-          },
-          information: {
-            description: 'Information description',
-            assessmentQuestions: ['Question 1', 'Question 2'],
-            maturityLevels: {
-              level1: 'Level 1 description',
-              level2: 'Level 2 description',
-              level3: 'Level 3 description',
-              level4: 'Level 4 description',
-              level5: 'Level 5 description',
-            },
-          },
-          technology: {
-            description: 'Technology description',
-            assessmentQuestions: ['Question 1', 'Question 2'],
-            maturityLevels: {
-              level1: 'Level 1 description',
-              level2: 'Level 2 description',
-              level3: 'Level 3 description',
-              level4: 'Level 4 description',
-              level5: 'Level 5 description',
-            },
-          },
-        },
+        domainDescription: 'Test Domain Description',
+        areaDescription: 'Test area description',
+        createdAt: '2025-06-01',
+        updatedAt: '2025-06-01',
       },
     ]),
-    getCapability: jest.fn().mockImplementation(id => {
-      if (id === 'test-capability') {
-        return {
-          id: 'test-capability',
-          name: 'Test Capability',
-          domainName: 'Test Domain',
-          domainDescription: 'Test Domain Description',
-          moduleName: 'Test Module',
-          version: '1.0',
-          lastUpdated: '2025-06-01',
-          description: 'Test description',
-          dimensions: {
-            outcome: {
-              description: 'Outcome description',
-              assessmentQuestions: ['Question 1', 'Question 2'],
-              maturityLevels: {
-                level1: 'Level 1 description',
-                level2: 'Level 2 description',
-                level3: 'Level 3 description',
-                level4: 'Level 4 description',
-                level5: 'Level 5 description',
-              },
-            },
-            role: {
-              description: 'Role description',
-              assessmentQuestions: ['Question 1', 'Question 2'],
-              maturityLevels: {
-                level1: 'Level 1 description',
-                level2: 'Level 2 description',
-                level3: 'Level 3 description',
-                level4: 'Level 4 description',
-                level5: 'Level 5 description',
-              },
-            },
-            businessProcess: {
-              description: 'Business Process description',
-              assessmentQuestions: ['Question 1', 'Question 2'],
-              maturityLevels: {
-                level1: 'Level 1 description',
-                level2: 'Level 2 description',
-                level3: 'Level 3 description',
-                level4: 'Level 4 description',
-                level5: 'Level 5 description',
-              },
-            },
-            information: {
-              description: 'Information description',
-              assessmentQuestions: ['Question 1', 'Question 2'],
-              maturityLevels: {
-                level1: 'Level 1 description',
-                level2: 'Level 2 description',
-                level3: 'Level 3 description',
-                level4: 'Level 4 description',
-                level5: 'Level 5 description',
-              },
-            },
-            technology: {
-              description: 'Technology description',
-              assessmentQuestions: ['Question 1', 'Question 2'],
-              maturityLevels: {
-                level1: 'Level 1 description',
-                level2: 'Level 2 description',
-                level3: 'Level 3 description',
-                level4: 'Level 4 description',
-                level5: 'Level 5 description',
-              },
-            },
-          },
-        };
-      }
-      return null;
-    }),
-    getCapabilitiesByDomain: jest.fn().mockImplementation(domain => {
-      if (domain === 'Test Domain') {
-        return [
-          {
-            id: 'test-capability',
-            name: 'Test Capability',
-            domainName: 'Test Domain',
-            domainDescription: 'Test Domain Description',
-            moduleName: 'Test Module',
-            version: '1.0',
-            lastUpdated: '2025-06-01',
-            description: 'Test description',
-          },
-        ];
-      }
-      return [];
-    }),
-  }));
-});
+  },
+}));
 
 describe('ContentLoader', () => {
   beforeEach(() => {
@@ -199,7 +56,7 @@ describe('ContentLoader', () => {
           capabilities: expect.arrayContaining([
             expect.objectContaining({
               id: 'test-capability',
-              name: 'Test Capability',
+              capabilityAreaName: 'Test Capability',
             }),
           ]),
         })
@@ -221,10 +78,8 @@ describe('ContentLoader', () => {
 
   test('handles loading errors', async () => {
     // Mock implementation that throws an error
-    (ContentService as jest.Mock).mockImplementationOnce(() => ({
-      initialize: jest.fn().mockRejectedValue(new Error('Failed to load content')),
-      getAllCapabilities: jest.fn(),
-    }));
+    const capabilityService = require('../../../src/services/CapabilityService').default;
+    capabilityService.getAllCapabilities.mockRejectedValueOnce(new Error('Failed to load content'));
 
     const mockChildrenFn = jest.fn().mockReturnValue(<div>Error State</div>);
 
@@ -256,25 +111,15 @@ describe('ContentLoader', () => {
 
       expect(capability).toBeDefined();
       expect(capability?.id).toBe('test-capability');
-      expect(capability?.name).toBe('Test Capability');
-      expect(capability?.domainName).toBe('Test Domain');
-      expect(capability?.domainDescription).toBe('Test Domain Description');
+      expect(capability?.capabilityAreaName).toBe('Test Capability');
+      expect(capability?.capabilityDomainName).toBe('Test Domain');
 
-      // Verify dimensions are properly loaded
+      // Verify dimensions are properly loaded (default ORBIT dimensions)
       expect(capability?.dimensions.outcome).toBeDefined();
       expect(capability?.dimensions.role).toBeDefined();
       expect(capability?.dimensions.businessProcess).toBeDefined();
       expect(capability?.dimensions.information).toBeDefined();
       expect(capability?.dimensions.technology).toBeDefined();
-
-      // Verify maturity levels for each dimension
-      expect(capability?.dimensions.outcome.maturityLevels.level1).toBe('Level 1 description');
-      expect(capability?.dimensions.role.maturityLevels.level2).toBe('Level 2 description');
-      expect(capability?.dimensions.businessProcess.maturityLevels.level3).toBe(
-        'Level 3 description'
-      );
-      expect(capability?.dimensions.information.maturityLevels.level4).toBe('Level 4 description');
-      expect(capability?.dimensions.technology.maturityLevels.level5).toBe('Level 5 description');
     });
   });
 
@@ -292,7 +137,7 @@ describe('ContentLoader', () => {
       const capabilities = getCapabilitiesByDomain('Test Domain');
       expect(capabilities).toHaveLength(1);
       expect(capabilities[0].id).toBe('test-capability');
-      expect(capabilities[0].domainName).toBe('Test Domain');
+      expect(capabilities[0].capabilityDomainName).toBe('Test Domain');
 
       // Test with non-existing domain
       const emptyCapabilities = getCapabilitiesByDomain('Non-Existent Domain');

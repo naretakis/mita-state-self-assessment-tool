@@ -6,89 +6,30 @@ import { ExportDataCollector } from '../ExportDataCollector';
 
 import type { Assessment } from '../../../types';
 
-// Mock ContentService
-jest.mock('../../ContentService', () => {
-  return jest.fn().mockImplementation(() => ({
-    initialize: jest.fn().mockResolvedValue(undefined),
-    isInitialized: true,
+// Mock CapabilityService
+jest.mock('../../CapabilityService', () => ({
+  __esModule: true,
+  default: {
     getCapability: jest.fn().mockImplementation((id: string) => {
       if (id === 'test-capability-1') {
         return Promise.resolve({
           id: 'test-capability-1',
-          capabilityDomainName: 'Test Domain',
-          capabilityAreaName: 'Test Area',
-          capabilityVersion: '1.0',
-          capabilityAreaCreated: '2024-01-01',
-          capabilityAreaLastUpdated: '2024-06-01',
+          domainId: 'test-domain',
+          domainName: 'Test Domain',
+          areaId: 'test-capability-1',
+          areaName: 'Test Area',
+          version: '4.0',
           description: 'Test capability',
           domainDescription: 'Test domain',
           areaDescription: 'Test area',
-          dimensions: {
-            outcome: {
-              description: 'Outcome dimension',
-              maturityAssessment: [],
-              maturityLevels: {
-                level1: 'Level 1',
-                level2: 'Level 2',
-                level3: 'Level 3',
-                level4: 'Level 4',
-                level5: 'Level 5',
-              },
-              checkboxItems: {
-                level3: ['Checkbox 1', 'Checkbox 2'],
-              },
-            },
-            role: {
-              description: 'Role dimension',
-              maturityAssessment: [],
-              maturityLevels: {
-                level1: '',
-                level2: '',
-                level3: '',
-                level4: '',
-                level5: '',
-              },
-            },
-            businessProcess: {
-              description: 'Business Process dimension',
-              maturityAssessment: [],
-              maturityLevels: {
-                level1: '',
-                level2: '',
-                level3: '',
-                level4: '',
-                level5: '',
-              },
-            },
-            information: {
-              description: 'Information dimension',
-              maturityAssessment: [],
-              maturityLevels: {
-                level1: '',
-                level2: '',
-                level3: '',
-                level4: '',
-                level5: '',
-              },
-            },
-            technology: {
-              description: 'Technology dimension',
-              maturityAssessment: [],
-              maturityLevels: {
-                level1: '',
-                level2: '',
-                level3: '',
-                level4: '',
-                level5: '',
-              },
-            },
-          },
+          createdAt: '2024-01-01',
+          updatedAt: '2024-06-01',
         });
       }
       return Promise.resolve(null);
     }),
-  }));
-});
+  },
+}));
 
 // Mock ScoringService
 jest.mock('../../ScoringService', () => ({

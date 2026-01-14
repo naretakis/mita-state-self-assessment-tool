@@ -17,7 +17,6 @@ domains:
     areas:
       - id: provider-enrollment
         name: Provider Enrollment
-        file: provider-enrollment.yaml
       - id: provider-screening
         name: Provider Screening
       - id: provider-monitoring

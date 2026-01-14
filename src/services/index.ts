@@ -14,6 +14,5 @@ export type { AssessmentScoreSummary, ScoringOptions } from './OrbitScoringServi
 // Capability service (ORBIT-compatible)
 export { CapabilityService, default as capabilityService } from './CapabilityService';
 
-// Legacy services
-export { default as ContentService } from './ContentService';
+// Legacy scoring service (for backward compatibility with legacy assessments)
 export { ScoringService, default as scoringService } from './ScoringService';

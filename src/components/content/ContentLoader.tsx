@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import ContentService from '../../services/ContentService';
+import capabilityService from '../../services/CapabilityService';
 
 import type { CapabilityDefinition } from '../../types';
 
@@ -21,13 +21,27 @@ interface ContentLoaderState {
 }
 
 /**
+ * Create a default dimension definition for ORBIT model
+ */
+const createDefaultDimension = () => ({
+  description: '',
+  maturityAssessment: [],
+  maturityLevels: {
+    level1: 'Level 1 - Initial',
+    level2: 'Level 2 - Developing',
+    level3: 'Level 3 - Defined',
+    level4: 'Level 4 - Managed',
+    level5: 'Level 5 - Optimized',
+  },
+});
+
+/**
  * Component for loading capability content and providing it to child components
  */
-export function ContentLoader({ contentDirectory, onLoaded, children }: ContentLoaderProps) {
+export function ContentLoader({ onLoaded, children }: ContentLoaderProps) {
   const [capabilities, setCapabilities] = useState<CapabilityDefinition[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
-  const [contentService] = useState<ContentService>(() => new ContentService(contentDirectory));
 
   useEffect(() => {
     async function loadContent() {
@@ -35,8 +49,28 @@ export function ContentLoader({ contentDirectory, onLoaded, children }: ContentL
         setIsLoading(true);
         setError(null);
 
-        await contentService.initialize();
-        const loadedCapabilities = contentService.getAllCapabilities();
+        const capabilityMetadata = await capabilityService.getAllCapabilities();
+
+        // Convert CapabilityMetadata to CapabilityDefinition format
+        const loadedCapabilities: CapabilityDefinition[] = capabilityMetadata.map(cap => ({
+          id: cap.id,
+          version: cap.version,
+          capabilityDomainName: cap.domainName,
+          capabilityAreaName: cap.areaName,
+          capabilityVersion: cap.version,
+          capabilityAreaCreated: cap.createdAt,
+          capabilityAreaLastUpdated: cap.updatedAt,
+          description: cap.description,
+          domainDescription: cap.domainDescription,
+          areaDescription: cap.areaDescription,
+          dimensions: {
+            outcome: createDefaultDimension(),
+            role: createDefaultDimension(),
+            businessProcess: createDefaultDimension(),
+            information: createDefaultDimension(),
+            technology: createDefaultDimension(),
+          },
+        }));
 
         setCapabilities(loadedCapabilities);
 
@@ -45,21 +79,20 @@ export function ContentLoader({ contentDirectory, onLoaded, children }: ContentL
         }
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to load content'));
-        // Removed console.error to fix the test warning
       } finally {
         setIsLoading(false);
       }
     }
 
     loadContent();
-  }, [contentDirectory, contentService, onLoaded]);
+  }, [onLoaded]);
 
   const getCapability = (id: string): CapabilityDefinition | null => {
-    return contentService.getCapability(id);
+    return capabilities.find(cap => cap.id === id) || null;
   };
 
   const getCapabilitiesByDomain = (domainName: string): CapabilityDefinition[] => {
-    return contentService.getCapabilitiesByDomain(domainName);
+    return capabilities.filter(cap => cap.capabilityDomainName === domainName);
   };
 
   return children({
