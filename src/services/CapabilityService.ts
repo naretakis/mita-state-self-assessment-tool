@@ -26,7 +26,7 @@ interface RawCapabilityIndex {
     areas: Array<{
       id: string;
       name: string;
-      file: string;
+      file?: string; // Optional - not all areas have dedicated files yet
     }>;
   }>;
   metadata: {
@@ -156,23 +156,55 @@ class CapabilityService {
         areas: [],
       };
 
-      // Load each capability area file
+      // Load each capability area
       for (const areaRef of rawDomain.areas) {
-        try {
-          const capability = await this.loadCapabilityFile(
-            `${basePath}/content/capabilities/${areaRef.file}`
-          );
-          if (capability) {
-            domain.areas.push(capability);
-            this.capabilities.set(capability.id, capability);
+        let capability: CapabilityMetadata | null = null;
+
+        // If the area has a dedicated file, load it
+        if (areaRef.file) {
+          try {
+            capability = await this.loadCapabilityFile(
+              `${basePath}/content/capabilities/${areaRef.file}`
+            );
+          } catch (error) {
+            console.warn(`Failed to load capability file for ${areaRef.id}:`, error);
           }
-        } catch (error) {
-          console.warn(`Failed to load capability ${areaRef.id}:`, error);
         }
+
+        // If no file or file failed to load, create metadata from index
+        if (!capability) {
+          capability = this.createCapabilityFromIndex(rawDomain, areaRef, index.metadata);
+        }
+
+        domain.areas.push(capability);
+        this.capabilities.set(capability.id, capability);
       }
 
       this.domains.push(domain);
     }
+  }
+
+  /**
+   * Create capability metadata from index data when no dedicated file exists
+   */
+  private createCapabilityFromIndex(
+    domain: RawCapabilityIndex['domains'][0],
+    area: RawCapabilityIndex['domains'][0]['areas'][0],
+    metadata: RawCapabilityIndex['metadata']
+  ): CapabilityMetadata {
+    return {
+      id: area.id,
+      domainId: domain.id,
+      domainName: domain.name,
+      areaId: area.id,
+      areaName: area.name,
+      version: '4.0',
+      description: `${area.name} capability area within the ${domain.name} domain.`,
+      domainDescription: domain.description,
+      areaDescription: `${area.name} capability area within the ${domain.name} domain.`,
+      createdAt: metadata.lastUpdated,
+      updatedAt: metadata.lastUpdated,
+    };
   }
 
   /**
