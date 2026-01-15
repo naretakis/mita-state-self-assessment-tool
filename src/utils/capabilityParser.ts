@@ -95,11 +95,11 @@ function parseDimension(content: string): DimensionDefinition {
   const maturityAssessment = assessmentText ? [assessmentText] : [];
 
   // Extract maturity levels with more specific patterns
-  const level1Content = extractMaturityLevel(content, 'Level 1: Ad Hoc');
-  const level2Content = extractMaturityLevel(content, 'Level 2: Compliant');
-  const level3Content = extractMaturityLevel(content, 'Level 3: Efficient');
-  const level4Content = extractMaturityLevel(content, 'Level 4: Optimized');
-  const level5Content = extractMaturityLevel(content, 'Level 5: Pioneering');
+  const level1Content = extractMaturityLevel(content, 'Level 1: Initial');
+  const level2Content = extractMaturityLevel(content, 'Level 2: Developing');
+  const level3Content = extractMaturityLevel(content, 'Level 3: Defined');
+  const level4Content = extractMaturityLevel(content, 'Level 4: Managed');
+  const level5Content = extractMaturityLevel(content, 'Level 5: Optimized');
 
   const maturityLevels = {
     level1: level1Content,

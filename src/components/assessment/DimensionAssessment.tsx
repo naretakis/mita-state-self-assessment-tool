@@ -99,7 +99,7 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
 
   // Get the next maturity level name for the advancement prompt
   const getNextLevelName = () => {
-    const levelLabels = ['Ad Hoc', 'Compliant', 'Efficient', 'Optimized', 'Pioneering'];
+    const levelLabels = ['Initial', 'Developing', 'Defined', 'Managed', 'Optimized'];
     const nextLevel = formData.maturityLevel + 1;
     if (nextLevel <= 5) {
       return `Level ${nextLevel}: ${levelLabels[nextLevel - 1]}`;
@@ -194,11 +194,11 @@ const DimensionAssessment: React.FC<DimensionAssessmentProps> = ({
                     // The description contains the full content, we need to extract just the description part
                     // and create the level name based on the content structure
                     const levelLabels = [
-                      'Ad Hoc',
-                      'Compliant',
-                      'Efficient',
+                      'Initial',
+                      'Developing',
+                      'Defined',
+                      'Managed',
                       'Optimized',
-                      'Pioneering',
                     ];
                     const levelName = `Level ${levelNumber}: ${levelLabels[levelNumber - 1]}`;
                     const isSelected = formData.maturityLevel === levelNumber;

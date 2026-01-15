@@ -46,11 +46,11 @@ const findMatchingDefinition = (
       description: '',
       maturityAssessment: [],
       maturityLevels: {
-        level1: 'Level 1 - Ad Hoc',
-        level2: 'Level 2 - Compliant',
-        level3: 'Level 3 - Efficient',
-        level4: 'Level 4 - Optimized',
-        level5: 'Level 5 - Pioneering',
+        level1: 'Level 1: Initial',
+        level2: 'Level 2: Developing',
+        level3: 'Level 3: Defined',
+        level4: 'Level 4: Managed',
+        level5: 'Level 5: Optimized',
       },
     };
 

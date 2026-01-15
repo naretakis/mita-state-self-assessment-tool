@@ -28,11 +28,11 @@ interface OrbitAspectAssessmentProps {
 }
 
 const LEVEL_NAMES: Record<number, string> = {
-  1: 'Ad Hoc',
-  2: 'Compliant',
-  3: 'Efficient',
-  4: 'Optimized',
-  5: 'Pioneering',
+  1: 'Initial',
+  2: 'Developing',
+  3: 'Defined',
+  4: 'Managed',
+  5: 'Optimized',
 };
 
 const OrbitAspectAssessment: React.FC<OrbitAspectAssessmentProps> = ({
