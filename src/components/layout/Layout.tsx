@@ -33,7 +33,7 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
     { path: '/dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
     { path: '/results', label: 'Results', icon: <AssessmentIcon /> },
     { path: '/import-export', label: 'Import/Export', icon: <ImportExportIcon /> },
-    { path: '/about', label: 'About', icon: <InfoOutlinedIcon /> },
+    { path: '/guide', label: 'Guide', icon: <InfoOutlinedIcon /> },
   ];
 
   return (
@@ -96,7 +96,7 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
                 onClick={() => navigate(item.path)}
                 aria-current={isActive ? 'page' : undefined}
                 sx={{
-                  mr: item.path !== '/about' ? 1 : 0,
+                  mr: item.path !== '/guide' ? 1 : 0,
                   backgroundColor: isActive ? 'rgba(255,255,255,0.1)' : 'transparent',
                 }}
               >

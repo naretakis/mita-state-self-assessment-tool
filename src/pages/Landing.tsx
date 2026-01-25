@@ -148,7 +148,7 @@ export default function Landing(): JSX.Element {
           </Grid>
 
           <Box sx={{ mt: 4, textAlign: 'center' }}>
-            <Link component={RouterLink} to="/about" sx={{ mr: 3 }}>
+            <Link component={RouterLink} to="/guide" sx={{ mr: 3 }}>
               Learn more about using this tool
             </Link>
           </Box>

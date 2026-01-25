@@ -24,7 +24,7 @@ function App(): JSX.Element {
         <Route path="/results/:domainId" element={<DomainResults />} />
         <Route path="/results/:domainId/:areaId" element={<AreaResults />} />
         <Route path="/import-export" element={<ImportExport />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/guide" element={<About />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>

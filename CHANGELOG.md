@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 404 Not Found page for invalid routes within the application
 - GitHub Pages SPA redirect support to fix browser refresh on deep links
 
+### Changed
+
+- Renamed `/about` route to `/guide` to avoid conflict with GitHub Pages reserved paths
+
 ### Fixed
 
 - Browser refresh on any route now correctly reloads the page instead of showing GitHub's 404

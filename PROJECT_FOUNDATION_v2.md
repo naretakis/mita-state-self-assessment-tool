@@ -364,7 +364,7 @@ interface SubDimensionScore {
 | `/results/:domainId`         | DomainResults | Domain-level results                              |
 | `/results/:domainId/:areaId` | AreaResults   | Capability area results                           |
 | `/import-export`             | ImportExport  | Data import/export management                     |
-| `/about`                     | About         | Tool usage guide and information                  |
+| `/guide`                     | About         | Tool usage guide and information                  |
 
 ---
 
