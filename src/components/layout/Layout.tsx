@@ -5,6 +5,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { ScrollToTop } from './ScrollToTop';
 
 interface LayoutProps {
   children: ReactNode;
@@ -37,6 +38,7 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
+      <ScrollToTop />
       {/* Skip to main content link - visually hidden until focused */}
       <Link
         href="#main-content"

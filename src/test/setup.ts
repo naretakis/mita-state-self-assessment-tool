@@ -12,6 +12,11 @@ import 'fake-indexeddb/auto';
 // @ts-expect-error - globalThis typing
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
+// Mock scrollTo for jsdom (not implemented in jsdom)
+Element.prototype.scrollTo = function () {
+  // No-op in test environment
+};
+
 // Suppress act() warnings from Dexie's useLiveQuery hook
 // These warnings occur because useLiveQuery triggers async state updates
 // that are expected behavior and don't affect test correctness

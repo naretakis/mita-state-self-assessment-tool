@@ -5,7 +5,7 @@
  * Aspects are displayed as collapsible cards.
  */
 
-import { JSX, useState, useCallback, useMemo } from 'react';
+import { JSX, useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { Box, Typography, Chip, Paper, alpha, useTheme } from '@mui/material';
 import { AspectCard } from './AspectCard';
 import type {
@@ -43,8 +43,8 @@ interface DimensionPageProps {
  * Page showing all aspects for a dimension
  */
 export function DimensionPage({
-  dimensionId: _dimensionId,
-  subDimensionId: _subDimensionId,
+  dimensionId,
+  subDimensionId,
   dimensionName,
   dimensionDescription,
   isRequired,
@@ -64,6 +64,14 @@ export function DimensionPage({
   disabled = false,
 }: DimensionPageProps): JSX.Element {
   const theme = useTheme();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll to top when dimension changes
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo(0, 0);
+    }
+  }, [dimensionId, subDimensionId]);
 
   // Track which aspects are expanded - default to all collapsed
   const [expandedAspects, setExpandedAspects] = useState<Set<string>>(new Set());
@@ -184,7 +192,7 @@ export function DimensionPage({
       </Paper>
 
       {/* Aspect Cards */}
-      <Box sx={{ flex: 1, overflow: 'auto', p: 3 }}>
+      <Box ref={scrollContainerRef} sx={{ flex: 1, overflow: 'auto', p: 3 }}>
         {aspects.map((aspect) => {
           const rating = ratings.get(aspect.id);
           const aspectAttachments = attachments.get(aspect.id) ?? [];
