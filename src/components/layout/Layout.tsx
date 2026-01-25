@@ -140,7 +140,8 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
         >
           <Container maxWidth="lg">
             <Typography variant="body2" color="text.secondary" align="center">
-              MITA 4.0 State Self-Assessment Tool • All data stored locally in your browser
+              MITA 4.0 State Self-Assessment Tool • All data stored locally in your browser •
+              Version {__APP_VERSION__}
             </Typography>
           </Container>
         </Box>

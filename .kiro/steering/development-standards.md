@@ -771,7 +771,63 @@ feature/phase-2   # Larger feature work
 
 ---
 
-## 13. Dependency Management
+## 13. Versioning
+
+### Semantic Versioning
+
+This project follows [Semantic Versioning](https://semver.org/):
+
+```
+MAJOR.MINOR.PATCH (e.g., 2.1.0)
+```
+
+- **MAJOR**: Breaking changes (data format changes, removed features)
+- **MINOR**: New features, backward compatible
+- **PATCH**: Bug fixes, backward compatible
+
+### Version Location
+
+The version is defined in a single source of truth:
+
+| File           | Purpose                                     |
+| -------------- | ------------------------------------------- |
+| `package.json` | Authoritative version (update this first)   |
+| Footer         | Displayed to users via build-time injection |
+| CHANGELOG.md   | Documents what changed in each version      |
+
+### How Version Injection Works
+
+The version is injected at build time via Vite:
+
+```typescript
+// vite.config.ts
+define: {
+  __APP_VERSION__: JSON.stringify(pkg.version),
+}
+```
+
+This makes `__APP_VERSION__` available globally (declared in `src/vite-env.d.ts`).
+
+### When to Update Version
+
+| Change Type                       | Version Bump | Example            |
+| --------------------------------- | ------------ | ------------------ |
+| Bug fix                           | PATCH        | 2.0.0 → 2.0.1      |
+| New feature (backward compatible) | MINOR        | 2.0.1 → 2.1.0      |
+| Breaking change or major release  | MAJOR        | 2.1.0 → 3.0.0      |
+| Data model/schema change          | MAJOR        | Requires migration |
+
+### Release Checklist
+
+1. Update version in `package.json`
+2. Run `npm install --package-lock-only` to sync package-lock.json
+3. Update CHANGELOG.md with release notes
+4. Commit with message: `chore: release vX.Y.Z`
+5. Tag the release: `git tag vX.Y.Z`
+
+---
+
+## 14. Dependency Management
 
 ### Adding Dependencies
 
@@ -803,7 +859,7 @@ Before adding a new dependency:
 
 ---
 
-## 14. Available Scripts
+## 15. Available Scripts
 
 ```bash
 # Development

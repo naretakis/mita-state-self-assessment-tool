@@ -2,8 +2,16 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'node:url';
 
+// Read version from package.json for injection into app
+import { readFileSync } from 'node:fs';
+const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
+
 export default defineConfig({
   plugins: [react()],
+  define: {
+    // Inject app version at build time
+    __APP_VERSION__: JSON.stringify(pkg.version),
+  },
   // Base path for deployment - defaults to '/' for local dev
   // Set VITE_BASE_PATH env var for GitHub Pages (e.g., '/repo-name/')
   base: process.env.VITE_BASE_PATH || '/',
