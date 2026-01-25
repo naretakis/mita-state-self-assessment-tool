@@ -7,19 +7,22 @@
       // GitHub Pages SPA redirect hack
       // Converts the path to a query string so index.html can restore it
       // e.g., /repo/dashboard -> /repo/?p=/dashboard
-      const pathSegmentsToKeep = 1; // Keep the repo name segment
-      const location = window.location;
-      const path = location.pathname.split('/').slice(pathSegmentsToKeep + 1).join('/');
-      const search = location.search;
-      const hash = location.hash;
-      
-      // Redirect to root with path as query param
-      const redirectUrl = location.pathname.split('/').slice(0, pathSegmentsToKeep + 1).join('/') + 
-        '/?p=/' + path + 
-        (search ? '&q=' + encodeURIComponent(search.slice(1)) : '') +
-        hash;
-      
-      location.replace(redirectUrl);
+      (function() {
+        var pathSegmentsToKeep = 1; // Keep the repo name segment
+        var loc = window.location;
+        var pathParts = loc.pathname.split('/');
+        var path = pathParts.slice(pathSegmentsToKeep + 1).join('/');
+        var search = loc.search;
+        var hash = loc.hash;
+        
+        // Redirect to root with path as query param
+        var basePath = pathParts.slice(0, pathSegmentsToKeep + 1).join('/');
+        var redirectUrl = basePath + '/?p=/' + path + 
+          (search ? '&q=' + encodeURIComponent(search.slice(1)) : '') +
+          hash;
+        
+        loc.replace(redirectUrl);
+      })();
     </script>
   </head>
   <body>
