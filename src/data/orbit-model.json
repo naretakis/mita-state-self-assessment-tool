@@ -1,0 +1,2249 @@
+{
+  "version": "4.0",
+  "lastUpdated": "2026-01-16",
+  "source": "MITA 4.0 Maturity Model Reference Document v0.1 (August 8, 2025)",
+  "maturityLevels": {
+    "level1": {
+      "name": "Initial",
+      "description": "SMA seeks to adopt enterprise-wide planning and architectural frameworks to improve program delivery. Current processes are unstructured, reactive, and inconsistent."
+    },
+    "level2": {
+      "name": "Developing",
+      "description": "SMA complies with federal regulations and guidance and has begun adopting MES industry-recognized planning and architectural frameworks. Although basic processes and systems exist, they are not fully standardized or documented. The SMA collects and reports state-specific and MES metrics as well as performance data."
+    },
+    "level3": {
+      "name": "Defined",
+      "description": "SMA complies with federal regulations and guidance and has fully implemented MES industry-recognized planning and architectural frameworks. Processes, systems, and strategies are standardized, well-documented, and aligned across the organization. The SMA actively monitors and analyzes state-specific and MES metrics as well as performance data for improvements."
+    },
+    "level4": {
+      "name": "Managed",
+      "description": "SMA maintains compliance, follows industry-recognized planning and architectural frameworks, and monitors MES performance to meet goals. Processes are fully operational, consistent, and well executed. The SMA actively monitors and analyzes state-specific and MES metrics as well as performance data for improvements. The organization is a thought-leader in the MES ecosystem and actively collaborates and shares approaches with other SMAs."
+    },
+    "level5": {
+      "name": "Optimized",
+      "description": "The SMA employs advanced, data-driven strategies to manage MES planning and architecture to align predictive decision-making with the SMA's long-term goals. Integrated processes, technologies, and data drive enterprise optimization. The SMA's institutionalized innovation supports adaptability, scalability, and continuous improvement. The organization is nationally recognized and actively collaborates and shares solutions with other SMAs."
+    },
+    "notApplicable": {
+      "name": "Not Applicable",
+      "description": "Not applicable was added by request of SMAs during listening sessions in late 2024. SMAs noted that some maturity criteria are inapplicable to their business operations or MES."
+    }
+  },
+  "dimensions": {
+    "outcomes": {
+      "id": "outcomes",
+      "name": "Outcomes",
+      "description": "The definition of the desired outcomes that require the capability to be achieved.",
+      "required": false,
+      "aspects": [
+        {
+          "id": "culture-mindset",
+          "name": "Culture & Mindset",
+          "description": "Organizational norms, expectations, and behaviors related to outcome development.",
+          "levels": {
+            "level1": {
+              "description": "No culture or expectation of outcomes for projects (at any phase of the project).",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Recognition begins to take hold of the importance of outcomes during planning.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Leadership sets expectations; outcome development during planning becomes a norm.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Outcome development is formalized and institutionally expected.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Outcome thinking is fully embedded at all levels of organization—without direction by or requirement from leadership.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "capability",
+          "name": "Capability",
+          "description": "The internal capacity to develop, oversee, and apply outcomes without reliance on vendors.",
+          "levels": {
+            "level1": {
+              "description": "No internal capabilities to identify or draft outcomes.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Organization understands at a high-level what elements are needed to identify and draft outcomes, but vendor leads development of outcomes.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Sufficient experience in identifying and drafting outcomes internally; organization may lead or closely oversee vendors to draft outcomes.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Full in-house capability to independently produce outcomes.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Deep in-house expertise with fully self-sufficient teams across the organization. Organization may also support sister organizations and agencies in developing outcomes.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "quality-consistency",
+          "name": "Quality & Consistency",
+          "description": "The clarity, structure, and strategic alignment of outcome statements.",
+          "levels": {
+            "level1": {
+              "description": "Outcomes are ambiguous, inconsistent, and disconnected from goals. No consistent approach or methodology to developing outcomes.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Outcomes may be aligned with priorities but are not 'smart' or actionable. Defined approach or methodology to developing outcomes.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Outcomes capture the capability sought and benefit derived from a given project, but the quality of the outcome statements vary. Well-established and consistently applied approach to developing outcomes.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Outcomes are clear, actionable, reusable, and strategically aligned. Well-established and consistently applied approach to developing outcomes.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Outcome statements are of consistently high quality, recognizable, and standardized.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "alignment-goals-priorities",
+          "name": "Alignment to Goals & Priorities",
+          "description": "The extent to which outcomes are traceable to broader goals, priorities, and mission.",
+          "levels": {
+            "level1": {
+              "description": "Outcomes are not aligned to goals or priorities.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Emerging awareness of need to align outcomes with goals and priorities but gaps remain.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Outcomes are intentionally aligned to strategic goals and priorities.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Systematic alignment of outcomes to goals and priorities. Outcomes inform broader strategies.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Outcomes reflect and reinforce strategic direction seamlessly.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "use-of-metrics",
+          "name": "Use of Metrics",
+          "description": "How outcomes are tracked, and metrics are used to measure progress and guide improvement.",
+          "levels": {
+            "level1": {
+              "description": "No recognition of the need to measure progress toward achieving outcomes or commitment to continuous improvement.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Interest in measuring progress toward achieving outcomes. Metrics are not well-aligned with outcomes.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Metrics are generally appropriate and regularly referenced to determine progress in achieving outcomes. Some engagement in continuous improvement cycles.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Metrics are well-developed. Staff regularly use metrics to evaluate performance and engage in well-established continuous improvement cycles.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Performance monitoring is deeply embedded in organization's culture. Metrics and outcomes support continuous improvement, learning, and decision-making.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "reusability-integration",
+          "name": "Reusability & Integration",
+          "description": "Whether outcomes are reused across project documents, Advance Planning Documents (APD), systems, and reporting.",
+          "levels": {
+            "level1": {
+              "description": "No reuse. Outcomes are informal or nonexistent.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Reuse is isolated to APDs; no reuse across other project, planning, or leadership documents.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Reuse is focused on APDs and some project-related documents. Inconsistent reuse across leadership documents, and external communications.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Reuse is consistent and intentional across APDs, project documents, and leadership and external communications.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Seamless reuse across systems and communications, which improves coherence and efficiency.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        }
+      ]
+    },
+    "roles": {
+      "id": "roles",
+      "name": "Roles",
+      "description": "The individual roles responsible for providing the capability.",
+      "required": false,
+      "aspects": [
+        {
+          "id": "technology-resources",
+          "name": "Technology Resources",
+          "description": "Management and understanding of technical resources across the SMA.",
+          "levels": {
+            "level1": {
+              "description": "Partial list of technical resources exists; capabilities are not fully understood across the SMA.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "SMA maintains a comprehensive list of all technical resources and their capabilities.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "SMA maps technical resources directly to business processes.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Technical resources are actively shared and optimized across business units for seamless execution.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Technical resources are accessible to agencies, states, and federal partners and support continuous improvement through data-driven insights and collaborative efforts; drives technical reforms across the broader health and human services network.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "organizational-goals-alignment",
+          "name": "Organizational Goals Alignment",
+          "description": "Alignment of business units with enterprise-wide Medicaid goals.",
+          "levels": {
+            "level1": {
+              "description": "Business units operate in silos without clear understanding of enterprise-wide Medicaid goals.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Organizational goals are defined but not fully communicated across all levels.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Business units align their roles and processes to support broader Medicaid goals.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "All roles (internal and external) collaborate to drive enterprise-wide Medicaid program goals, with regular reassessments for alignment.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "SMA leadership collaborates at the national level to set adaptable, data-driven goals and performance outcomes for the Medicaid program; focus is on improving healthcare and social services delivery and beneficiary well-being nationwide.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "governance-standardization",
+          "name": "Governance & Standardization",
+          "description": "Formal governance structures and process standardization.",
+          "levels": {
+            "level1": {
+              "description": "Limited or no formal governance to guide roles or standardize processes.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Some governance exists, but role clarity and process standardization are inconsistent.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Formal governance structures support role clarity, with standard operating procedures (SOP).",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Enterprise governance bodies actively coordinate roles, processes, and data for continuous improvement and standardization.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "SMA leads data-driven solutions at a national level and collaborates with other SMAs to develop shared business and technical standards that are disseminated nationally to strengthen overall Medicaid service delivery.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "communication",
+          "name": "Communication (Internal / External)",
+          "description": "Communication channels between leadership, business, and technical units.",
+          "levels": {
+            "level1": {
+              "description": "Minimal communication between leadership, business, and technical units.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Defined communication channels exist but are not used consistently.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Regular cross-unit communication occurs, including with external partners like Managed Care Organizations (MCO) and vendors.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Transparent, enterprise-wide communication ensures all roles understand priorities, responsibilities, and impacts.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Integrates communication across all business areas to align long-term Medicaid goals and performance outcomes. Fosters cooperation with other SMAs, CMS, and external partners nationally. The Agency is recognized for its leadership in sharing solutions, provider enrollment process needs, and best practices.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "culture-leadership",
+          "name": "Culture & Leadership",
+          "description": "Leadership visibility into workloads and resource capacity.",
+          "levels": {
+            "level1": {
+              "description": "Leadership lacks visibility into workloads and resource capacity; roles are reactive.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Leadership begins assessing role capacity but lacks full enterprise insight.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Leadership proactively manages workloads and roles based on enterprise needs and priorities.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Leadership fosters a culture of collaboration and continuous learning across internal and external roles.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Leadership supports internal change agents to align culture, strategy, and resources with long-term Medicaid goals.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "resourcing-capacity",
+          "name": "Resourcing Capacity (Staffing, Training, Recruitment)",
+          "description": "Capacity management for staffing, training, and recruitment.",
+          "levels": {
+            "level1": {
+              "description": "SMA struggles to identify gaps in role capacity; staffing is reactive.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Some processes exist for role capacity management (staffing, training, recruitment).",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "SMA systematically identifies, recruits, and trains staff.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "SMA maintains a dynamic capacity model to forecast and meet enterprise role needs, including succession planning and continuous role development.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "SMA uses comprehensive planning and advanced analytics to align roles and skills with program objectives, enabling rapid response to required changes while maintaining high service delivery standards.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        }
+      ]
+    },
+    "businessArchitecture": {
+      "id": "businessArchitecture",
+      "name": "Business Architecture",
+      "description": "The business processes performed to deliver the capability.",
+      "required": true,
+      "aspects": [
+        {
+          "id": "business-capability",
+          "name": "Business Capability",
+          "description": "Documentation and management of the capability itself.",
+          "levels": {
+            "level1": {
+              "description": "The capability has been identified, and the use of the capability has been documented.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "The SMA has begun the documentation of the capability roles, supporting processes, technology, and information. The capability complies with state and federal requirements.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "The SMA has fully documented and defined the capability roles, supporting processes, technology, and information. The capability complies with state and federal requirements and conforms to MES industry-recognized architectural frameworks. The capability is standardized and aligned at the enterprise level.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "The SMA manages the capability for performance and compliance. The SMA monitors the metrics and measures of the capability. The SMA uses performance monitoring to make improvements to the capability.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "The SMA is a thought leader for the capability and shares capability information with other SMAs.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "business-process",
+          "name": "Business Process",
+          "description": "Documentation and standardization of business processes supporting the capability.",
+          "levels": {
+            "level1": {
+              "description": "The business process(es) that support a capability have been identified and defined.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "The business process(es) that support a capability have been documented in SOPs with steps and roles responsible for each activity or decision.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "All associated staff members supporting the capability are following the same process steps in the same order for a standardized, repeatable approach to the work. All processes are easily accessible in a Business Process Catalog.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "The business process(es) that support a capability have associated performance metrics (e.g., timeliness, quality, and efficiency) and are regularly tracked and reported to leadership to understand bottlenecks in the process. A few business process steps are automated to streamline overall turnaround time without sacrificing quality.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "The business process(es) that support a capability are regularly assessed using the performance metrics to identify process improvements to increase SMA effectiveness and efficiency. All business process steps are automated as much as possible to streamline overall turnaround time without sacrificing quality.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "business-process-model",
+          "name": "Business Process Model",
+          "description": "Development and management of business process models.",
+          "levels": {
+            "level1": {
+              "description": "Business process models are not fully developed for the supporting capability.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Business Process Models are developed for all business processes supporting the capability and for staff reference.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "The business process model(s) that support a capability follow Business Process Modeling Notation (BPMN) 2.0 or other organization defined standard for business process documentation to ensure industry best practices are applied to the documentation.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "The business process model(s) that support a capability are developed in a standardized tool for version control and historical tracking of changes and their impact on metrics. Business processes are managed in an enterprise catalog.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "The business process model(s) are monitored and reviewed for improvement and updates for improvements.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "role-management",
+          "name": "Role Management",
+          "description": "Identification and documentation of roles supporting processes.",
+          "levels": {
+            "level1": {
+              "description": "The Role(s) that support the process are identified as part of the process documentation or process model.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "The Role(s) that support the process are identified as part of the process documentation or process model.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "The Role(s) that support the process are identified as part of the process documentation or process model.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "The Role(s) that support the process are identified as part of the process documentation or process model.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "The Role(s) that support the process are identified as part of the process documentation or process model.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "strategic-planning",
+          "name": "Strategic Planning",
+          "description": "Alignment of capabilities with strategic planning.",
+          "levels": {
+            "level1": {
+              "description": "The SMA's strategic plan is considered in the architectural and capability planning.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Aligned where possible.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "The SMA's strategic plan and capability planning are aligned through outcomes. The SMA's strategic plan has identified capabilities as a dependency to achieve outcomes.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Capabilities and processes are identified and analyzed as part enterprise risk and issue management. Capabilities and processes are identified and analyzed as part of Enterprise Portfolio and Project Management. The SMA's Enterprise Roadmap (Projects / Initiatives) has identified capabilities and processes that support the roadmap items.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Capabilities and processes are identified and analyzed for intake of new business to support funding requests for an APD or for state funding for project approval. Capabilities and processes are identified and analyzed in Enterprise Governance for decision-making.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "enterprise-architecture",
+          "name": "Enterprise Architecture",
+          "description": "Enterprise-wide planning and architectural frameworks.",
+          "levels": {
+            "level1": {
+              "description": "SMA recognizes the need for enterprise-wide planning and architectural frameworks; however, current Enterprise Architecture (EA) practices are unstructured, reactive, and inconsistent.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "SMA complies with federal guidance and has begun adopting MES-recognized EA frameworks. EA processes exist but are not standardized or fully documented.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "SMA has fully implemented MES-recognized EA frameworks. EA processes are standardized, documented, and aligned across business, information, and technology.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "SMA uses EA to monitor and manage MES performance. EA is integrated into strategic planning and execution. SMA collaborates with other SMAs to share EA practices.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "SMA uses advanced, data-driven EA strategies for proactive decision-making. EA drives enterprise optimization and continuous improvement. SMA is nationally recognized for EA leadership.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "policy-management",
+          "name": "Policy Management",
+          "description": "Management and alignment of policies with business capabilities.",
+          "levels": {
+            "level1": {
+              "description": "Policies relevant to business capabilities are informally identified or inconsistently documented. There is little to no mapping of policies to business processes or systems.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Some policies are documented, and the organization is starting to map policies to business processes and systems. Compliance is mostly reactive; regular reviews are not established.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "All business policies relevant to the capability (e.g., 'Pharmacy Management') are identified, documented, and mapped to business processes and supporting systems. Policies are harmonized with state and federal requirements, and their alignment is regularly reviewed to ensure compliance and support for enterprise objectives.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Policy alignment is institutionalized and integrated into enterprise governance. Policies are systematically reviewed, updated, and optimized based on performance data, regulatory changes, and strategic objectives.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Policy alignment is a proactive, continuous process that drives organizational agility, compliance, and innovation. The organization demonstrates thought leadership and collaborates externally to share best practices.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        }
+      ]
+    },
+    "informationData": {
+      "id": "informationData",
+      "name": "Information & Data",
+      "description": "The information and the data management capabilities needed to deliver the capability.",
+      "required": true,
+      "aspects": [
+        {
+          "id": "data-storage-warehousing",
+          "name": "Data Storage & Warehousing",
+          "description": "Does the SMA manage the storage and warehousing of the information assets that support this capability?",
+          "levels": {
+            "level1": {
+              "description": "Storage locations for the information assets that support this capability have been identified and documented.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Basic storage and warehousing requirements for these information assets have been defined. Storage and warehousing procedures have been defined and documented. Roles and responsibilities for managing the storage and warehousing of these information assets have been defined.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Storage and warehousing standards and conventions (such as structure, naming, or access rules) have been defined for the information assets. Storage and warehousing roles for this capability have been assigned to individuals, and they are actively performing their responsibilities. Storage and warehousing standards and conventions have been adopted and are applied to the information assets that support this capability.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Storage and warehousing performance measures have been established for these information assets. Storage and warehousing performance and maturity assessments are conducted regularly for the information assets that support this capability. Root cause analysis is performed and documented for issues affecting the storage or warehousing of the information assets.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Storage and warehousing improvement activities needed to increase performance and maturity are regularly identified and carried out for the information assets that support this capability.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "data-architecture-modeling",
+          "name": "Data Architecture & Modeling",
+          "description": "Does the SMA manage the data architecture and models for the information assets that support this capability?",
+          "levels": {
+            "level1": {
+              "description": "The data architecture components needed to support this capability have been identified and documented.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Basic data modeling requirements for the information assets that support this capability have been defined. Data architecture and data modeling procedures for how each information asset is structured and represented have been defined and documented. Roles and responsibilities for managing the data architecture and data models for these information assets have been defined.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Data architecture standards, modeling conventions, and reference structures needed to support these information assets have been defined. Data architecture and data modeling roles for this capability have been assigned to individuals, and those individuals are actively performing their responsibilities. Data architecture standards, modeling conventions, and reference structures have been adopted and applied to the information assets that support this capability.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Data architecture and modeling performance measures have been established for these information assets. Data architecture and modeling performance assessments are conducted regularly for the information assets that support this capability. Root cause analysis is performed and documented for issues affecting the data architecture or models of the information assets.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Data architecture and modeling improvement activities needed to increase performance and maturity are regularly identified and carried out for the information assets that support this capability.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "document-content-management",
+          "name": "Document & Content Management",
+          "description": "Does the SMA manage the document and content information assets that support this capability?",
+          "levels": {
+            "level1": {
+              "description": "The document and content information assets needed to support this capability have been identified and documented.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Basic document and content management requirements for these information assets have been defined. Procedures for how each document and content asset is created, stored, updated, and archived have been defined and documented. Roles and responsibilities for managing document and content information assets for this capability have been defined.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Document and content management roles for this capability have been assigned to individuals, and those individuals are actively performing their responsibilities. Document and content management standards, conventions, and retention rules have been adopted and applied to the information assets that support this capability.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Document and content management performance measures have been established for these information assets. Document and content management performance assessments and maturity assessments are conducted regularly for the information assets that support this capability. Root cause analysis is performed and documented for issues affecting the document and content information assets.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Document and content management improvement activities needed to increase performance and maturity are regularly identified and carried out for the information assets that support this capability.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "data-governance",
+          "name": "Data Governance",
+          "description": "Does the SMA govern the information assets that support this capability?",
+          "levels": {
+            "level1": {
+              "description": "Information assets needed to support the capability have been identified and documented.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Data governance requirements for the information assets for this capability have been defined. Definition for how each information asset is used has been defined and documented. Data governance roles and responsibilities needed to support the information assets for this capability have been defined. Data policies, standards, reference models and specifications needed to support the information assets for this capability have been defined. Data issues that impact the information assets for this capability have been defined and documented.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Data governance roles needed to support this capability have been assigned to individuals and they are actively performing their assigned responsibilities. Data governance information is stored centrally and accessible to key stakeholders that need access to it. Data policies, standards, reference models, and specifications have been adopted and aligned to the information assets for this capability.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Data governance performance measures and standards have been established to support the information assets for this capability. Data governance performance assessments are performed regularly on the information assets for this capability. Enterprise data governance capability maturity assessments are performed and aligned to the information assets for this capability. Root cause analysis for the data issues that impact the information assets for the capability have been performed and documented.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Data governance activities needed to improve the performance and maturity of data governance of the information assets for this capability are regularly identified and performed.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "data-privacy-security",
+          "name": "Data Privacy & Security",
+          "description": "Does the SMA manage the privacy and security of the information assets that support this capability?",
+          "levels": {
+            "level1": {
+              "description": "Privacy and security requirements for the information assets that support this capability have been identified and documented.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Basic protections (such as access restrictions or password controls) for these information assets have been defined. Procedures for how each information asset is protected, accessed, transmitted, and stored have been defined and documented. Privacy and security roles and responsibilities for managing these information assets have been defined.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Privacy and security policies, standards, and controls (such as encryption requirements, data handling rules, and access control standards) have been defined. Privacy and security roles for this capability have been assigned to individuals, and those individuals are actively performing their responsibilities. Privacy and security policies, standards, and controls have been adopted and applied to the information assets that support this capability.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Privacy and security performance measures have been established for these information assets. Privacy and security performance assessments and maturity assessments are performed regularly for the information assets that support this capability. Root cause analysis is performed and documented for privacy and security incidents or issues affecting these information assets.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Privacy and security improvement activities needed to increase performance and maturity are regularly identified and carried out for the information assets that support this capability.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "data-quality",
+          "name": "Data Quality",
+          "description": "Does the SMA manage the quality of the information assets that support this capability?",
+          "levels": {
+            "level1": {
+              "description": "The data quality requirements for the information assets that support this capability have been identified and documented.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Basic expectations for accuracy, completeness, consistency, and timeliness have been defined. Procedures for how data quality is monitored, measured, and corrected for each information asset have been defined and documented. Roles and responsibilities for managing data quality for these information assets have been defined.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Data quality standards, business rules, and validation requirements have been established. Data quality roles for this capability have been assigned to individuals, and those individuals are actively performing their responsibilities. Data quality standards and business rules have been adopted and are consistently applied to the information assets that support this capability.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Data quality performance measures and thresholds have been established for these information assets. Data quality performance assessments and maturity assessments are regularly conducted for the information assets that support this capability. Root cause analysis is performed and documented for data quality issues or defects affecting these information assets.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Data quality improvement activities needed to increase performance and maturity are regularly identified, prioritized, and carried out for the information assets that support this capability.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "data-integration-interoperability",
+          "name": "Data Integration & Interoperability",
+          "description": "Does the SMA integrate the information assets that support this capability into the enterprise and maintain interoperability?",
+          "levels": {
+            "level1": {
+              "description": "Data exchanges needed for this capability have been identified.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Structural / Transaction standards needed to support this capability have been defined and documented. Mapping specifications needed to support the integration of each structure / transaction have been identified.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Structure / Transaction data standards have been adopted and implemented. Transaction data is actively received and integrated into the enterprise and is accessible to key stakeholders that need access to it.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Data integration & interoperability performance measures and standards have been established to support this capability. Data Integration & Interoperability performance assessments are performed regularly on the information assets for this capability. Enterprise Data Integration & Interoperability capability maturity assessments are performed and aligned to the information assets for this capability.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "The SMA continuously identifies and implements improvement initiatives aimed at enhancing integration performance and interoperability maturity. Practices such as automation of data exchanges, adoption of emerging standards, and reuse of integration components are regularly pursued. Progress and impact of improvement activities are measured through key performance indicators (KPI), and lessons learned are integrated into future initiatives to sustain growth in integration maturity.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "master-data-management",
+          "name": "Master Data Management",
+          "description": "Does the SMA manage the master data that is needed to support this capability?",
+          "levels": {
+            "level1": {
+              "description": "Master data entities needed to support the capability have been identified.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Master data management requirement to support this capability have been defined. The data sources that impact the master data for this capability have been identified.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Master data rules / logic that support this capability have been defined and documented. Master data is accessible to the key stakeholders who need it to support this capability.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Master data performance measures and standards have been established to support this capability. Master data management performance assessments are performed regularly on the information assets for this capability. Enterprise master data management capability maturity assessments are performed and aligned to the information assets for this capability.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Activities needed to improve the performance and maturity of master data management of the information assets for this capability are regularly identified and performed.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "reference-data-management",
+          "name": "Reference Data Management",
+          "description": "Does the SMA manage the reference data that is needed to support this capability?",
+          "levels": {
+            "level1": {
+              "description": "Reference data needed for this capability have been identified.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Reference data requirements for this capability have been defined. Reference data standards needed to support this capability have been defined and documented. Crosswalks needed to support this capability have been identified.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Crosswalks for the reference data needed to support this capability have been documented. Reference data needed to support the capability is stored centrally and accessible to key stakeholders that need access to it.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Reference data performance measures and standards have been established to support this capability. Regular assessments of reference data quality and management practices are conducted, including audits and validation activities to identify gaps and improvement opportunities. Root cause analyses are performed and documented for issues impacting reference data, with corrective actions implemented. Monitoring tools, audit logs, and reporting mechanisms are maintained to ensure ongoing compliance and quality.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "The SMA continuously identifies and executes improvement activities aimed at enhancing reference data quality, consistency, and management maturity. Practices such as automation, standardization, and integration of reference data processes are adopted to increase efficiency. The organization actively participates in or contributes to industry standards and best practices for reference data management. The impact of improvement initiatives is measured through KPIs, and lessons learned are incorporated to sustain ongoing maturation of reference data management capabilities.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "business-intelligence",
+          "name": "Business Intelligence",
+          "description": "Does the SMA provide business intelligence (BI) to support this capability?",
+          "levels": {
+            "level1": {
+              "description": "Measures and Reports needed for this capability have been identified.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Business Intelligence requirements for this capability have been defined. Measure and report specifications needed for this capability have been defined and documented. Reports needed for this capability can be traced to the specific data elements that are used in the report.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Measures and Reports needed for this capability are stored centrally and accessible to key stakeholders that need access to it.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Business Intelligence performance measures and standards have been established to support this capability. Regular assessments of BI performance and data quality are conducted, including validation, user feedback, and usage analysis. Root cause analysis is performed for issues such as incorrect reports or data discrepancies, with corrective actions documented and tracked. Monitoring dashboards and audit logs are maintained to oversee BI system performance, security, and compliance.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "The SMA continuously identifies and implements improvement activities to enhance BI capabilities, data quality, and user experience. Practices such as automation, advanced analytics, and self-service BI are adopted to increase agility and insight generation. The organization actively explores new BI technologies, data visualization techniques, and analytics methods to increase maturity. The impact of BI improvements is measured through KPIs such as decision-making speed, data accuracy, and stakeholder satisfaction, with lessons learned incorporated into ongoing initiatives.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        },
+        {
+          "id": "metadata-management",
+          "name": "Metadata Management",
+          "description": "Does the SMA manage the metadata for the information assets that support this capability?",
+          "levels": {
+            "level1": {
+              "description": "Metadata requirements for the information assets for this capability have been defined.",
+              "questions": [],
+              "evidence": []
+            },
+            "level2": {
+              "description": "Metadata standards and expectations have been defined for the metadata needed to manage the information assets for the capability. Metadata about the information assets for this capability have been identified and documented.",
+              "questions": [],
+              "evidence": []
+            },
+            "level3": {
+              "description": "Metadata about the information assets for this capability are stored centrally and accessible to key stakeholders that need access to it.",
+              "questions": [],
+              "evidence": []
+            },
+            "level4": {
+              "description": "Metadata performance measures and standards have been established to support the information assets for this capability. Metadata performance assessments are performed regularly on the information assets for this capability. Enterprise metadata capability maturity assessments are performed and aligned to the information assets for this capability.",
+              "questions": [],
+              "evidence": []
+            },
+            "level5": {
+              "description": "Activities needed to improve the performance and maturity of metadata management of the information assets for this capability are regularly identified and performed.",
+              "questions": [],
+              "evidence": []
+            }
+          }
+        }
+      ]
+    },
+    "technology": {
+      "id": "technology",
+      "name": "Technology",
+      "description": "The technology used to automate the capability.",
+      "required": true,
+      "overallLevelDescriptions": {
+        "level1": "The State operates a monolithic, legacy MMIS with little modernization or capability to interact with other systems as evidenced by limited modularity, reuse, or interoperability. Integrations occur through direct connections, using proprietary formats and batch file transfers. Security practices are fragmented; compliance processes are manual with limited automation.",
+        "level2": "The State has begun modularizing core Medicaid functions (e.g., eligibility and claims) and piloting standards-based application programming interfaces (API) (e.g., National Information Exchange Model [NIEM] and Health Level 7 [HL7]). Non-critical modules are piloted in Software as a Service (SaaS) environments; security policies exist but lack centralized enforcement. Security policies are in place, but enforcement remains siloed. The state is implementing modular components and piloting cloud solutions and standards, but it lacks overall enterprise integration.",
+        "level3": "Core Medicaid systems are modularized with standardized service contracts and interoperable APIs aligned with CMS and national standards. (e.g., Fast Healthcare Interoperability Resources [FHIR], HL7, and X12). A hybrid cloud model supports scalability and modernization, with a cloud-first policy for new modules. State runs a modular, standards-based Medicaid enterprise that aligns with CMS's requirements for modularity and interoperability.",
+        "level4": "The Medicaid Enterprise is governed as a cohesive platform with real-time interoperability across modules, MCOs, Health Information Exchanges (HIE), and CMS. Performance metrics are actively monitored and used for continuous improvement. Most of the Medicaid Enterprise is hosted in the cloud and designed for flexibility and reliability. States manage the Medicaid Enterprise as a cloud-based platform.",
+        "level5": "The enterprise is fully composable, enabling dynamic orchestration of services and seamless integration with broader human services (e.g., Supplemental Nutrition Assistance Program [SNAP], Transitional Assistance for Needy Families [TANF], and behavioral health). The Medicaid Enterprise is cloud-native and serverless, ensuring resilience and scalability across the nation. A zero-trust architecture is fully implemented; compliance is continuous and automated. The state manages a next-generation, adaptive Medicaid enterprise."
+      },
+      "subDimensions": [
+        {
+          "id": "infrastructure",
+          "name": "Infrastructure",
+          "description": "Compute, storage, networking, and resilience capabilities.",
+          "overallLevelDescriptions": {
+            "level1": "The infrastructure is legacy bound, primarily on-premises, with minimal virtualization or automation. Networking is flat and insecure, storage is unmanaged, and resilience is reactive. There is no formal governance, monitoring, or scaling capability.",
+            "level2": "The state begins adopting virtualization and piloting cloud services for non-critical workloads. Basic security and backup policies are introduced. Networking is segmented, and Disaster Recovery (DR) plans exist but are untested. Governance roles are emerging, but practices are inconsistent.",
+            "level3": "A hybrid cloud model is in place with standardized provisioning and container adoption. Storage is tiered and policy driven. Secure, segmented networking supports external partners. DR is tested, and auto-scaling is implemented for some workloads. Technical debt is tracked, and observability is established.",
+            "level4": "The infrastructure is governed by a cloud-first policy, with container orchestration, Infrastructure-as-Code (IAC), and integrated monitoring. Storage and networking are optimized for performance, cost, and compliance. DR and scaling are automated and aligned with business KPIs. Zero-trust principles are emerging.",
+            "level5": "The infrastructure is fully cloud native, composable, and adaptive. Serverless and edge computing are used where appropriate. Artificial Intelligence (AI) / Machine Learning (ML) supports predictive scaling, anomaly detection, and self-healing. Zero-trust networking and continuous compliance are fully implemented. Governance is dynamic and data driven."
+          },
+          "aspects": [
+            {
+              "id": "compute-hosting",
+              "name": "Compute and Hosting",
+              "description": "Management of compute resources and hosting environments.",
+              "levels": {
+                "level1": {
+                  "description": "All workloads run on legacy on-premises servers. No virtualization or cloud usage. No centralized inventory of compute assets.",
+                  "questions": [
+                    "Are most workloads hosted on physical servers?",
+                    "Is there a centralized inventory of compute assets?"
+                  ],
+                  "evidence": [
+                    "Server inventory spreadsheet",
+                    "Screenshots of legacy on-premise systems"
+                  ]
+                },
+                "level2": {
+                  "description": "Some virtualization is introduced. Cloud pilots are used for non-critical workloads. Compute provisioning is manual and ad hoc.",
+                  "questions": [
+                    "Are non-critical workloads piloted in the cloud?",
+                    "Are virtualization tools in use?"
+                  ],
+                  "evidence": ["Cloud pilot documentation", "Virtualization deployment plan"]
+                },
+                "level3": {
+                  "description": "A hybrid cloud model is adopted. Virtual machines (VM) and containers are provisioned using standardized templates. Compute assets are inventoried and monitored.",
+                  "questions": [
+                    "Is there a hybrid cloud model in place?",
+                    "Are provisioning processes standardized?"
+                  ],
+                  "evidence": ["Hybrid cloud architecture diagram", "VM provisioning templates"]
+                },
+                "level4": {
+                  "description": "Cloud-first policy is enforced. Container orchestration (e.g., Kubernetes) and IAC are used for provisioning. Compute resources are monitored for performance and cost.",
+                  "questions": [
+                    "Is IaC integrated into Continuous Integration (CI) / Continuous Delivery (CD) pipelines?",
+                    "Are containers orchestrated using a platform like Kubernetes?"
+                  ],
+                  "evidence": ["IaC scripts in version control", "Deployment manifests"]
+                },
+                "level5": {
+                  "description": "Fully cloud-native and serverless where appropriate. Compute provisioning is dynamic and policy driven. AI/ML supports predictive scaling and self-healing.",
+                  "questions": [
+                    "Are compute resources dynamically provisioned based on usage?",
+                    "Is serverless computing used in production?"
+                  ],
+                  "evidence": ["Serverless architecture diagrams", "Scaling dashboards using AI/ML"]
+                }
+              }
+            },
+            {
+              "id": "storage",
+              "name": "Storage",
+              "description": "Data storage, backup, and retention management.",
+              "levels": {
+                "level1": {
+                  "description": "Local storage only. Manual backups. No encryption or retention policies. Storage growth is unmanaged.",
+                  "questions": [
+                    "Are backups performed manually?",
+                    "Are storage growth and retention unmanaged?"
+                  ],
+                  "evidence": ["Backup logs (manual)", "Storage device inventory"]
+                },
+                "level2": {
+                  "description": "Basic Storage Area Network (SAN) / Network Attached Storage (NAS) is introduced. Some automated backups. Retention policies are drafted but not enforced.",
+                  "questions": [
+                    "Are retention policies defined but not enforced?",
+                    "Are backups partially automated?"
+                  ],
+                  "evidence": ["Draft retention policy", "SAN/NAS configuration screenshots"]
+                },
+                "level3": {
+                  "description": "Tiered storage is implemented. Cloud backups and encryption are enforced. Immutable backups are used for critical data.",
+                  "questions": [
+                    "Is encryption enforced for data at rest and in transit?",
+                    "Are immutable backups used?"
+                  ],
+                  "evidence": ["Tiered storage policy", "Cloud backup configuration"]
+                },
+                "level4": {
+                  "description": "Storage lifecycle is automated. Cost optimization and anomaly detection are in place. Storage is aligned with data classification policies.",
+                  "questions": [
+                    "Is storage lifecycle automated based on policy?",
+                    "Are anomalies in storage usage detected automatically?"
+                  ],
+                  "evidence": ["Storage lifecycle automation scripts", "Cost optimization reports"]
+                },
+                "level5": {
+                  "description": "AI/ML-driven tiering and self-healing storage. Continuous compliance with Health Insurance Portability and Accountability Act (HIPAA), National Institute of Standards and Technology (NIST), and state policies. Storage adapts to usage and risk patterns.",
+                  "questions": [
+                    "Is storage self-healing and AI-optimized?",
+                    "Is compliance continuously validated?"
+                  ],
+                  "evidence": ["Tiering engine logs", "Compliance audit reports (HIPAA, NIST)"]
+                }
+              }
+            },
+            {
+              "id": "networking-connectivity",
+              "name": "Networking and Connectivity",
+              "description": "Network architecture, segmentation, and external connectivity.",
+              "levels": {
+                "level1": {
+                  "description": "Flat network with no segmentation. No secure external access. No formal documentation or monitoring.",
+                  "questions": [
+                    "Is the network flat and unsegmented?",
+                    "Is there secure external access?"
+                  ],
+                  "evidence": ["Network topology diagram (flat)"]
+                },
+                "level2": {
+                  "description": "Virtual Private Networks (VPN) and firewalls are introduced. Some secure partner access. Basic network monitoring is in place.",
+                  "questions": [
+                    "Are VPNs and firewalls in place?",
+                    "Is partner access manually provisioned?"
+                  ],
+                  "evidence": ["Network topology diagram", "Partner access documentation"]
+                },
+                "level3": {
+                  "description": "Network is segmented using Virtual Local Area Networks (VLAN) or security zones. Redundant connectivity is established. Real-time dashboards monitor traffic.",
+                  "questions": [
+                    "Is network segmentation enforced?",
+                    "Are dashboards used to monitor traffic?"
+                  ],
+                  "evidence": [
+                    "VLAN / security zone documentation",
+                    "Real-time network dashboards / screenshots"
+                  ]
+                },
+                "level4": {
+                  "description": "Software-Defined Wide Area Network (SD-WAN) or cloud-native networking is adopted. Zero-trust principles are emerging. Network traffic is monitored and alerts are automated.",
+                  "questions": [
+                    "Is zero-trust architecture emerging?",
+                    "Is network traffic monitored in real time?"
+                  ],
+                  "evidence": ["SD-WAN Deployment Plan", "Zero-trust documentation"]
+                },
+                "level5": {
+                  "description": "Fully zero-trust architecture. Dynamic routing and posture assessment. AI-driven analytics continuously optimize network performance and security.",
+                  "questions": [
+                    "Is network posture continuously assessed and adjusted?",
+                    "Is dynamic routing implemented?"
+                  ],
+                  "evidence": ["Network analytics", "Dynamic routing documentation"]
+                }
+              }
+            },
+            {
+              "id": "resilience-scaling",
+              "name": "Resilience and Scaling",
+              "description": "Disaster recovery, failover, and scaling capabilities.",
+              "levels": {
+                "level1": {
+                  "description": "No DR plan. Failover is manual. No scaling capabilities. Outages are handled reactively.",
+                  "questions": [
+                    "Is there a documented DR plan?",
+                    "Are failovers handled manually?"
+                  ],
+                  "evidence": ["DR Plan (if any)", "Failover logs"]
+                },
+                "level2": {
+                  "description": "DR plan exists but is untested. Manual load balancing is used. Basic scripts support limited scaling.",
+                  "questions": [
+                    "Are DR plans tested regularly?",
+                    "Is load balancing manual or scripted?"
+                  ],
+                  "evidence": ["Load balancing documentation", "DR test schedule (Draft)"]
+                },
+                "level3": {
+                  "description": "DR is tested annually. Auto-scaling is implemented for some workloads. Resilience metrics (e.g., Recovery Time Objective [RTO] / Recovery Point Objective [RPO]) are tracked.",
+                  "questions": [
+                    "Are resilience metrics tracked?",
+                    "Is auto-scaling implemented for some workloads?"
+                  ],
+                  "evidence": ["Auto-scaling configuration", "RTO / RPO metrics"]
+                },
+                "level4": {
+                  "description": "DR is automated and tested regularly. Elastic scaling is tied to business KPIs. Resilience is monitored in real time.",
+                  "questions": [
+                    "Is DR automated and aligned with KPIs?",
+                    "Is scaling tied to real-time demand?"
+                  ],
+                  "evidence": ["Elastic scaling policy", "DR automation documentation"]
+                },
+                "level5": {
+                  "description": "Predictive resilience using telemetry and AI. Seamless DR with no user impact. Scaling is adaptive and policy driven.",
+                  "questions": [
+                    "Is resilience predictive and AI-driven?",
+                    "Are outages mitigated before they occur?"
+                  ],
+                  "evidence": ["Analytics Dashboard", "Failure mitigation documentation"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "integration",
+          "name": "Integration",
+          "description": "API management, system messaging, and partner integration.",
+          "overallLevelDescriptions": {
+            "level1": "The interfaces are single purpose with minimal use of data standards and no documentation. There is little to no oversight. System messages are not exchanged or consolidated. Partner integrations are lacking consistency.",
+            "level2": "Interface patterns and data standards are developed for reuse. New and updated interfaces are subject to oversight and require documentation. Systems exchange some messages, but exchanges lack standards. Partner integration patterns are under development.",
+            "level3": "New interface designs are based on reuse and data standards. Governance and documentation standards are in place. Patterns for exchanging messages between systems are in place. External partner integration follows standard processes and design.",
+            "level4": "Software frameworks are widely used and there is extensive interface reuse. Data standards are applied to interfaces and interface specifications are published. Messages for critical information are exchanged across systems using standard patterns and tools. Eliminating variation of partner integration and automating endpoint management.",
+            "level5": "Single use interfaces are eliminated. Interfaces follow patterns and implement data standards. Specifications are published using API management tools. Systems exchange messages using tools that trigger alerts when needed and track problems through to resolution. Partner integration is standardized, and endpoints are continually monitored."
+          },
+          "aspects": [
+            {
+              "id": "api-interface-management",
+              "name": "API and Interface Management",
+              "description": "Design, governance, and lifecycle management of APIs and interfaces.",
+              "levels": {
+                "level1": {
+                  "description": "Interfaces are point-to-point, single purpose, and inconsistently designed. Data standards are rarely applied. No governance or documentation exists.",
+                  "questions": [
+                    "Are interfaces primarily point-to-point and single purpose?",
+                    "Is interface documentation available?"
+                  ],
+                  "evidence": [
+                    "Interface inventory (if any)",
+                    "Screenshots of point-to-point connections"
+                  ]
+                },
+                "level2": {
+                  "description": "Interface patterns and data standards are defined. Some reuse is piloted. Documentation and oversight are introduced for new interfaces.",
+                  "questions": [
+                    "Are interface patterns defined?",
+                    "Are new interfaces subject to review or documentation?"
+                  ],
+                  "evidence": [
+                    "Draft interface patterns",
+                    "Sample API specifications using emerging standards",
+                    "Governance meeting notes"
+                  ]
+                },
+                "level3": {
+                  "description": "New interfaces follow defined patterns and apply data standards (e.g., FHIR and X12). Governance and documentation standards are enforced.",
+                  "questions": [
+                    "Are APIs designed using standardized patterns?",
+                    "Are APIs versioned and documented?",
+                    "Is interface governance enforced?"
+                  ],
+                  "evidence": [
+                    "API design templates",
+                    "Interface governance policy",
+                    "Versioned API documentation"
+                  ]
+                },
+                "level4": {
+                  "description": "Interfaces are widely reused. API specifications are published using API management tools. Governance drives standardization and lifecycle management.",
+                  "questions": [
+                    "Are APIs published and discoverable via a management platform?",
+                    "Is interface reuse tracked and governed?",
+                    "Are APIs monitored for usage and performance?"
+                  ],
+                  "evidence": [
+                    "API management platform screenshots",
+                    "Usage analytics reports",
+                    "Interface lifecycle documentation"
+                  ]
+                },
+                "level5": {
+                  "description": "All interfaces follow standardized patterns and data standards. API specifications are discoverable and versioned. Interface behavior is monitored and dynamically adjusted based on usage and policy.",
+                  "questions": [
+                    "Are all interfaces standardized and reusable?",
+                    "Are APIs dynamically adjusted based on usage or policy?",
+                    "Is interface behavior monitored and optimized in real time?"
+                  ],
+                  "evidence": [
+                    "Dynamic API gateway configuration",
+                    "Real-time interface health dashboards",
+                    "Policy-driven API orchestration logs"
+                  ]
+                }
+              }
+            },
+            {
+              "id": "system-messaging",
+              "name": "System Messaging",
+              "description": "Real-time messaging and alerting between systems.",
+              "levels": {
+                "level1": {
+                  "description": "No messaging between systems. Data is exchanged manually or via batch files.",
+                  "questions": [
+                    "Is there any real-time messaging between systems?",
+                    "Are alerts triggered manually?"
+                  ],
+                  "evidence": [
+                    "Messaging pilot documentation",
+                    "Batch file transfer logs",
+                    "Manual alerting procedures"
+                  ]
+                },
+                "level2": {
+                  "description": "Some messaging is introduced using non-standard formats. Alerts are manually triggered.",
+                  "questions": [
+                    "Are messaging patterns defined?",
+                    "Are some messages exchanged between systems?",
+                    "Are alerts traceable?"
+                  ],
+                  "evidence": [
+                    "Messaging pilot documentation",
+                    "Sample message formats",
+                    "Alert logs"
+                  ]
+                },
+                "level3": {
+                  "description": "Messaging patterns are standardized. Messages trigger alerts and are logged. Messaging is used for key business events.",
+                  "questions": [
+                    "Are messages exchanged using standard formats?",
+                    "Do messages trigger automated alerts?"
+                  ],
+                  "evidence": [
+                    "Messaging architecture diagrams",
+                    "Message schemas (e.g., HL7 and FHIR)",
+                    "Alert correlation rules"
+                  ]
+                },
+                "level4": {
+                  "description": "Messaging is used for real-time, critical information exchange. Alerts are traceable and integrated with monitoring tools.",
+                  "questions": [
+                    "Are critical messages exchanged in real time?",
+                    "Are alerts integrated with monitoring tools?",
+                    "Are messaging SLAs tracked?",
+                    "Are messaging patterns reused across systems?"
+                  ],
+                  "evidence": [
+                    "Real-time alert dashboards",
+                    "Messaging middleware configuration",
+                    "Service Level Agreement (SLA) monitoring reports"
+                  ]
+                },
+                "level5": {
+                  "description": "Messaging is event-driven and proactive. Messages trigger automated workflows and predictive alerts. Messaging patterns are reused across the enterprise.",
+                  "questions": [
+                    "Are messages used to proactively address issues?",
+                    "Are alerts predictive and self-resolving?",
+                    "Is messaging fully event-driven?"
+                  ],
+                  "evidence": [
+                    "Real-time alert dashboards",
+                    "Event-driven architecture documentation",
+                    "Predictive alerting dashboards",
+                    "Automated remediation logs"
+                  ]
+                }
+              }
+            },
+            {
+              "id": "external-partner-integration",
+              "name": "External Partner Integration",
+              "description": "Integration with external partners, endpoint management, and standards.",
+              "levels": {
+                "level1": {
+                  "description": "Partner integrations are ad hoc. No standards or endpoint management practices exist.",
+                  "questions": [
+                    "Are partner integrations standardized?",
+                    "Are integration endpoints managed centrally?"
+                  ],
+                  "evidence": [
+                    "Ad hoc partner connection logs",
+                    "Lack of endpoint registry",
+                    "Manual onboarding procedures"
+                  ]
+                },
+                "level2": {
+                  "description": "Integration patterns and endpoint management processes are defined. Some partners follow emerging standards.",
+                  "questions": [
+                    "Are integration patterns defined for partners?",
+                    "Are endpoint management processes emerging?"
+                  ],
+                  "evidence": [
+                    "Draft partner integration patterns",
+                    "Endpoint inventory spreadsheet",
+                    "Sample onboarding checklist"
+                  ]
+                },
+                "level3": {
+                  "description": "New integrations follow standard patterns. Endpoints are registered and managed. Security and data-sharing agreements are documented.",
+                  "questions": [
+                    "Are new partner integrations following standard patterns?",
+                    "Are endpoints registered and governed?",
+                    "Are partner agreements documented?"
+                  ],
+                  "evidence": [
+                    "Partner integration playbook",
+                    "Endpoint registration forms",
+                    "Security and data-sharing agreements"
+                  ]
+                },
+                "level4": {
+                  "description": "Most partner integrations use standardized patterns. Endpoint management is automated. Integration health is monitored.",
+                  "questions": [
+                    "Are most partner integrations standardized and monitored?",
+                    "Is endpoint management automated?",
+                    "Are integration SLAs enforced?"
+                  ],
+                  "evidence": [
+                    "Automated endpoint management tool",
+                    "Partner integration dashboards",
+                    "SLA compliance reports"
+                  ]
+                },
+                "level5": {
+                  "description": "Partner integrations are consolidated and governed through shared services. Endpoint management is integrated with Information Technology Service Management (ITSM). Real-time monitoring and automated remediation are in place.",
+                  "questions": [
+                    "Are partner integrations consolidated and reusable?",
+                    "Is endpoint management integrated with ITSM?",
+                    "Are partner connections monitored in real time?"
+                  ],
+                  "evidence": [
+                    "Shared services integration catalog",
+                    "Real-time partner health dashboards",
+                    "ITSM integration logs"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "platform-services",
+          "name": "Platform Services",
+          "description": "Application hosting, business rules, workflow, and common platform functions.",
+          "overallLevelDescriptions": {
+            "level1": "Applications are hosted in environments lacking platform standards or strategy. Hosting uses dedicated servers or virtual machines with limited scaling capability. There is very little automation of platform services. Commonly used services such as document management workflow, rules management, and address validation, are deployed independently when they are needed.",
+            "level2": "Applications are hosted in environments using standards for platform capabilities. Hosting primarily uses virtual servers. The platform supports use of APIs and integration with Commercial Off-the-Shelf (COTS) tools and SaaS services. Business rules and workflow capabilities are restricted to limited business functions. Common services are used for a single module within a single vendor or state environment.",
+            "level3": "Platforms include Platform as a Service (PaaS) services such as databases, application containers, API security, and network integration. The platform uses SaaS and leveraged COTS tools for business capabilities such as workflow, rules-based processing, and document management. Common services are leveraged across modules but within the domain of a single vendor or state environment.",
+            "level4": "PaaS services are the primary hosting platform. The platforms are designed and implemented using standards to limit complexity and to support automation. Commonly used business and technical capabilities are implemented using SaaS and COTS tools. Some tools are available across vendor and state hosting environments using APIs.",
+            "level5": "Platforms are based almost exclusively on PaaS services. Platform standards include integration with operations management. APIs are used to manage hosting including automated scaling. Most services used across modules and environments are available from a common source although modules may use their own capabilities."
+          },
+          "aspects": [
+            {
+              "id": "application-hosting",
+              "name": "Application Hosting",
+              "description": "Hosting environments, platform standards, and scalability.",
+              "levels": {
+                "level1": {
+                  "description": "Applications are hosted on dedicated physical or virtual servers. No platform standards. Limited scalability and automation.",
+                  "questions": [
+                    "Are applications hosted on dedicated servers?",
+                    "Is there a platform strategy?"
+                  ],
+                  "evidence": ["Server inventory", "Unmanaged hosting screenshots"]
+                },
+                "level2": {
+                  "description": "Hosting environments use virtual servers with some standardization. SaaS and COTS tools are piloted. APIs are used for limited integration.",
+                  "questions": [
+                    "Are virtual servers used consistently?",
+                    "Are SaaS tools piloted?"
+                  ],
+                  "evidence": ["Virtual server deployment plan", "SaaS pilot documentation"]
+                },
+                "level3": {
+                  "description": "Hosting platforms include PaaS services (e.g., databases, containers, and identity). SaaS and COTS tools are integrated for business capabilities.",
+                  "questions": [
+                    "Are PaaS services used for hosting?",
+                    "Are APIs integrated with hosting platforms?"
+                  ],
+                  "evidence": ["PaaS architecture diagrams", "Container usage logs"]
+                },
+                "level4": {
+                  "description": "PaaS or SaaS is the primary hosting model. Platforms are designed using standards to support automation, scalability, and cross-vendor integration.",
+                  "questions": [
+                    "Are platforms designed for automation and reuse?",
+                    "Is cross-vendor integration supported?"
+                  ],
+                  "evidence": ["Platform standards", "Cross-vendor integration documentation"]
+                },
+                "level5": {
+                  "description": "Hosting is cloud native and policy driven. APIs manage deployment, scaling, and monitoring. Platforms are integrated with operations and support multi-tenant, cross-state reuse.",
+                  "questions": [
+                    "Are platforms cloud native and policy driven?",
+                    "Are services reused across states / vendors?"
+                  ],
+                  "evidence": ["API-driven deployment scripts", "Multi-tenant hosting logs"]
+                }
+              }
+            },
+            {
+              "id": "business-rules-workflow",
+              "name": "Business Rules and Workflow",
+              "description": "Management of business rules and workflow automation.",
+              "levels": {
+                "level1": {
+                  "description": "Business rules and workflows are hardcoded within applications. No reuse or externalization.",
+                  "questions": ["Are rules / workflows hard coded?", "Is there any reuse?"],
+                  "evidence": ["Application code with embedded rules", "Lack of external tools"]
+                },
+                "level2": {
+                  "description": "Rules and workflows are coded but follow emerging standards. Some COTS tools for specific functions.",
+                  "questions": [
+                    "Are rules coded but follow standards?",
+                    "Are COTS tools used for specific functions?"
+                  ],
+                  "evidence": ["COTS tool pilot reports", "Rule documentation"]
+                },
+                "level3": {
+                  "description": "COTS or SaaS tools are used to manage rules and workflows. Reuse is limited to specific modules or vendors.",
+                  "questions": [
+                    "Are rules / workflows externalized?",
+                    "Are they reused across modules?"
+                  ],
+                  "evidence": ["SaaS rule engine screenshots", "Workflow configuration files"]
+                },
+                "level4": {
+                  "description": "Rules and workflows are externalized and reused across modules. Tools support versioning, testing, and governance.",
+                  "questions": [
+                    "Are rules versioned and governed?",
+                    "Are they reused across vendors?"
+                  ],
+                  "evidence": ["Rule governance policy", "Versioning logs"]
+                },
+                "level5": {
+                  "description": "Rules and workflows are dynamically orchestrated across systems. Business users can configure logic. AI/ML supports optimization and exception handling.",
+                  "questions": [
+                    "Can business users configure rules?",
+                    "Are rules dynamically orchestrated?"
+                  ],
+                  "evidence": ["AI-optimized rule engine logs", "Business user configuration UI"]
+                }
+              }
+            },
+            {
+              "id": "common-platform-functions",
+              "name": "Common Platform Functions",
+              "description": "Shared services and reusable platform capabilities.",
+              "levels": {
+                "level1": {
+                  "description": "Common services are developed independently within each module. No reuse or standardization.",
+                  "questions": [
+                    "Are services developed independently by module?",
+                    "Is there any reuse?"
+                  ],
+                  "evidence": ["Module-specific services (e.g., file upload)", "No shared catalog"]
+                },
+                "level2": {
+                  "description": "Some services (e.g., document upload and address validation) are reused within a single module or vendor environment.",
+                  "questions": [
+                    "Are services reused within a module or vendor?",
+                    "Is reuse documented?"
+                  ],
+                  "evidence": ["Internal service registry", "Single-module reuse examples"]
+                },
+                "level3": {
+                  "description": "Shared services are available across multiple modules. APIs and documentation support reuse.",
+                  "questions": [
+                    "Are services reused across multiple modules?",
+                    "Are APIs documented and discoverable?"
+                  ],
+                  "evidence": ["API documentation for shared services", "Usage logs"]
+                },
+                "level4": {
+                  "description": "Common services are standardized, governed, and integrated with platform operations. Usage is monitored and optimized.",
+                  "questions": [
+                    "Are services standardized and monitored?",
+                    "Is usage tracked across modules?"
+                  ],
+                  "evidence": ["Service governance policy", "Monitoring dashboards"]
+                },
+                "level5": {
+                  "description": "Services are composable, discoverable, and reused across states and vendors. Service catalogs and self-service provisioning are available.",
+                  "questions": [
+                    "Are services composable and reused across states/vendors?",
+                    "Is provisioning self-service?"
+                  ],
+                  "evidence": ["Service catalog", "Self-service provisioning portal"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "application-architecture",
+          "name": "Application Architecture",
+          "description": "Modular architecture, user interfaces, and session management.",
+          "overallLevelDescriptions": {
+            "level1": "Medicaid systems are monolithic and tightly coupled, with limited ability to scale, replace, or integrate components. User interfaces are inconsistent and inaccessible, and session management is unreliable or nonexistent. There is no architectural governance or reuse.",
+            "level2": "Some modules or services are isolated and piloted, but integration and reuse are limited. User interfaces begin to adopt responsive design and accessibility guidelines. Session handling is basic and inconsistent across systems. Architecture decisions are ad hoc.",
+            "level3": "Systems are modularized with standardized APIs and service contracts. UI components are consistent and accessible, and session state is maintained across modules. Architecture is documented and aligned with CMS interoperability standards.",
+            "level4": "Modular architecture is governed and reused across the enterprise. Interfaces are mobile-first, role-based, and tested for accessibility. Session and state are centrally managed and secure. Architecture supports scalability, monitoring, and DevOps integration.",
+            "level5": "The architecture is fully composable, adaptive, and event driven. Interfaces are personalized and continuously improved using analytics. Session and state management is intelligent, context-aware, and resilient across devices and channels. Architecture enables rapid innovation and seamless integration with external systems."
+          },
+          "aspects": [
+            {
+              "id": "modular-architecture",
+              "name": "Modular Architecture",
+              "description": "Decomposition of systems into independent, reusable modules.",
+              "levels": {
+                "level1": {
+                  "description": "Applications are monolithic and tightly coupled. Changes require full redeployment. No service boundaries or reuse.",
+                  "questions": [
+                    "Are applications monolithic and tightly coupled?",
+                    "Is modularity absent?"
+                  ],
+                  "evidence": ["Legacy system diagrams", "Full redeployment logs"]
+                },
+                "level2": {
+                  "description": "Some components are isolated or piloted as services. Modularization is informal. No formal service contracts or governance.",
+                  "questions": [
+                    "Are some components isolated or piloted as services?",
+                    "Are service boundaries informal?"
+                  ],
+                  "evidence": ["Pilot service documentation", "Partial modularization notes"]
+                },
+                "level3": {
+                  "description": "Core systems are decomposed into modules with standardized APIs and service contracts. Modules can be deployed independently.",
+                  "questions": [
+                    "Are modules deployed independently with standardized APIs?",
+                    "Are service contracts defined?"
+                  ],
+                  "evidence": [
+                    "API specifications",
+                    "Service contract templates",
+                    "Modular architecture diagrams"
+                  ]
+                },
+                "level4": {
+                  "description": "Modular architecture is governed by patterns and standards. Shared services are reused across modules. Modules are independently scalable and monitored.",
+                  "questions": [
+                    "Are modular patterns governed and reused?",
+                    "Are modules independently scalable and monitored?"
+                  ],
+                  "evidence": ["Architecture governance policy", "Monitoring dashboards"]
+                },
+                "level5": {
+                  "description": "Architecture is fully composable and event driven. Modules are dynamically orchestrated and integrate seamlessly with external systems. Architecture supports rapid innovation and plug-and-play capabilities.",
+                  "questions": [
+                    "Is the architecture fully composable and event driven?",
+                    "Are services dynamically orchestrated?"
+                  ],
+                  "evidence": ["Event-driven architecture diagrams", "Orchestration engine logs"]
+                }
+              }
+            },
+            {
+              "id": "user-interfaces",
+              "name": "User Interfaces",
+              "description": "Design, accessibility, and consistency of user interfaces.",
+              "levels": {
+                "level1": {
+                  "description": "Interfaces are static and form based. Design is inconsistent. No accessibility compliance.",
+                  "questions": [
+                    "Are interfaces static and inconsistent?",
+                    "Is accessibility unsupported?"
+                  ],
+                  "evidence": ["Screenshots of legacy UIs", "Lack of WCAG documentation"]
+                },
+                "level2": {
+                  "description": "Some interfaces are redesigned for responsiveness. Accessibility guidelines are drafted. Basic usability testing is conducted.",
+                  "questions": [
+                    "Are some interfaces responsive or redesigned?",
+                    "Are accessibility guidelines drafted?"
+                  ],
+                  "evidence": ["Draft UI standards", "Usability test results"]
+                },
+                "level3": {
+                  "description": "Standardized UI components are used. Interfaces comply with Web Content Accessibility Guidelines (WCAG) 2.1 AA. User feedback loops are established.",
+                  "questions": [
+                    "Are standardized UI components used?",
+                    "Is WCAG 2.1 AA compliance achieved?"
+                  ],
+                  "evidence": ["UI component library", "Accessibility audit reports"]
+                },
+                "level4": {
+                  "description": "Design systems are reused across teams. Interfaces are mobile first and role based. Accessibility is tested automatically.",
+                  "questions": [
+                    "Are design systems reused across teams?",
+                    "Are interfaces mobile first and role based?"
+                  ],
+                  "evidence": ["Design system documentation", "Automated accessibility test logs"]
+                },
+                "level5": {
+                  "description": "Interfaces are adaptive and personalized. AI/ML supports User Experience (UX) optimization. Continuous improvement is driven by analytics and user behavior.",
+                  "questions": [
+                    "Are interfaces adaptive and personalized?",
+                    "Is UX continuously optimized using analytics?"
+                  ],
+                  "evidence": ["UX analytics dashboards", "AI-driven personalization logs"]
+                }
+              }
+            },
+            {
+              "id": "session-state-management",
+              "name": "Session and State Management",
+              "description": "Management of user sessions and application state.",
+              "levels": {
+                "level1": {
+                  "description": "No session persistence. Users lose progress on timeout. No support for multi-tab or multi-device continuity.",
+                  "questions": [
+                    "Is session persistence absent?",
+                    "Do users lose progress on timeout?"
+                  ],
+                  "evidence": ["Session timeout logs", "Lack of session recovery features"]
+                },
+                "level2": {
+                  "description": "Basic session timeout and login persistence. Draft saving is available in some modules. Session handling is inconsistent.",
+                  "questions": [
+                    "Is basic session handling implemented?",
+                    "Are drafts saved in some modules?"
+                  ],
+                  "evidence": ["Draft-saving feature screenshots", "Session timeout settings"]
+                },
+                "level3": {
+                  "description": "Session state is maintained across modules. Drafts are recoverable. Session expiration is policy driven.",
+                  "questions": [
+                    "Is session state maintained across modules?",
+                    "Are expiration policies defined?"
+                  ],
+                  "evidence": ["Session management policy", "Cross-module session logs"]
+                },
+                "level4": {
+                  "description": "Centralized session and state management are implemented. Multi-device continuity is supported. Session data is encrypted and monitored.",
+                  "questions": [
+                    "Is session/state management centralized?",
+                    "Is multi-device continuity supported?"
+                  ],
+                  "evidence": [
+                    "Session encryption logs",
+                    "Centralized session service documentation"
+                  ]
+                },
+                "level5": {
+                  "description": "Session state is preserved across devices and sessions. Context-aware restoration is enabled. Session behavior adapts to user patterns and risk signals.",
+                  "questions": [
+                    "Is session behavior context-aware and adaptive?",
+                    "Is session state preserved across devices and sessions?"
+                  ],
+                  "evidence": [
+                    "AI-driven session management logs",
+                    "Cross-device continuity test results"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "security-identity",
+          "name": "Security and Identity",
+          "description": "Identity management, consent, data protection, and security monitoring.",
+          "note": "The reference document (Table 10) does not provide a distinct Level 5 overall description for Security and Identity - it appears to contain a copy-paste error from Application Architecture. The aspect-level descriptions for Level 5 are accurate.",
+          "overallLevelDescriptions": {
+            "level1": "Security controls are dispersed without oversight. Multiple identity management systems may be in place. Minimal capabilities to manage and use member consent. Lack of visibility to security protections across the enterprise. Limited and siloed monitoring.",
+            "level2": "Some consolidation of identity management systems. Member consent management is in place. Consent management is in place, but some processes such as revoking consent are manual. Standards exist for security protection and monitoring, but are not fully implemented. Some applications use standalone identity management systems.",
+            "level3": "Consent management in place. Security protections are defined and implemented for most systems. Security Information and Event Management (SIEM) tool used on most systems. Single identity management system used by all applications.",
+            "level4": "Consent management is in place. Security controls are standardized, implemented, and meet state and federal regulations. Internal audits are used to validate compliance. A single SIEM tool provides view of enterprise security events."
+          },
+          "aspects": [
+            {
+              "id": "identity-access-services",
+              "name": "Identity and Access Services",
+              "description": "Identity management, authentication, and access control.",
+              "levels": {
+                "level1": {
+                  "description": "Multiple identity systems are in place with inconsistent standards. Access is manually provisioned. No centralized authentication or audit trail.",
+                  "questions": [
+                    "Are identity systems fragmented and unmanaged?",
+                    "Is access manually provisioned?"
+                  ],
+                  "evidence": ["Screenshots of legacy IAM tools", "Manual access logs"]
+                },
+                "level2": {
+                  "description": "Identity systems are partially consolidated. Some access policies are defined. Authentication is standardized for new systems.",
+                  "questions": [
+                    "Are identity systems partially consolidated?",
+                    "Are access policies defined for new systems?"
+                  ],
+                  "evidence": ["IAM policy drafts", "Partial integration diagrams"]
+                },
+                "level3": {
+                  "description": "A centralized identity and access management (IAM) system is used for most applications. Role-based access control (RBAC) is implemented.",
+                  "questions": [
+                    "Is a centralized IAM system used for most applications?",
+                    "Is RBAC implemented?"
+                  ],
+                  "evidence": ["IAM architecture diagrams", "RBAC configuration files"]
+                },
+                "level4": {
+                  "description": "All applications use a single IAM system. Multi-factor authentication (MFA) is enforced. Access provisioning is automated and auditable.",
+                  "questions": [
+                    "Is MFA enforced across all applications?",
+                    "Is access provisioning automated and auditable?"
+                  ],
+                  "evidence": ["MFA logs", "Automated access request workflows"]
+                },
+                "level5": {
+                  "description": "Identity is federated across systems and partners. Adaptive access controls respond to risk signals. IAM is integrated with DevSecOps and zero trust architecture.",
+                  "questions": [
+                    "Is identity federated across systems and partners?",
+                    "Are adaptive access controls in place?"
+                  ],
+                  "evidence": ["Federation trust configurations", "Risk-based access control logs"]
+                }
+              }
+            },
+            {
+              "id": "consent-management",
+              "name": "Consent Management",
+              "description": "Management of member consent for data sharing and privacy.",
+              "levels": {
+                "level1": {
+                  "description": "Consent is captured manually or inconsistently. No centralized tracking or enforcement.",
+                  "questions": [
+                    "Is consent captured manually or inconsistently?",
+                    "Is there centralized tracking?"
+                  ],
+                  "evidence": ["Paper forms", "Inconsistent consent logs"]
+                },
+                "level2": {
+                  "description": "Consent policies are defined. Some systems capture and store consent electronically. Revocation is manual.",
+                  "questions": [
+                    "Are consent policies defined?",
+                    "Are electronic consents partially implemented?"
+                  ],
+                  "evidence": ["Draft consent policy", "Screenshots of consent capture UI"]
+                },
+                "level3": {
+                  "description": "Consent is captured and enforced across systems. Electronic consent records are auditable. Revocation is supported through standard workflows.",
+                  "questions": [
+                    "Is consent enforced across systems?",
+                    "Is revocation supported through standard workflows?"
+                  ],
+                  "evidence": ["Consent audit logs", "Revocation request workflows"]
+                },
+                "level4": {
+                  "description": "Consent is managed through centralized services. APIs enforce consent dynamically. Audit logs are integrated with compliance reporting.",
+                  "questions": [
+                    "Is consent managed through centralized services?",
+                    "Are APIs used to enforce consent dynamically?"
+                  ],
+                  "evidence": ["Consent service API specifications", "Audit trail dashboards"]
+                },
+                "level5": {
+                  "description": "Consent is context aware and member controlled. Real-time enforcement and revocation are supported. Consent services are interoperable across agencies and partners.",
+                  "questions": [
+                    "Is consent context aware and member controlled?",
+                    "Is real-time revocation supported?"
+                  ],
+                  "evidence": ["Member portal screenshots", "Real-time consent enforcement logs"]
+                }
+              }
+            },
+            {
+              "id": "system-data-protection",
+              "name": "System and Data Protection",
+              "description": "Security controls, encryption, and compliance.",
+              "levels": {
+                "level1": {
+                  "description": "Security controls are inconsistent and manually applied. No encryption or secure configuration standards.",
+                  "questions": [
+                    "Are security controls inconsistent and manually applied?",
+                    "Is encryption missing or partial?"
+                  ],
+                  "evidence": ["Unencrypted data logs", "Ad hoc firewall rules"]
+                },
+                "level2": {
+                  "description": "Security standards are defined and partially implemented. Some systems use encryption and secure configurations.",
+                  "questions": [
+                    "Are security standards defined but not fully implemented?",
+                    "Are some systems encrypted?"
+                  ],
+                  "evidence": ["Draft security standards", "Partial encryption reports"]
+                },
+                "level3": {
+                  "description": "Security controls are implemented across systems. Encryption is enforced for data at rest and in transit. Internal audits are conducted.",
+                  "questions": [
+                    "Are security controls implemented across systems?",
+                    "Are internal audits conducted?"
+                  ],
+                  "evidence": ["Audit reports", "Encryption policy enforcement logs"]
+                },
+                "level4": {
+                  "description": "Security controls are continuously monitored and updated. Automated compliance checks are in place. Incident response plans are tested.",
+                  "questions": [
+                    "Are controls continuously monitored and updated?",
+                    "Are incident response plans tested?"
+                  ],
+                  "evidence": ["SIEM alerts", "DR/Incident Response (IR) test results"]
+                },
+                "level5": {
+                  "description": "Security controls exceed regulatory requirements. AI/ML supports threat detection and response. Continuous compliance is achieved through automated validation.",
+                  "questions": [
+                    "Do controls exceed regulatory requirements?",
+                    "Is AI/ML used for threat detection?"
+                  ],
+                  "evidence": ["Threat intelligence dashboards", "Automated remediation logs"]
+                }
+              }
+            },
+            {
+              "id": "security-monitoring",
+              "name": "Security Monitoring",
+              "description": "Security event monitoring, alerting, and response.",
+              "levels": {
+                "level1": {
+                  "description": "Security event monitoring is siloed and inconsistent. No centralized visibility or alerting.",
+                  "questions": [
+                    "Is monitoring siloed and inconsistent?",
+                    "Is there centralized visibility?"
+                  ],
+                  "evidence": ["System-specific logs", "Lack of SIEM integration"]
+                },
+                "level2": {
+                  "description": "Monitoring standards are defined. Some systems use commercial or open-source tools. Alerts are manually reviewed.",
+                  "questions": [
+                    "Are monitoring standards defined?",
+                    "Are alerts manually reviewed?"
+                  ],
+                  "evidence": ["Monitoring policy drafts", "Alert review logs"]
+                },
+                "level3": {
+                  "description": "A SIEM tool is used across most systems. Alerts are correlated and logged.",
+                  "questions": [
+                    "Is a SIEM tool used across most systems?",
+                    "Are alerts correlated and logged?"
+                  ],
+                  "evidence": ["SIEM dashboards", "Alert correlation rules"]
+                },
+                "level4": {
+                  "description": "A centralized SIEM provides enterprise-wide visibility. Automated alerting and response workflows are in place.",
+                  "questions": [
+                    "Is a centralized SIEM used enterprise wide?",
+                    "Are automated alert responses in place?"
+                  ],
+                  "evidence": ["SIEM integration diagrams", "Automated response workflows"]
+                },
+                "level5": {
+                  "description": "SIEM is integrated with AI/ML for predictive threat detection. Automated remediation is triggered by risk signals. Monitoring supports real-time compliance and audit readiness.",
+                  "questions": [
+                    "Is AI/ML used for predictive threat detection?",
+                    "Is remediation automated?"
+                  ],
+                  "evidence": ["Predictive analytics dashboards", "Auto-remediation logs"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "operations-maintenance",
+          "name": "Operations and Maintenance",
+          "description": "System monitoring, operations, and maintenance.",
+          "overallLevelDescriptions": {
+            "level1": "System monitoring implemented on a system-by-system basis. Monitoring identifies problems after they happen. Tools for operations are in place, but manual processes are still required to operate system.",
+            "level2": "Guidelines for system monitoring are in place. Some commercial or open-source tools for monitoring. Standard processes are in place for operations. System updates and patching.",
+            "level3": "Most systems use the same tools for monitoring and alerts. Some automation is in place to respond to problems. Dashboards present information on system problems. System operations processes use automation and are developing alignment with standards such as Information Technology Infrastructure Library (ITIL).",
+            "level4": "Monitoring and alerting are automated and integrated across systems. Proactive monitoring is implemented for both platforms and applications. Automation is used to respond to problems. Dashboards present information about the system across multiple modules. Systems operations processes are extensively automated and aligned with system management standards such as ITIL.",
+            "level5": "Monitoring is controlled through configuration. Wide use of proactive monitoring and automated problem prevention and response. Dashboards present information about the current system health and expectations for future activities operation across the MES."
+          },
+          "aspects": [
+            {
+              "id": "system-monitoring",
+              "name": "System Monitoring",
+              "description": "Monitoring of system health, performance, and alerts.",
+              "levels": {
+                "level1": {
+                  "description": "Monitoring is implemented independently per system. Alerts are reactive and manually reviewed. No enterprise-wide visibility.",
+                  "questions": [
+                    "Is monitoring siloed and reactive?",
+                    "Is there centralized visibility?"
+                  ],
+                  "evidence": ["System-specific logs", "Manual alerting procedures"]
+                },
+                "level2": {
+                  "description": "Guidelines for monitoring are defined. Some systems use commercial or open-source tools. Alerts are partially automated.",
+                  "questions": [
+                    "Are monitoring standards defined?",
+                    "Are commercial / open-source tools used on some systems?"
+                  ],
+                  "evidence": ["Monitoring policy drafts", "Tool deployment screenshots"]
+                },
+                "level3": {
+                  "description": "A common set of tools is used across most systems. Dashboards present system health. Alerts are integrated and monitored centrally.",
+                  "questions": [
+                    "Are common tools used across most systems?",
+                    "Are alerts integrated and monitored centrally?"
+                  ],
+                  "evidence": ["Unified dashboards", "Alert correlation rules"]
+                },
+                "level4": {
+                  "description": "Monitoring is automated and integrated across platforms and applications. Proactive alerting and root cause analysis are in place. Dashboards provide real-time visibility across modules.",
+                  "questions": [
+                    "Is monitoring automated and proactive?",
+                    "Are dashboards used for real-time visibility?"
+                  ],
+                  "evidence": ["Real-time monitoring dashboards", "Root cause analysis logs"]
+                },
+                "level5": {
+                  "description": "Monitoring is configuration driven and policy based. AI/ML supports predictive alerts and automated remediation. Dashboards forecast system health and future risks across the enterprise.",
+                  "questions": [
+                    "Is monitoring configuration-driven and predictive?",
+                    "Is AI/ML used for alerting and remediation?"
+                  ],
+                  "evidence": ["Predictive analytics dashboards", "Automated remediation logs"]
+                }
+              }
+            },
+            {
+              "id": "system-operations",
+              "name": "System Operations",
+              "description": "Operational processes, automation, and maintenance.",
+              "levels": {
+                "level1": {
+                  "description": "Operations are manual and system specific. Batch jobs and file transfers are managed independently. Updates are delayed and cause downtime.",
+                  "questions": [
+                    "Are operations manual and system specific?",
+                    "Are updates delayed or disruptive?"
+                  ],
+                  "evidence": ["Manual job logs", "Update failure reports"]
+                },
+                "level2": {
+                  "description": "Routine tasks (e.g., file transfers and job scheduling) are partially automated. Standard procedures exist for updates, but execution is manual.",
+                  "questions": [
+                    "Are routine tasks partially automated?",
+                    "Are update procedures standardized but manual?"
+                  ],
+                  "evidence": ["File transfer scripts", "Patching SOPs"]
+                },
+                "level3": {
+                  "description": "Many operations are automated. Patching is scheduled and tested. Updates follow defined procedures and avoid unplanned downtime.",
+                  "questions": [
+                    "Are many operations automated?",
+                    "Are updates scheduled and tested?"
+                  ],
+                  "evidence": ["Automation scripts", "Patching schedules", "Downtime logs"]
+                },
+                "level4": {
+                  "description": "Operations are extensively automated and aligned with ITSM standards (e.g., ITIL). Updates are implemented without downtime.",
+                  "questions": [
+                    "Are operations aligned with ITSM standards?",
+                    "Are updates implemented without downtime?"
+                  ],
+                  "evidence": ["ITIL-aligned process documents", "Zero-downtime deployment logs"]
+                },
+                "level5": {
+                  "description": "Operations are fully automated and policy driven. Updates are continuous and risk managed. AI/ML supports anomaly detection and self-healing. Operations exceed ITSM benchmarks.",
+                  "questions": [
+                    "Are operations fully automated and policy-driven?",
+                    "Is AI/ML used for anomaly detection and self-healing?"
+                  ],
+                  "evidence": ["AI-driven ops dashboards", "Automated patching and rollback logs"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "development-release",
+          "name": "Development and Release",
+          "description": "Code management, testing, release processes, and security compliance.",
+          "overallLevelDescriptions": {
+            "level1": "Development and release processes are manual, inconsistent, and reactive. Code changes are not version controlled, testing is ad hoc, and security is addressed after deployment. No formal governance or automation.",
+            "level2": "Basic tools and practices are introduced, such as version control and environment separation. Some testing and security practices are piloted, but processes remain siloed and inconsistently applied. Releases are still largely manual.",
+            "level3": "Development and release processes are standardized and documented. Automated testing and IAC are introduced. Security and compliance checks are integrated into the development lifecycle. Releases follow defined gates.",
+            "level4": "Standard practices and approaches (e.g., CI/CD pipelines) are used to automate builds, tests, and deployments. Code and infrastructure changes are peer reviewed and traceable. Security gates and rollback mechanisms are embedded. Release metrics are tracked and used for improvement.",
+            "level5": "Development and release are continuous, adaptive, and policy driven. AI/ML supports test optimization, anomaly detection, and predictive compliance. The entire pipeline is monitored in real time, enabling rapid, secure, and resilient delivery of changes."
+          },
+          "aspects": [
+            {
+              "id": "code-configuration-management",
+              "name": "Code and Configuration Management",
+              "description": "Version control, infrastructure as code, and configuration management.",
+              "levels": {
+                "level1": {
+                  "description": "Code and infrastructure settings are managed manually. No version control. Environments are inconsistently configured.",
+                  "questions": [
+                    "Is code managed manually without version control?",
+                    "Are infrastructure settings inconsistently applied?"
+                  ],
+                  "evidence": ["Shared drive code folders", "Manual configuration logs"]
+                },
+                "level2": {
+                  "description": "Basic version control (e.g., Git) is introduced. Teams begin using scripts for repeatable configurations. Infrastructure settings are partially documented.",
+                  "questions": [
+                    "Is version control used by some teams?",
+                    "Are scripts used for repeatable configurations?"
+                  ],
+                  "evidence": ["Git repo screenshots", "Provisioning scripts"]
+                },
+                "level3": {
+                  "description": "Version control is standardized across teams. IAC is adopted for provisioning. Code and configuration changes are peer reviewed and traceable.",
+                  "questions": ["Is version control standardized across teams?", "Is IAC adopted?"],
+                  "evidence": ["IaC templates", "Peer review logs"]
+                },
+                "level4": {
+                  "description": "IaC is integrated into CI/CD pipelines. Code and infrastructure changes are governed by policy and auditable. Repositories are version controlled and monitored.",
+                  "questions": [
+                    "Is IaC integrated into CI/CD pipelines?",
+                    "Are code / configuration changes governed and auditable?"
+                  ],
+                  "evidence": ["CI/CD pipeline configurations", "Change audit logs"]
+                },
+                "level5": {
+                  "description": "Code and infrastructure are fully automated and policy driven. AI/ML supports anomaly detection and predictive configuration. Compliance is enforced continuously.",
+                  "questions": [
+                    "Are code and infrastructure fully automated and policy-driven?",
+                    "Is AI/ML used for anomaly detection?"
+                  ],
+                  "evidence": ["AI-based configuration monitoring", "Policy enforcement dashboards"]
+                }
+              }
+            },
+            {
+              "id": "testing-release",
+              "name": "Testing and Release",
+              "description": "Test automation, release processes, and deployment practices.",
+              "levels": {
+                "level1": {
+                  "description": "Testing is manual and inconsistent. Releases are infrequent and error prone. No formal environments or release process.",
+                  "questions": [
+                    "Is testing manual and inconsistent?",
+                    "Are releases infrequent and error prone?"
+                  ],
+                  "evidence": ["Manual test scripts", "Release failure reports"]
+                },
+                "level2": {
+                  "description": "Basic test automation is introduced. Dev/Test/Prod environments are established. Releases follow informal checklists.",
+                  "questions": [
+                    "Is basic test automation introduced?",
+                    "Are Dev/Test/Prod environments established?"
+                  ],
+                  "evidence": ["Test automation logs", "Environment setup documents"]
+                },
+                "level3": {
+                  "description": "Automated testing is integrated into CI/CD pipelines. Release gates and rollback procedures are defined. Releases are traceable and documented.",
+                  "questions": [
+                    "Are automated tests integrated into CI/CD?",
+                    "Are release gates and rollback procedures defined?"
+                  ],
+                  "evidence": ["CI/CD pipeline configurations", "Rollback playbooks"]
+                },
+                "level4": {
+                  "description": "CI/CD pipelines are standardized and monitored. Releases are automated, peer reviewed, and include rollback and canary deployments. Metrics (e.g., deployment frequency and failure rate) are tracked.",
+                  "questions": [
+                    "Are releases automated and peer reviewed?",
+                    "Are metrics like deployment frequency tracked?"
+                  ],
+                  "evidence": ["Deployment dashboards", "Release audit logs"]
+                },
+                "level5": {
+                  "description": "Releases are continuous and adaptive. AI/ML optimizes test coverage and prioritization. Pipelines are self-healing and policy driven. Release health is monitored in real time.",
+                  "questions": [
+                    "Are releases continuous and adaptive?",
+                    "Is AI/ML used for test optimization and risk detection?"
+                  ],
+                  "evidence": ["Predictive release analytics", "Self-healing pipeline logs"]
+                }
+              }
+            },
+            {
+              "id": "security-compliance",
+              "name": "Security and Compliance",
+              "description": "Secure development practices and compliance integration.",
+              "levels": {
+                "level1": {
+                  "description": "Security is addressed post-deployment. No secure coding practices or compliance checks.",
+                  "questions": [
+                    "Is security addressed post-deployment?",
+                    "Are secure coding practices absent?"
+                  ],
+                  "evidence": ["Post-release vulnerability reports", "Lack of security checklists"]
+                },
+                "level2": {
+                  "description": "Security policies are drafted. Static code analysis tools are piloted. Manual compliance reviews occur before release.",
+                  "questions": ["Are security policies drafted?", "Are analysis tools piloted?"],
+                  "evidence": ["SAST tool outputs", "Draft security policies"]
+                },
+                "level3": {
+                  "description": "Secure coding standards are enforced. Security scans (Static Application Security Testing [SAST] / Dynamic Application Security Testing [DAST]) are integrated into pipelines. Compliance checklists are standardized.",
+                  "questions": [
+                    "Are secure coding standards enforced?",
+                    "Are security scans integrated into pipelines?"
+                  ],
+                  "evidence": ["SAST/DAST logs", "Compliance checklists"]
+                },
+                "level4": {
+                  "description": "DevSecOps practices are adopted. Security gates block non-compliant code. Compliance evidence is automatically collected and stored.",
+                  "questions": [
+                    "Are DevSecOps practices adopted?",
+                    "Is compliance evidence automatically collected?"
+                  ],
+                  "evidence": ["Security gate configurations", "Compliance audit logs"]
+                },
+                "level5": {
+                  "description": "Continuous compliance is achieved. AI/ML detects security anomalies and enforces policy. Compliance dashboards provide real-time visibility across the enterprise.",
+                  "questions": [
+                    "Is continuous compliance achieved?",
+                    "Is AI/ML used for anomaly detection and enforcement?"
+                  ],
+                  "evidence": ["Real-time compliance dashboards", "AI-driven security alerts"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
