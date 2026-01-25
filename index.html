@@ -13,12 +13,15 @@
     <script>
       // Restore route from 404.html redirect
       (function() {
-        const params = new URLSearchParams(window.location.search);
-        const path = params.get('p');
+        var params = new URLSearchParams(window.location.search);
+        var path = params.get('p');
         if (path) {
-          const search = params.get('q') ? '?' + decodeURIComponent(params.get('q')) : '';
-          const hash = window.location.hash;
-          window.history.replaceState(null, '', path + search + hash);
+          // Get the base path (e.g., /mita-state-self-assessment-tool)
+          var basePath = window.location.pathname.replace(/\/$/, '');
+          var search = params.get('q') ? '?' + decodeURIComponent(params.get('q')) : '';
+          var hash = window.location.hash;
+          // Restore full URL with base path + route path
+          window.history.replaceState(null, '', basePath + path + search + hash);
         }
       })();
     </script>
