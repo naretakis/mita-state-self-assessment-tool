@@ -8,18 +8,18 @@ This document defines the development standards for the MITA 4.0 State Self-Asse
 
 ### What to Document
 
-| Document                  | When to Update                                                |
-| ------------------------- | ------------------------------------------------------------- |
-| **README.md**             | Project setup changes, new major features, dependency changes |
-| **CHANGELOG.md**          | Every feature, fix, or breaking change (before PR merge)      |
-| **PROJECT_FOUNDATION.md** | Architecture decisions, data model changes, phase completion  |
+| Document                     | When to Update                                                |
+| ---------------------------- | ------------------------------------------------------------- |
+| **README.md**                | Project setup changes, new major features, dependency changes |
+| **CHANGELOG.md**             | Every feature, fix, or breaking change (before PR merge)      |
+| **PROJECT_FOUNDATION_v2.md** | Architecture decisions, data model changes, phase completion  |
 
 ### CHANGELOG Format
 
 Follow [Keep a Changelog](https://keepachangelog.com/) format:
 
 ```markdown
-## [Unreleased]
+## [version]
 
 ### Added
 

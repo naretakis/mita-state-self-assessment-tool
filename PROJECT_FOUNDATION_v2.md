@@ -4,11 +4,11 @@
 
 A Progressive Web App (PWA) enabling State Medicaid Agencies (SMAs) to self-assess their Medicaid Enterprise maturity using the **MITA 4.0 ORBIT Maturity Model**. The application is fully client-side, offline-first, and stores all data locally in the browser.
 
-**Version:** 0.1.0  
-**Last Updated:** January 24, 2026  
+**Version:** 2.0  
+**Last Updated:** January 25, 2026  
 **Target Deployment:** GitHub Pages
 
-> **Note:** This document (v2) reflects the current implementation. See `PROJECT_FOUNDATION.md` for the original planning document.
+> **Note:** This document (v2) reflects the current implementation.
 
 ---
 
@@ -462,4 +462,3 @@ export-2026-01-24.zip
 
 - [MITA 4.0 Maturity Model List Format](docs/MITA_4.0_Maturity_Model_List_Format.md)
 - [MITA 4.0 Capability Reference Model](docs/MITA_4.0_Capability_Reference_Model.md)
-- [Original Planning Document](PROJECT_FOUNDATION.md)

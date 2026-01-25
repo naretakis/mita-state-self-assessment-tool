@@ -213,7 +213,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ## Documentation
 
-- [PROJECT_FOUNDATION.md](PROJECT_FOUNDATION.md) - Architecture and design decisions
+- [PROJECT_FOUNDATION_v2.md](PROJECT_FOUNDATION_v2.md) - Architecture and design decisions
 - [CHANGELOG.md](CHANGELOG.md) - Version history
 - [docs/MITA_4.0_Maturity_Model_List_Format.md](docs/MITA_4.0_Maturity_Model_List_Format.md) - ORBIT maturity criteria reference
 - [docs/MITA_4.0_Capability_Reference_Model.md](docs/MITA_4.0_Capability_Reference_Model.md) - Capability domains and areas reference
@@ -225,5 +225,5 @@ This project is licensed under the GPLv3 (GNU General Public License Version 3) 
 ## Acknowledgments
 
 - MITA Governance Board
-- MITA 4.0 NextGen Workgroup
+- MITA 4.0 Workgroup
 - Centers for Medicare & Medicaid Services (CMS)
