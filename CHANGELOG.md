@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.2] - 2026-01-25
+
+### Added
+
+- 404 Not Found page for invalid routes within the application
+- GitHub Pages SPA redirect support to fix browser refresh on deep links
+
+### Fixed
+
+- Browser refresh on any route now correctly reloads the page instead of showing GitHub's 404
+
 ## [2.0.1] - 2026-01-25
 
 ### Fixed

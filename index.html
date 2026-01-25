@@ -9,6 +9,19 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- GitHub Pages SPA redirect restoration -->
+    <script>
+      // Restore route from 404.html redirect
+      (function() {
+        const params = new URLSearchParams(window.location.search);
+        const path = params.get('p');
+        if (path) {
+          const search = params.get('q') ? '?' + decodeURIComponent(params.get('q')) : '';
+          const hash = window.location.hash;
+          window.history.replaceState(null, '', path + search + hash);
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

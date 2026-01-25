@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
+    <script>
+      // GitHub Pages SPA redirect hack
+      // Converts the path to a query string so index.html can restore it
+      // e.g., /repo/dashboard -> /repo/?p=/dashboard
+      const pathSegmentsToKeep = 1; // Keep the repo name segment
+      const location = window.location;
+      const path = location.pathname.split('/').slice(pathSegmentsToKeep + 1).join('/');
+      const search = location.search;
+      const hash = location.hash;
+      
+      // Redirect to root with path as query param
+      const redirectUrl = location.pathname.split('/').slice(0, pathSegmentsToKeep + 1).join('/') + 
+        '/?p=/' + path + 
+        (search ? '&q=' + encodeURIComponent(search.slice(1)) : '') +
+        hash;
+      
+      location.replace(redirectUrl);
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <p>JavaScript is required to use this application.</p>
+      <p><a href="/">Return to home</a></p>
+    </noscript>
+  </body>
+</html>

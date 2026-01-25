@@ -10,6 +10,7 @@ import DomainResults from './pages/DomainResults';
 import AreaResults from './pages/AreaResults';
 import ImportExport from './pages/ImportExport';
 import About from './pages/About';
+import NotFound from './pages/NotFound';
 
 function App(): JSX.Element {
   return (
@@ -24,6 +25,7 @@ function App(): JSX.Element {
         <Route path="/results/:domainId/:areaId" element={<AreaResults />} />
         <Route path="/import-export" element={<ImportExport />} />
         <Route path="/about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>
   );

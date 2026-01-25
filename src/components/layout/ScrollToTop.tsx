@@ -12,7 +12,8 @@ export function ScrollToTop(): null {
   useEffect(() => {
     // The main content area has id="main-content" and is the scrollable container
     const mainContent = document.getElementById('main-content');
-    if (mainContent) {
+    // scrollTo may not exist in test environments (jsdom)
+    if (mainContent?.scrollTo) {
       mainContent.scrollTo(0, 0);
     }
   }, [pathname]);
