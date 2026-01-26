@@ -350,7 +350,6 @@ function DimensionRow({
                   aria-hidden="true"
                 />
               )}
-              {isSubDimension && '↳ '}
               {dimensionName}
               <Typography
                 variant="caption"
@@ -364,7 +363,6 @@ function DimensionRow({
           ) : (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Box sx={{ width: 24, mr: 0.5 }} />
-              {isSubDimension && '↳ '}
               {dimensionName}
               <Typography variant="caption" color="text.secondary" sx={{ ml: 1 }}>
                 ({assessedCount}/{totalCount})
