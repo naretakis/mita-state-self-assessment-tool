@@ -762,13 +762,22 @@ export function ResultsMasterDetail({ domains }: ResultsMasterDetailProps): JSX.
   const detailHeadingRef = useRef<HTMLHeadingElement>(null);
   const navRef = useRef<HTMLElement>(null);
 
-  // Focus the detail heading when selection changes
+  // Focus the detail heading when selection changes (for screen readers)
+  // Use preventScroll to avoid jarring scroll jumps when clicking with mouse
   useEffect(() => {
     if (selection && detailHeadingRef.current) {
       // Small delay to ensure content is rendered
       setTimeout(() => {
-        detailHeadingRef.current?.focus();
+        detailHeadingRef.current?.focus({ preventScroll: true });
       }, 100);
+    }
+  }, [selection]);
+
+  // Scroll the detail panel content to top when selection changes
+  const detailPanelRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (selection && detailPanelRef.current) {
+      detailPanelRef.current.scrollTop = 0;
     }
   }, [selection]);
 
@@ -794,7 +803,7 @@ export function ResultsMasterDetail({ domains }: ResultsMasterDetailProps): JSX.
 
   return (
     <Paper
-      sx={{ display: 'flex', minHeight: 400, position: 'relative' }}
+      sx={{ display: 'flex', height: 600, position: 'relative' }}
       role="region"
       aria-label="Results by domain"
     >
@@ -826,6 +835,7 @@ export function ResultsMasterDetail({ domains }: ResultsMasterDetailProps): JSX.
           borderRight: 1,
           borderColor: 'divider',
           bgcolor: 'background.paper',
+          overflowY: 'auto',
         }}
         component="nav"
         aria-label="Domain and capability area navigation"
@@ -842,7 +852,8 @@ export function ResultsMasterDetail({ domains }: ResultsMasterDetailProps): JSX.
 
       {/* Right: Detail Panel */}
       <Box
-        sx={{ flex: 1, bgcolor: 'grey.50', position: 'relative' }}
+        ref={detailPanelRef}
+        sx={{ flex: 1, bgcolor: 'grey.50', position: 'relative', overflowY: 'auto' }}
         role="region"
         aria-label="Selected item details"
       >
