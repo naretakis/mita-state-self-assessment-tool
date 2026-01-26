@@ -48,6 +48,8 @@ jobs:
         env:
           # Dynamically set base path from repo name
           VITE_BASE_PATH: /${{ github.event.repository.name }}/
+          # Dynamically set GitHub repo URL
+          VITE_GITHUB_REPO_URL: ${{ github.server_url }}/${{ github.repository }}
         run: npm run build
 
       - name: Setup Pages

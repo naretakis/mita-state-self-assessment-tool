@@ -276,25 +276,29 @@ export default function About(): JSX.Element {
           Agencies in conducting their MITA 4.0 self-assessments.
         </Typography>
 
-        <Alert severity="info" icon={<InfoOutlinedIcon />} sx={{ mb: 2 }}>
-          <Typography variant="body2">
-            Interested in contributing or reporting an issue? Visit our GitHub repository for
-            documentation, source code, and contribution guidelines.
-          </Typography>
-        </Alert>
+        {GITHUB_REPO_URL && (
+          <>
+            <Alert severity="info" icon={<InfoOutlinedIcon />} sx={{ mb: 2 }}>
+              <Typography variant="body2">
+                Interested in contributing or reporting an issue? Visit our GitHub repository for
+                documentation, source code, and contribution guidelines.
+              </Typography>
+            </Alert>
 
-        <Link
-          href={GITHUB_REPO_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="View on GitHub (opens in new window)"
-          sx={{ display: 'inline-flex', alignItems: 'center' }}
-        >
-          <GitHubIcon aria-hidden="true" sx={{ mr: 0.5, fontSize: 18 }} />
-          View on GitHub
-        </Link>
+            <Link
+              href={GITHUB_REPO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View on GitHub (opens in new window)"
+              sx={{ display: 'inline-flex', alignItems: 'center' }}
+            >
+              <GitHubIcon aria-hidden="true" sx={{ mr: 0.5, fontSize: 18 }} />
+              View on GitHub
+            </Link>
 
-        <Divider sx={{ my: 2 }} />
+            <Divider sx={{ my: 2 }} />
+          </>
+        )}
 
         <Typography variant="body2" color="text.secondary">
           Built with React, TypeScript, and Material UI. Data stored locally using IndexedDB.

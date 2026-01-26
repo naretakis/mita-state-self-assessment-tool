@@ -11,11 +11,10 @@
 
 /**
  * GitHub repository URL.
- * Can be overridden via VITE_GITHUB_REPO_URL environment variable.
+ * Automatically set via VITE_GITHUB_REPO_URL in the deploy workflow.
+ * Falls back to empty string for local development (link won't appear if not set).
  */
-export const GITHUB_REPO_URL =
-  import.meta.env.VITE_GITHUB_REPO_URL ||
-  'https://github.com/naretakis/mita-state-self-assessment-tool';
+export const GITHUB_REPO_URL = import.meta.env.VITE_GITHUB_REPO_URL || '';
 
 // =============================================================================
 // Maturity Score Thresholds
