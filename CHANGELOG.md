@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Browser refresh on any route now correctly reloads the page instead of showing GitHub's 404
+- Fixed infinite scroll issue on Results page when assessments are displayed
 
 ## [2.0.1] - 2026-01-25
 

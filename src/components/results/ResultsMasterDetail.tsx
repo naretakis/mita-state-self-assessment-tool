@@ -793,7 +793,11 @@ export function ResultsMasterDetail({ domains }: ResultsMasterDetailProps): JSX.
   };
 
   return (
-    <Paper sx={{ display: 'flex', minHeight: 400 }} role="region" aria-label="Results by domain">
+    <Paper
+      sx={{ display: 'flex', minHeight: 400, position: 'relative' }}
+      role="region"
+      aria-label="Results by domain"
+    >
       {/* Live region for announcements */}
       <Box
         role="status"
