@@ -1,5 +1,23 @@
 # MITA 4.0 State Self-Assessment Tool
 
+> ⚠️ **This repository has been archived.**
+>
+> Active development has moved to **[Enterprise-CMCS/mita-ssa-tool](https://github.com/Enterprise-CMCS/mita-ssa-tool)**.
+>
+> This repository is preserved for historical reference only. Please visit the new repository for:
+> - Latest releases and updates
+> - Bug reports and feature requests
+> - Contributing to the project
+>
+> Thank you to everyone who contributed to this original repository!
+
+---
+
+<details>
+<summary>Original README (for historical reference)</summary>
+
+## About
+
 A Progressive Web App (PWA) enabling State Medicaid Agencies (SMAs) to self-assess their Medicaid Enterprise maturity using the **MITA 4.0 Maturity Model**.
 
 ## Overview
@@ -227,3 +245,6 @@ This project is licensed under the GPLv3 (GNU General Public License Version 3) 
 - MITA Governance Board
 - MITA 4.0 Workgroup
 - Centers for Medicare & Medicaid Services (CMS)
+
+
+</details>
