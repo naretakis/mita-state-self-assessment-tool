@@ -4,19 +4,12 @@
 
 The MITA 4.0 State Self-Assessment Tool is designed with security and privacy as core principles. All assessment data is stored locally in the user's browser using IndexedDB—no data is transmitted to or stored on remote servers.
 
-## Supported Versions
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 0.1.x   | :white_check_mark: |
-
 ## Security Features
 
 ### Data Privacy
 
 - **Local-only storage**: All data remains in the browser's IndexedDB
 - **No remote transmission**: No assessment data is sent to any server
-- **No tracking**: No analytics or tracking scripts
 - **User control**: Users can clear all data at any time
 
 ### Browser Security
